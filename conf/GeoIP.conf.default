@@ -4,6 +4,16 @@
 # for more details, please go to
 # http://www.maxmind.com/app/products
 
-# replace 'foobar1234' with your license key here
+# see http://www.maxmind.com/app/my_license_key to obtain License Key,
+# UserId, and available ProductIds
 
-LicenseKey foobar1234
+# Enter your license key here
+LicenseKey YOUR_LICENSE_KEY_HERE
+
+# Enter your User ID here
+UserId YOUR_USER_ID_HERE
+
+# Enter the Product ID(s) of the database(s) you would like to update
+# By default 106 (MaxMind GeoIP Country) is listed below
+ProductIds 106
+
