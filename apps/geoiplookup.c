@@ -74,13 +74,21 @@ int main (int argc, char *argv[]) {
 					} else {
 						printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
 					}
-				} else if (GEOIP_CITY_EDITION == i) {
+				} else if (GEOIP_CITY_EDITION_REV0 == i) {
 					gir = GeoIP_record_by_name(gi, hostname);
 					if (NULL == gir) {
 						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 					} else {
 						printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
 									 gir->latitude, gir->longitude);
+					}
+				} else if (GEOIP_CITY_EDITION_REV1 == i) {
+					gir = GeoIP_record_by_name(gi, hostname);
+					if (NULL == gir) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
+									 gir->latitude, gir->longitude, gir->dma_code, gir->area_code);
 					}
 				} else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
 					org = GeoIP_org_by_name(gi, hostname);

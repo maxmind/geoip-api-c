@@ -57,7 +57,7 @@ void csv_export (int databaseType, int beginIp, int endIp, int val, FILE *out) {
 	if (GEOIP_COUNTRY_EDITION == databaseType) {
 		fprintf(out, "\"%u\",\"%u\",\"%s\"\n",
 						beginIp, endIp, GeoIP_country_code[val]);
-	} else if (GEOIP_CITY_EDITION == databaseType) {
+	} else if (GEOIP_CITY_EDITION_REV0 == databaseType) {
 		fprintf(out, "\"%u\",\"%u\",\"%u\"\n",
 						beginIp, endIp, val);
 	}
@@ -67,7 +67,7 @@ void csv_export2 (int databaseType, int beginIp, int endIp, int val, FILE *out) 
 	if (GEOIP_COUNTRY_EDITION == databaseType) {
 		fprintf(out, "\"%s\",\"%s\",\"%s\"\n",
 						_num_to_addr(beginIp), _num_to_addr(endIp), GeoIP_country_code[val]);
-	} else if (GEOIP_CITY_EDITION == databaseType) {
+	} else if (GEOIP_CITY_EDITION_REV0 == databaseType) {
 		fprintf(out, "\"%s\",\"%s\",\"%u\"\n",
 						_num_to_addr(beginIp), _num_to_addr(endIp), val);
 	}
@@ -117,7 +117,7 @@ int main (int argc, char *argv[]) {
 		} else if (record == VALUE_FLAG) {
 			if (GEOIP_COUNTRY_EDITION == databaseType) {
 				val = GeoIPBitReader_read(gibr, COUNTRY_RECORD_SIZE);
-			} else if (GEOIP_CITY_EDITION == databaseType) {
+			} else if (GEOIP_CITY_EDITION_REV0 == databaseType) {
 				val = GeoIPBitReader_read(gibr, CITY_RECORD_SIZE);
 			}
 			if (EXPORT_CSV == exportType) {

@@ -60,11 +60,12 @@ typedef enum {
 } GeoIPOptions;
 
 typedef enum {
-	GEOIP_COUNTRY_EDITION = 1,
-	GEOIP_REGION_EDITION  = 7,
-	GEOIP_CITY_EDITION    = 6,
-	GEOIP_ORG_EDITION     = 5,
-	GEOIP_ISP_EDITION     = 4,
+	GEOIP_COUNTRY_EDITION   = 1,
+	GEOIP_REGION_EDITION    = 7,
+	GEOIP_CITY_EDITION_REV0 = 6,
+	GEOIP_ORG_EDITION       = 5,
+	GEOIP_ISP_EDITION       = 4,
+	GEOIP_CITY_EDITION_REV1 = 2,
 } GeoIPDBTypes;
 
 extern char **GeoIPDBFileName;

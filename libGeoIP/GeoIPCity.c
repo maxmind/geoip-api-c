@@ -33,9 +33,11 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	int j;
         unsigned int seek_country;
 	double latitude = 0, longitude = 0;
+	int dmaarea_combo = 0;
 
-	if (gi->databaseType != GEOIP_CITY_EDITION) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION]);
+	if (gi->databaseType != GEOIP_CITY_EDITION_REV0 ||
+			gi->databaseType != GEOIP_CITY_EDITION_REV1) {
+		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
 		return 0;
 	}
 
@@ -101,6 +103,16 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	for (j = 0; j < 3; ++j)
 		longitude += (record_buf[j] << (j * 8));
 	record->longitude = longitude/10000 - 180;
+
+	/* get area code and dma code for post April 2002 databases and for US locations */
+	if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
+		if (strcmp(record->country_code, "US")) {
+			for (j = 0; j < 3; ++j)
+				dmaarea_combo += (record_buf[j] << (j * 8));
+			record->dma_code = dmaarea_combo/1000;
+			record->area_code = dmaarea_combo % 1000;
+		}
+	}
 
 	if (gi->cache == NULL)
 		free(begin_record_buf);
