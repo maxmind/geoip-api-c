@@ -439,8 +439,6 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 	if (seek_org == gi->databaseSegments[0])		
 		return NULL;
 
-	printf("seek_org = %d\n", seek_org - gi->databaseSegments[0]);
-
 	record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
