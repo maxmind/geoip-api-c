@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* GeoIP.c
  *
- * Copyright (C) 2002 MaxMind.com.  All Rights Reserved.
+ * Copyright (C) 2003 MaxMind LLC  All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -34,10 +34,15 @@
 #endif
 
 #define COUNTRY_BEGIN 16776960
-#define STATE_BEGIN 16700000
+#define STATE_BEGIN_REV0 16700000
+#define STATE_BEGIN_REV1 16000000
 #define STRUCTURE_INFO_MAX_SIZE 20
 #define DATABASE_INFO_MAX_SIZE 100
 #define MAX_ORG_RECORD_LENGTH 300
+#define US_OFFSET 1
+#define CANADA_OFFSET 677
+#define WORLD_OFFSET 1353
+#define FIPS_RANGE 360
 
 #define CHECK_ERR(err, msg) { \
 		if (err != Z_OK) { \
@@ -56,7 +61,7 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 
 const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA","AF","AN","SA","OC","EU","OC","SA","AS","EU","SA","AS","EU","AF","EU","AS","AF","AF","SA","AS","SA","SA","SA","AS","AF","AF","EU","SA","NA","AS","AF","AF","AF","EU","AF","OC","SA","AF","AS","SA","SA","SA","AF","AS","AS","EU","EU","AF","EU","SA","SA","AF","SA","EU","AF","AF","AF","EU","AF","EU","OC","SA","OC","EU","EU","EU","AF","EU","SA","AS","SA","AF","EU","SA","AF","AF","SA","AF","EU","SA","SA","OC","AF","SA","AS","AF","SA","EU","SA","EU","AS","EU","AS","AS","AS","AS","AS","EU","EU","SA","AS","AS","AF","AS","AS","OC","AF","SA","AS","AS","AS","SA","AS","AS","AS","SA","EU","AS","AF","AF","EU","EU","EU","AF","AF","EU","EU","AF","OC","EU","AF","AS","AS","AS","OC","SA","AF","SA","EU","AF","AS","AF","NA","AS","AF","AF","OC","AF","OC","AF","SA","EU","EU","AS","OC","OC","OC","AS","SA","SA","OC","OC","AS","AS","EU","SA","OC","SA","AS","EU","OC","SA","AS","AF","EU","AS","AF","AS","OC","AF","AF","EU","AS","AF","EU","EU","EU","AF","EU","AF","AF","SA","AF","SA","AS","AF","SA","AF","AF","AF","AS","AS","OC","AS","AF","OC","AS","AS","SA","OC","AS","AF","EU","AF","OC","NA","SA","AS","EU","SA","SA","SA","SA","AS","OC","OC","OC","AS","AF","EU","AF","AF","AF","AF"};
 
-const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", NULL, "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition"};
+const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0"};
 
 #ifdef WIN32
 #define GEOIPDATADIR "\\windows\\system32\\"
@@ -69,7 +74,8 @@ void _setup_dbfilename() {
 		GeoIPDBFileName = malloc(sizeof(char *) * NUM_DB_TYPES);
 		memset(GeoIPDBFileName, 0, sizeof(char *) * NUM_DB_TYPES);
 		GeoIPDBFileName[GEOIP_COUNTRY_EDITION] = GEOIPDATADIR "/GeoIP.dat";
-		GeoIPDBFileName[GEOIP_REGION_EDITION] = GEOIPDATADIR "/GeoIPRegion.dat";
+		GeoIPDBFileName[GEOIP_REGION_EDITION_REV0] = GEOIPDATADIR "/GeoIPRegion.dat";
+		GeoIPDBFileName[GEOIP_REGION_EDITION_REV1] = GEOIPDATADIR "/GeoIPRegion.dat";
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV0] = GEOIPDATADIR "/GeoIPCity.dat";
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1] = GEOIPDATADIR "/GeoIPCity.dat";
 		GeoIPDBFileName[GEOIP_ISP_EDITION] = GEOIPDATADIR "/GeoIPISP.dat";
@@ -132,13 +138,18 @@ void _setup_segments(GeoIP * gi) {
 				gi->databaseType -= 105;
 			}
 
-			if (gi->databaseType == GEOIP_REGION_EDITION) {
-				/* Region Edition */
+			if (gi->databaseType == GEOIP_REGION_EDITION_REV0) {
+				/* Region Edition, pre June 2003 */
 				gi->databaseSegments = malloc(sizeof(int));
-				gi->databaseSegments[0] = STATE_BEGIN;
+				gi->databaseSegments[0] = STATE_BEGIN_REV0;
+			} else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
+				/* Region Edition, post June 2003 */
+				gi->databaseSegments = malloc(sizeof(int));
+				gi->databaseSegments[0] = STATE_BEGIN_REV1;
 			} else if (gi->databaseType == GEOIP_CITY_EDITION_REV0 ||
 								 gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
-								 gi->databaseType == GEOIP_ORG_EDITION) {
+								 gi->databaseType == GEOIP_ORG_EDITION ||
+								 gi->databaseType == GEOIP_ISP_EDITION) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
@@ -160,7 +171,7 @@ void _setup_segments(GeoIP * gi) {
 	}
 }
 
-unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
+unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 	int i, j, depth;
 	unsigned int x[2];
 	unsigned char buf[2 * MAX_RECORD_LENGTH];
@@ -367,7 +378,7 @@ int GeoIP_country_id_by_name (GeoIP* gi, const char *name) {
 		}
 		ipnum = _h_addr_to_num((unsigned char *) host->h_addr_list[0]);
 	}
-	ret = _seek_country(gi, ipnum) - COUNTRY_BEGIN;
+	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
 
@@ -402,7 +413,7 @@ int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
-	ret = _seek_country(gi, ipnum) - COUNTRY_BEGIN;
+	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
 
@@ -457,18 +468,49 @@ GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 	region = malloc(sizeof(GeoIPRegion));
 	memset(region, 0, sizeof(GeoIPRegion));
 
-	seek_region = _seek_country(gi, ipnum) - STATE_BEGIN;
-	if (seek_region >= 1000) {
-		region->country_code[0] = 'U';
-		region->country_code[1] = 'S';
-		region->country_code[2] = '\0';
-		region->region = malloc(sizeof(char) * 3);
-		region->region[0] = (char) ((seek_region - 1000)/26 + 65);
-		region->region[1] = (char) ((seek_region - 1000)%26 + 65);
-		region->region[2] = '\0';
-	} else {
-		strncpy(region->country_code, GeoIP_country_code[seek_region], 3);
-		region->region = NULL;
+	seek_region = _seek_record(gi, ipnum);
+
+	if (gi->databaseType == GEOIP_REGION_EDITION_REV0) {
+		/* Region Edition, pre June 2003 */
+		seek_region -= STATE_BEGIN_REV0;
+		if (seek_region >= 1000) {
+			region->country_code[0] = 'U';
+			region->country_code[1] = 'S';
+			region->country_code[2] = '\0';
+			region->region = malloc(sizeof(char) * 3);
+			region->region[0] = (char) ((seek_region - 1000)/26 + 65);
+			region->region[1] = (char) ((seek_region - 1000)%26 + 65);
+			region->region[2] = '\0';
+		} else {
+			strncpy(region->country_code, GeoIP_country_code[seek_region], 3);
+			region->region = NULL;
+		}
+	} else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
+		/* Region Edition, post June 2003 */
+		seek_region -= STATE_BEGIN_REV1;
+		if (seek_region < CANADA_OFFSET) {
+			/* USA State */
+			region->country_code[0] = 'U';
+			region->country_code[1] = 'S';
+			region->country_code[2] = '\0';
+			region->region = malloc(sizeof(char) * 3);
+			region->region[0] = (char) ((seek_region - US_OFFSET)/26 + 65);
+			region->region[1] = (char) ((seek_region - US_OFFSET)%26 + 65);
+			region->region[2] = '\0';
+		} else if (seek_region < WORLD_OFFSET) {
+			/* Canada Province */
+			region->country_code[0] = 'C';
+			region->country_code[1] = 'A';
+			region->country_code[2] = '\0';
+			region->region = malloc(sizeof(char) * 3);
+			region->region[0] = (char) ((seek_region - CANADA_OFFSET)/26 + 65);
+			region->region[1] = (char) ((seek_region - CANADA_OFFSET)%26 + 65);
+			region->region[2] = '\0';
+		} else {
+			/* Not US or Canada */
+			strncpy(region->country_code, GeoIP_country_code[seek_region / FIPS_RANGE], 3);
+			region->region = NULL;
+		}
 	}
 	return region;
 }
@@ -478,8 +520,9 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	if (gi->databaseType != GEOIP_REGION_EDITION) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION]);
+	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
+			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
+		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
@@ -492,8 +535,9 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	if (gi->databaseType != GEOIP_REGION_EDITION) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION]);
+	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
+			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
+		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
 	ipnum = _addr_to_num(name);
@@ -525,7 +569,7 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 		return 0;
 	}
 
-	seek_org = _seek_country(gi, ipnum);
+	seek_org = _seek_record(gi, ipnum);
 	if (seek_org == gi->databaseSegments[0])		
 		return NULL;
 

@@ -1,3 +1,6 @@
+1.2.1
+	* Added support for new GeoIP Region format, including Canadian Provinces
+
 1.2.0
 	* Added support for GeoIP City format revision 1, including dma code and area code
 	* geoiplookup returns results from GeoIP Region, City, ISP and Organization databases

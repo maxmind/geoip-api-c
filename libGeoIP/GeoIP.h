@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* GeoIP.h
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2003 MaxMind LLC
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -60,17 +60,17 @@ typedef enum {
 } GeoIPOptions;
 
 typedef enum {
-	GEOIP_COUNTRY_EDITION   = 1,
-	GEOIP_REGION_EDITION    = 7,
-	GEOIP_CITY_EDITION_REV0 = 6,
-	GEOIP_ORG_EDITION       = 5,
-	GEOIP_ISP_EDITION       = 4,
-	GEOIP_CITY_EDITION_REV1 = 2,
+	GEOIP_COUNTRY_EDITION     = 1,
+	GEOIP_REGION_EDITION_REV0 = 7,
+	GEOIP_CITY_EDITION_REV0   = 6,
+	GEOIP_ORG_EDITION         = 5,
+	GEOIP_ISP_EDITION         = 4,
+	GEOIP_CITY_EDITION_REV1   = 2,
+	GEOIP_REGION_EDITION_REV1 = 3,
 } GeoIPDBTypes;
 
 extern char **GeoIPDBFileName;
 extern const char * GeoIPDBDescription[NUM_DB_TYPES];
-
 extern const char *GeoIPCountryDBFileName;
 extern const char *GeoIPRegionDBFileName;
 extern const char *GeoIPCityDBFileName;
@@ -113,7 +113,7 @@ GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
 
-GEOIP_API unsigned int _seek_country (GeoIP *gi, unsigned long ipnum);
+GEOIP_API unsigned int _seek_record (GeoIP *gi, unsigned long ipnum);
 GEOIP_API unsigned long _addr_to_num (const char *addr);
 GEOIP_API unsigned long _h_addr_to_num (unsigned char *addr);
 

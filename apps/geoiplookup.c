@@ -67,7 +67,8 @@ int main (int argc, char *argv[]) {
 					} else {
 						printf("%s: %s, %s\n", GeoIPDBDescription[i], country_code, country_name);
 					}
-				} else if (GEOIP_REGION_EDITION == i) {
+				} else if (GEOIP_REGION_EDITION_REV0 == i ||
+									 GEOIP_REGION_EDITION_REV1 == i) {
 					region = GeoIP_region_by_name(gi, hostname);
 					if (NULL == region) {
 						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
