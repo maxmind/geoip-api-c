@@ -1,3 +1,6 @@
+	* Added support for GeoIP Proxy Edition
+	* renamed GeoIP_country_id_by_* functions to GeoIP_id_by_*
+
 1.2.1	2003-07-12
 	* Added GeoIP_record_id_by_addr and GeoIP_next_record functions
 	* Added support for new GeoIP Region format, including Canadian Provinces

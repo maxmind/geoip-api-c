@@ -35,7 +35,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES 8
+#define NUM_DB_TYPES 16
 
 typedef struct GeoIPTag {
   FILE *GeoIPDatabase;
@@ -68,7 +68,14 @@ typedef enum {
 	GEOIP_ISP_EDITION         = 4,
 	GEOIP_CITY_EDITION_REV1   = 2,
 	GEOIP_REGION_EDITION_REV1 = 3,
+	GEOIP_PROXY_EDITION       = 8,
 } GeoIPDBTypes;
+
+typedef enum {
+	GEOIP_ANON_PROXY = 1,
+	GEOIP_HTTP_X_FORWARDED_FOR_PROXY = 2,
+	GEOIP_HTTP_CLIENT_IP_PROXY = 3,
+} GeoIPProxyTypes;
 
 extern char **GeoIPDBFileName;
 extern const char * GeoIPDBDescription[NUM_DB_TYPES];
@@ -102,6 +109,8 @@ GEOIP_API const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
 GEOIP_API int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API int GeoIP_country_id_by_name (GeoIP* gi, const char *host);
+GEOIP_API int GeoIP_id_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API int GeoIP_id_by_name (GeoIP* gi, const char *host);
 
 GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
