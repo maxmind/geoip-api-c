@@ -1,3 +1,24 @@
+Maurice Cinquini
+
+*** ifndef WIN32 on netdb.h ? ***
+In GeoIPCity.c you don't "#ifndef WIN32" the netdb.h include,
+but in GeoIP.c you do.  Which one is right?
+
+*** Warnings in GeoIP-1.2.1 before I made changes ***
+GeoIPUpdate.c:73: warning: implicit declaration of function `_setup_dbfilename'
+    I suggest a GeoIP_private.h file to include prototypes for
+    _setup_dbfilename and other private functions also used by GeoIPCity.c
+
+*** Drop the GeoIP_*_by_addr API calls ***
+And now that I think of it, why do you need a seperate
+GeoIP_region_by_addr and GeoIP_region_by_name since
+the later does the work of the former just as efficently.
+For backward compatibility you could #define GeoIP_region_by_addr
+to GeoIP_region_by_name
+
+
+
+
 memory cache should check for updated file
 
 Performance improvements suggested by Jason Linhart
