@@ -332,6 +332,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	char * db_info;
 	char *ipaddress;
 	char *geoipfilename;
+	char *tmpstr;
+	int dbtype;
+	int lookupresult = 1;
+
 	hostlist = gethostbyname(GeoIPUpdateHost);
 
 	if (hostlist == NULL)
@@ -378,7 +382,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	}
 	buf[offset] = 0;
 	offset = 0;
-	char *tmpstr = strstr(buf, "\r\n\r\n") + 4;
+	tmpstr = strstr(buf, "\r\n\r\n") + 4;
 	geoipfilename = _full_path_to(tmpstr);
 	free(buf);
 
@@ -643,7 +647,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 
 	/* get the database type */
-	int dbtype = GeoIP_database_edition(gi);
+	dbtype = GeoIP_database_edition(gi);
 	if (verbose == 1) {
 		printf("data base type is %d \n",dbtype);
 	}
@@ -677,7 +681,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	/* this performs an IP lookup test of a US IP address */
 	if (verbose == 1)
 		GeoIP_printf(f,"lookup  ");
-	int lookupresult = 1;
 	if (dbtype == GEOIP_COUNTRY_EDITION) {
 		/* if data base type is country then call the function
 		 * named GeoIP_country_code_by_addr */
