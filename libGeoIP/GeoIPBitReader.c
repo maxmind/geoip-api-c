@@ -48,9 +48,7 @@ ulong GeoIPBitReader_read(GeoIPBitReader * gibr, short int numBits) {
 		}
 		bit = ((gibr->bits & (1 << (BITS_IN_BYTE - gibr->position - 1))) > 0) ? 1 : 0;
 		bit <<= i;
-		printf("position = %d, bit = %d\n", gibr->position, bit);
 		num += bit;
-		//		gibr->bits >>= 1;
 		++(gibr->position);
 	}
 	return num;
