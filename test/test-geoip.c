@@ -29,88 +29,85 @@ int main () {
 	GeoIP * gi;
 	int failed = 0;
 	int test_num = 1;
-	gi = GeoIP_open("../data/GeoIP.dat", GEOIP_MEMORY_CACHE);
 
-	if (gi == NULL) {
-		fprintf(stderr, "Error opening database\n");
-		exit(1);
+	int i;
+	for (i = 0; i < 2; ++i) {
+		if (0 == i) {
+			gi = GeoIP_open("../data/GeoIP.dat", GEOIP_STANDARD);
+		} else {
+			gi = GeoIP_open("../data/GeoIP.dat", GEOIP_MEMORY_CACHE);
+		}
+
+		if (gi == NULL) {
+			fprintf(stderr, "Error opening database\n");
+			exit(1);
+		}
+
+		/* make sure GeoIP deals with invalid query gracefully */
+		returnedCountry = GeoIP_country_code_by_addr(gi,NULL);
+		if (returnedCountry != NULL) {
+			fprintf(stderr,"Invalid Query test failed, got non NULL, expected NULL\n");
+			failed = 1;
+		}
+
+		returnedCountry = GeoIP_country_code_by_name(gi,NULL);
+		if (returnedCountry != NULL) {
+			fprintf(stderr,"Invalid Query test failed, got non NULL, expected NULL\n");
+			failed = 1;
+		}
+
+		f = fopen("country_test.txt","r");
+
+		while (fscanf(f, "%s", ipAddress) != EOF) {
+			fscanf(f, "%s", expectedCountry);
+			fscanf(f, "%s", expectedCountry3);
+			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			returnedCountry = GeoIP_country_code3_by_addr(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
+				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			returnedCountry = GeoIP_country_code3_by_name(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
+				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			test_num++;
+		}
+
+		f = fopen("country_test2.txt","r");
+		while (fscanf(f, "%s", ipAddress) != EOF) {
+			fscanf(f, "%s", expectedCountry);
+			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			test_num++;
+		}
+
+		f = fopen("country_test_name.txt","r");
+		while (fscanf(f, "%s", ipAddress) != EOF) {
+			fscanf(f, "%s", expectedCountry);
+			returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
+			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
+				failed = 1;
+			}
+			test_num++;
+		}
+
+		fclose(f);
+		GeoIP_delete(gi);
 	}
-
-  /* make sure GeoIP deals with invalid query gracefully */
-  returnedCountry = GeoIP_country_code_by_addr(gi,NULL);
-	if (returnedCountry != NULL) {
-		fprintf(stderr,"Invalid Query test failed, got non NULL, expected NULL\n");
-		failed = 1;
-	}
-/* commented out b/c March 2002 demo database returns 'US'
-  returnedCountry = GeoIP_country_code_by_addr(gi,"");
-	if (strcmp(returnedCountry, "--") != 0) {
-		fprintf(stderr,"Invalid Query test failed, got %s, expected %s\n",returnedCountry,"--");
-		failed = 1;
-	}
-  returnedCountry = GeoIP_country_code_by_addr(gi,"foo");
-	if (strcmp(returnedCountry, "--") != 0) {
-		fprintf(stderr,"Invalid Query test failed, got %s, expected %s\n",returnedCountry,"--");
-		failed = 1;
-	}
-*/
-  returnedCountry = GeoIP_country_code_by_name(gi,NULL);
-	if (returnedCountry != NULL) {
-		fprintf(stderr,"Invalid Query test failed, got non NULL, expected NULL\n");
-		failed = 1;
-	}
-
-  f = fopen("country_test.txt","r");
-
-  while (fscanf(f, "%s", ipAddress) != EOF) {
-    fscanf(f, "%s", expectedCountry);
-    fscanf(f, "%s", expectedCountry3);
-    returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
-			fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-    returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
-			fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-    returnedCountry = GeoIP_country_code3_by_addr(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
-			fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-    returnedCountry = GeoIP_country_code3_by_name(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
-			fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-		test_num++;
-  }
-
-  f = fopen("country_test2.txt","r");
-  while (fscanf(f, "%s", ipAddress) != EOF) {
-    fscanf(f, "%s", expectedCountry);
-    returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
-			fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-		test_num++;
-  }
-
-  f = fopen("country_test_name.txt","r");
-  while (fscanf(f, "%s", ipAddress) != EOF) {
-    fscanf(f, "%s", expectedCountry);
-    returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
-		if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
-			fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
-			failed = 1;
-		}
-		test_num++;
-  }
-
-	fclose(f);
-	GeoIP_delete(gi);
 	return failed;
 }
