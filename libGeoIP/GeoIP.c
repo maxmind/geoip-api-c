@@ -80,7 +80,8 @@ void _setup_dbfilename() {
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1] = GEOIPDATADIR "/GeoIPCity.dat";
 		GeoIPDBFileName[GEOIP_ISP_EDITION] = GEOIPDATADIR "/GeoIPISP.dat";
 		GeoIPDBFileName[GEOIP_ORG_EDITION] = GEOIPDATADIR "/GeoIPOrg.dat";
-		GeoIPDBFileName[GEOIP_PROXY_EDITION] = GEOIPDATADIR "/GeOIPProxy.dat";
+		GeoIPDBFileName[GEOIP_PROXY_EDITION] = GEOIPDATADIR "/GeoIPProxy.dat";
+		GeoIPDBFileName[GEOIP_ASNUM_EDITION] = GEOIPDATADIR "/GeoIPASNum.dat";
 	}
 }
 
@@ -150,7 +151,8 @@ void _setup_segments(GeoIP * gi) {
 			} else if (gi->databaseType == GEOIP_CITY_EDITION_REV0 ||
 								 gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
 								 gi->databaseType == GEOIP_ORG_EDITION ||
-								 gi->databaseType == GEOIP_ISP_EDITION) {
+								 gi->databaseType == GEOIP_ISP_EDITION ||
+								 gi->databaseType == GEOIP_ASNUM_EDITION) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
@@ -386,20 +388,20 @@ int GeoIP_id_by_name (GeoIP* gi, const char *name) {
 
 const char *GeoIP_country_code_by_addr (GeoIP* gi, const char *addr) {
 	int country_id;
-	country_id = GeoIP_country_id_by_addr(gi, addr);
+	country_id = GeoIP_id_by_addr(gi, addr);
 	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
 }
 
 const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr) {
 	int country_id;
-	country_id = GeoIP_country_id_by_addr(gi, addr);
+	country_id = GeoIP_id_by_addr(gi, addr);
 	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
 	return GeoIP_country_code3[country_id];
 }
 
 const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr) {
 	int country_id;
-	country_id = GeoIP_country_id_by_addr(gi, addr);
+	country_id = GeoIP_id_by_addr(gi, addr);
 	return (country_id > 0) ? GeoIP_country_name[country_id] : NULL;
 	return GeoIP_country_name[country_id];
 }
@@ -567,14 +569,15 @@ void GeoIPRegion_delete (GeoIPRegion *gir) {
 	free(gir);
 }
 
-/* GeoIP Organization Edition functions */
-char *_get_org (GeoIP* gi, unsigned long ipnum) {
+/* GeoIP Organization, ISP and AS Number Edition private method */
+char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	int seek_org;
 	char buf[MAX_ORG_RECORD_LENGTH];
 	char * org_buf, * buf_pointer;
 	int record_pointer;
 
-	if (gi->databaseType != GEOIP_ORG_EDITION) {
+	if (gi->databaseType != GEOIP_ORG_EDITION &&
+			gi->databaseType != GEOIP_ASNUM_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
 		return 0;
 	}
@@ -598,16 +601,16 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 	return org_buf;
 }
 
-char *GeoIP_org_by_addr (GeoIP* gi, const char *addr) {
+char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	if (addr == NULL) {
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
-	return _get_org(gi, ipnum);
+	return _get_name(gi, ipnum);
 }
 
-char *GeoIP_org_by_name (GeoIP* gi, const char *name) {
+char *GeoIP_name_by_name (GeoIP* gi, const char *name) {
 	unsigned long ipnum;
 	struct hostent * host;
 	if (name == NULL) {
@@ -621,7 +624,15 @@ char *GeoIP_org_by_name (GeoIP* gi, const char *name) {
 		}
 		ipnum = _h_addr_to_num((unsigned char *) host->h_addr_list[0]);
 	}
-	return _get_org(gi, ipnum);
+	return _get_name(gi, ipnum);
+}
+
+char *GeoIP_org_by_addr (GeoIP* gi, const char *addr) {
+	return GeoIP_name_by_addr(gi, addr);
+}
+
+char *GeoIP_org_by_name (GeoIP* gi, const char *name) {
+	return GeoIP_name_by_name(gi, name);
 }
 
 unsigned char GeoIP_database_edition (GeoIP* gi) {

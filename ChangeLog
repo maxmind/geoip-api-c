@@ -1,3 +1,7 @@
+	* Added support for GeoIP AS Number Edition
+	* renamed GeoIP_org_by_* functions to GeoIP_name_by_* to reduce confusion
+		since these functions are used by GeoIP ISP and GeoIP ASNum as well
+		as GeoIP Organization
 	* Added support for GeoIP Proxy Edition
 	* renamed GeoIP_country_id_by_* functions to GeoIP_id_by_*
 

@@ -8,7 +8,7 @@ INCLUDES =	\
 check_PROGRAMS = test-geoip test-geoip-proxy
 
 #if WITH_CITY
-noinst_PROGRAMS = benchmark test-geoip-region test-geoip-city test-geoip-org
+noinst_PROGRAMS = benchmark test-geoip-region test-geoip-city test-geoip-org test-geoip-asnum
 #else
 #noinst_PROGRAMS = benchmark test-geoip-region
 #endif
@@ -35,6 +35,11 @@ test_geoip_org_SOURCES = test-geoip-org.c
 test_geoip_org_LDFLAGS =
 test_geoip_org_DEPENDENCIES = $(DEPS)
 test_geoip_org_LDADD = $(LDADDS)
+
+test_geoip_asnum_SOURCES = test-geoip-asnum.c
+test_geoip_asnum_LDFLAGS =
+test_geoip_asnum_DEPENDENCIES = $(DEPS)
+test_geoip_asnum_LDADD = $(LDADDS)
 
 if WITH_CITY
 test_geoip_city_SOURCES = test-geoip-city.c

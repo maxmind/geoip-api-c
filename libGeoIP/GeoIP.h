@@ -69,6 +69,7 @@ typedef enum {
 	GEOIP_CITY_EDITION_REV1   = 2,
 	GEOIP_REGION_EDITION_REV1 = 3,
 	GEOIP_PROXY_EDITION       = 8,
+	GEOIP_ASNUM_EDITION       = 9,
 } GeoIPDBTypes;
 
 typedef enum {
@@ -107,8 +108,14 @@ GEOIP_API const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_code3_by_name (GeoIP* gi, const char *host);
 GEOIP_API const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
+
+/* Deprecated - for backwards compatibility only */
 GEOIP_API int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API int GeoIP_country_id_by_name (GeoIP* gi, const char *host);
+GEOIP_API char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
+/* End deprecated */
+
 GEOIP_API int GeoIP_id_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API int GeoIP_id_by_name (GeoIP* gi, const char *host);
 
@@ -116,9 +123,9 @@ GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
 GEOIP_API void GeoIPRegion_delete (GeoIPRegion *gir);
 
-/* Used to query both GeoIP Organization and ISP databases */
-GEOIP_API char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
-GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
+/* Used to query GeoIP Organization, ISP and AS Number databases */
+GEOIP_API char *GeoIP_name_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API char *GeoIP_name_by_name (GeoIP* gi, const char *host);
 
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
