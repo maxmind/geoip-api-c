@@ -48,7 +48,7 @@ typedef enum {
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char *));
 
 /* More generalized update function that works more databases */
-short int GeoIP_update_database_general (char * user_id, char * license_key,char * data_base_type, int verbose, void (*f)( char *));
+short int GeoIP_update_database_general (char * user_id, char * license_key,char * data_base_type, int verbose,char ** client_ipaddr, void (*f)( char *));
 
 #ifdef __cplusplus
 }

@@ -66,6 +66,7 @@ int main (int argc, char *argv[]) {
 	int *the_product_id_strl = NULL;
 	int *the_product_id_stral = NULL;
 	int num_product_ids = 0;
+	char * client_ipaddr = NULL;
 	char c;
 	int err;
 	int i;
@@ -221,8 +222,9 @@ int main (int argc, char *argv[]) {
 		printf("number of product ids %d \n",num_product_ids);
 	}
 	/* update the databases using the user id string, the license key string and the product id for each database */
+	client_ipaddr = NULL;
 	for (i = 0; i < num_product_ids; i++) {
-		err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose, &my_printf);
+		err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
 	}
 
 	if (err == GEOIP_NO_NEW_UPDATES) {
@@ -245,5 +247,9 @@ int main (int argc, char *argv[]) {
 
 	free(the_license_key_str);
 	free(the_user_id_str);
+
+	if (client_ipaddr) {
+		free(client_ipaddr);
+	}
 	exit(0);
 }
