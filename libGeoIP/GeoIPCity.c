@@ -21,6 +21,8 @@
 #include <GeoIP.h>
 #include <GeoIPCity.h>
 #include <netdb.h>
+#include <netinet/in.h> /* For ntohl */
+#include <stdint.h>     /* For uint32_t */
 
 const int FULL_RECORD_LENGTH = 50;
 
@@ -155,7 +157,7 @@ GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 		if (host == NULL) {
 			return 0;
 		}
-		ipnum = _h_addr_to_num((unsigned char *) host->h_addr_list[0]);
+		ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
 	}
 	return _get_record(gi, ipnum);
 }

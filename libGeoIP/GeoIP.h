@@ -51,7 +51,7 @@ typedef struct GeoIPTag {
 
 typedef struct GeoIPRegionTag {
 	char country_code[3];
-	char *region;
+	char region[3];
 } GeoIPRegion;
 
 typedef enum {
@@ -122,6 +122,7 @@ GEOIP_API int GeoIP_id_by_name (GeoIP* gi, const char *host);
 GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
 GEOIP_API void GeoIPRegion_delete (GeoIPRegion *gir);
+GEOIP_API void GeoIP_assign_region_by_inetaddr(GeoIP* gi, unsigned long inetaddr, GeoIPRegion *gir);
 
 /* Used to query GeoIP Organization, ISP and AS Number databases */
 GEOIP_API char *GeoIP_name_by_addr (GeoIP* gi, const char *addr);
@@ -132,7 +133,6 @@ GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
 
 GEOIP_API unsigned int _seek_record (GeoIP *gi, unsigned long ipnum);
 GEOIP_API unsigned long _addr_to_num (const char *addr);
-GEOIP_API unsigned long _h_addr_to_num (unsigned char *addr);
 
 #ifdef BSD
 #define memcpy(dest, src, n) bcopy(src, dest, n)

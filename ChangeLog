@@ -1,3 +1,9 @@
+	! IMPORTANT API Change Changed GeoIPRegion to have region in structure. Saves space and a malloc.
+	  Since GeoIPRegion.region is no longer a pointer but an in-structure
+	  array so test the first byte of region == 0 rather testing if the region
+	  pointer is NULL. (Maurice Cinquini)
+	* Added GeoIP_assign_region_by_inetaddr which doesn't do any mallocs and made all other region APIs go thru it (Maurice Cinquini)
+	* Replaced _h_addr_to_num() with ntohl() and removed _h_addr_to_num() (Maurice Cinquini)
 	* Fixed bug when IP address not found in region rev1 database (Jason Linhart)
 	* Added added extern "C" to GeoIPCity.h fixes problems when included in C++ library
 

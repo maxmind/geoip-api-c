@@ -19,10 +19,24 @@
  */
 
 #include <GeoIP.h>
+#include <netdb.h>  /* For gethostbyname */
+#include <stdint.h> /* For uint32_t */
+#include <netinet/in.h> /* For ntohl */
+#include <assert.h>
+
+unsigned long inetaddr(const char * name)
+{
+	struct hostent * host;
+	struct in_addr inaddr;
+
+	host = gethostbyname(name);       assert(host);
+	inaddr.s_addr = *((uint32_t*)host->h_addr_list[0]);
+	return inaddr.s_addr;
+}
 
 int main () {
 	GeoIP * gi;
-	GeoIPRegion * gir;
+	GeoIPRegion * gir, giRegion;
 
   FILE *f;
   char ipAddress[30];
@@ -55,15 +69,31 @@ int main () {
 		printf("ip = %s\n",ipAddress);
 
 		gir = GeoIP_region_by_name (gi, ipAddress);
-
 		if (gir != NULL) {
 			printf("%s, %s\n",
 						 gir->country_code,
-						 (NULL == gir->region) ? "N/A" : gir->region );
-
-			GeoIPRegion_delete(gir);
-		} else
+						 (!gir->region[0]) ? "N/A" : gir->region );
+		} else {
 			printf("NULL!\n");
+		}
+
+		GeoIP_assign_region_by_inetaddr (gi, inetaddr(ipAddress), &giRegion);
+		if (gir != NULL) {
+			assert(giRegion.country_code[0]);
+			assert(!strcmp(gir->country_code, giRegion.country_code));
+			if ( gir->region[0] ) {
+				assert(giRegion.region[0]);
+				assert(!strcmp(gir->region, giRegion.region));
+			} else {
+				assert(!giRegion.region[0]);
+			}
+		} else {
+			assert(!giRegion.country_code[0]);
+		}
+
+		if ( gir != NULL ) {
+			GeoIPRegion_delete(gir);
+		}
 	}
 
 	GeoIP_delete(gi);
