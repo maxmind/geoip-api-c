@@ -41,7 +41,7 @@ char * _num_to_addr (unsigned long num) {
 					 (int)floor(num/16777216),
 					 ((int)floor(num/65536)) % 256,
 					 ((int)floor(num/256)) % 256,
-					 num % 256);
+					 (int)(num % 256));
 	return addr;
 }
 
@@ -78,7 +78,7 @@ int main (int argc, char *argv[]) {
   GeoIPBitReader *gibr;
 	int databaseType, record, val;
 	int exportType;
-	ulong beginIp = 0, endIp = 0;
+	unsigned long beginIp = 0, endIp = 0;
 
   if (argc < 4) {
     usage();
@@ -108,7 +108,6 @@ int main (int argc, char *argv[]) {
   }
 
 	databaseType = GeoIPBitReader_read(gibr, 8);
-	printf("databaseType = %d\n", databaseType);
 	for (;;) {
 		record = GeoIPBitReader_read(gibr, 5);
 		if (record == EOF_FLAG) {
@@ -127,7 +126,6 @@ int main (int argc, char *argv[]) {
 				full_csv_export(databaseType, beginIp, endIp - 1, val, f);
 			}
 			beginIp = endIp;
-			printf("setting beginIp to %d\n",beginIp);
 		} else {
 			/* record = netmask - 1 */
 			endIp += (1 << (31 - record));
