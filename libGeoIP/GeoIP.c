@@ -97,7 +97,8 @@ void _setup_segments(GeoIP * gi) {
 				for (j = 0; j < SEGMENT_RECORD_LENGTH; j++) {
 					gi->databaseSegments[0] += (buf[j] << (j * 8));
 				}
-				gi->record_length = ORG_RECORD_LENGTH;
+				if (gi->databaseType == GEOIP_ORG_EDITION)
+					gi->record_length = ORG_RECORD_LENGTH;
 			}
 			break;
 		} else {

@@ -1,3 +1,6 @@
+1.1.8	2003-03-04
+	* Fixed bug with city database introduced in 1.1.6
+
 1.1.7	2003-03-04
 	* Fixed bug introduced in 1.1.6 when run in GEOIP_STANDARD mode
 	* Added test to test GEOIP_STANDARD
