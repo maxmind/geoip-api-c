@@ -68,6 +68,7 @@ typedef enum {
 } GeoIPDBTypes;
 
 extern char **GeoIPDBFileName;
+extern const char * GeoIPDBDescription[NUM_DB_TYPES];
 
 extern const char *GeoIPCountryDBFileName;
 extern const char *GeoIPRegionDBFileName;

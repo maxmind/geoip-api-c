@@ -35,7 +35,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	double latitude = 0, longitude = 0;
 
 	if (gi->databaseType != GEOIP_CITY_EDITION) {
-		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_CITY_EDITION);
+		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION]);
 		return 0;
 	}
 
