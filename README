@@ -1,4 +1,4 @@
-				GeoIP 1.3.4
+				GeoIP 1.3.5
 				-----------
 
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
@@ -12,10 +12,14 @@ be found (it used to return '--' or 'N/A'.  Be sure to check the
 return value for NULL, to avoid segmentation faults!
 
 GeoIP is a C library that enables the user to find the country that any
-IP address or hostname originates from.  It uses a file based database
-that is accurate as of March 2003.  This database simply contains IP blocks
+IP address or hostname originates from.  It contains a free GeoIP Country database
+that is updated every month.  This database simply contains IP blocks
 as keys, and countries as values.  This database should be more complete and
-accurate than using reverse DNS lookups. 
+accurate than using reverse DNS lookups.  We also offer a paid database
+that has greater accuracy than the free version, as well as paid databases
+with city level resolution.  For more details see:
+http://www.maxmind.com/app/geoip_country
+http://www.maxmind.com/app/products
 
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
@@ -30,6 +34,33 @@ make install
 
 For more information, including how to purchase database updates, go to
 http://maxmind.com/
+
+MEMORY CACHING AND OTHER OPTIONS
+
+There are three options available:
+
+GEOIP_STANDARD - read database from filesystem, uses least memory.
+
+GEOIP_MEMORY_CACHE - load database into memory, faster performance
+	but uses more memory
+
+GEOIP_CHECK_CACHE - check for updated database.  If database has been updated,
+	reload filehandle and/or memory cache.
+
+EXAMPLES
+
+See
+test/
+     test-geoip.c
+     test-geoip-region.c
+     test-geoip-city.c
+     test-geoip-isp.c
+     test-geoip-org.c
+     test-geoip-netspeed.c
+
+For examples of how to use the API.  The test-geoip.c works with both the free and paid
+GeoIP Country databases.  The other example programs require the paid databases available
+from http://www.maxmind.com/app/products
 
 AUTOMATIC UPDATES
 
