@@ -113,7 +113,7 @@ void _setup_segments(GeoIP * gi) {
 unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
 	int i, j, depth;
 	unsigned int x[2];
-	unsigned char buf[2][MAX_RECORD_LENGTH];
+	unsigned char buf[2 * MAX_RECORD_LENGTH];
 	unsigned char *cache_buf = NULL;
 	unsigned int offset = 0;
 
@@ -129,7 +129,7 @@ unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
 			x[i] = 0;
 			for (j = 0; j < gi->record_length; j++) {
 				if (gi->cache == NULL) {
-					x[i] += (buf[i][j] << (j * 8));
+					x[i] += (buf[gi->record_length * i + j] << (j * 8));
 				} else {
 					x[i] += (cache_buf[i*gi->record_length + j] << (j * 8));
 				}
