@@ -29,7 +29,8 @@
 #endif
 #include <ctype.h>
 
-#define LICENSE_KEY "LicenseKey"
+#define LICENSE_KEY_TOKEN "LicenseKey"
+#define LICENSE_KEY_LENGTH 12
 
 const char *GeoIPConfFile = "GeoIP.conf";
 
@@ -107,15 +108,16 @@ int main (int argc, char *argv[]) {
 			line_index = 0;
 			if (lineptr[0] == '#')
 				continue;
-			a_license_key_str = strstr(lineptr, LICENSE_KEY);
+			a_license_key_str = strstr(lineptr, LICENSE_KEY_TOKEN);
 			if (a_license_key_str != NULL) {
 				a_ptr = a_license_key_str;
-				a_ptr += strlen(LICENSE_KEY) + 1;
+				a_ptr += strlen(LICENSE_KEY_TOKEN) + 1;
 				while (a_ptr[0] == ' ') {
 					a_ptr++;
 				}
-				the_license_key_str = malloc(sizeof(char) * (strlen(a_ptr) + 1));
-				strcpy(the_license_key_str, a_ptr);
+				the_license_key_str = malloc(sizeof(char) * (LICENSE_KEY_LENGTH + 1));
+				strncpy(the_license_key_str, a_ptr, LICENSE_KEY_LENGTH);
+				the_license_key_str[LICENSE_KEY_LENGTH] = '\0';
 				break;
 			}
 		} else {
