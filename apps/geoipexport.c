@@ -18,56 +18,37 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#define _GNU_SOURCE
+#include "GeoIPBitReader.h"
 #include "GeoIP.h"
+#include <math.h>
 
 void usage() {
-  fprintf(stderr,"Usage: geoipexport binary_file csv_file1 csv_file2 ...\n");
+  fprintf(stderr,"Usage: geoipexport bit_file csv_file1 csv_file2 ...\n");
 }
 
-void print_netblock (GeoIP *gi, FILE *f, int ipnum, int depth, int val) {
-  if (gi->databaseType == GEOIP_COUNTRY_EDITION) {
-    fprintf(f, "\"%d\",\"%d\",\"%s\"\r\n", ipnum, ipnum + (1 << (32 - depth)) - 1, GeoIP_country_code[val - gi->databaseSegments[0]]);
-  } else {
-
-  }
+char * _num_to_addr (unsigned long num) {
+	char * addr;
+	asprintf(&addr, "%u.%u.%u.%u",
+					 (int)floor(num/16777216),
+					 ((int)floor(num/65536)) % 256,
+					 ((int)floor(num/256)) % 256,
+					 num % 256);
+	return addr;
 }
 
-/* print out binary tree using depth first search */
-void export_netblock (GeoIP* gi, FILE *f, int ipnum, int depth, int offset) {
-  unsigned char *cache_buf = NULL;
-  int i, j;
-  unsigned int x[2];
+void full_csv_export (int databaseType, int beginIp, int endIp, int val, FILE *out) {
+	fprintf(out, "\"%s\",\"%s\",\"%u\",\"%u\",\"%s\",\"%s\"\n",
+					_num_to_addr(beginIp), _num_to_addr(endIp), beginIp, endIp,
+					GeoIP_country_code[val], GeoIP_country_name[val]);
 
-  printf("offset = %d\n", offset);
-
-  cache_buf = gi->cache + (long)RECORD_LENGTH * 2 * offset;
-  for (i = 0; i < 2; i++) {
-    x[i] = 0;
-    for (j = 0; j < RECORD_LENGTH; j++) {
-      x[i] += (cache_buf[i*RECORD_LENGTH + j] << (j * 8));
-    }
-  }
-  depth++;
-
-  /* go left down tree*/
-  if (x[1] >= gi->databaseSegments[0]) {
-    print_netblock(gi,f,ipnum,depth,x[1]);
-  } else {
-    export_netblock(gi,f,ipnum,depth,x[1]);
-  }
-
-  /* go right down tree */
-  ipnum += (1 << (32 - depth));
-  if (x[0] >= gi->databaseSegments[0]) {
-    print_netblock(gi,f,ipnum,depth,x[0]);
-  } else {
-    export_netblock(gi,f,ipnum,depth,x[0]);
-  }
 }
 
 int main (int argc, char *argv[]) {
   FILE *f;
-  GeoIP *gi;
+  GeoIPBitReader *gibr;
+	int databaseType, record, val;
+	int beginIp = 0, endIp = 0;
 
   if (argc < 3) {
     usage();
@@ -79,12 +60,31 @@ int main (int argc, char *argv[]) {
     fprintf(stderr, "Error opening %s for write\n", argv[2]);
     exit(1);
   }
-  gi = GeoIP_open(argv[1], GEOIP_MEMORY_CACHE);
-  if (gi == NULL) {
-    fprintf(stderr, "Error opening GeoIP Database %s\n", argv[1]);
+
+  gibr = GeoIPBitReader_new(argv[1]);
+  if (gibr == NULL) {
+    fprintf(stderr, "Error opening GeoIP Bit Database %s\n", argv[1]);
     exit(1);
   }
-  export_netblock(gi,f,0,0,0);
+
+	databaseType = GeoIPBitReader_read(gibr, 8);
+	printf("databaseType = %d\n", databaseType);
+	for (;;) {
+		record = GeoIPBitReader_read(gibr, 5);
+		if (record == EOF_FLAG) {
+			break;
+		} else if (record == NOOP_FLAG) {
+			beginIp = endIp;
+		} else if (record == VALUE_FLAG) {
+			/* assume databaseType == country for now */
+			val = GeoIPBitReader_read(gibr, 8);
+			/* printf("country record (%d, %d) -> %d\n", beginIp, endIp-1, val); */
+			full_csv_export(databaseType, beginIp, endIp - 1, val, f);
+		} else {
+			/* record = netmask - 1 */
+			endIp += (1 << (31 - record));
+		}
+	}
+
   return 0;
 }
-

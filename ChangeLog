@@ -1,4 +1,7 @@
 1.1.2
+	* Added geoipexport, program to export bit binary file to
+		binary tree format and csv format
+	* Split update code into separate library, GeoIPUpdate.la
 	* Allow passing NULL callback to GeoIP_update_database function
 		(Sean Chittenden)
 	* Added geoipexport program, exports to CSV file
