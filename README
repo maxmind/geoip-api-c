@@ -24,12 +24,24 @@ make check
 make install
 
 For more information, including how to purchase database updates, goto
-http://maxmind.com/geoip/
+http://maxmind.com/
 
 AUTOMATIC UPDATES
 
-If you are a GeoIP subscriber, you can update your database automatically
-each month.  To perform the update, simply run:
+MaxMind offers a service where you can have your database updated
+automically each month.
+
+1. In order to have the database updated every month automatically, you can
+purchase a subscription to the updates available for $150/year from here:
+http://www.maxmind.com/app/country
+
+2. Once you subscribe, you will be given a license key to be placed
+in your GeoIP.conf file.  Typically GeoIP.conf is located in
+/usr/local/etc/GeoIP.conf or /etc/GeoIP.conf
+
+
+To perform the update, simply 
+run:
 
 geoipupdate
 
