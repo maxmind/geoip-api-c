@@ -1,3 +1,4 @@
+	* inet_addr patch for 64 bit systems (Thomas Steudten)
 	* Added Support for automated downloads of GeoIP Region, City, ISP and Organization databases (Frank Mather)
 	* INADDR_NONE Patch for Solaris 9 (John Young)
 
