@@ -160,7 +160,8 @@ void _setup_segments(GeoIP * gi) {
 				for (j = 0; j < SEGMENT_RECORD_LENGTH; j++) {
 					gi->databaseSegments[0] += (buf[j] << (j * 8));
 				}
-				if (gi->databaseType == GEOIP_ORG_EDITION)
+				if (gi->databaseType == GEOIP_ORG_EDITION ||
+						gi->databaseType == GEOIP_ISP_EDITION)
 					gi->record_length = ORG_RECORD_LENGTH;
 			}
 			break;
@@ -578,6 +579,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	int record_pointer;
 
 	if (gi->databaseType != GEOIP_ORG_EDITION &&
+			gi->databaseType != GEOIP_ISP_EDITION &&
 			gi->databaseType != GEOIP_ASNUM_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
 		return 0;

@@ -1,3 +1,4 @@
+	* Added support for GeoIP ISP Edition identifier
 	* Fixed bug in GeoIP_database_info (Jason Linhart)
 	* Added support for GeoIP AS Number Edition
 	! renamed GeoIP_org_by_* functions to GeoIP_name_by_* to reduce confusion
