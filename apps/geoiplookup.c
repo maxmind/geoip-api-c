@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* geoiplookup.c
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2004 MaxMind LLC
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -32,6 +32,7 @@ int main (int argc, char *argv[]) {
 	GeoIPRegion * region;
 	GeoIPRecord * gir;
 	const char * org;
+	int netspeed;
 	char * db_info;
 	GeoIP * gi;
 	int i;
@@ -97,6 +98,17 @@ int main (int argc, char *argv[]) {
 						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 					} else {
 						printf("%s: %s\n", GeoIPDBDescription[i], org);
+					}
+				} else if (GEOIP_NETSPEED_EDITION == i) {
+					netspeed = GeoIP_id_by_name (gi, hostname);
+					if (netspeed == GEOIP_UNKNOWN_SPEED) {
+						printf("%s: Unknown\n", GeoIPDBDescription[i]);
+					} else if (netspeed == GEOIP_DIALUP_SPEED) {
+						printf("%s: Dialup\n", GeoIPDBDescription[i]);
+					} else if (netspeed == GEOIP_CABLEDSL_SPEED) {
+						printf("%s: Cable/DSL\n", GeoIPDBDescription[i]);
+					} else if (netspeed == GEOIP_CORPORATE_SPEED) {
+						printf("%s: Corporate\n", GeoIPDBDescription[i]);
 					}
 				}
 			}
