@@ -587,7 +587,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	/* uncompress gzip file */
 	offset = 0;
 	gz_fh = gzopen(file_path_gz, "rb");
-	free(file_path_gz);
 	for (;;) {
 		int amt;
 		uncompr = realloc(uncompr, offset+block_size);
@@ -605,6 +604,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	}
 	gzclose(gz_fh);
 	unlink(file_path_gz);
+	free(file_path_gz);
 
 	if (verbose == 1)
 		GeoIP_printf(f,"Done\n");
