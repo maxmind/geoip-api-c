@@ -37,6 +37,10 @@
 #include <stdint.h>     /* For uint32_t */
 #endif
 
+#ifndef        INADDR_NONE
+#define        INADDR_NONE     -1
+#endif
+
 #define COUNTRY_BEGIN 16776960
 #define STATE_BEGIN_REV0 16700000
 #define STATE_BEGIN_REV1 16000000
