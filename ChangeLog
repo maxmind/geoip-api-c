@@ -1,6 +1,7 @@
+1.3.6	2004-8-8
 	* Check for gethostbyname_r support in configure (Mac OS X doesn't support gethostbyname_r)
 	* Made GeoIP City code thread safe
-	* Fixed bug with geoipupdate read in product ids
+	* Fixed bug with geoipupdate reading in product ids
 	* Added support for GeoIP Netspeed lookup
 	* Fix memleak in lookupaddress (Ludwig Nussel/SUSE)
 	* Add prototype for _full_path_to to make 64bit clean
@@ -8,7 +9,7 @@
 	* Add return values to test programs (Ludwig Nussel/SUSE)
 
 1.3.5	2004-7-5
-	* Added more documenation to README file
+	* Added more documentation to README file
 	* Made GEOIP_CHECK_CACHE work with GEOIP_STANDARD mode - reloads filehandle
 		in case file changes.
 	* Added GeoIP_country_code_by_ipnum and GeoIP_id_by_ipnum to use
