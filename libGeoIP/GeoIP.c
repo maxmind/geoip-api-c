@@ -386,14 +386,11 @@ int GeoIP_id_by_name (GeoIP* gi, const char *name) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
-	ipnum = _addr_to_num(name);
-	if (ipnum == 0) {
-		host = gethostbyname(name);
-		if (host == NULL) {
-			return 0;
-		}
-		ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
+	host = gethostbyname(name);
+	if (host == NULL) {
+		return 0;
 	}
+	ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
 	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
@@ -567,14 +564,11 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
-	ipnum = _addr_to_num(name);
-	if (ipnum == 0) {
-		host = gethostbyname(name);
-		if (host == NULL) {
-			return 0;
-		}
-		ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
+	host = gethostbyname(name);
+	if (host == NULL) {
+		return 0;
 	}
+	ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
 	return _get_region(gi, ipnum);
 }
 
@@ -630,14 +624,11 @@ char *GeoIP_name_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	ipnum = _addr_to_num(name);
-	if (ipnum == 0) {
-		host = gethostbyname(name);
-		if (host == NULL) {
-			return 0;
-		}
-		ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
+	host = gethostbyname(name);
+	if (host == NULL) {
+		return 0;
 	}
+	ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
 	return _get_name(gi, ipnum);
 }
 

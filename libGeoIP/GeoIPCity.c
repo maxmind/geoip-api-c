@@ -151,14 +151,11 @@ GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	ipnum = _addr_to_num(name);
-	if (ipnum == 0) {
-		host = gethostbyname(name);
-		if (host == NULL) {
-			return 0;
-		}
-		ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
+	host = gethostbyname(name);
+	if (host == NULL) {
+		return 0;
 	}
+	ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
 	return _get_record(gi, ipnum);
 }
 
