@@ -149,13 +149,14 @@ int main (int argc, char *argv[]) {
 							 * alloc length of the string then realloc the string and
 							 * increase the alloc length by 20 */
 							the_product_id_stral[num_product_ids] = the_product_id_stral[num_product_ids] + 20;
-							the_product_id_str[num_product_ids] = (char *) realloc(the_product_id_str[num_product_ids],the_product_id_stral[num_product_ids]);
+							the_product_id_str[num_product_ids] = (char *) realloc(the_product_id_str[num_product_ids],the_product_id_stral[num_product_ids]+4);
 						}
 						/* read the product id from the line in the config file */
 						the_product_id_str[num_product_ids][the_product_id_strl[num_product_ids]] = a_ptr[0];
 						the_product_id_strl[num_product_ids]++;
 						a_ptr++;
 					}
+				        the_product_id_str[num_product_ids][the_product_id_strl[num_product_ids]] = 0;
 					while ((a_ptr[0] == ' ') & (a_ptr[0] != '\0')) {
 						a_ptr++;//skip spaces
 					}
