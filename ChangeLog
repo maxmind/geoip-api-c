@@ -1,3 +1,9 @@
+1.3.8	2004-11-7
+	* Updated geoipupdate to report invalid userID and productID errors
+	* Check if gethostbyname_r is version that returns int or is other version
+		- should fix compile errors on Solaris and FreeBSD
+	* Updated URL to get license key, userId, and product Ids in conf/GeoIP.conf.default
+	* Updated test case, removed www.asahi.com
 	* Added support for GEOIP_INDEX_CACHE - which just caches
 	the most frequently access index portion of the database, resulting
 	in faster lookups than GEOIP_STANDARD, but less memory usage than
