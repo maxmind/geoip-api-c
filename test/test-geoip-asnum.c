@@ -41,7 +41,7 @@ int main (int argc, char* argv[]) {
 	f = fopen("asnum_test.txt","r");
 
 	if (f == NULL) {
-		fprintf(stderr, "Error opening org_test.txt\n");
+		fprintf(stderr, "Error opening asnum_test.txt\n");
 		exit(1);
 	}
 
