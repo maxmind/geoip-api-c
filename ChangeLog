@@ -1,6 +1,5 @@
+1.3.7	2004-10-5
 	* Updated test case, removed www.bundesregierung.de added www.asahi.com
-	* Protect against segfaults in case of corrupted database in
-		Binary Tree Traversal (Maurice Cinquini/Speedera)
 
 1.3.6	2004-8-8
 	* Check for gethostbyname_r support in configure (Mac OS X doesn't support gethostbyname_r)
