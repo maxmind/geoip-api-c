@@ -1,4 +1,4 @@
-				GeoIP 1.1.0
+				GeoIP 1.1.9
 				-----------
 
 IMPORTANT API Change for 1.1.x users - as of GeoIP 1.1.0 the
@@ -8,7 +8,7 @@ return value for NULL, to avoid segmentation faults!
 
 GeoIP is a C library that enables the user to find the country that any
 IP address or hostname originates from.  It uses a file based database
-that is accurate as of March 2002.  This database simply contains IP blocks
+that is accurate as of March 2003.  This database simply contains IP blocks
 as keys, and countries as values.  This database should be more complete and
 accurate than using reverse DNS lookups. 
 

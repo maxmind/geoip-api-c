@@ -1,4 +1,4 @@
-1.1.9
+1.1.9	2003-03-10
 	* merged windows patch into main code base (Kenneth R. Robinette)
 	* Changed const int to #define for windows compatibility
 
