@@ -46,7 +46,7 @@ int main (int argc, char* argv[]) {
 	}
 
 	while (fscanf(f, "%s", host) != EOF) {
-		org = GeoIP_org_by_name (gi, (const char *)host);
+		org = GeoIP_name_by_name (gi, (const char *)host);
 
 		if (org != NULL) {
                   printf("%s\t%s\n", host, org);
