@@ -23,6 +23,10 @@
 
 #include "GeoIP.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct GeoIPRecordTag {
 	char *country_code;
 	char *country_code3;
@@ -45,5 +49,9 @@ int GeoIP_init_record_iter (GeoIP* gi);
 int GeoIP_next_record (GeoIP* gi, GeoIPRecord **gir, int *record_iter);
 
 void GeoIPRecord_delete (GeoIPRecord *gir);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GEOIPCITY_H */
