@@ -1,4 +1,5 @@
-1.1.2
+1.1.2	2002-12-16
+	* Added support for postal codes
 	* Added geoipexport, program to export bit binary file to
 		binary tree format and csv format
 	* Split update code into separate library, GeoIPUpdate.la
