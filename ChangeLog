@@ -1,3 +1,4 @@
+1.3.3	2004-6-2
 	* Added support for NetSpeed lookup to geoiplookup
 	* inet_addr patch for 64 bit systems (Thomas Steudten)
 	* Added Support for automated downloads of GeoIP Region, City, ISP and Organization databases (Frank Mather)
