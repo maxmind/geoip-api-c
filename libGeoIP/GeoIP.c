@@ -135,13 +135,11 @@ unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
 		}
 
 		if (ipnum & (1 << depth)) {
-			printf("going right %d, %d\n", x[1],  gi->databaseSegments[0]);
 			if (x[1] >= gi->databaseSegments[0]) {
 				return x[1];
 			}
 			offset = x[1];
 		} else {
-			printf("going left %d\n",x[0]);
 			if (x[0] >= gi->databaseSegments[0]) {
 				return x[0];
 			}
