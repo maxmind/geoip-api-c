@@ -1,3 +1,6 @@
+1.1.5
+	* Added support for GeoIP Organization database
+
 1.1.4	2002-12-30
 	* Cast number to int in _num_to_addr in geoipexport (Ralf S. Engelschall)
 	* Removed printf debug statements from geoipexport

@@ -30,7 +30,8 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	unsigned char *begin_record_buf = NULL;
 	GeoIPRecord * record;
 	int str_length = 0;
-	int j, seek_country;
+	int j;
+        unsigned int seek_country;
 	double latitude = 0, longitude = 0;
 
 	seek_country = _seek_country(gi, ipnum);

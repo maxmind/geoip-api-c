@@ -32,6 +32,7 @@ const int COUNTRY_BEGIN = 16776960;
 const int STATE_BEGIN   = 16700000;
 const int STRUCTURE_INFO_MAX_SIZE = 20;
 const int DATABASE_INFO_MAX_SIZE = 100;
+const int MAX_ORG_RECORD_LENGTH = 300;
 
 #define CHECK_ERR(err, msg) { \
 		if (err != Z_OK) { \
@@ -86,8 +87,9 @@ void _setup_segments(GeoIP * gi) {
 				/* Region Edition */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = STATE_BEGIN;
-			} else if (gi->databaseType == GEOIP_CITY_EDITION) {
-				/* City Edition has two segments, read offset of second segment */
+			} else if (gi->databaseType == GEOIP_CITY_EDITION ||
+								 gi->databaseType == GEOIP_ORG_EDITION) {
+				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
 				fread(buf, RECORD_LENGTH, 1, gi->GeoIPDatabase);
@@ -106,12 +108,12 @@ void _setup_segments(GeoIP * gi) {
 	}
 }
 
-int _seek_country (GeoIP *gi, unsigned long ipnum) {
+unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
 	int i, j, depth;
 	unsigned int x[2];
 	unsigned char buf[2][RECORD_LENGTH];
 	unsigned char *cache_buf = NULL;
-	int offset = 0;
+	unsigned int offset = 0;
 
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
@@ -133,11 +135,13 @@ int _seek_country (GeoIP *gi, unsigned long ipnum) {
 		}
 
 		if (ipnum & (1 << depth)) {
+			printf("going right %d, %d\n", x[1],  gi->databaseSegments[0]);
 			if (x[1] >= gi->databaseSegments[0]) {
 				return x[1];
 			}
 			offset = x[1];
 		} else {
+			printf("going left %d\n",x[0]);
 			if (x[0] >= gi->databaseSegments[0]) {
 				return x[0];
 			}
@@ -372,7 +376,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 /* GeoIP Region Edition functions */
 GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 	GeoIPRegion * region;
-	int seek_region;
+	unsigned int seek_region;
 
 	region = malloc(sizeof(GeoIPRegion));
 	memset(region, 0, sizeof(GeoIPRegion));
@@ -423,6 +427,59 @@ void GeoIPRegion_delete (GeoIPRegion *gir) {
 	if (gir->region != NULL)
 			free(gir->region);
 	free(gir);
+}
+
+/* GeoIP Organization Edition functions */
+char *_get_org (GeoIP* gi, unsigned long ipnum) {
+	int seek_org;
+	char buf[MAX_ORG_RECORD_LENGTH];
+	char * org_buf, * buf_pointer;
+	int record_pointer;
+	seek_org = _seek_country(gi, ipnum);
+	if (seek_org == gi->databaseSegments[0])		
+		return NULL;
+
+	printf("seek_org = %d\n", seek_org - gi->databaseSegments[0]);
+
+	record_pointer = seek_org + (2 * RECORD_LENGTH - 1) * gi->databaseSegments[0];
+
+	if (gi->cache == NULL) {
+		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
+		fread(buf, sizeof(char), MAX_ORG_RECORD_LENGTH, gi->GeoIPDatabase);
+		org_buf = malloc(sizeof(char) * (strlen(buf)+1));
+		strcpy(org_buf, buf);
+	} else {
+		buf_pointer = gi->cache + (long)record_pointer;
+		org_buf = malloc(sizeof(char) * (strlen(buf_pointer)+1));
+		strcpy(org_buf, buf_pointer);
+	}
+	return org_buf;
+}
+
+char *GeoIP_org_by_addr (GeoIP* gi, const char *addr) {
+	unsigned long ipnum;
+	if (addr == NULL) {
+		return 0;
+	}
+	ipnum = _addr_to_num(addr);
+	return _get_org(gi, ipnum);
+}
+
+char *GeoIP_org_by_name (GeoIP* gi, const char *name) {
+	unsigned long ipnum;
+	struct hostent * host;
+	if (name == NULL) {
+		return 0;
+	}
+	ipnum = _addr_to_num(name);
+	if (ipnum == 0) {
+		host = gethostbyname(name);
+		if (host == NULL) {
+			return 0;
+		}
+		ipnum = _h_addr_to_num((unsigned char *) host->h_addr_list[0]);
+	}
+	return _get_org(gi, ipnum);
 }
 
 unsigned char GeoIP_database_edition (GeoIP* gi) {
