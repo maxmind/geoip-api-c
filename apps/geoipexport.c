@@ -76,8 +76,8 @@ void csv_export2 (int databaseType, int beginIp, int endIp, int val, FILE *out) 
 int main (int argc, char *argv[]) {
   FILE *f;
   GeoIPBitReader *gibr;
-	int databaseType, record, val;
-	int exportType;
+	int databaseType, record, val = 0;
+	int exportType = 0;
 	unsigned long beginIp = 0, endIp = 0;
 
   if (argc < 4) {
