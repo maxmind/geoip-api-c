@@ -42,6 +42,8 @@ typedef enum {
 	GEOIP_SANITY_INFO_FAIL        = -21, /* Sanity check database_info string failed */
 	GEOIP_SANITY_LOOKUP_FAIL      = -22, /* Sanity check ip address lookup failed */
 	GEOIP_RENAME_ERR              = -23, /* Rename error while installing db, check errno */
+	GEOIP_USER_ID_INVALID_ERR     = -24, /* Invalid userID */
+	GEOIP_PRODUCT_ID_INVALID_ERR  = -25  /* Invalid product ID or subscription expired */
 } GeoIPUpdateCode;
 
 /* Original Update Function, just for MaxMind GeoIP Country database */

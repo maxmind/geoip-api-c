@@ -547,6 +547,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			printf("no new updates\n");
 		}
 		return GEOIP_NO_NEW_UPDATES;
+	} else if (strstr(compr, "Invalid UserId") != NULL){
+		free(buf);
+		return GEOIP_USER_ID_INVALID_ERR;
+	} else if (strstr(compr, "Invalid product ID or subscription expired") != NULL){
+		free(buf);
+		return GEOIP_PRODUCT_ID_INVALID_ERR;
 	}
 
 	if (verbose == 1)
