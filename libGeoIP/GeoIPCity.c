@@ -86,13 +86,13 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	record_buf += (str_length + 1);
 
 	/* get latitude */
-	for (j = 0; j < 3; j++)
+	for (j = 0; j < 3; ++j)
 		latitude += (record_buf[j] << (j * 8));
 	record->latitude = latitude/10000 - 180;
 	record_buf += 3;
 
 	/* get longitude */
-	for (j = 0; j < 3; j++)
+	for (j = 0; j < 3; ++j)
 		longitude += (record_buf[j] << (j * 8));
 	record->longitude = longitude/10000 - 180;
 
