@@ -1,4 +1,4 @@
-				GeoIP 1.3.3
+				GeoIP 1.3.4
 				-----------
 
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
@@ -34,34 +34,9 @@ http://maxmind.com/
 AUTOMATIC UPDATES
 
 MaxMind offers a service where you can have your database updated
-automically each month.
+automically each month.  For more details see:
 
-1. In order to have the database updated every month automatically, you can
-purchase a subscription to the updates available for $150/year from here:
-http://www.maxmind.com/app/country
-
-2. Once you subscribe, you will be given a license key to be placed
-in your GeoIP.conf file.  Typically GeoIP.conf is located in
-/usr/local/etc/GeoIP.conf or /etc/GeoIP.conf
-
-
-To perform the update, simply 
-run:
-
-geoipupdate
-
-To fully automate this process, use a crontab file like:
-
-# top of crontab
-MAILTO=your@email.com
-
-33 3 1 * * /usr/local/bin/geoipupdate -v
-# end of crontab
-
-This crontab file will run at the first of each month, and it will email
-you the results.  To apply the crontab file run
-
-$ crontab cronfile
+http://www.maxmind.com/app/license_key
 
 TROUBLESHOOTING
 
