@@ -45,6 +45,7 @@ fi
 
 AC_OUTPUT([
 Makefile
+GeoIP.spec
 libGeoIP/Makefile
 apps/Makefile
 conf/Makefile

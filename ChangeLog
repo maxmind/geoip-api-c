@@ -1,3 +1,4 @@
+	* Added spec for building RPMs (Ryan Weaver)
 	* Added support for 4byte records for Organization database
 	* Changed Taiwan, Province of China to Taiwan
 
