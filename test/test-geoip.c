@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* test-geoip.c
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2003 MaxMind LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
