@@ -21,6 +21,14 @@ This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
 visitors, for credit card fraud detection, and for software export controls.
 
+%package devel
+Summary: GeoIP headers, libraries
+Group: Development/Libraries
+Requires: %name = %{version}
+
+%description devel
+This package contain the devel files for GeoIP.
+
 %prep
 %setup -q
 
@@ -48,14 +56,19 @@ chmod 755 $RPM_BUILD_ROOT/%{_libdir}/*
 %attr(0755,root,root) %{_libdir}/*.so.*.*
 %{_bindir}/*
 %{_sysconfdir}/*
-%{_includedir}/*
 %dir %{_datadir}/GeoIP
 %{_datadir}/GeoIP/*
-%{_libdir}/*.a
 %{_libdir}/*.so
 %{_mandir}/*/*
 
+%files devel
+%{_includedir}/*
+%{_libdir}/*.a
+%{_libdir}/*.la
+
 %changelog
+* Mon Sep  8 2003 Dr. Peter Bieringer
+- Fix for RHL 9, created a new devel package definition.
+
 * Thu Feb 27 2003 Ryan Weaver <ryanw@falsehope.com>
 - Initial RPM Build
-
