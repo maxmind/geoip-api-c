@@ -31,6 +31,7 @@
 #include "time.h"
 #include <netdb.h>
 #include <stdio.h>
+#include <unistd.h>
 
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";

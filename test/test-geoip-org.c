@@ -54,4 +54,5 @@ int main (int argc, char* argv[]) {
 	}
 
 	GeoIP_delete(gi);
+	return 0;
 }
