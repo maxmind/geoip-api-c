@@ -180,29 +180,50 @@ void _setup_segments(GeoIP * gi) {
 }
 
 unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
-	int i, j, depth;
+	int depth;
 	unsigned int x[2];
-	unsigned char buf[2 * MAX_RECORD_LENGTH];
-	unsigned char *cache_buf = NULL;
+	unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
+	const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
 	unsigned int offset = 0;
 
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
 		if (gi->cache == NULL) {
 			fseek(gi->GeoIPDatabase, (long)gi->record_length * 2 * offset, SEEK_SET);
-			fread(buf,gi->record_length,2,gi->GeoIPDatabase);
+			fread(stack_buffer,gi->record_length,2,gi->GeoIPDatabase);
 		} else {
-			cache_buf = gi->cache + (long)gi->record_length * 2 *offset;
+			buf = gi->cache + (long)gi->record_length * 2 *offset;
 		}
-		for (i = 0; i < 2; i++) {
-			x[i] = 0;
-			for (j = 0; j < gi->record_length; j++) {
-				if (gi->cache == NULL) {
-					x[i] += (buf[gi->record_length * i + j] << (j * 8));
-				} else {
-					x[i] += (cache_buf[i*gi->record_length + j] << (j * 8));
-				}
-			}
+
+		if ( gi->record_length == 3 ) {
+			/* Most common case is completely unrolled and uses constant addresses. */
+			x[0]= (buf[3*0 + 0] << (0*8))
+				+ (buf[3*0 + 1] << (1*8))
+				+ (buf[3*0 + 2] << (2*8));
+			x[1]= (buf[3*1 + 0] << (0*8))
+				+ (buf[3*1 + 1] << (1*8))
+				+ (buf[3*1 + 2] << (2*8));
+		} else {
+			/* General case is partially unrolled. */
+			unsigned int n;
+			int j;
+			const unsigned char * p = &buf[2*gi->record_length];
+
+			n = 0;
+			j = gi->record_length;
+			do {
+				n <<= 8;
+				n += *(--p);
+			} while ( --j );
+			x[0] = n;
+
+			n = 0;
+			j = gi->record_length;
+			do {
+				n <<= 8;
+				n += *(--p);
+			} while ( --j );
+			x[1] = n;
 		}
 
 		if (ipnum & (1 << depth)) {
