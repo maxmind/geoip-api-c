@@ -32,7 +32,7 @@ GeoIPBitReader * GeoIPBitReader_new(const char * filename) {
 }
 
 unsigned long GeoIPBitReader_read(GeoIPBitReader * gibr, short int numBits) {
-	ulong num = 0;
+	unsigned long num = 0;
 	int i, bit;
 	int bytes_read;
 
