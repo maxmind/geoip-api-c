@@ -1,3 +1,7 @@
+1.1.9
+	* merged windows patch into main code base (Kenneth R. Robinette)
+	* Changed const int to #define for windows compatibility
+
 1.1.8	2003-03-04
 	* Fixed bug with city database introduced in 1.1.6
 

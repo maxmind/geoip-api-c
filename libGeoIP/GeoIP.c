@@ -23,16 +23,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef WIN32
 #include <netdb.h>
+#endif
 #include <assert.h>
 #include <sys/types.h> /* for fstat */
 #include <sys/stat.h>	/* for fstat */
+#ifdef WIN32
+#include <windows.h>
+#endif
 
-const int COUNTRY_BEGIN = 16776960;
-const int STATE_BEGIN   = 16700000;
-const int STRUCTURE_INFO_MAX_SIZE = 20;
-const int DATABASE_INFO_MAX_SIZE = 100;
-const int MAX_ORG_RECORD_LENGTH = 300;
+#define COUNTRY_BEGIN 16776960
+#define STATE_BEGIN 16700000
+#define STRUCTURE_INFO_MAX_SIZE 20
+#define DATABASE_INFO_MAX_SIZE 100
+#define MAX_ORG_RECORD_LENGTH 300
 
 #define CHECK_ERR(err, msg) { \
 		if (err != Z_OK) { \
@@ -49,7 +54,11 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 "Korea, Democratic People's Republic of","Korea, Republic of","Kuwait","Cayman Islands","Kazakhstan","Lao People's Democratic Republic","Lebanon","Saint Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania","Luxembourg","Latvia","Libyan Arab Jamahiriya","Morocco","Monaco","Moldova, Republic of","Madagascar","Marshall Islands","Macedonia, the Former Yugoslav Republic of","Mali","Myanmar","Mongolia","Macao","Northern Mariana Islands","Martinique","Mauritania","Montserrat","Malta","Mauritius","Maldives","Malawi","Mexico","Malaysia","Mozambique","Namibia","New Caledonia","Niger","Norfolk Island","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","Niue","New Zealand","Oman","Panama","Peru","French Polynesia","Papua New Guinea","Philippines","Pakistan","Poland","Saint Pierre and Miquelon","Pitcairn","Puerto Rico","Palestinian Territory, Occupied","Portugal","Palau","Paraguay","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saudi Arabia","Solomon Islands","Seychelles","Sudan","Sweden","Singapore","Saint Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname","Sao Tome and Principe","El Salvador","Syrian Arab Republic","Swaziland","Turks and Caicos Islands","Chad","French Southern Territories","Togo","Thailand","Tajikistan","Tokelau","Turkmenistan","Tunisia","Tonga","East Timor","Turkey","Trinidad and Tobago","Tuvalu","Taiwan","Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela","Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Yugoslavia","South Africa","Zambia","Zaire","Zimbabwe",
 "Anonymous Proxy","Satellite Provider","Other"};
 
+#ifdef WIN32
+const char *GeoIPDBFileName = "\\windows\\system32\\GeoIP.dat";
+#else
 const char *GeoIPDBFileName = GEOIPDATADIR "/GeoIP.dat";
+#endif
 
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;

@@ -71,31 +71,37 @@ extern const char GeoIP_country_code[247][3];
 extern const char GeoIP_country_code3[247][4];
 extern const char * GeoIP_country_name[247];
 
-GeoIP* GeoIP_new(int flags);
-GeoIP* GeoIP_open(const char * filename, int flags);
-void GeoIP_delete(GeoIP* gi);
-const char *GeoIP_country_code_by_addr (GeoIP* gi, const char *addr);
-const char *GeoIP_country_code_by_name (GeoIP* gi, const char *host);
-const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr);
-const char *GeoIP_country_code3_by_name (GeoIP* gi, const char *host);
-const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr);
-const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
-int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
-int GeoIP_country_id_by_name (GeoIP* gi, const char *host);
+#ifdef DLL
+#define GEOIP_API __declspec(dllexport)
+#else
+#define GEOIP_API
+#endif  /* DLL */
 
-GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
-GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
-void GeoIPRegion_delete (GeoIPRegion *gir);
+GEOIP_API GeoIP* GeoIP_new(int flags);
+GEOIP_API GeoIP* GeoIP_open(const char * filename, int flags);
+GEOIP_API void GeoIP_delete(GeoIP* gi);
+GEOIP_API const char *GeoIP_country_code_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_code_by_name (GeoIP* gi, const char *host);
+GEOIP_API const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_code3_by_name (GeoIP* gi, const char *host);
+GEOIP_API const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
+GEOIP_API int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API int GeoIP_country_id_by_name (GeoIP* gi, const char *host);
 
-char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
-char *GeoIP_org_by_name (GeoIP* gi, const char *host);
+GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
+GEOIP_API void GeoIPRegion_delete (GeoIPRegion *gir);
 
-char *GeoIP_database_info (GeoIP* gi);
-unsigned char GeoIP_database_edition (GeoIP* gi);
+GEOIP_API char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
+GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
 
-unsigned int _seek_country (GeoIP *gi, unsigned long ipnum);
-unsigned long _addr_to_num (const char *addr);
-unsigned long _h_addr_to_num (unsigned char *addr);
+GEOIP_API char *GeoIP_database_info (GeoIP* gi);
+GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
+
+GEOIP_API unsigned int _seek_country (GeoIP *gi, unsigned long ipnum);
+GEOIP_API unsigned long _addr_to_num (const char *addr);
+GEOIP_API unsigned long _h_addr_to_num (unsigned char *addr);
 
 #ifdef BSD
 #define memcpy(dest, src, n) bcopy(src, dest, n)

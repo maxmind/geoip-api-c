@@ -1,3 +1,16 @@
+=======================================================
+
+Environmental variables:
+
+1. GeoIPDBFileName is hardcoded to "\\windows\\system32\\GeoIP.dat" on
+windows in GeoIP.c
+2. #ifdef DLL is used to determine whether you want to have a DLL built
+in GeoIP.h
+
+You may want to change these depending on your system configuration
+and compiler.
+
+=======================================================
 Thanks to Chris Gibbs for supplying these instructions.
 
 The GeoIP C library should work under windows.  Note that it requires the zlib
@@ -27,3 +40,5 @@ Building GeoIP as a DLL
 
 Stanislaw Pusep has contributed a patch for building GeoIP as a DLL.
 You can find the patch in GeoIPWinDLL.patch
+
+Note a modified version of this patch is now merged into the main code.
