@@ -34,11 +34,16 @@ GeoIPBitReader * GeoIPBitReader_new(const char * filename) {
 ulong GeoIPBitReader_read(GeoIPBitReader * gibr, short int numBits) {
 	ulong num = 0;
 	int i, bit;
+	int bytes_read;
 
 	for (i = 0; i < numBits; ++i) {
 		if (BITS_IN_BYTE == gibr->position) {
 			/* read in next byte */
-			fread(&gibr->bits, 1, 1, gibr->GeoIPBitFH);
+			bytes_read = fread(&gibr->bits, 1, 1, gibr->GeoIPBitFH);
+			if (bytes_read == 0) {
+				fprintf(stderr, "Warning: EOF reached\n");
+				gibr->bits = 0;
+			}
 			gibr->position = 0;
 		}
 		bit = ((gibr->bits & (1 << (BITS_IN_BYTE - gibr->position - 1))) > 0) ? 1 : 0;
