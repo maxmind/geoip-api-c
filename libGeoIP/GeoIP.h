@@ -70,7 +70,7 @@ extern const char *GeoIPDBFileName;
 extern const char GeoIP_country_code[247][3];
 extern const char GeoIP_country_code3[247][4];
 extern const char * GeoIP_country_name[247];
-extern const char * GeoIP_country_continent[247][3];
+extern const char GeoIP_country_continent[247][3];
 
 #ifdef DLL
 #define GEOIP_API __declspec(dllexport)
