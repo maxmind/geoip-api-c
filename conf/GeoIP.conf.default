@@ -1,0 +1,9 @@
+# If you purchase a subscription to the GeoIP database,
+# then you will obtain a license key which you can
+# use to automatically obtain updates.
+# for more details, please go to
+# http://maxmind.com/geoip/database/binary.shtml
+
+# replace 'foobar1234' with your license key here
+
+LicenseKey foobar1234

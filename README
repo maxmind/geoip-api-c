@@ -1,0 +1,72 @@
+				GeoIP 1.1.0
+				-----------
+
+IMPORTANT API Change for 1.1.x users - as of GeoIP 1.1.0 the
+GeoIP_country_xxx_by_xxx functions return NULL if a country can not
+be found (it used to return '--' or 'N/A'.  Be sure to check the
+return value for NULL, to avoid segmentation faults!
+
+GeoIP is a C library that enables the user to find the country that any
+IP address or hostname originates from.  It uses a file based database
+that is accurate as of March 2002.  This database simply contains IP blocks
+as keys, and countries as values.  This database should be more complete and
+accurate than using reverse DNS lookups. 
+
+This module can be used to automatically select the geographically closest
+mirror, to analyze your web server logs to determine the countries of your
+visitors, for credit card fraud detection, and for software export controls. 
+
+To install, run:
+
+./configure
+make
+make check
+make install
+
+For more information, including how to purchase database updates, goto
+http://maxmind.com/geoip/
+
+AUTOMATIC UPDATES
+
+If you are a GeoIP subscriber, you can update your database automatically
+each month.  To perform the update, simply run:
+
+geoipupdate
+
+To fully automate this process, use a crontab file like:
+
+# top of crontab
+MAILTO=your@email.com
+
+3 33 1 * * /usr/local/bin/geoipupdate -v
+# end of crontab
+
+This crontab file will run at the first of each month, and it will email
+you the results.
+
+TROUBLESHOOTING
+
+Note that it is recommended that you use GNU make.  Also, if you are using
+OpenBSD, GeoIP requires OpenBSD 3.1 or greater.
+
+if you get "cannot load shared object file: No such file or directory"
+error, add the directory libGeoIP.so was installed to to /etc/ld.so.conf
+and run ldconfig
+
+On Solaris, if you get a
+ld: fatal: relocations remain against allocatable but non-writable sections
+error, try running
+
+# make clean
+# ./configure --disable-shared
+# make
+
+If you get a "ar : command not found" error, make sure that ar is
+in your path.  On Solaris, ar is typically found in /usr/ccs/bin
+
+If you get a "geoipupdate.c:24: getopt.h: No such file or directory"
+error, run
+
+# export CPPFLAGS="-I/usr/local/include"
+
+(assuming that getopt.h is in /usr/local/include)

@@ -1,0 +1,8 @@
+yahoo.com	US
+www.bundesregierung.de	DE
+www.thaigov.go.th	TH
+www.president.ir	IR
+www.gov.ru	RU
+www.parliament.ge	GE
+www.cpv.org.vn	VN
+alfa.nic.in	IN

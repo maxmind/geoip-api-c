@@ -1,0 +1,54 @@
+AC_INIT(libGeoIP/GeoIP.c)
+dnl AM_CONFIG_HEADER(config.h)
+
+VERSION=1.1.1
+PACKAGE=GeoIP
+GEOIP_VERSION_INFO=`echo $VERSION | awk -F. '{ printf "%d:%d:%d", $1+$2, $3, $2 }'`
+AC_SUBST(GEOIP_VERSION_INFO)
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+AC_PROG_CC
+AC_PROG_LIBTOOL
+
+AC_ARG_WITH(dbdir,
+[  --with-dbdir=\"dir\"    Default directories to look for Geo-IP Database files.
+                          (Default: DATADIR/GeoIP)],
+     [DEFAULT_DBDIR="$with_dbdir"
+     AC_DEFINE_UNQUOTED(DEFAULT_DBDIR,"$with_dbdir")])
+
+AC_ARG_WITH(city,
+[  --with-city=\"no\"   Enable/disable support for GeoIP City Edition. (yes)])
+if test "$with_city" = "no" ; then
+  echo Disabling GeoIP City Edition support
+  WITH_CITY=1
+else
+  echo Enabling GeoIP City Edition support
+  WITH_CITY=0
+fi
+AC_SUBST(WITH_CITY)
+AM_CONDITIONAL(WITH_CITY, test "$with_city" != "no")
+
+AC_CHECK_FUNC(gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME),
+	AC_CHECK_LIB(nsl, gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME)
+	LIBS="${LIBS} -lsocket -lnsl"))
+
+GEOIPSHAREPATH=""
+tmpset="$datadir/GeoIP"
+while test "x$tmpset" != "x$GEOIPSHAREPATH"; do
+  GEOIPSHAREPATH="$tmpset"
+  eval tmpset="$tmpset"
+done
+
+if test "x$DEFAULT_DBDIR" = "x"; then
+  AC_DEFINE_UNQUOTED(DEFAULT_DBDIR,"$GEOIPSHAREPATH")
+fi
+
+AC_OUTPUT([
+Makefile
+libGeoIP/Makefile
+apps/Makefile
+conf/Makefile
+data/Makefile
+man/Makefile
+test/Makefile
+])
