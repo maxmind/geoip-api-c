@@ -74,10 +74,11 @@ int _check_mtime(GeoIP *gi) {
 void _setup_segments(GeoIP * gi) {
 	int i, j;
 	unsigned char delim[3];
-	unsigned char buf[RECORD_LENGTH];
+	unsigned char buf[SEGMENT_RECORD_LENGTH];
 
 	/* default to GeoIP Country Edition */
 	gi->databaseType = GEOIP_COUNTRY_EDITION;
+	gi->record_length = STANDARD_RECORD_LENGTH;
 	fseek(gi->GeoIPDatabase, -3l, SEEK_END);
 	for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
 		fread(delim, 1, 3, gi->GeoIPDatabase);
@@ -92,10 +93,11 @@ void _setup_segments(GeoIP * gi) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
-				fread(buf, RECORD_LENGTH, 1, gi->GeoIPDatabase);
-				for (j = 0; j < RECORD_LENGTH; j++) {
+				fread(buf, SEGMENT_RECORD_LENGTH, 1, gi->GeoIPDatabase);
+				for (j = 0; j < SEGMENT_RECORD_LENGTH; j++) {
 					gi->databaseSegments[0] += (buf[j] << (j * 8));
 				}
+				gi->record_length = ORG_RECORD_LENGTH;
 			}
 			break;
 		} else {
@@ -111,25 +113,25 @@ void _setup_segments(GeoIP * gi) {
 unsigned int _seek_country (GeoIP *gi, unsigned long ipnum) {
 	int i, j, depth;
 	unsigned int x[2];
-	unsigned char buf[2][RECORD_LENGTH];
+	unsigned char buf[2][MAX_RECORD_LENGTH];
 	unsigned char *cache_buf = NULL;
 	unsigned int offset = 0;
 
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
 		if (gi->cache == NULL) {
-			fseek(gi->GeoIPDatabase, (long)RECORD_LENGTH * 2 * offset, SEEK_SET);
-			fread(buf,RECORD_LENGTH,2,gi->GeoIPDatabase);
+			fseek(gi->GeoIPDatabase, (long)gi->record_length * 2 * offset, SEEK_SET);
+			fread(buf,gi->record_length,2,gi->GeoIPDatabase);
 		} else {
-			cache_buf = gi->cache + (long)RECORD_LENGTH * 2 *offset;
+			cache_buf = gi->cache + (long)gi->record_length * 2 *offset;
 		}
 		for (i = 0; i < 2; i++) {
 			x[i] = 0;
-			for (j = 0; j < RECORD_LENGTH; j++) {
+			for (j = 0; j < gi->record_length; j++) {
 				if (gi->cache == NULL) {
 					x[i] += (buf[i][j] << (j * 8));
 				} else {
-					x[i] += (cache_buf[i*RECORD_LENGTH + j] << (j * 8));
+					x[i] += (cache_buf[i*gi->record_length + j] << (j * 8));
 				}
 			}
 		}
@@ -439,7 +441,7 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 
 	printf("seek_org = %d\n", seek_org - gi->databaseSegments[0]);
 
-	record_pointer = seek_org + (2 * RECORD_LENGTH - 1) * gi->databaseSegments[0];
+	record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);

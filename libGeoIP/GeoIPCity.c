@@ -41,7 +41,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	record = malloc(sizeof(GeoIPRecord));
 	memset(record, 0, sizeof(GeoIPRecord));
 
-	record_pointer = seek_country + (2 * RECORD_LENGTH - 1) * gi->databaseSegments[0];
+	record_pointer = seek_country + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);

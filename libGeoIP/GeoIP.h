@@ -31,7 +31,10 @@ extern "C" {
 #include <sys/types.h> /* for fstat */
 #include <sys/stat.h>	/* for fstat */
 
-#define RECORD_LENGTH 3
+#define SEGMENT_RECORD_LENGTH 3
+#define STANDARD_RECORD_LENGTH 3
+#define ORG_RECORD_LENGTH 4
+#define MAX_RECORD_LENGTH 4
 
 typedef struct GeoIPTag {
   FILE *GeoIPDatabase;
@@ -41,6 +44,7 @@ typedef struct GeoIPTag {
 	char databaseType;
 	time_t mtime;
 	int flags;
+	char record_length;
 } GeoIP;
 
 typedef struct GeoIPRegionTag {
