@@ -34,7 +34,7 @@
 #endif
 
 #include <netinet/in.h> /* For ntohl */
-#if HAVE_STDINT_H
+#ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
 #endif
 
