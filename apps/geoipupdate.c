@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* geoipupdate.c
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2004 MaxMind LLC
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -221,10 +221,17 @@ int main (int argc, char *argv[]) {
 		printf("Read in license key %s\n", the_license_key_str);
 		printf("number of product ids %d \n",num_product_ids);
 	}
-	/* update the databases using the user id string, the license key string and the product id for each database */
-	client_ipaddr = NULL;
-	for (i = 0; i < num_product_ids; i++) {
-		err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
+
+	if (the_user_id_str != NULL) {
+		/* update the databases using the user id string, the license key string and the product id for each database */
+		client_ipaddr = NULL;
+		for (i = 0; i < num_product_ids; i++) {
+			err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
+		}
+	} else {
+		/* Old format with just license key for MaxMind GeoIP Country database updates 
+		 * here for backwards compatibility */
+		err = GeoIP_update_database(the_license_key_str, verbose, &my_printf);
 	}
 
 	if (err == GEOIP_NO_NEW_UPDATES) {
@@ -234,19 +241,22 @@ int main (int argc, char *argv[]) {
 	} else if (err < 0) {
 		fprintf(stderr,"Received Error %d when attempting to update GeoIP Database\n",err);
 	} else {
-		fprintf(stderr,"Updated database.\n");
+		fprintf(stderr,"Updated database(s).\n");
 	}
 
-	/* free the product ids */
-	for (i = 0; i < num_product_ids; i++ ) {
-		free(the_product_id_str[i]);
+	if (the_product_id_str != NULL) {
+		/* free the product ids */
+		for (i = 0; i < num_product_ids; i++ ) {
+			free(the_product_id_str[i]);
+		}
+		free(the_product_id_str);
+		free(the_product_id_strl);
+		free(the_product_id_stral);
 	}
-	free(the_product_id_str);
-	free(the_product_id_strl);
-	free(the_product_id_stral);
 
 	free(the_license_key_str);
-	free(the_user_id_str);
+	if (the_user_id_str)
+		free(the_user_id_str);
 
 	if (client_ipaddr) {
 		free(client_ipaddr);
