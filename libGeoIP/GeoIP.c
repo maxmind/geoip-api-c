@@ -488,6 +488,12 @@ const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr) {
 	return GeoIP_country_name[country_id];
 }
 
+const char *GeoIP_country_code_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	int country_id;
+	country_id = GeoIP_id_by_ipnum(gi, ipnum);
+	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+}
+
 int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
 	return GeoIP_id_by_addr(gi, addr);
 }
@@ -502,11 +508,32 @@ int GeoIP_id_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	if (gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION && gi->databaseType != GEOIP_NETSPEED_EDITION) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION &&
+			gi->databaseType != GEOIP_PROXY_EDITION &&
+			gi->databaseType != GEOIP_NETSPEED_EDITION) {
+		printf("Invalid database type %s, expected %s\n",
+					 GeoIPDBDescription[(int)gi->databaseType],
+					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
+	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
+	return ret;
+}
+
+int GeoIP_id_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	int ret;
+	if (ipnum == 0) {
+		return 0;
+	}
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION && 
+			gi->databaseType != GEOIP_PROXY_EDITION &&
+			gi->databaseType != GEOIP_NETSPEED_EDITION) {
+		printf("Invalid database type %s, expected %s\n",
+					 GeoIPDBDescription[(int)gi->databaseType],
+					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
+		return 0;
+	}
 	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }

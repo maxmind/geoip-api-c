@@ -116,6 +116,7 @@ GEOIP_API const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_code3_by_name (GeoIP* gi, const char *host);
 GEOIP_API const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
+GEOIP_API const char *GeoIP_country_code_by_ipnum (GeoIP* gi, unsigned long ipnum);
 
 /* Deprecated - for backwards compatibility only */
 GEOIP_API int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
@@ -126,6 +127,7 @@ GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
 
 GEOIP_API int GeoIP_id_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API int GeoIP_id_by_name (GeoIP* gi, const char *host);
+GEOIP_API int GeoIP_id_by_ipnum (GeoIP* gi, unsigned long ipnum);
 
 GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
