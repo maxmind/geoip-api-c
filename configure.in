@@ -34,7 +34,13 @@ AC_CHECK_FUNC(gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME),
 	AC_CHECK_LIB(nsl, gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME)
 	LIBS="${LIBS} -lsocket -lnsl"))
 
-AC_CHECK_FUNC(gethostbyname_r, AC_DEFINE(HAVE_GETHOSTBYNAME_R))
+AC_CHECK_FUNC(gethostbyname_r, [
+	AC_DEFINE(HAVE_GETHOSTBYNAME_R)
+	# We look for the one that returns `int'.
+	# Hopefully this check is robust enough.
+	AC_EGREP_HEADER(int.*gethostbyname_r, netdb.h, [
+		AC_DEFINE(GETHOSTBYNAME_R_RETURNS_INT)])
+	])
 
 GEOIPSHAREPATH=""
 tmpset="$datadir/GeoIP"

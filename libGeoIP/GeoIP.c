@@ -465,7 +465,11 @@ unsigned long lookupaddress (const char *host) {
 #ifdef HAVE_GETHOSTBYNAME_R
 		while (1) {
 			/* we use gethostbyname_r here because it is thread-safe and gethostbyname is not */
+#ifdef GETHOSTBYNAME_R_RETURNS_INT
 			result = gethostbyname_r(host,&phe2,buf,buflength,&phe,&herr);
+#else
+			phe = gethostbyname_r(host,&phe2,buf,buflength,&herr)
+#endif
 			if (herr != ERANGE)
 				break;
 			if (result == 0)
