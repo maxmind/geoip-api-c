@@ -79,6 +79,13 @@ typedef enum {
 	GEOIP_HTTP_CLIENT_IP_PROXY = 3,
 } GeoIPProxyTypes;
 
+typedef enum {
+	GEOIP_UNKNOWN_SPEED = 0,
+	GEOIP_DIALUP_SPEED = 1,
+	GEOIP_CABLEDSL_SPEED = 2,
+	GEOIP_CORPORATE_SPEED = 3,
+} GeoIPNetspeedValues;
+
 extern char **GeoIPDBFileName;
 extern const char * GeoIPDBDescription[NUM_DB_TYPES];
 extern const char *GeoIPCountryDBFileName;

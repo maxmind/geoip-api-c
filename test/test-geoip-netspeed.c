@@ -42,9 +42,16 @@ int main (int argc, char* argv[]) {
 
 	while (fscanf(f, "%s", host) != EOF) {
 		netspeed = GeoIP_id_by_name (gi, (const char *)host);
-
-                  printf("%s\t%d\n", host, netspeed);
+		if (netspeed == GEOIP_UNKNOWN_SPEED) {
+			printf("%s\tUnknown\n", host);
+		} else if (netspeed == GEOIP_DIALUP_SPEED) {
+			printf("%s\tDialup\n", host);
+		} else if (netspeed == GEOIP_CABLEDSL_SPEED) {
+			printf("%s\tCable/DSL\n", host);
+		} else if (netspeed == GEOIP_CORPORATE_SPEED) {
+			printf("%s\tCorporate\n", host);
+		}
 	}
-
+	fclose(f);
 	GeoIP_delete(gi);
 }
