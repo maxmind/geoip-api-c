@@ -1,5 +1,10 @@
-				GeoIP 1.2.1
+				GeoIP 1.3.0
 				-----------
+
+IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
+GeoIPRegion.region is no longer a pointer but an in-structure
+array so test the first byte of region == 0 rather testing if the region
+pointer is NULL.
 
 IMPORTANT API Change for 1.1.x and above users - as of GeoIP 1.1.0 the
 GeoIP_country_xxx_by_xxx functions return NULL if a country can not
@@ -23,7 +28,7 @@ make
 make check
 make install
 
-For more information, including how to purchase database updates, goto
+For more information, including how to purchase database updates, go to
 http://maxmind.com/
 
 AUTOMATIC UPDATES

@@ -1,3 +1,4 @@
+1.3.0	2003-09-29
 	* Fixed includes to compile on Windows (Fabrice Colin)
 	* Removed the _addr_to_num() calls from GeoIP_*_by_name()
 	* _seek_record() optimizations (Maurice Cinquini)
@@ -10,7 +11,7 @@
 		    only takes 15 (was > 100) i80x86 instructions with 6 byte accesses of RAM.                 4) only calculate x[0], x[1] when needed, may be a bigger win
 		    than the above since all the other optimizations above only reduced
                     CPU instructions operating on CPU cached RAM.
-	! IMPORTANT API Change Changed GeoIPRegion to have region in structure. Saves space and a malloc.
+	! IMPORTANT API Change: Changed GeoIPRegion to have region in structure. Saves space and a malloc.
 	  Since GeoIPRegion.region is no longer a pointer but an in-structure
 	  array so test the first byte of region == 0 rather testing if the region
 	  pointer is NULL. (Maurice Cinquini)
