@@ -33,8 +33,10 @@ int main () {
 	int i;
 	for (i = 0; i < 2; ++i) {
 		if (0 == i) {
-			gi = GeoIP_open("../data/GeoIP.dat", GEOIP_STANDARD);
+			/* Read from filesystem, check for updated file */
+			gi = GeoIP_open("../data/GeoIP.dat", GEOIP_STANDARD & GEOIP_CHECK_CACHE);
 		} else {
+			/* Read from memory, faster but takes up more memory */
 			gi = GeoIP_open("../data/GeoIP.dat", GEOIP_MEMORY_CACHE);
 		}
 

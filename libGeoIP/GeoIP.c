@@ -122,26 +122,6 @@ void _setup_dbfilename() {
 	}
 }
 
-int _check_mtime(GeoIP *gi) {
-	struct stat buf;
-
-	if (gi->flags & GEOIP_CHECK_CACHE) {
-		if (fstat(fileno(gi->GeoIPDatabase), &buf) != -1) {
-			if (buf.st_mtime > gi->mtime) {
-				/* GeoIP Database file updated, reload database into memory cache */
-				if (realloc(gi->cache, buf.st_size) != NULL) {
-					if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
-						fprintf(stderr,"Error reading file %s\n",gi->file_path);
-						return -1;
-					}
-					gi->mtime = buf.st_mtime;
-				}
-			}
-		}
-	}
-	return 0;
-}
-
 int _file_exists(const char *file_name) {
 	struct stat file_stat;
 	return( (stat(file_name, &file_stat) == 0) ? 1:0);
@@ -212,6 +192,38 @@ void _setup_segments(GeoIP * gi) {
 		gi->databaseSegments = malloc(sizeof(int));
 		gi->databaseSegments[0] = COUNTRY_BEGIN;
 	}
+}
+
+int _check_mtime(GeoIP *gi) {
+	struct stat buf;
+
+	if (gi->flags & GEOIP_CHECK_CACHE) {
+		if (fstat(fileno(gi->GeoIPDatabase), &buf) != -1) {
+			if (buf.st_mtime > gi->mtime) {
+				/* GeoIP Database file updated */
+				if (gi->flags & GEOIP_MEMORY_CACHE) {
+					/* reload database into memory cache */
+					if (realloc(gi->cache, buf.st_size) != NULL) {
+						if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
+							fprintf(stderr,"Error reading file %s\n",gi->file_path);
+							return -1;
+						}
+						gi->mtime = buf.st_mtime;
+					}
+				} else {
+					/* refresh filehandle */
+					fclose(gi->GeoIPDatabase);
+					gi->GeoIPDatabase = fopen(gi->file_path,"rb");
+					if (gi->GeoIPDatabase == NULL) {
+						fprintf(stderr,"Error Opening file %s\n",gi->file_path);
+						return -1;
+					}
+					_setup_segments(gi);
+				}
+			}
+		}
+	}
+	return 0;
 }
 
 unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
