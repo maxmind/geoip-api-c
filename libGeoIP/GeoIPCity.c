@@ -75,6 +75,15 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	}
 	record_buf += (str_length + 1);
 
+	/* get postal code */
+	while (record_buf[str_length] != '\0')
+		str_length++;
+	if (str_length > 0) {
+		record->postal_code = malloc(str_length+1);
+		strncpy(record->postal_code, record_buf, str_length+1);
+	}
+	record_buf += (str_length + 1);
+
 	/* get latitude */
 	for (j = 0; j < 3; j++)
 		latitude += (record_buf[j] << (j * 8));
@@ -121,5 +130,6 @@ GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 void GeoIPRecord_delete (GeoIPRecord *gir) {
 	free(gir->region);
 	free(gir->city);
+	free(gir->postal_code);
 	free(gir);
 }

@@ -27,6 +27,7 @@ typedef struct GeoIPRecordTag {
 	char *country_name;
 	char *region;
 	char *city;
+	char *postal_code;
 	float latitude;
 	float longitude;
 } GeoIPRecord;

@@ -50,10 +50,11 @@ int main (int argc, char* argv[]) {
 		gir = GeoIP_record_by_name (gi, (const char *)host);
 
 		if (gir != NULL) {
-			printf("%s\t%s\t%s\t%s\t%f\t%f\n", host,
+			printf("%s\t%s\t%s\t%s\t%s\t%f\t%f\n", host,
 					 gir->country_code,
 					 gir->region,
 					 gir->city,
+					 gir->postal_code,
 					 gir->latitude,
 					 gir->longitude);
 			GeoIPRecord_delete(gir);
