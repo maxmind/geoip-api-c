@@ -83,7 +83,7 @@ void _setup_segments(GeoIP * gi) {
 		if (delim[0] == 255 && delim[1] == 255 && delim[2] == 255) {
 			fread(&gi->databaseType, 1, 1, gi->GeoIPDatabase);
 			if (gi->databaseType == GEOIP_REGION_EDITION) {
-				/* State Edition */
+				/* Region Edition */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = STATE_BEGIN;
 			} else if (gi->databaseType == GEOIP_CITY_EDITION) {
@@ -369,7 +369,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 	return NULL;
 }
 
-/* GeoIP State Edition functions */
+/* GeoIP Region Edition functions */
 GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 	GeoIPRegion * region;
 	int seek_region;
