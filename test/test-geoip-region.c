@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* test-geoip-region.c
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2003 MaxMind LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -41,6 +41,11 @@ int main () {
 	if (f == NULL) {
 		fprintf(stderr, "Error opening region_test.txt\n");
 		exit(1);
+	}
+
+	gir = GeoIP_region_by_addr (gi, "10.0.0.0");
+	if (gir != NULL) {
+		printf("lookup of private IP address: country = %s, region = %s\n", gir->country_code, gir->region);
 	}
 
   while (fscanf(f, "%s", ipAddress) != EOF) {

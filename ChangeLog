@@ -1,3 +1,7 @@
+	* Fixed bug when IP address not found in region rev1 database (Jason Linhart)
+	* Added added extern "C" to GeoIPCity.h fixes problems when included in C++ library
+
+1.2.2	2003-08-10
 	* Added support for GeoIP ISP Edition identifier
 	* Fixed bug in GeoIP_database_info (Jason Linhart)
 	* Added support for GeoIP AS Number Edition

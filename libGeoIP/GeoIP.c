@@ -502,7 +502,11 @@ GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 	} else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
 		/* Region Edition, post June 2003 */
 		seek_region -= STATE_BEGIN_REV1;
-		if (seek_region < CANADA_OFFSET) {
+		if (seek_region < US_OFFSET) {
+			/* Unknown */
+			region->country_code[0] = '\0';
+			region->region = NULL;
+		} else if (seek_region < CANADA_OFFSET) {
 			/* USA State */
 			region->country_code[0] = 'U';
 			region->country_code[1] = 'S';
