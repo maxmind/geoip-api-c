@@ -23,8 +23,16 @@
 #include "GeoIP.h"
 #include <math.h>
 
+const int EXPORT_BINARY   = 1;
+const int EXPORT_CSV      = 2;
+const int EXPORT_FULL_CSV = 3;
+const int EXPORT_XML      = 4;
+
+const int COUNTRY_RECORD_SIZE = 8;
+const int CITY_RECORD_SIZE = 20;
+
 void usage() {
-  fprintf(stderr,"Usage: geoipexport bit_file csv_file1 csv_file2 ...\n");
+  fprintf(stderr,"Usage: geoipexport [-bcfx] bit_file out_file1 [out_file2]\n");
 }
 
 char * _num_to_addr (unsigned long num) {
@@ -38,32 +46,64 @@ char * _num_to_addr (unsigned long num) {
 }
 
 void full_csv_export (int databaseType, int beginIp, int endIp, int val, FILE *out) {
-	fprintf(out, "\"%s\",\"%s\",\"%u\",\"%u\",\"%s\",\"%s\"\n",
-					_num_to_addr(beginIp), _num_to_addr(endIp), beginIp, endIp,
-					GeoIP_country_code[val], GeoIP_country_name[val]);
+	if (GEOIP_COUNTRY_EDITION == databaseType) {
+		fprintf(out, "\"%s\",\"%s\",\"%u\",\"%u\",\"%s\",\"%s\"\n",
+						_num_to_addr(beginIp), _num_to_addr(endIp), beginIp, endIp,
+						GeoIP_country_code[val], GeoIP_country_name[val]);
+	}
+}
 
+void csv_export (int databaseType, int beginIp, int endIp, int val, FILE *out) {
+	if (GEOIP_COUNTRY_EDITION == databaseType) {
+		fprintf(out, "\"%u\",\"%u\",\"%s\"\n",
+						beginIp, endIp, GeoIP_country_code[val]);
+	} else if (GEOIP_CITY_EDITION == databaseType) {
+		fprintf(out, "\"%u\",\"%u\",\"%u\"\n",
+						beginIp, endIp, val);
+	}
+}
+
+void csv_export2 (int databaseType, int beginIp, int endIp, int val, FILE *out) {
+	if (GEOIP_COUNTRY_EDITION == databaseType) {
+		fprintf(out, "\"%s\",\"%s\",\"%s\"\n",
+						_num_to_addr(beginIp), _num_to_addr(endIp), GeoIP_country_code[val]);
+	} else if (GEOIP_CITY_EDITION == databaseType) {
+		fprintf(out, "\"%s\",\"%s\",\"%u\"\n",
+						_num_to_addr(beginIp), _num_to_addr(endIp), val);
+	}
 }
 
 int main (int argc, char *argv[]) {
   FILE *f;
   GeoIPBitReader *gibr;
 	int databaseType, record, val;
-	int beginIp = 0, endIp = 0;
+	int exportType;
+	ulong beginIp = 0, endIp = 0;
 
-  if (argc < 3) {
+  if (argc < 4) {
     usage();
     exit(1);
   }
 
-  f = fopen(argv[2], "w");
+	if (strcmp(argv[1],"-b") == 0) {
+		exportType = EXPORT_BINARY;
+	} else if (strcmp(argv[1],"-c") == 0) {
+		exportType = EXPORT_CSV;
+	} else if (strcmp(argv[1],"-f") == 0) {
+		exportType = EXPORT_FULL_CSV;
+	} else if (strcmp(argv[1],"-x") == 0) {
+		exportType = EXPORT_XML;
+	}
+
+  f = fopen(argv[3], "w");
   if (f == NULL) {
-    fprintf(stderr, "Error opening %s for write\n", argv[2]);
+    fprintf(stderr, "Error opening %s for write\n", argv[3]);
     exit(1);
   }
 
-  gibr = GeoIPBitReader_new(argv[1]);
+  gibr = GeoIPBitReader_new(argv[2]);
   if (gibr == NULL) {
-    fprintf(stderr, "Error opening GeoIP Bit Database %s\n", argv[1]);
+    fprintf(stderr, "Error opening GeoIP Bit Database %s\n", argv[2]);
     exit(1);
   }
 
@@ -76,10 +116,18 @@ int main (int argc, char *argv[]) {
 		} else if (record == NOOP_FLAG) {
 			beginIp = endIp;
 		} else if (record == VALUE_FLAG) {
-			/* assume databaseType == country for now */
-			val = GeoIPBitReader_read(gibr, 8);
-			/* printf("country record (%d, %d) -> %d\n", beginIp, endIp-1, val); */
-			full_csv_export(databaseType, beginIp, endIp - 1, val, f);
+			if (GEOIP_COUNTRY_EDITION == databaseType) {
+				val = GeoIPBitReader_read(gibr, COUNTRY_RECORD_SIZE);
+			} else if (GEOIP_CITY_EDITION == databaseType) {
+				val = GeoIPBitReader_read(gibr, CITY_RECORD_SIZE);
+			}
+			if (EXPORT_CSV == exportType) {
+				csv_export2(databaseType, beginIp, endIp - 1, val, f);
+			} else if (EXPORT_FULL_CSV == exportType) {
+				full_csv_export(databaseType, beginIp, endIp - 1, val, f);
+			}
+			beginIp = endIp;
+			printf("setting beginIp to %d\n",beginIp);
 		} else {
 			/* record = netmask - 1 */
 			endIp += (1 << (31 - record));
