@@ -24,12 +24,13 @@
 #include "global.h"
 #include "md5.h"
 #include <sys/types.h>
-#ifndef WIN32
+#ifndef _WIN32
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #else
+#include <windows.h>
 #include <winsock.h>
 #endif
 #include <zlib.h>

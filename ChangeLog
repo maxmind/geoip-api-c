@@ -1,3 +1,11 @@
+MinGW patch from Stanislaw Pusep
+
+I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly needed to put up-to-date Win32 compatibility of libGeoIP itself. Fortunately MinGW plataform evolved a lot since last time I used it to compile libGeoIP. I'm sending you the patch with changes required for libGeoIP to work on both Win32 and UN*X. UN*X behavior is unaffected. Now, detailed explanation of what I did at all:
+1) Made correct header imports for both Win32 and UN*X. UN*X imports netdb.h & netinet/in.h and Win32 imports windows.h & winsock.h
+2) Win32 gethostbyname() is only able to resolve hostnames, it can't convert "127.0.0.1" string to 32-bit IP address. Thus I added lookupaddress() function that safely resolves any string to IP address and replaced all gethostbyname() calls by it.
+3) Database files were referenced by pre-compiled static strings. I malloc()ed buffers for file names so they can be changed "on fly". Thus, on Win32 version GeoIP.dat & other files are being seeked in the same directory as executable file or library.
+4) Added README.MinGW file with brief explanation on how to get GeoIP working under MinGW system.
+
 1.3.1	2003-11-11
 	* Check for stdint.h in autoconf (Sean Chittenden)
 	* prevent the geoipupdate man page from trying to install itself directly in the system directory (Gyepi Sam)

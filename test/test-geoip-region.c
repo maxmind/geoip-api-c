@@ -19,12 +19,17 @@
  */
 
 #include <GeoIP.h>
-#include <netdb.h>  /* For gethostbyname */
 #include <sys/types.h> /* For uint32_t */
 #ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
 #endif
+#ifndef _WIN32
+#include <netdb.h>  /* For gethostbyname */
 #include <netinet/in.h> /* For ntohl */
+#else
+#include <windows.h>
+#include <winsock.h>
+#endif
 #include <assert.h>
 
 unsigned long inetaddr(const char * name)
