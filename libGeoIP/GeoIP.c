@@ -20,6 +20,9 @@
 
 #include "GeoIP.h"
 
+#include <netdb.h>
+#include <sys/socket.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -419,14 +422,32 @@ const char *GeoIP_country_name_by_name (GeoIP* gi, const char *name) {
 
 unsigned long lookupaddress (const char *host) {
 	unsigned long addr = inet_addr(host);
-	struct hostent * phe;
-	if (addr == INADDR_NONE)
-	{
-		phe = gethostbyname(host);
+	struct hostent phe2;
+	struct hostent * phe = &phe2;
+	char *buf = NULL;
+	int buflength = 16384;
+	int herr = 0;
+	int result = 0;
+	buf = malloc(buflength);
+	if (addr == INADDR_NONE) {
+		while (1) {
+			/* we use gethostbyname_r here because it is thread-safe and gethostbyname is not */
+			result = gethostbyname_r(host,&phe2,buf,buflength,&phe,&herr);
+			if (herr != ERANGE)
+				break;
+			if (result == 0)
+				break;
+			/* double the buffer if the buffer is too small */
+			buflength = buflength * 2;
+			buf = realloc(buf,buflength);
+		}
 		if (!phe)
+			return 0;
+		if (result != 0)
 			return 0;
 		addr = *((unsigned long *) phe->h_addr_list[0]);
 	}
+	free(buf);
 	return ntohl(addr);
 }
 
