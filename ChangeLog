@@ -1,3 +1,9 @@
+1.1.4	2002-12-30
+	* Cast number to int in _num_to_addr in geoipexport (Ralf S. Engelschall)
+	* Removed printf debug statements from geoipexport
+	* correct library build ordering (Ralf S. Engelschall)
+	* ulong -> unsigned long (Sean Chittenden)
+
 1.1.3	2002-12-24
 	* Added GeoIPUpdate.h to EXTRA_DISTS
 	* Compile fixes for Solaris, FreeBSD (Michael McClennen, Corris Randall)
