@@ -12,9 +12,10 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-root
 %description
 GeoIP is a C library that enables the user to find the country that any IP
 address or hostname originates from. It uses a file based database that is
-accurate as of December 2002. This database simply contains IP blocks as keys,
+accurate as of March 2003. This database simply contains IP blocks as keys,
 and countries as values. This database should be more complete and accurate
-than using reverse DNS lookups.
+than using reverse DNS lookups. Commercial databases and automatic update
+services are available from http://www.maxmind.com/
 
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
@@ -56,5 +57,5 @@ chmod 755 $RPM_BUILD_ROOT/%{_libdir}/*
 
 %changelog
 * Thu Feb 27 2003 Ryan Weaver <ryanw@falsehope.com>
-- Initail RPM Build
+- Initial RPM Build
 
