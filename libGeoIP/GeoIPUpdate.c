@@ -24,14 +24,20 @@
 #include "global.h"
 #include "md5.h"
 #include <sys/types.h>
+#ifndef WIN32
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#include "zlib.h"
-#include "time.h"
 #include <netdb.h>
+#else
+#include <winsock.h>
+#endif
+#include <zlib.h>
+#include <time.h>
 #include <stdio.h>
 #include <unistd.h>
+
+extern void _setup_dbfilename();
 
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";

@@ -20,7 +20,11 @@
 
 #include <GeoIP.h>
 #include <GeoIPCity.h>
+#ifndef WIN32
 #include <netdb.h>
+#else
+#include <winsock.h>
+#endif
 #include <netinet/in.h> /* For ntohl */
 #include <stdint.h>     /* For uint32_t */
 

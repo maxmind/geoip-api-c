@@ -1,3 +1,4 @@
+	* Fixed includes to compile on Windows (Fabrice Colin)
 	* Removed the _addr_to_num() calls from GeoIP_*_by_name()
 	* _seek_record() optimizations (Maurice Cinquini)
 		 1) Use a single buf ptr inside the loops.
@@ -6,7 +7,7 @@
 		 3) Unroll the j loop for the common case of j = STANDARD_RECORD_LENGTH
 		    (I've already done the above changes see attached function.)
 		    With gcc -O2 calculating x[0] and x[1] for STANDARD_RECORD_LENGTH now
-		    only takes 15 (was > 100) i80x86 instructions with 6 byte accesses of RAM.                 4) only calculate x[0] when needed, may be a bigger win
+		    only takes 15 (was > 100) i80x86 instructions with 6 byte accesses of RAM.                 4) only calculate x[0], x[1] when needed, may be a bigger win
 		    than the above since all the other optimizations above only reduced
                     CPU instructions operating on CPU cached RAM.
 	! IMPORTANT API Change Changed GeoIPRegion to have region in structure. Saves space and a malloc.
