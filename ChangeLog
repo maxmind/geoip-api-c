@@ -1,4 +1,4 @@
-1.2.1
+1.2.1	2003-07-12
 	* Added GeoIP_record_id_by_addr and GeoIP_next_record functions
 	* Added support for new GeoIP Region format, including Canadian Provinces
 
