@@ -682,6 +682,13 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	/* this performs an IP lookup test of a US IP address */
 	if (verbose == 1)
 		GeoIP_printf(f,"lookup  ");
+	if (dbtype == GEOIP_NETSPEED_EDITION) {
+		int netspeed = GeoIP_id_by_name(gi,"24.24.24.24");
+		lookupresult = 0;
+		if (netspeed == GEOIP_CABLEDSL_SPEED){
+			lookupresult = 1;
+		}
+	}
 	if (dbtype == GEOIP_COUNTRY_EDITION) {
 		/* if data base type is country then call the function
 		 * named GeoIP_country_code_by_addr */
