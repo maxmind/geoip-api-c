@@ -74,6 +74,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 		strncpy(record->city, record_buf, str_length+1);
 	}
 	record_buf += (str_length + 1);
+	str_length = 0;
 
 	/* get postal code */
 	while (record_buf[str_length] != '\0')
