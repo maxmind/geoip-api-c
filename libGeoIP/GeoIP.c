@@ -448,6 +448,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 			hasStructureInfo = 1;
 			break;
 		}
+		fseek(gi->GeoIPDatabase, -4l, SEEK_CUR);
 	}
 	if (hasStructureInfo == 1) {
 		fseek(gi->GeoIPDatabase, -3l, SEEK_CUR);
