@@ -181,10 +181,13 @@ void _setup_segments(GeoIP * gi) {
 
 unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 	int depth;
-	unsigned int x[2];
+	unsigned int x;
 	unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
 	const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
 	unsigned int offset = 0;
+
+	const unsigned char * p;
+	int j;
 
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
@@ -195,48 +198,48 @@ unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 			buf = gi->cache + (long)gi->record_length * 2 *offset;
 		}
 
-		if ( gi->record_length == 3 ) {
-			/* Most common case is completely unrolled and uses constant addresses. */
-			x[0]= (buf[3*0 + 0] << (0*8))
-				+ (buf[3*0 + 1] << (1*8))
-				+ (buf[3*0 + 2] << (2*8));
-			x[1]= (buf[3*1 + 0] << (0*8))
-				+ (buf[3*1 + 1] << (1*8))
-				+ (buf[3*1 + 2] << (2*8));
-		} else {
-			/* General case is partially unrolled. */
-			unsigned int n;
-			int j;
-			const unsigned char * p = &buf[2*gi->record_length];
-
-			n = 0;
-			j = gi->record_length;
-			do {
-				n <<= 8;
-				n += *(--p);
-			} while ( --j );
-			x[0] = n;
-
-			n = 0;
-			j = gi->record_length;
-			do {
-				n <<= 8;
-				n += *(--p);
-			} while ( --j );
-			x[1] = n;
-		}
-
 		if (ipnum & (1 << depth)) {
-			if (x[1] >= gi->databaseSegments[0]) {
-				return x[1];
+			/* Take the right-hand branch */
+			if ( gi->record_length == 3 ) {
+				/* Most common case is completely unrolled and uses constants. */
+				x =   (buf[3*1 + 0] << (0*8))
+					+ (buf[3*1 + 1] << (1*8))
+					+ (buf[3*1 + 2] << (2*8));
+
+			} else {
+				/* General case */
+				j = gi->record_length;
+				p = &buf[2*j];
+				x = 0;
+				do {
+					x <<= 8;
+					x += *(--p);
+				} while ( --j );
 			}
-			offset = x[1];
+
 		} else {
-			if (x[0] >= gi->databaseSegments[0]) {
-				return x[0];
+			/* Take the left-hand branch */
+			if ( gi->record_length == 3 ) {
+				/* Most common case is completely unrolled and uses constants. */
+				x =   (buf[3*0 + 0] << (0*8))
+					+ (buf[3*0 + 1] << (1*8))
+					+ (buf[3*0 + 2] << (2*8));
+			} else {
+				/* General case */
+				j = gi->record_length;
+				p = &buf[1*j];
+				x = 0;
+				do {
+					x <<= 8;
+					x += *(--p);
+				} while ( --j );
 			}
-			offset = x[0];
 		}
+
+		if (x >= gi->databaseSegments[0]) {
+			return x;
+		}
+		offset = x;
 	}
 
 	/* shouldn't reach here */
