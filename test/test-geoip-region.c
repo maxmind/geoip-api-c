@@ -54,7 +54,7 @@ int main () {
 		if (gir != NULL) {
 			printf("%s, %s\n",
 						 gir->country_code,
-						 gir->region);
+						 (NULL == gir->region) ? "N/A" : gir->region );
 
 			GeoIPRegion_delete(gir);
 		} else

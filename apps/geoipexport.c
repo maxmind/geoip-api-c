@@ -36,8 +36,8 @@ void usage() {
 }
 
 char * _num_to_addr (unsigned long num) {
-	char * addr;
-	asprintf(&addr, "%u.%u.%u.%u",
+	char * addr = malloc(15);
+	sprintf(addr, "%u.%u.%u.%u",
 					 (int)floor(num/16777216),
 					 ((int)floor(num/65536)) % 256,
 					 ((int)floor(num/256)) % 256,

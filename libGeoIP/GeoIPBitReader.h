@@ -43,7 +43,7 @@ typedef enum {
 } GeoIPBitReaderRecordCode;
 
 GeoIPBitReader * GeoIPBitReader_new(const char * filename);
-ulong GeoIPBitReader_read(GeoIPBitReader * gibr, short int numBits);
+unsigned long GeoIPBitReader_read(GeoIPBitReader * gibr, short int numBits);
 
 #ifdef __cplusplus
 }
