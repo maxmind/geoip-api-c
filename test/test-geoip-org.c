@@ -49,10 +49,12 @@ int main (int argc, char* argv[]) {
 		org = GeoIP_name_by_name (gi, (const char *)host);
 
 		if (org != NULL) {
-                  printf("%s\t%s\n", host, org);
+			printf("%s\t%s\n", host, org);
+			free(org);
 		}
 	}
 
+	fclose(f);
 	GeoIP_delete(gi);
 	return 0;
 }

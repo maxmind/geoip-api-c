@@ -1,3 +1,6 @@
+	* Fixed memory leak in test-geoip-isp.c and test-geoip-org.c
+	* Added support for GeoIP Domain Names in geoipupdate
+
 1.3.8	2004-11-7
 	* Updated geoipupdate to report invalid userID and productID errors
 	* Check if gethostbyname_r is version that returns int or is other version
