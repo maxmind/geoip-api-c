@@ -1,8 +1,13 @@
+1.1.7	2003-03-04
+	* Fixed bug introduced in 1.1.6 when run in GEOIP_STANDARD mode
+	* Added test to test GEOIP_STANDARD
+
+1.1.6	2003-03-03
 	* Added spec for building RPMs (Ryan Weaver)
 	* Added support for 4byte records for Organization database
 	* Changed Taiwan, Province of China to Taiwan
 
-1.1.5	2002-02-10
+1.1.5	2003-02-10
 	* Added support for GeoIP Organization database
 
 1.1.4	2002-12-30
