@@ -1,5 +1,6 @@
-1.1.3
-	* Compile fixes for Solaris (Michael McClennen)
+1.1.3	2002-12-24
+	* Added GeoIPUpdate.h to EXTRA_DISTS
+	* Compile fixes for Solaris, FreeBSD (Michael McClennen, Corris Randall)
 	* Handle NULL in printf in test-geoip-region
 
 1.1.2	2002-12-16
