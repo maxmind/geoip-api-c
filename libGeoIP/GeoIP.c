@@ -57,10 +57,22 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA","AF","AN","SA","OC","EU","OC","SA","AS","EU","SA","AS","EU","AF","EU","AS","AF","AF","SA","AS","SA","SA","SA","AS","AF","AF","EU","SA","NA","AS","AF","AF","AF","EU","AF","OC","SA","AF","AS","SA","SA","SA","AF","AS","AS","EU","EU","AF","EU","SA","SA","AF","SA","EU","AF","AF","AF","EU","AF","EU","OC","SA","OC","EU","EU","EU","AF","EU","SA","AS","SA","AF","EU","SA","AF","AF","SA","AF","EU","SA","SA","OC","AF","SA","AS","AF","SA","EU","SA","EU","AS","EU","AS","AS","AS","AS","AS","EU","EU","SA","AS","AS","AF","AS","AS","OC","AF","SA","AS","AS","AS","SA","AS","AS","AS","SA","EU","AS","AF","AF","EU","EU","EU","AF","AF","EU","EU","AF","OC","EU","AF","AS","AS","AS","OC","SA","AF","SA","EU","AF","AS","AF","NA","AS","AF","AF","OC","AF","OC","AF","SA","EU","EU","AS","OC","OC","OC","AS","SA","SA","OC","OC","AS","AS","EU","SA","OC","SA","AS","EU","OC","SA","AS","AF","EU","AS","AF","AS","OC","AF","AF","EU","AS","AF","EU","EU","EU","AF","EU","AF","AF","SA","AF","SA","AS","AF","SA","AF","AF","AF","AS","AS","OC","AS","AF","OC","AS","AS","SA","OC","AS","AF","EU","AF","OC","NA","SA","AS","EU","SA","SA","SA","SA","AS","OC","OC","OC","AS","AF","EU","AF","AF","AF","AF"};
 
 #ifdef WIN32
-const char *GeoIPDBFileName = "\\windows\\system32\\GeoIP.dat";
-#else
-const char *GeoIPDBFileName = GEOIPDATADIR "/GeoIP.dat";
+#define GEOIPDATADIR "\\windows\\system32\\"
 #endif
+
+char ** GeoIPDBFileName = NULL;
+
+void _setup_dbfilename() {
+	if (NULL == GeoIPDBFileName) {
+		GeoIPDBFileName = malloc(sizeof(char *) * NUM_DB_TYPES);
+		memset(GeoIPDBFileName, 0, sizeof(char *) * NUM_DB_TYPES);
+		GeoIPDBFileName[GEOIP_COUNTRY_EDITION] = GEOIPDATADIR "/GeoIP.dat";
+		GeoIPDBFileName[GEOIP_REGION_EDITION] = GEOIPDATADIR "/GeoIPRegion.dat";
+		GeoIPDBFileName[GEOIP_CITY_EDITION] = GEOIPDATADIR "/GeoIPCity.dat";
+		GeoIPDBFileName[GEOIP_ISP_EDITION] = GEOIPDATADIR "/GeoIPISP.dat";
+		GeoIPDBFileName[GEOIP_ORG_EDITION] = GEOIPDATADIR "/GeoIPOrg.dat";
+	}
+}
 
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
@@ -95,6 +107,11 @@ void _setup_segments(GeoIP * gi) {
 		fread(delim, 1, 3, gi->GeoIPDatabase);
 		if (delim[0] == 255 && delim[1] == 255 && delim[2] == 255) {
 			fread(&gi->databaseType, 1, 1, gi->GeoIPDatabase);
+			if (gi->databaseType >= 106) {
+				/* backwards compatibility with databases from March 2003 and earlier */
+				gi->databaseType -= 105;
+			}
+
 			if (gi->databaseType == GEOIP_REGION_EDITION) {
 				/* Region Edition */
 				gi->databaseSegments = malloc(sizeof(int));
@@ -214,9 +231,27 @@ unsigned long _h_addr_to_num (unsigned char *addr) {
 	return ipnum;
 }
 
+GeoIP* GeoIP_open_type (int type, int flags) {
+	GeoIP * gi;
+	const char * filePath;
+	if (type < 0 || type >= NUM_DB_TYPES) {
+		printf("Invalid database type %d\n", type);
+		return NULL;
+	}
+	_setup_dbfilename();
+	filePath = GeoIPDBFileName[type];
+	if (filePath == NULL) {
+		printf("Invalid database type %d\n", type);
+		return NULL;
+	}
+	gi = GeoIP_open (filePath, flags);
+	return gi;
+}
+
 GeoIP* GeoIP_new (int flags) {
 	GeoIP * gi;
-	gi = GeoIP_open (GeoIPDBFileName, flags);
+	_setup_dbfilename();
+	gi = GeoIP_open (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], flags);
 	return gi;
 }
 
@@ -300,7 +335,7 @@ int GeoIP_country_id_by_name (GeoIP* gi, const char *name) {
 		return 0;
 	}
 	if (gi->databaseType != GEOIP_COUNTRY_EDITION) {
-		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_COUNTRY_EDITION);
+		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_COUNTRY_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(name);
@@ -342,7 +377,7 @@ int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
 		return 0;
 	}
 	if (gi->databaseType != GEOIP_COUNTRY_EDITION) {
-		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_COUNTRY_EDITION);
+		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_COUNTRY_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
@@ -423,7 +458,7 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 		return 0;
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION) {
-		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_REGION_EDITION);
+		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_REGION_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
@@ -437,7 +472,7 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 		return 0;
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION) {
-		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_REGION_EDITION);
+		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_REGION_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(name);
@@ -465,7 +500,7 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 	int record_pointer;
 
 	if (gi->databaseType != GEOIP_ORG_EDITION) {
-		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_ORG_EDITION);
+		printf("Invalid database type %d, expected %d\n", gi->databaseType, GEOIP_ORG_EDITION);
 		return 0;
 	}
 

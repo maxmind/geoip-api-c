@@ -1,7 +1,7 @@
-				GeoIP 1.1.9
+				GeoIP 1.2.0
 				-----------
 
-IMPORTANT API Change for 1.1.x users - as of GeoIP 1.1.0 the
+IMPORTANT API Change for 1.1.x and above users - as of GeoIP 1.1.0 the
 GeoIP_country_xxx_by_xxx functions return NULL if a country can not
 be found (it used to return '--' or 'N/A'.  Be sure to check the
 return value for NULL, to avoid segmentation faults!

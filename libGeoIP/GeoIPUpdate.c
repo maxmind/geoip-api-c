@@ -70,10 +70,12 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	GeoIP * gi;
 	char * db_info;
 
+	_setup_dbfilename();
+
 	/* get MD5 of current GeoIP database file */
-	if ((cur_db_fh = fopen (GeoIPDBFileName, "rb")) == NULL) {
-		f_str = malloc(strlen(NoCurrentDB) + strlen(GeoIPDBFileName) - 1);
-		sprintf(f_str,NoCurrentDB, GeoIPDBFileName);
+	if ((cur_db_fh = fopen (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], "rb")) == NULL) {
+		f_str = malloc(strlen(NoCurrentDB) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
+		sprintf(f_str,NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 		if (f != NULL)
 			(*f)(f_str);
 	} else {
@@ -160,10 +162,10 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		GeoIP_printf(f,"Done\n");
 
 	/* save gzip file */
-	file_path_gz = malloc(sizeof(char) * (strlen(GeoIPDBFileName) + 4));
+	file_path_gz = malloc(sizeof(char) * (strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) + 4));
 	if (file_path_gz == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
-	strcpy(file_path_gz,GeoIPDBFileName);
+	strcpy(file_path_gz,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
 		f_str = malloc(strlen(SavingGzip) + strlen(file_path_gz) - 1);
@@ -214,15 +216,15 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		GeoIP_printf(f,"Done\n");
 
 	if (verbose == 1) {
-		f_str = malloc(strlen(WritingFile) + strlen(GeoIPDBFileName) - 1);
-		sprintf(f_str,WritingFile,GeoIPDBFileName);
+		f_str = malloc(strlen(WritingFile) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
+		sprintf(f_str,WritingFile,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	}
 
 	/* write uncompressed GeoIP.dat.test file */
-	file_path_test = malloc(sizeof(char) * (strlen(GeoIPDBFileName) + 6));
+	file_path_test = malloc(sizeof(char) * (strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) + 6));
 	if (file_path_test == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
-	strcpy(file_path_test,GeoIPDBFileName);
+	strcpy(file_path_test,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	strcat(file_path_test,".test");
 	gi_fh = fopen(file_path_test, "wb");
 
@@ -282,7 +284,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		GeoIP_printf(f,"PASS\n");
 
 	/* install GeoIP.dat.test -> GeoIP.dat */
-	err = rename(file_path_test, GeoIPDBFileName);
+	err = rename(file_path_test, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	if (err != 0) {
 		GeoIP_printf(f,"GeoIP Install error while renaming file\n");
 		return GEOIP_RENAME_ERR;

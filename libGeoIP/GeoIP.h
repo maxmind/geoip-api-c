@@ -35,6 +35,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
+#define NUM_DB_TYPES 8
 
 typedef struct GeoIPTag {
   FILE *GeoIPDatabase;
@@ -59,13 +60,20 @@ typedef enum {
 } GeoIPOptions;
 
 typedef enum {
-	GEOIP_COUNTRY_EDITION = 106,
-	GEOIP_REGION_EDITION  = 112,
-	GEOIP_CITY_EDITION    = 111,
-	GEOIP_ORG_EDITION     = 110,
+	GEOIP_COUNTRY_EDITION = 1,
+	GEOIP_REGION_EDITION  = 7,
+	GEOIP_CITY_EDITION    = 6,
+	GEOIP_ORG_EDITION     = 5,
+	GEOIP_ISP_EDITION     = 4,
 } GeoIPDBTypes;
 
-extern const char *GeoIPDBFileName;
+extern char **GeoIPDBFileName;
+
+extern const char *GeoIPCountryDBFileName;
+extern const char *GeoIPRegionDBFileName;
+extern const char *GeoIPCityDBFileName;
+extern const char *GeoIPOrgDBFileName;
+extern const char *GeoIPISPDBFileName;
 
 extern const char GeoIP_country_code[247][3];
 extern const char GeoIP_country_code3[247][4];
@@ -78,6 +86,7 @@ extern const char GeoIP_country_continent[247][3];
 #define GEOIP_API
 #endif  /* DLL */
 
+GEOIP_API GeoIP* GeoIP_open_type (int type, int flags);
 GEOIP_API GeoIP* GeoIP_new(int flags);
 GEOIP_API GeoIP* GeoIP_open(const char * filename, int flags);
 GEOIP_API void GeoIP_delete(GeoIP* gi);
@@ -94,6 +103,7 @@ GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
 GEOIP_API void GeoIPRegion_delete (GeoIPRegion *gir);
 
+/* Used to query both GeoIP Organization and ISP databases */
 GEOIP_API char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
 
