@@ -508,7 +508,7 @@ GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 			region->region[2] = '\0';
 		} else {
 			/* Not US or Canada */
-			strncpy(region->country_code, GeoIP_country_code[seek_region / FIPS_RANGE], 3);
+			strncpy(region->country_code, GeoIP_country_code[(seek_region - WORLD_OFFSET) / FIPS_RANGE], 3);
 			region->region = NULL;
 		}
 	}
