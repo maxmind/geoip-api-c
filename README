@@ -21,6 +21,8 @@ with city level resolution.  For more details see:
 http://www.maxmind.com/app/geoip_country
 http://www.maxmind.com/app/products
 
+As of version 1.3.6, the GeoIP C library is thread safe.
+
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
 visitors, for credit card fraud detection, and for software export controls. 
@@ -48,10 +50,11 @@ GEOIP_CHECK_CACHE - check for updated database.  If database has been updated,
 	reload filehandle and/or memory cache.
 
 GEOIP_INDEX_CACHE - just cache
-        the most frequently access index portion of the database, resulting
+        the most frequently accessed index portion of the database, resulting
         in faster lookups than GEOIP_STANDARD, but less memory usage than
         GEOIP_MEMORY_CACHE - useful for larger databases such as
-	GeoIP Organization and GeoIP City
+	GeoIP Organization and GeoIP City.  Note, for GeoIP Country, Region
+	and Netspeed databases, GEOIP_INDEX_CACHE is equivalent to GEOIP_MEMORY_CACHE
 
 EXAMPLES
 
