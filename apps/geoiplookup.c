@@ -19,29 +19,26 @@
  */
 
 #include <GeoIP.h>
+#include <GeoIPCity.h>
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-lv] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-v] <ipaddress|hostname>\n");
 }
 
 int main (int argc, char *argv[]) {
-	int long_format = 0;
 	const char * hostname;
-	const char * result;
+	const char * country_code;
+	const char * country_name;
+	GeoIPRegion * region;
+	GeoIPRecord * gir;
+	const char * org;
 	char * db_info;
 	GeoIP * gi;
+	int i;
 
 	if (argv[1] == NULL) {
 		usage();
 		exit(1);
-	}
-	if (strcmp(argv[1],"-l") == 0) {
-		long_format = 1;
-		if (argv[2] == NULL) {
-			usage();
-			exit(1);
-		}
-		hostname = argv[2];
 	} else if (strcmp(argv[1],"-v") == 0) {
 		gi = GeoIP_new(GEOIP_STANDARD);
 		db_info = GeoIP_database_info(gi);
@@ -52,21 +49,50 @@ int main (int argc, char *argv[]) {
 	} else {
 		hostname = argv[1];
 	}
-	gi = GeoIP_new(GEOIP_STANDARD);
-	if (gi == NULL) {
-		fprintf(stderr,"Error opening database\n");
-		exit(1);
-	}
-	if (long_format == 1) {
-		result = GeoIP_country_name_by_name(gi, hostname);
-	} else {
-		result = GeoIP_country_code_by_name(gi, hostname);
-	}
-	GeoIP_delete(gi);
-	if (result != NULL) {
-		printf("%s\n",result);
-	} else {
-		printf("IP Address not found\n");
+
+	_setup_dbfilename();
+
+	/* iterate through different database types */
+	for (i = 0; i < NUM_DB_TYPES; ++i) {
+		if (GeoIP_db_avail(i)) {
+			gi = GeoIP_open_type(i, GEOIP_STANDARD);
+			if (NULL == gi) {
+				printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
+			} else {
+				if (GEOIP_COUNTRY_EDITION == i) {
+					country_code = GeoIP_country_code_by_name(gi, hostname);
+					country_name = GeoIP_country_name_by_name(gi, hostname);
+					if (country_code == NULL) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s, %s\n", GeoIPDBDescription[i], country_code, country_name);
+					}
+				} else if (GEOIP_REGION_EDITION == i) {
+					region = GeoIP_region_by_name(gi, hostname);
+					if (NULL == region) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
+					}
+				} else if (GEOIP_CITY_EDITION == i) {
+					gir = GeoIP_record_by_name(gi, hostname);
+					if (NULL == gir) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
+									 gir->latitude, gir->longitude);
+					}
+				} else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
+					org = GeoIP_org_by_name(gi, hostname);
+					if (org == NULL) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s\n", GeoIPDBDescription[i], org);
+					}
+				}
+			}
+			GeoIP_delete(gi);
+		}
 	}
 	return 0;
 }

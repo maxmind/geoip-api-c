@@ -90,6 +90,7 @@ extern const char GeoIP_country_continent[247][3];
 GEOIP_API GeoIP* GeoIP_open_type (int type, int flags);
 GEOIP_API GeoIP* GeoIP_new(int flags);
 GEOIP_API GeoIP* GeoIP_open(const char * filename, int flags);
+GEOIP_API int GeoIP_db_avail(int type);
 GEOIP_API void GeoIP_delete(GeoIP* gi);
 GEOIP_API const char *GeoIP_country_code_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API const char *GeoIP_country_code_by_name (GeoIP* gi, const char *host);

@@ -1,4 +1,5 @@
 1.2.0
+	* geoiplookup returns results from GeoIP Region, City, ISP and Organization databases
 	* Standardized location for GeoIP Region, City, ISP and Organization databases
 	* Added GeoIP_open_type to open database from default location for other dbs besides country
 	* Added check to make sure that the appropriate database is loaded for each lookup method

@@ -96,6 +96,23 @@ int _check_mtime(GeoIP *gi) {
 	return 0;
 }
 
+int _file_exists(const char *file_name) {
+	struct stat file_stat;
+	return( (stat(file_name, &file_stat) == 0) ? 1:0);
+}
+
+int GeoIP_db_avail(int type) {
+	const char * filePath;
+	if (type < 0 || type >= NUM_DB_TYPES) {
+		return 0;
+	}
+	filePath = GeoIPDBFileName[type];
+	if (NULL == filePath) {
+		return 0;
+	}
+	return _file_exists(filePath);
+}
+
 void _setup_segments(GeoIP * gi) {
 	int i, j;
 	unsigned char delim[3];
