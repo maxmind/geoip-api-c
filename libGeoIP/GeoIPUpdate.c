@@ -40,6 +40,7 @@
 #include <unistd.h>
 
 extern void _setup_dbfilename();
+extern char *_full_path_to(const char *file_name);
 
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
