@@ -20,7 +20,10 @@
 
 #include <GeoIP.h>
 #include <netdb.h>  /* For gethostbyname */
-#include <stdint.h> /* For uint32_t */
+#include <sys/types.h> /* For uint32_t */
+#if HAVE_STDINT_H
+#include <stdint.h>     /* For uint32_t */
+#endif
 #include <netinet/in.h> /* For ntohl */
 #include <assert.h>
 

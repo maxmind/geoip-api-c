@@ -28,6 +28,8 @@ fi
 AC_SUBST(WITH_CITY)
 AM_CONDITIONAL(WITH_CITY, test "$with_city" != "no")
 
+AC_CHECK_HEADERS(stdint.h)
+
 AC_CHECK_FUNC(gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME),
 	AC_CHECK_LIB(nsl, gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME)
 	LIBS="${LIBS} -lsocket -lnsl"))

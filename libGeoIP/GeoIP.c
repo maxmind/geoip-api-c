@@ -34,7 +34,9 @@
 #endif
 
 #include <netinet/in.h> /* For ntohl */
+#if HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
+#endif
 
 #define COUNTRY_BEGIN 16776960
 #define STATE_BEGIN_REV0 16700000

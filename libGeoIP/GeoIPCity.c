@@ -26,7 +26,10 @@
 #include <winsock.h>
 #endif
 #include <netinet/in.h> /* For ntohl */
+#include <sys/types.h> /* For uint32_t */
+#if HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
+#endif
 
 const int FULL_RECORD_LENGTH = 50;
 
