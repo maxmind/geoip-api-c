@@ -238,13 +238,15 @@ unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
-		if (gi->cache == NULL) {
+		if (gi->cache == NULL && gi->index_cache == NULL) {
 			/* read from disk */
 			fseek(gi->GeoIPDatabase, (long)gi->record_length * 2 * offset, SEEK_SET);
 			fread(stack_buffer,gi->record_length,2,gi->GeoIPDatabase);
-		} else {
+		} else if (gi->index_cache == NULL) {
 			/* simply point to record in memory */
 			buf = gi->cache + (long)gi->record_length * 2 *offset;
+		} else {
+			buf = gi->index_cache + (long)gi->record_length * 2 * offset;
 		}
 
 		if (ipnum & (1 << depth)) {
@@ -398,6 +400,20 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		}
 		gi->flags = flags;
 		_setup_segments(gi);
+		if (flags & GEOIP_INDEX_CACHE) {
+                        gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * gi->databaseSegments[0]);
+                        if (gi->index_cache != NULL) {
+                        	fseek(gi->GeoIPDatabase, 0, SEEK_SET);
+                                if (fread(gi->index_cache, sizeof(unsigned char), gi->databaseSegments[0], gi->GeoIPDatabase) != (size_t) gi->databaseSegments[0]) {
+                                        fprintf(stderr,"Error reading file %s\n",filename);
+                                        free(gi->index_cache);
+                                        free(gi);
+                                        return NULL;
+                                }
+                        }
+		} else {
+			gi->index_cache = NULL;
+		}
 		return gi;
 	}
 }
@@ -407,6 +423,8 @@ void GeoIP_delete (GeoIP *gi) {
 		fclose(gi->GeoIPDatabase);
 	if (gi->cache != NULL)
 		free(gi->cache);
+	if (gi->index_cache != NULL)
+		free(gi->index_cache);
 	if (gi->file_path != NULL)
 		free(gi->file_path);
 	if (gi->databaseSegments != NULL)

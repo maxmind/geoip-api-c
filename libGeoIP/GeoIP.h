@@ -41,6 +41,7 @@ typedef struct GeoIPTag {
   FILE *GeoIPDatabase;
   char *file_path;
 	unsigned char *cache;
+	unsigned char *index_cache;
 	unsigned int *databaseSegments;
 	char databaseType;
 	time_t mtime;
@@ -58,6 +59,7 @@ typedef enum {
 	GEOIP_STANDARD = 0,
 	GEOIP_MEMORY_CACHE = 1,
 	GEOIP_CHECK_CACHE = 2,
+	GEOIP_INDEX_CACHE = 4,
 } GeoIPOptions;
 
 typedef enum {

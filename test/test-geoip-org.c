@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* test-geoip-org.c
  *
- * Copyright (C) 2002 MaxMind.com
+ * Copyright (C) 2004 MaxMind LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -31,7 +31,7 @@ int main (int argc, char* argv[]) {
 		if (!strcmp(argv[1],"gen"))
 			generate = 1;
 
-	gi = GeoIP_open("../data/GeoIPOrg.dat", GEOIP_STANDARD);
+	gi = GeoIP_open("../data/GeoIPOrg.dat", GEOIP_INDEX_CACHE);
 
 	if (gi == NULL) {
 		fprintf(stderr, "Error opening database\n");
