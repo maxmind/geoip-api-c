@@ -42,11 +42,16 @@ int main (int argc, char *argv[]) {
 		exit(1);
 	} else if (strcmp(argv[1],"-v") == 0) {
 		gi = GeoIP_new(GEOIP_STANDARD);
-		db_info = GeoIP_database_info(gi);
-		printf("%s\n",db_info);
-		free(db_info);
-		GeoIP_delete(gi);
-		exit(0);
+    if (gi != NULL) {
+		  db_info = GeoIP_database_info(gi);
+		  printf("%s\n",db_info);
+		  free(db_info);
+		  GeoIP_delete(gi);
+		  exit(0);
+    } else {
+      printf("error opening database\n");
+		  exit(0);
+    }
 	} else {
 		hostname = argv[1];
 	}
