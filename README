@@ -50,7 +50,7 @@ To fully automate this process, use a crontab file like:
 # top of crontab
 MAILTO=your@email.com
 
-3 33 1 * * /usr/local/bin/geoipupdate -v
+33 3 1 * * /usr/local/bin/geoipupdate -v
 # end of crontab
 
 This crontab file will run at the first of each month, and it will email
