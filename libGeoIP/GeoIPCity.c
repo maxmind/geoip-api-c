@@ -35,7 +35,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	double latitude = 0, longitude = 0;
 	int dmaarea_combo = 0;
 
-	if (gi->databaseType != GEOIP_CITY_EDITION_REV0 ||
+	if (gi->databaseType != GEOIP_CITY_EDITION_REV0 &&
 			gi->databaseType != GEOIP_CITY_EDITION_REV1) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
 		return 0;
@@ -106,7 +106,8 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 
 	/* get area code and dma code for post April 2002 databases and for US locations */
 	if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
-		if (strcmp(record->country_code, "US")) {
+		if (!strcmp(record->country_code, "US")) {
+			record_buf += 3;
 			for (j = 0; j < 3; ++j)
 				dmaarea_combo += (record_buf[j] << (j * 8));
 			record->dma_code = dmaarea_combo/1000;
