@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
-/* test-geoip-org.c
+/* test-geoip-isp.c
  *
- * Copyright (C) 2003 MaxMind LLC
+ * Copyright (C) 2004 MaxMind LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -54,4 +54,6 @@ int main (int argc, char* argv[]) {
 	}
 
 	GeoIP_delete(gi);
+
+	return 0;
 }
