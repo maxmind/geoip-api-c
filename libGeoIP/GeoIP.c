@@ -453,10 +453,10 @@ unsigned long lookupaddress (const char *host) {
 			buflength = buflength * 2;
 			buf = realloc(buf,buflength);
 		}
-		if (!phe)
+		if (!phe || result != 0) {
+			free(buf);
 			return 0;
-		if (result != 0)
-			return 0;
+		}
 		addr = *((unsigned long *) phe->h_addr_list[0]);
 	}
 	free(buf);
