@@ -121,7 +121,10 @@ GEOIP_API int GeoIP_id_by_name (GeoIP* gi, const char *host);
 
 GEOIP_API GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *host);
+
+/* Warning - don't call this after GeoIP_assign_region_by_inetaddr calls */
 GEOIP_API void GeoIPRegion_delete (GeoIPRegion *gir);
+
 GEOIP_API void GeoIP_assign_region_by_inetaddr(GeoIP* gi, unsigned long inetaddr, GeoIPRegion *gir);
 
 /* Used to query GeoIP Organization, ISP and AS Number databases */
