@@ -656,7 +656,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	/* get the database type */
 	dbtype = GeoIP_database_edition(gi);
 	if (verbose == 1) {
-		printf("data base type is %d \n",dbtype);
+		printf("Database type is %d\n",dbtype);
 	}
 
 	/* this checks to make sure the files is complete, since info is at the end
