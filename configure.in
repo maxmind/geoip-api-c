@@ -34,6 +34,8 @@ AC_CHECK_FUNC(gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME),
 	AC_CHECK_LIB(nsl, gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME)
 	LIBS="${LIBS} -lsocket -lnsl"))
 
+AC_CHECK_FUNC(gethostbyname_r, AC_DEFINE(HAVE_GETHOSTBYNAME_R))
+
 GEOIPSHAREPATH=""
 tmpset="$datadir/GeoIP"
 while test "x$tmpset" != "x$GEOIPSHAREPATH"; do

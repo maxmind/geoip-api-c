@@ -440,8 +440,11 @@ unsigned long lookupaddress (const char *host) {
 	int buflength = 16384;
 	int herr = 0;
 	int result = 0;
+#ifdef HAVE_GETHOSTBYNAME_R
 	buf = malloc(buflength);
+#endif
 	if (addr == INADDR_NONE) {
+#ifdef HAVE_GETHOSTBYNAME_R
 		while (1) {
 			/* we use gethostbyname_r here because it is thread-safe and gethostbyname is not */
 			result = gethostbyname_r(host,&phe2,buf,buflength,&phe,&herr);
@@ -453,13 +456,20 @@ unsigned long lookupaddress (const char *host) {
 			buflength = buflength * 2;
 			buf = realloc(buf,buflength);
 		}
+#endif
+#ifndef HAVE_GETHOSTBYNAME_R
+		/* Some systems do not support gethostbyname_r, such as Mac OS X */
+		phe = gethostbyname(host);
+#endif
 		if (!phe || result != 0) {
 			free(buf);
 			return 0;
 		}
 		addr = *((unsigned long *) phe->h_addr_list[0]);
 	}
+#ifdef HAVE_GETHOSTBYNAME_R
 	free(buf);
+#endif
 	return ntohl(addr);
 }
 
