@@ -1,3 +1,6 @@
+1.1.10
+	* Added check to make sure that the appropriate database is loaded for each lookup method
+	* Updated update code to check for first 12 characters of license key
 	* Added GeoIP_country_continent array to lookup continent by country ID
 
 1.1.9	2003-03-10

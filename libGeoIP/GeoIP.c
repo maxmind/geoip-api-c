@@ -299,6 +299,10 @@ int GeoIP_country_id_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION) {
+		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_COUNTRY_EDITION);
+		return 0;
+	}
 	ipnum = _addr_to_num(name);
 	if (ipnum == 0) {
 		host = gethostbyname(name);
@@ -335,6 +339,10 @@ int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	int ret;
 	if (addr == NULL) {
+		return 0;
+	}
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION) {
+		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_COUNTRY_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(addr);
@@ -414,6 +422,10 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
+	if (gi->databaseType != GEOIP_REGION_EDITION) {
+		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_REGION_EDITION);
+		return 0;
+	}
 	ipnum = _addr_to_num(addr);
 	return _get_region(gi, ipnum);
 }
@@ -422,6 +434,10 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 	unsigned long ipnum;
 	struct hostent * host;
 	if (name == NULL) {
+		return 0;
+	}
+	if (gi->databaseType != GEOIP_REGION_EDITION) {
+		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_REGION_EDITION);
 		return 0;
 	}
 	ipnum = _addr_to_num(name);
@@ -447,6 +463,12 @@ char *_get_org (GeoIP* gi, unsigned long ipnum) {
 	char buf[MAX_ORG_RECORD_LENGTH];
 	char * org_buf, * buf_pointer;
 	int record_pointer;
+
+	if (gi->databaseType != GEOIP_ORG_EDITION) {
+		printf("Invalid database type %d, expected %d", gi->databaseType, GEOIP_ORG_EDITION);
+		return 0;
+	}
+
 	seek_org = _seek_country(gi, ipnum);
 	if (seek_org == gi->databaseSegments[0])		
 		return NULL;
