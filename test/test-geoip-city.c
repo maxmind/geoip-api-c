@@ -32,7 +32,7 @@ int main (int argc, char* argv[]) {
 		if (!strcmp(argv[1],"gen"))
 			generate = 1;
 
-	gi = GeoIP_open("../data/GeoIPFull.dat", GEOIP_MEMORY_CACHE);
+	gi = GeoIP_open("../data/GeoIPCity.dat", GEOIP_MEMORY_CACHE);
 
 	if (gi == NULL) {
 		fprintf(stderr, "Error opening database\n");
