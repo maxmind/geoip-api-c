@@ -46,6 +46,7 @@ typedef struct GeoIPTag {
 	time_t mtime;
 	int flags;
 	char record_length;
+	int record_iter; /* used in GeoIP_next_record */
 } GeoIP;
 
 typedef struct GeoIPRegionTag {

@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* GeoIPCity.h
  *
- * Copyright (C) 2002 MaxMind.com.  All rights reserved.
+ * Copyright (C) 2003 MaxMind LLC  All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -38,6 +38,12 @@ typedef struct GeoIPRecordTag {
 
 GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr);
 GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *host);
+
+int GeoIP_record_id_by_addr (GeoIP* gi, const char *addr);
+int GeoIP_init_record_iter (GeoIP* gi);
+/* returns 0 on success, 1 on failure */
+int GeoIP_next_record (GeoIP* gi, GeoIPRecord **gir, int *record_iter);
+
 void GeoIPRecord_delete (GeoIPRecord *gir);
 
 #endif /* GEOIPCITY_H */

@@ -7,12 +7,17 @@ AM_CPPFLAGS = -DSYSCONFDIR=\"$(sysconfdir)\" -Wall
 DEPS = $(top_builddir)/libGeoIP/libGeoIP.la
 LDADDS = $(top_builddir)/libGeoIP/libGeoIP.la
 
-bin_PROGRAMS = geoiplookup geoipupdate geoipexport
+bin_PROGRAMS = geoiplookup geoipupdate geoipexport geoipexportlocations
 
 geoiplookup_SOURCES = geoiplookup.c
 geoiplookup_LDFLAGS =
 geoiplookup_DEPENDENCIES = $(top_builddir)/libGeoIP/libGeoIP.la
 geoiplookup_LDADD = $(top_builddir)/libGeoIP/libGeoIP.la
+
+geoipexportlocations_SOURCES = geoipexportlocations.c
+geoipexportlocations_LDFLAGS =
+geoipexportlocations_DEPENDENCIES = $(top_builddir)/libGeoIP/libGeoIP.la
+geoipexportlocations_LDADD = $(top_builddir)/libGeoIP/libGeoIP.la
 
 geoipupdate_SOURCES = geoipupdate.c
 geoipupdate_LDFLAGS =
