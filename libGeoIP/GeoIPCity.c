@@ -159,11 +159,7 @@ GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	host = gethostbyname(name);
-	if (host == NULL) {
-		return 0;
-	}
-	ipnum = ntohl(*((uint32_t*)host->h_addr_list[0]));
+	ipnum = lookupaddress(name);
 	return _get_record(gi, ipnum);
 }
 
