@@ -42,7 +42,9 @@ MAILTO=your@email.com
 # end of crontab
 
 This crontab file will run at the first of each month, and it will email
-you the results.
+you the results.  To apply the crontab file run
+
+$ crontab cronfile
 
 TROUBLESHOOTING
 
