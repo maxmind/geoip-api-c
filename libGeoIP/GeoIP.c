@@ -65,7 +65,7 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 
 const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA","AF","AN","SA","OC","EU","OC","SA","AS","EU","SA","AS","EU","AF","EU","AS","AF","AF","SA","AS","SA","SA","SA","AS","AF","AF","EU","SA","NA","AS","AF","AF","AF","EU","AF","OC","SA","AF","AS","SA","SA","SA","AF","AS","AS","EU","EU","AF","EU","SA","SA","AF","SA","EU","AF","AF","AF","EU","AF","EU","OC","SA","OC","EU","EU","EU","AF","EU","SA","AS","SA","AF","EU","SA","AF","AF","SA","AF","EU","SA","SA","OC","AF","SA","AS","AF","SA","EU","SA","EU","AS","EU","AS","AS","AS","AS","AS","EU","EU","SA","AS","AS","AF","AS","AS","OC","AF","SA","AS","AS","AS","SA","AS","AS","AS","SA","EU","AS","AF","AF","EU","EU","EU","AF","AF","EU","EU","AF","OC","EU","AF","AS","AS","AS","OC","SA","AF","SA","EU","AF","AS","AF","NA","AS","AF","AF","OC","AF","OC","AF","SA","EU","EU","AS","OC","OC","OC","AS","SA","SA","OC","OC","AS","AS","EU","SA","OC","SA","AS","EU","OC","SA","AS","AF","EU","AS","AF","AS","OC","AF","AF","EU","AS","AF","EU","EU","EU","AF","EU","AF","AF","SA","AF","SA","AS","AF","SA","AF","AF","AF","AS","AS","OC","AS","AF","OC","AS","AS","SA","OC","AS","AF","EU","AF","OC","NA","SA","AS","EU","SA","SA","SA","SA","AS","OC","OC","OC","AS","AF","EU","AF","AF","AF","AF"};
 
-const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition"};
+const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP Netspeed Edition"};
 
 char *_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
@@ -110,6 +110,7 @@ void _setup_dbfilename() {
 		GeoIPDBFileName[GEOIP_ORG_EDITION]		= _full_path_to("GeoIPOrg.dat");
 		GeoIPDBFileName[GEOIP_PROXY_EDITION]		= _full_path_to("GeoIPProxy.dat");
 		GeoIPDBFileName[GEOIP_ASNUM_EDITION]		= _full_path_to("GeoIPASNum.dat");
+		GeoIPDBFileName[GEOIP_NETSPEED_EDITION]		= _full_path_to("GeoIPNetSpeed.dat");
 	}
 }
 
@@ -198,7 +199,8 @@ void _setup_segments(GeoIP * gi) {
 		}
 	}
 	if (gi->databaseType == GEOIP_COUNTRY_EDITION ||
-			gi->databaseType == GEOIP_PROXY_EDITION) {
+			gi->databaseType == GEOIP_PROXY_EDITION ||
+			gi->databaseType == GEOIP_NETSPEED_EDITION) {
 		gi->databaseSegments = malloc(sizeof(int));
 		gi->databaseSegments[0] = COUNTRY_BEGIN;
 	}
@@ -217,9 +219,11 @@ unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 	_check_mtime(gi);
 	for (depth = 31; depth >= 0; depth--) {
 		if (gi->cache == NULL) {
+			/* read from disk */
 			fseek(gi->GeoIPDatabase, (long)gi->record_length * 2 * offset, SEEK_SET);
 			fread(stack_buffer,gi->record_length,2,gi->GeoIPDatabase);
 		} else {
+			/* simply point to record in memory */
 			buf = gi->cache + (long)gi->record_length * 2 *offset;
 		}
 
@@ -427,7 +431,7 @@ int GeoIP_id_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	if (gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION) {
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION && gi->databaseType != GEOIP_NETSPEED_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
@@ -472,7 +476,7 @@ int GeoIP_id_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	if (gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION) {
+	if (gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION && gi->databaseType != GEOIP_NETSPEED_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}

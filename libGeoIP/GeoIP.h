@@ -70,6 +70,7 @@ typedef enum {
 	GEOIP_REGION_EDITION_REV1 = 3,
 	GEOIP_PROXY_EDITION       = 8,
 	GEOIP_ASNUM_EDITION       = 9,
+	GEOIP_NETSPEED_EDITION   = 10,
 } GeoIPDBTypes;
 
 typedef enum {

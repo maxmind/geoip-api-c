@@ -1,3 +1,5 @@
+	* Added support for Maxmind NetSpeed
+
 MinGW patch from Stanislaw Pusep
 
 I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly needed to put up-to-date Win32 compatibility of libGeoIP itself. Fortunately MinGW plataform evolved a lot since last time I used it to compile libGeoIP. I'm sending you the patch with changes required for libGeoIP to work on both Win32 and UN*X. UN*X behavior is unaffected. Now, detailed explanation of what I did at all:
