@@ -31,7 +31,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	GeoIPRecord * record;
 	int str_length = 0;
 	int j;
-        unsigned int seek_country;
+        unsigned int seek_record;
 	double latitude = 0, longitude = 0;
 	int dmaarea_combo = 0;
 
@@ -41,14 +41,14 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 		return 0;
 	}
 
-	seek_country = _seek_country(gi, ipnum);
-	if (seek_country == gi->databaseSegments[0])		
+	seek_record = _seek_record(gi, ipnum);
+	if (seek_record == gi->databaseSegments[0])		
 		return NULL;
 
 	record = malloc(sizeof(GeoIPRecord));
 	memset(record, 0, sizeof(GeoIPRecord));
 
-	record_pointer = seek_country + (2 * gi->record_length - 1) * gi->databaseSegments[0];
+	record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
