@@ -75,7 +75,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	FILE *comp_fh, *cur_db_fh, *gi_fh;
 	gzFile gz_fh;
 	char * file_path_gz, * file_path_test;
-	MD5_CTX context;
+	MD5_CONTEXT context;
 	unsigned char buffer[1024], digest[16];
 	char hex_digest[32] = "00000000000000000000000000000000";
 	unsigned int i;
@@ -92,10 +92,11 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		if (f != NULL)
 			(*f)(f_str);
 	} else {
-		MD5Init(&context);
+		md5_init(&context);
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
-			MD5Update (&context, buffer, len);
-		MD5Final (digest, &context);
+			md5_write (&context, buffer, len);
+		md5_final (&context);
+    memcpy(digest,context.buf,16);
 		fclose (cur_db_fh);
 		for (i = 0; i < 16; i++)
 			sprintf (&hex_digest[2*i], "%02x", digest[i]);
@@ -322,8 +323,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	FILE *comp_fh, *cur_db_fh, *gi_fh;
 	gzFile gz_fh;
 	char * file_path_gz, * file_path_test;
-	MD5_CTX context;
-	MD5_CTX context2;
+	MD5_CONTEXT context;
+	MD5_CONTEXT context2;
 	unsigned char buffer[1024], digest[16] ,digest2[16];
 	char hex_digest[33] = "00000000000000000000000000000000";
 	char hex_digest2[33] = "00000000000000000000000000000000";
@@ -401,10 +402,11 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		if (f != NULL)
 			(*f)(f_str);
 	} else {
-		MD5Init(&context);
+		md5_init(&context);
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
-			MD5Update (&context, buffer, len);
-		MD5Final (digest, &context);
+			md5_write (&context, buffer, len);
+		md5_final (&context);
+    memcpy(digest,context.buf,16);
 		fclose (cur_db_fh);
 		for (i = 0; i < 16; i++)
 			sprintf (&hex_digest[2*i], "%02x", digest[i]);
@@ -479,10 +481,11 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 	/* make a md5 sum of ip address and license_key and store it in hex_digest2 */
 	request_uri = malloc(sizeof(char) * 2036);
-	MD5Init(&context2);
-	MD5Update (&context2, license_key, 12);//add license key to the md5 sum
-	MD5Update (&context2, ipaddress, strlen(ipaddress));//add ip address to the md5 sum
-	MD5Final (digest2, &context2);
+	md5_init(&context2);
+	md5_write (&context2, license_key, 12);//add license key to the md5 sum
+	md5_write (&context2, ipaddress, strlen(ipaddress));//add ip address to the md5 sum
+	md5_final (&context2);
+  memcpy(digest2,context2.buf,16);
 	for (i = 0; i < 16; i++)
 		sprintf (&hex_digest2[2*i], "%02x", digest2[i]);// change the digest to a hex digest
 	if (verbose == 1) {

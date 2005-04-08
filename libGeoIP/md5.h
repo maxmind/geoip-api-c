@@ -24,13 +24,17 @@ documentation and/or software.
  */
 
 /* MD5 context. */
-typedef struct {
-  UINT4 state[4];                                   /* state (ABCD) */
-  UINT4 count[2];        /* number of bits, modulo 2^64 (lsb first) */
-  unsigned char buffer[64];                         /* input buffer */
-} MD5_CTX;
 
-void MD5Init PROTO_LIST ((MD5_CTX *));
-void MD5Update PROTO_LIST
-  ((MD5_CTX *, unsigned char *, unsigned int));
-void MD5Final PROTO_LIST ((unsigned char [16], MD5_CTX *));
+#include "types.h"
+
+typedef struct {
+  u32 A,B,C,D;          /* chaining variables */
+  u32  nblocks;
+  byte buf[64];
+  int  count;
+} MD5_CONTEXT;
+
+void md5_init( MD5_CONTEXT *ctx );
+void md5_write( MD5_CONTEXT *hd, byte *inbuf, size_t inlen);
+void md5_final( MD5_CONTEXT *hd );
+

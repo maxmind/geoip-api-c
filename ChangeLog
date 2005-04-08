@@ -1,3 +1,5 @@
+	* Updated MD5 checksum code to use GnuPG code which works
+		on 64bit machines (Frank Mather)
 	* Fixed memory leak in test-geoip-isp.c and test-geoip-org.c
 	* Added support for GeoIP Domain Names in geoipupdate
 
