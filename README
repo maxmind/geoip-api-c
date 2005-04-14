@@ -104,3 +104,7 @@ error, run
 # export CPPFLAGS="-I/usr/local/include"
 
 (assuming that getopt.h is in /usr/local/include)
+
+If you get a "zlib.h: No such file or directory" error, make sure
+that the zlib development libraries are installed on your server.
+These are typically included in a "zlib-devel" package.
