@@ -1,6 +1,6 @@
 lib_LTLIBRARIES = libGeoIP.la libGeoIPUpdate.la libGeoIPBitReader.la
 
-EXTRA_DIST = md5.h global.h
+EXTRA_DIST = md5.h global.h types.h
 
 AM_CPPFLAGS = -DGEOIPDATADIR=\"$(pkgdatadir)\" -Wall
 
