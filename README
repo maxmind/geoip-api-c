@@ -108,3 +108,6 @@ error, run
 If you get a "zlib.h: No such file or directory" error, make sure
 that the zlib development libraries are installed on your server.
 These are typically included in a "zlib-devel" package.
+
+Please contact support@maxmind.com with any questions or bug
+reports.
