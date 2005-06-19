@@ -58,6 +58,7 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 		bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
 		if (bytes_read == 0) {
 			/* eof or other error */
+			free(begin_record_buf);
 			return NULL;
 		}
 	} else {
