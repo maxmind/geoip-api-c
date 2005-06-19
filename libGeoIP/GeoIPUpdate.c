@@ -54,6 +54,49 @@ const char *WritingFile = "Writing uncompressed data to %s ...";
 
 /* TODO replace printf with GeoIP_printf - we need someway of having vargs with GeoIP_printf */
 
+const char * GeoIP_get_error_message(int i) {
+  switch (i) {
+  GEOIP_NO_NEW_UPDATES:
+    return "no new updates";
+  GEOIP_SUCCESS:
+    return "Success";
+  GEOIP_LICENSE_KEY_INVALID_ERR:
+    return "License Key Invalid";
+  GEOIP_DNS_ERR:
+    return "Unable to resolve hostname";
+  GEOIP_NON_IPV4_ERR:
+    return "Non - IPv4 address";
+  GEOIP_SOCKET_OPEN_ERR:
+    return "Error opening socket";
+  GEOIP_CONNECTION_ERR:
+    return "Unable to connect";
+  GEOIP_GZIP_IO_ERR:
+    return "Unable to write GeoIP.dat.gz file";
+  GEOIP_TEST_IO_ERR:
+    return "Unable to write GeoIP.dat.test file";
+  GEOIP_GZIP_READ_ERR:
+    return "Unable to read gzip data";
+  GEOIP_OUT_OF_MEMORY_ERR:
+    return "Out of memory error";
+  GEOIP_SOCKET_READ_ERR:
+    return "Error reading from socket, see errno";
+  GEOIP_SANITY_OPEN_ERR:
+    return "Sanity check GeoIP_open error";
+  GEOIP_SANITY_INFO_FAIL:
+    return "Sanity check database_info string failed";
+  GEOIP_SANITY_LOOKUP_FAIL:
+    return "Sanity check ip address lookup failed";
+  GEOIP_RENAME_ERR:
+    return "Rename error while installing db, check errno";
+  GEOIP_USER_ID_INVALID_ERR:
+    return "Invalid userID";
+  GEOIP_PRODUCT_ID_INVALID_ERR:
+    return "Invalid product ID or subscription expired";
+  default:
+    return "no error";
+  }  
+}
+
 void GeoIP_printf(void (*f)(char *), const char *str) {
 	char * f_str;
 	f_str = malloc(strlen(str)+1);
