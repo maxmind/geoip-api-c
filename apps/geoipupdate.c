@@ -244,7 +244,7 @@ int main (int argc, char *argv[]) {
 	} else if (err == GEOIP_PRODUCT_ID_INVALID_ERR){
 		fprintf(stderr,"Invalid product ID or subscription expired");
 	} else if (err < 0) {
-		fprintf(stderr,"Received Error %d when attempting to update GeoIP Database\n",err);
+		fprintf(stderr,"Received Error %d (%s) when attempting to update GeoIP Database\n",err, GeoIP_get_error_message(err));
 	} else {
 		fprintf(stderr,"Updated database(s).\n");
 	}

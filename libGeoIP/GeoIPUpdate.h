@@ -46,6 +46,8 @@ typedef enum {
 	GEOIP_PRODUCT_ID_INVALID_ERR  = -25  /* Invalid product ID or subscription expired */
 } GeoIPUpdateCode;
 
+const char * GeoIP_get_error_message(int i);
+
 /* Original Update Function, just for MaxMind GeoIP Country database */
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char *));
 
