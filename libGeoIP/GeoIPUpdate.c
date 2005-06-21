@@ -56,41 +56,41 @@ const char *WritingFile = "Writing uncompressed data to %s ...";
 
 const char * GeoIP_get_error_message(int i) {
   switch (i) {
-  GEOIP_NO_NEW_UPDATES:
+  case GEOIP_NO_NEW_UPDATES:
     return "no new updates";
-  GEOIP_SUCCESS:
+  case GEOIP_SUCCESS:
     return "Success";
-  GEOIP_LICENSE_KEY_INVALID_ERR:
+  case GEOIP_LICENSE_KEY_INVALID_ERR:
     return "License Key Invalid";
-  GEOIP_DNS_ERR:
+  case GEOIP_DNS_ERR:
     return "Unable to resolve hostname";
-  GEOIP_NON_IPV4_ERR:
+  case GEOIP_NON_IPV4_ERR:
     return "Non - IPv4 address";
-  GEOIP_SOCKET_OPEN_ERR:
+  case GEOIP_SOCKET_OPEN_ERR:
     return "Error opening socket";
-  GEOIP_CONNECTION_ERR:
+  case GEOIP_CONNECTION_ERR:
     return "Unable to connect";
-  GEOIP_GZIP_IO_ERR:
+  case GEOIP_GZIP_IO_ERR:
     return "Unable to write GeoIP.dat.gz file";
-  GEOIP_TEST_IO_ERR:
+  case GEOIP_TEST_IO_ERR:
     return "Unable to write GeoIP.dat.test file";
-  GEOIP_GZIP_READ_ERR:
+  case GEOIP_GZIP_READ_ERR:
     return "Unable to read gzip data";
-  GEOIP_OUT_OF_MEMORY_ERR:
+  case GEOIP_OUT_OF_MEMORY_ERR:
     return "Out of memory error";
-  GEOIP_SOCKET_READ_ERR:
+  case GEOIP_SOCKET_READ_ERR:
     return "Error reading from socket, see errno";
-  GEOIP_SANITY_OPEN_ERR:
+  case GEOIP_SANITY_OPEN_ERR:
     return "Sanity check GeoIP_open error";
-  GEOIP_SANITY_INFO_FAIL:
+  case GEOIP_SANITY_INFO_FAIL:
     return "Sanity check database_info string failed";
-  GEOIP_SANITY_LOOKUP_FAIL:
+  case GEOIP_SANITY_LOOKUP_FAIL:
     return "Sanity check ip address lookup failed";
-  GEOIP_RENAME_ERR:
+  case GEOIP_RENAME_ERR:
     return "Rename error while installing db, check errno";
-  GEOIP_USER_ID_INVALID_ERR:
+  case GEOIP_USER_ID_INVALID_ERR:
     return "Invalid userID";
-  GEOIP_PRODUCT_ID_INVALID_ERR:
+  case GEOIP_PRODUCT_ID_INVALID_ERR:
     return "Invalid product ID or subscription expired";
   default:
     return "no error";
