@@ -19,6 +19,7 @@
  */
 
 #include <GeoIP.h>
+#include <GeoIP_internal.h>
 #include <GeoIPCity.h>
 #ifndef _WIN32
 #include <netdb.h>
@@ -156,7 +157,6 @@ GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr) {
 
 GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 	unsigned long ipnum;
-	struct hostent * host;
 	if (name == NULL) {
 		return 0;
 	}

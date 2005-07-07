@@ -21,6 +21,7 @@
 #include "GeoIPCity.h"
 #include "GeoIP.h"
 #include "GeoIPUpdate.h"
+#include "GeoIP_internal.h"
 
 #include "global.h"
 #include "md5.h"
@@ -38,9 +39,6 @@
 #include <time.h>
 #include <stdio.h>
 #include <unistd.h>
-
-extern void _setup_dbfilename();
-extern char *_full_path_to(const char *file_name);
 
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
@@ -782,7 +780,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			(dbtype == GEOIP_ORG_EDITION)) {
 		/* if data base type is isp or org then call the function
 		 * named GeoIP_org_by_addr */
-		GeoIPRecord *r = GeoIP_org_by_addr(gi,"24.24.24.24");
+		GeoIPRecord *r = (GeoIPRecord*)GeoIP_org_by_addr(gi,"24.24.24.24");
 		lookupresult = 0;
 		if (r != NULL) {
 			lookupresult = 1;

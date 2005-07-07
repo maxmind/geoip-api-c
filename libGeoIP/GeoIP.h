@@ -146,9 +146,6 @@ GEOIP_API char *GeoIP_name_by_name (GeoIP* gi, const char *host);
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
 
-GEOIP_API unsigned int _seek_record (GeoIP *gi, unsigned long ipnum);
-GEOIP_API unsigned long _addr_to_num (const char *addr);
-
 #ifdef BSD
 #define memcpy(dest, src, n) bcopy(src, dest, n)
 #endif

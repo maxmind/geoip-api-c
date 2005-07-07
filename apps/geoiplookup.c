@@ -20,6 +20,7 @@
 
 #include <GeoIP.h>
 #include <GeoIPCity.h>
+#include <GeoIP_internal.h>
 
 void usage() {
 	fprintf(stderr,"Usage: geoiplookup [-v] <ipaddress|hostname>\n");

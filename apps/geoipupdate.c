@@ -67,8 +67,8 @@ int main (int argc, char *argv[]) {
 	int *the_product_id_stral = NULL;
 	int num_product_ids = 0;
 	char * client_ipaddr = NULL;
-	char c;
-	int err;
+	int c;
+	int err = 0;
 	int i;
 
 	opterr = 0;
