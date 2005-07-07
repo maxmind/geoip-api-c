@@ -4,18 +4,17 @@ Summary:    GeoIP is a C library find what country an IP address or hostname ori
 Release:    1
 Group:	    System Environment/Libraries
 URL:	    http://www.maxmind.com/app/c
-Vendor:	    Maxmind
+Vendor:	    MaxMind LLC
 Source0:    http://www.maxmind.com/download/geoip/api/c/GeoIP-%{version}.tar.gz
 License:    GPL
 BuildRoot:  %{_tmppath}/%{name}-%{version}-root
 
 %description
-GeoIP is a C library that enables the user to find the country that any IP
-address or hostname originates from. It uses a file based database that is
-accurate as of March 2003. This database simply contains IP blocks as keys,
-and countries as values. This database should be more complete and accurate
-than using reverse DNS lookups. Commercial databases and automatic update
-services are available from http://www.maxmind.com/
+GeoIP is a C library that enables the user to find the country that any
+IP address or hostname originates from.  It contains a free GeoIP Country database
+that is updated at the beginning of every month.
+To download the latest free GeoIP Country database, go to:
+http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz
 
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
@@ -67,6 +66,9 @@ chmod 755 $RPM_BUILD_ROOT/%{_libdir}/*
 %{_libdir}/*.la
 
 %changelog
+* Thu Jul  7 2005 Thomas Mather <tjmather@maxmind.com>
+- Updated description to reflect monthly updates for free country database.
+
 * Mon Sep  8 2003 Dr. Peter Bieringer
 - Fix for RHL 9, created a new devel package definition.
 
