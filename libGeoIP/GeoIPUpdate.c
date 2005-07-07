@@ -124,7 +124,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	GeoIP * gi;
 	char * db_info;
 
-	_setup_dbfilename();
+	_GeoIP_setup_dbfilename();
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], "rb")) == NULL) {
@@ -426,14 +426,14 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	buf[offset] = 0;
 	offset = 0;
 	tmpstr = strstr(buf, "\r\n\r\n") + 4;
-	geoipfilename = _full_path_to(tmpstr);
+	geoipfilename = _GeoIP_full_path_to(tmpstr);
 	free(buf);
 
 	/* print the database product id and the database filename */
 	if (verbose == 1){
 		printf("database product id %s database file name %s \n",data_base_type,geoipfilename);
 	}
-	_setup_dbfilename();
+	_GeoIP_setup_dbfilename();
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (geoipfilename, "rb")) == NULL) {

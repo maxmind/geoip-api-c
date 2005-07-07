@@ -33,8 +33,10 @@
 #include <stdint.h>     /* For uint32_t */
 #endif
 
+static
 const int FULL_RECORD_LENGTH = 50;
 
+static
 GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_record_ptr) {
 	int record_pointer;
 	unsigned char *record_buf = NULL;
@@ -133,6 +135,7 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	return record;
 }
 
+static
 GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	unsigned int seek_record;
 
@@ -142,7 +145,7 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 		return 0;
 	}
 
-	seek_record = _seek_record(gi, ipnum);
+	seek_record = _GeoIP_seek_record(gi, ipnum);
 	return _extract_record(gi, seek_record, NULL);
 }
 
@@ -151,7 +154,7 @@ GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _addr_to_num(addr);
+	ipnum = _GeoIP_addr_to_num(addr);
 	return _get_record(gi, ipnum);
 }
 
@@ -160,7 +163,7 @@ GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	ipnum = lookupaddress(name);
+	ipnum = _GeoIP_lookupaddress(name);
 	return _get_record(gi, ipnum);
 }
 
@@ -174,8 +177,8 @@ int GeoIP_record_id_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _addr_to_num(addr);
-	return _seek_record(gi, ipnum);
+	ipnum = _GeoIP_addr_to_num(addr);
+	return _GeoIP_seek_record(gi, ipnum);
 }
 
 int GeoIP_init_record_iter (GeoIP* gi) {

@@ -57,7 +57,7 @@ int main (int argc, char *argv[]) {
 		hostname = argv[1];
 	}
 
-	_setup_dbfilename();
+	_GeoIP_setup_dbfilename();
 
 	/* iterate through different database types */
 	for (i = 0; i < NUM_DB_TYPES; ++i) {

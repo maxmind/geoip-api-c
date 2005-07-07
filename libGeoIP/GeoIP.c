@@ -75,7 +75,7 @@ const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA"
 
 const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition"};
 
-char *_full_path_to(const char *file_name) {
+char *_GeoIP_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
 
 #ifndef _WIN32
@@ -104,24 +104,25 @@ char *_full_path_to(const char *file_name) {
 
 char ** GeoIPDBFileName = NULL;
 
-void _setup_dbfilename() {
+void _GeoIP_setup_dbfilename() {
 	if (NULL == GeoIPDBFileName) {
 		GeoIPDBFileName = malloc(sizeof(char *) * NUM_DB_TYPES);
 		memset(GeoIPDBFileName, 0, sizeof(char *) * NUM_DB_TYPES);
 
-		GeoIPDBFileName[GEOIP_COUNTRY_EDITION]		= _full_path_to("GeoIP.dat");
-		GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]	= _full_path_to("GeoIPRegion.dat");
-		GeoIPDBFileName[GEOIP_REGION_EDITION_REV1]	= _full_path_to("GeoIPRegion.dat");
-		GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]	= _full_path_to("GeoIPCity.dat");
-		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1]	= _full_path_to("GeoIPCity.dat");
-		GeoIPDBFileName[GEOIP_ISP_EDITION]		= _full_path_to("GeoIPISP.dat");
-		GeoIPDBFileName[GEOIP_ORG_EDITION]		= _full_path_to("GeoIPOrg.dat");
-		GeoIPDBFileName[GEOIP_PROXY_EDITION]		= _full_path_to("GeoIPProxy.dat");
-		GeoIPDBFileName[GEOIP_ASNUM_EDITION]		= _full_path_to("GeoIPASNum.dat");
-		GeoIPDBFileName[GEOIP_NETSPEED_EDITION]		= _full_path_to("GeoIPNetSpeed.dat");
+		GeoIPDBFileName[GEOIP_COUNTRY_EDITION]		= _GeoIP_full_path_to("GeoIP.dat");
+		GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]	= _GeoIP_full_path_to("GeoIPRegion.dat");
+		GeoIPDBFileName[GEOIP_REGION_EDITION_REV1]	= _GeoIP_full_path_to("GeoIPRegion.dat");
+		GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]	= _GeoIP_full_path_to("GeoIPCity.dat");
+		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1]	= _GeoIP_full_path_to("GeoIPCity.dat");
+		GeoIPDBFileName[GEOIP_ISP_EDITION]		= _GeoIP_full_path_to("GeoIPISP.dat");
+		GeoIPDBFileName[GEOIP_ORG_EDITION]		= _GeoIP_full_path_to("GeoIPOrg.dat");
+		GeoIPDBFileName[GEOIP_PROXY_EDITION]		= _GeoIP_full_path_to("GeoIPProxy.dat");
+		GeoIPDBFileName[GEOIP_ASNUM_EDITION]		= _GeoIP_full_path_to("GeoIPASNum.dat");
+		GeoIPDBFileName[GEOIP_NETSPEED_EDITION]		= _GeoIP_full_path_to("GeoIPNetSpeed.dat");
 	}
 }
 
+static
 int _file_exists(const char *file_name) {
 	struct stat file_stat;
 	return( (stat(file_name, &file_stat) == 0) ? 1:0);
@@ -139,6 +140,7 @@ int GeoIP_db_avail(int type) {
 	return _file_exists(filePath);
 }
 
+static
 void _setup_segments(GeoIP * gi) {
 	int i, j;
 	unsigned char delim[3];
@@ -194,6 +196,7 @@ void _setup_segments(GeoIP * gi) {
 	}
 }
 
+static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
 
@@ -226,7 +229,7 @@ int _check_mtime(GeoIP *gi) {
 	return 0;
 }
 
-unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
+unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 	int depth;
 	unsigned int x;
 	unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
@@ -298,7 +301,7 @@ unsigned int _seek_record (GeoIP *gi, unsigned long ipnum) {
 	return 0;
 }
 
-unsigned long _addr_to_num (const char *addr) {
+unsigned long _GeoIP_addr_to_num (const char *addr) {
 	int i;
 	char tok[4];
 	int octet;
@@ -340,7 +343,7 @@ GeoIP* GeoIP_open_type (int type, int flags) {
 		printf("Invalid database type %d\n", type);
 		return NULL;
 	}
-	_setup_dbfilename();
+	_GeoIP_setup_dbfilename();
 	filePath = GeoIPDBFileName[type];
 	if (filePath == NULL) {
 		printf("Invalid database type %d\n", type);
@@ -352,7 +355,7 @@ GeoIP* GeoIP_open_type (int type, int flags) {
 
 GeoIP* GeoIP_new (int flags) {
 	GeoIP * gi;
-	_setup_dbfilename();
+	_GeoIP_setup_dbfilename();
 	gi = GeoIP_open (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], flags);
 	return gi;
 }
@@ -450,7 +453,7 @@ const char *GeoIP_country_name_by_name (GeoIP* gi, const char *name) {
 	return (country_id > 0) ? GeoIP_country_name[country_id] : NULL;
 }
 
-unsigned long lookupaddress (const char *host) {
+unsigned long _GeoIP_lookupaddress (const char *host) {
 	unsigned long addr = inet_addr(host);
 	struct hostent phe2;
 	struct hostent * phe = &phe2;
@@ -505,9 +508,9 @@ int GeoIP_id_by_name (GeoIP* gi, const char *name) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
-	if (!(ipnum = lookupaddress(name)))
+	if (!(ipnum = _GeoIP_lookupaddress(name)))
 		return 0;
-	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
+	ret = _GeoIP_seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 
 }
@@ -560,8 +563,8 @@ int GeoIP_id_by_addr (GeoIP* gi, const char *addr) {
 					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
-	ipnum = _addr_to_num(addr);
-	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
+	ipnum = _GeoIP_addr_to_num(addr);
+	ret = _GeoIP_seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
 
@@ -578,7 +581,7 @@ int GeoIP_id_by_ipnum (GeoIP* gi, unsigned long ipnum) {
 					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
-	ret = _seek_record(gi, ipnum) - COUNTRY_BEGIN;
+	ret = _GeoIP_seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
 
@@ -635,7 +638,7 @@ void GeoIP_assign_region_by_inetaddr(GeoIP* gi, unsigned long inetaddr, GeoIPReg
 	 * keep them) and clear any fields that are not set. */
 	memset(region, 0, sizeof(GeoIPRegion));
 
-	seek_region = _seek_record(gi, ntohl(inetaddr));
+	seek_region = _GeoIP_seek_record(gi, ntohl(inetaddr));
 
 	if (gi->databaseType == GEOIP_REGION_EDITION_REV0) {
 		/* Region Edition, pre June 2003 */
@@ -673,6 +676,7 @@ void GeoIP_assign_region_by_inetaddr(GeoIP* gi, unsigned long inetaddr, GeoIPReg
 	}
 }
 
+static
 GeoIPRegion * _get_region(GeoIP* gi, unsigned long ipnum) {
 	GeoIPRegion * region;
  
@@ -693,7 +697,7 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
-	ipnum = _addr_to_num(addr);
+	ipnum = _GeoIP_addr_to_num(addr);
 	return _get_region(gi, ipnum);
 }
 
@@ -707,7 +711,7 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
-	if (!(ipnum = lookupaddress(name)))
+	if (!(ipnum = _GeoIP_lookupaddress(name)))
 		return 0;
 	return _get_region(gi, ipnum);
 }
@@ -717,6 +721,7 @@ void GeoIPRegion_delete (GeoIPRegion *gir) {
 }
 
 /* GeoIP Organization, ISP and AS Number Edition private method */
+static
 char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	int seek_org;
 	char buf[MAX_ORG_RECORD_LENGTH];
@@ -730,7 +735,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 		return 0;
 	}
 
-	seek_org = _seek_record(gi, ipnum);
+	seek_org = _GeoIP_seek_record(gi, ipnum);
 	if (seek_org == gi->databaseSegments[0])		
 		return NULL;
 
@@ -754,7 +759,7 @@ char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _addr_to_num(addr);
+	ipnum = _GeoIP_addr_to_num(addr);
 	return _get_name(gi, ipnum);
 }
 
@@ -763,7 +768,7 @@ char *GeoIP_name_by_name (GeoIP* gi, const char *name) {
 	if (name == NULL) {
 		return 0;
 	}
-	if (!(ipnum = lookupaddress(name)))
+	if (!(ipnum = _GeoIP_lookupaddress(name)))
 		return 0;
 	return _get_name(gi, ipnum);
 }
