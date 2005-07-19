@@ -1,3 +1,7 @@
+1.3.12	2005-7-19
+	* Removed -lGeoIP from libGeoIPUpdate_la_LIBADD - fixes compilation error
+		if GeoIP isn't already installed (Thomas Steudten)
+
 1.3.11	2005-7-7
 	* Fixed gcc warnings and bug.  Use int 
 		instead of char for checking the return value of getopt in geoipupdate.c.

@@ -17,4 +17,4 @@ libGeoIPBitReader_la_SOURCES = GeoIPBitReader.c
 
 libGeoIP_la_LDFLAGS = -version-info @GEOIP_VERSION_INFO@
 
-libGeoIPUpdate_la_LIBADD = -lGeoIP -lz
+libGeoIPUpdate_la_LIBADD = -lz
