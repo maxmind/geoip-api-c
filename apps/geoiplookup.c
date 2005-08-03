@@ -30,6 +30,7 @@ int main (int argc, char *argv[]) {
 	const char * hostname;
 	const char * country_code;
 	const char * country_name;
+	int country_id;
 	GeoIPRegion * region;
 	GeoIPRecord * gir;
 	const char * org;
@@ -67,8 +68,9 @@ int main (int argc, char *argv[]) {
 				printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 			} else {
 				if (GEOIP_COUNTRY_EDITION == i) {
-					country_code = GeoIP_country_code_by_name(gi, hostname);
-					country_name = GeoIP_country_name_by_name(gi, hostname);
+					country_id = GeoIP_id_by_name(gi, hostname);
+					country_code = GeoIP_country_code[country_id];
+					country_name = GeoIP_country_name[country_id];
 					if (country_code == NULL) {
 						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 					} else {
