@@ -112,5 +112,10 @@ If you get a "zlib.h: No such file or directory" error, make sure
 that the zlib development libraries are installed on your server.
 These are typically included in a "zlib-devel" package.
 
+If you get a "bad interpreter: No such file or directory" error
+when running ./configure, make sure that there are no DOS
+returns in the configure script.  To remove DOS returns,
+run perl -pi -e 's!\r!!g' configure.
+
 Please contact support@maxmind.com with any questions or bug
 reports.
