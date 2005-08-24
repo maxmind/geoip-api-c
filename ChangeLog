@@ -1,3 +1,4 @@
+	* Removed geoipexport
 	* Replaced Yugoslavia with Serbia and Montenegro
 	* Updated geoiplookup to only perform country lookup once instead of twice by using GeoIP_id_by_name
 
