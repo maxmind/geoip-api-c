@@ -535,10 +535,22 @@ const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr) {
 	return GeoIP_country_name[country_id];
 }
 
+const char *GeoIP_country_name_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	int country_id;
+	country_id = GeoIP_id_by_ipnum(gi, ipnum);
+	return (country_id > 0) ? GeoIP_country_name[country_id] : NULL;
+} 
+
 const char *GeoIP_country_code_by_ipnum (GeoIP* gi, unsigned long ipnum) {
 	int country_id;
 	country_id = GeoIP_id_by_ipnum(gi, ipnum);
 	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+}
+
+const char *GeoIP_country_code3_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	int country_id;
+	country_id = GeoIP_id_by_ipnum(gi, ipnum);
+	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
 }
 
 int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
@@ -716,6 +728,15 @@ GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 	return _get_region(gi, ipnum);
 }
 
+GeoIPRegion * GeoIP_region_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
+			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
+		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+		return 0;
+	}
+	return _get_region(gi, ipnum);
+}
+
 void GeoIPRegion_delete (GeoIPRegion *gir) {
 	free(gir);
 }
@@ -754,6 +775,10 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	return org_buf;
 }
 
+char *GeoIP_name_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	return _get_name(gi,ipnum);  
+}
+
 char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	if (addr == NULL) {
@@ -771,6 +796,10 @@ char *GeoIP_name_by_name (GeoIP* gi, const char *name) {
 	if (!(ipnum = _GeoIP_lookupaddress(name)))
 		return 0;
 	return _get_name(gi, ipnum);
+}
+
+char *GeoIP_org_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	return GeoIP_name_by_ipnum(gi, ipnum);
 }
 
 char *GeoIP_org_by_addr (GeoIP* gi, const char *addr) {

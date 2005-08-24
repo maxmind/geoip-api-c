@@ -40,6 +40,7 @@ typedef struct GeoIPRecordTag {
 	int area_code;
 } GeoIPRecord;
 
+GeoIPRecord * GeoIP_record_by_ipnum (GeoIP* gi, unsigned long ipnum);
 GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr);
 GeoIPRecord * GeoIP_record_by_name (GeoIP* gi, const char *host);
 

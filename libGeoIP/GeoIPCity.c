@@ -149,6 +149,10 @@ GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	return _extract_record(gi, seek_record, NULL);
 }
 
+GeoIPRecord * GeoIP_record_by_ipnum (GeoIP* gi, unsigned long ipnum) {
+	return _get_record(gi, ipnum);
+}
+
 GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	if (addr == NULL) {
