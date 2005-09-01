@@ -240,9 +240,9 @@ int main (int argc, char *argv[]) {
 	} else if (err == GEOIP_LICENSE_KEY_INVALID_ERR) {
 		fprintf(stderr,"Invalid License Key in %s - Please visit http://maxmind.com/ for a subscription\n",license_file);
 	} else if (err == GEOIP_USER_ID_INVALID_ERR){
-		fprintf(stderr,"Invalid UserID");
+		fprintf(stderr,"Invalid UserID\n");
 	} else if (err == GEOIP_PRODUCT_ID_INVALID_ERR){
-		fprintf(stderr,"Invalid product ID or subscription expired");
+		fprintf(stderr,"Invalid product ID or subscription expired\n");
 	} else if (err < 0) {
 		fprintf(stderr,"Received Error %d (%s) when attempting to update GeoIP Database\n",err, GeoIP_get_error_message(err));
 	} else {
