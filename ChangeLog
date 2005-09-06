@@ -1,3 +1,4 @@
+	* Updated ltmain.sh to support Debian GNU/k*BSD bug #315425 (Marek Habersack)
 	* Added lookup functions using IP numeric representation as input (Frank Mather)
 	* Removed geoipexport
 	* Replaced Yugoslavia with Serbia and Montenegro
