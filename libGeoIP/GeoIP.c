@@ -216,6 +216,8 @@ int _check_mtime(GeoIP *gi) {
 				} else {
 					/* refresh filehandle */
 					fclose(gi->GeoIPDatabase);
+					if (gi->databaseSegments != NULL)
+						free(gi->databaseSegments);
 					gi->GeoIPDatabase = fopen(gi->file_path,"rb");
 					if (gi->GeoIPDatabase == NULL) {
 						fprintf(stderr,"Error Opening file %s\n",gi->file_path);
