@@ -401,6 +401,14 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 				}
 			}
 		} else {
+			if (flags & GEOIP_CHECK_CACHE) {
+				if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+					fprintf(stderr,"Error stating file %s\n",filename);
+					free(gi);
+					return NULL;
+				}
+				gi->mtime = buf.st_mtime;
+			}
 			gi->cache = NULL;
 		}
 		gi->flags = flags;
