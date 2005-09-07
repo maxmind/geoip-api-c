@@ -405,15 +405,15 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		_setup_segments(gi);
 		if (flags & GEOIP_INDEX_CACHE) {                        
 			gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
-                        if (gi->index_cache != NULL) {
-                        	fseek(gi->GeoIPDatabase, 0, SEEK_SET);
-                                if (fread(gi->index_cache, sizeof(unsigned char), gi->databaseSegments[0] * (long)gi->record_length * 2, gi->GeoIPDatabase) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
-                                        fprintf(stderr,"Error reading file %s\n",filename);
-                                        free(gi->index_cache);
-                                        free(gi);
-                                        return NULL;
-                                }
-                        }
+			if (gi->index_cache != NULL) {
+				fseek(gi->GeoIPDatabase, 0, SEEK_SET);
+				if (fread(gi->index_cache, sizeof(unsigned char), gi->databaseSegments[0] * (long)gi->record_length * 2, gi->GeoIPDatabase) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
+					fprintf(stderr,"Error reading file %s\n",filename);
+					free(gi->index_cache);
+					free(gi);
+					return NULL;
+				}
+			}
 		} else {
 			gi->index_cache = NULL;
 		}
