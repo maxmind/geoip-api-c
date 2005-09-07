@@ -1,4 +1,4 @@
-				GeoIP 1.3.13
+				GeoIP 1.3.14
 				------------
 
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
@@ -36,6 +36,8 @@ To install, run:
 make
 make check
 make install
+
+The GeoIP C library relies on GNU make, not on BSD make
 
 For more information, including how to purchase database updates, go to
 http://maxmind.com/
