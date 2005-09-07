@@ -139,3 +139,19 @@ typedef struct string_list {
 } *STRLIST;
 
 #endif /*G10_TYPES_H*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

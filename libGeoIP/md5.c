@@ -29,6 +29,10 @@
 
 #include "types.h"
 
+#ifdef WORDS_BIGENDIAN
+#define BIG_ENDIAN_HOST
+#endif
+
 //#define DIM(v) (sizeof(v)/sizeof((v)[0]))
 #define wipememory2(_ptr,_set,_len) do { volatile char *_vptr=(volatile char *)(_ptr); size_t _vlen=(_len); while(_vlen) { *_vptr=(_set); _vptr++; _vlen--; } } while(0)
 #define wipememory(_ptr,_len) wipememory2(_ptr,0,_len)
