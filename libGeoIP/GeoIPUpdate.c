@@ -587,9 +587,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		return GEOIP_LICENSE_KEY_INVALID_ERR;
 	} else if (strstr(compr, "No new updates available") != NULL) {
 		free(buf);
-		if (verbose == 1) {
-			printf("no new updates\n");
-		}
+		printf("%s is up to date, no updates required\n", geoipfilename);
 		return GEOIP_NO_NEW_UPDATES;
 	} else if (strstr(compr, "Invalid UserId") != NULL){
 		free(buf);
@@ -601,6 +599,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 	if (verbose == 1)
 		GeoIP_printf(f,"Done\n");
+
+	printf("Updating %s\n", geoipfilename);
 
 	/* save gzip file */
 	file_path_gz = malloc(sizeof(char) * (strlen(geoipfilename) + 4));
