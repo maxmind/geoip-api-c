@@ -34,6 +34,7 @@ int main (int argc, char *argv[]) {
 	GeoIPRegion * region;
 	GeoIPRecord * gir;
 	const char * org;
+	const char * domain_name;
 	int netspeed;
 	char * db_info;
 	GeoIP * gi;
@@ -67,6 +68,14 @@ int main (int argc, char *argv[]) {
 			if (NULL == gi) {
 				printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 			} else {
+				if (GEOIP_DOMAIN_EDITION == i) {
+					domain_name = GeoIP_name_by_name(gi,hostname);
+					if (domain_name == NULL) {
+						printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+					} else {
+						printf("%s: %s\n", GeoIPDBDescription[i], domain_name);
+					}
+				}
 				if (GEOIP_COUNTRY_EDITION == i) {
 					country_id = GeoIP_id_by_name(gi, hostname);
 					country_code = GeoIP_country_code[country_id];

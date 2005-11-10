@@ -1,3 +1,5 @@
+	* Updated geoiplookup so that it returns GeoIP Domain Name if available
+		(Frank Mather)
 	* Updated geoipupdate so that it reports whether databases are updated
 		in non-verbose mode (Frank Mather)
 

@@ -35,7 +35,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES 16
+#define NUM_DB_TYPES 20
 
 typedef struct GeoIPTag {
   FILE *GeoIPDatabase;
@@ -72,7 +72,8 @@ typedef enum {
 	GEOIP_REGION_EDITION_REV1 = 3,
 	GEOIP_PROXY_EDITION       = 8,
 	GEOIP_ASNUM_EDITION       = 9,
-	GEOIP_NETSPEED_EDITION   = 10,
+	GEOIP_NETSPEED_EDITION    = 10,
+	GEOIP_DOMAIN_EDITION      = 11
 } GeoIPDBTypes;
 
 typedef enum {
