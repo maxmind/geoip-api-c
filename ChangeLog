@@ -7,7 +7,7 @@
 	* Check if byte, ushort, ulong, u16, u32 are defined in configure
 	  script.  Fixes compilation issue on FreeBSD systems.
 	* Check for Big Endian byte order (needed for MD5 code in geoipupdate
-	  to work properly on Mac OS X and other Big Endian processors
+	  to work properly on Mac OS X and other Big Endian processors)
 	* Fixed GEOIP_CHECK_CACHE mode when used with GEOIP_STANDARD to
 	  only refresh upon file change
 	* Fixed memory leak when refreshing file in GEOIP_CHECK_CACHE mode
