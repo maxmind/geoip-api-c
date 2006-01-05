@@ -111,7 +111,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	int offset = 0, err;
 	int block_size = 1024;
 	char * request_uri;
-	char *uncompr = NULL, *compr;
+	char * compr;
 	unsigned long comprLen;
 	FILE *comp_fh, *cur_db_fh, *gi_fh;
 	gzFile gz_fh;
@@ -246,36 +246,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		GeoIP_printf(f,"Uncompressing gzip file ... ");
 
 	/* uncompress gzip file */
-	offset = 0;
 	gz_fh = gzopen(file_path_gz, "rb");
-	free(file_path_gz);
-	for (;;) {
-		int amt;
-		uncompr = realloc(uncompr, offset+block_size);
-		if (uncompr == NULL)
-			return GEOIP_OUT_OF_MEMORY_ERR;
-		amt = gzread(gz_fh, &uncompr[offset], block_size);
-		if (amt == -1) {
-			gzclose(gz_fh);
-			return GEOIP_GZIP_READ_ERR;
-		}
-		if (amt == 0) {
-			break;
-		}
-		offset += amt;
-	}
-	gzclose(gz_fh);
-	unlink(file_path_gz);
-
-	if (verbose == 1)
-		GeoIP_printf(f,"Done\n");
-
-	if (verbose == 1) {
-		f_str = malloc(strlen(WritingFile) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
-		sprintf(f_str,WritingFile,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
-	}
-
-	/* write uncompressed GeoIP.dat.test file */
 	file_path_test = malloc(sizeof(char) * (strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) + 6));
 	if (file_path_test == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
@@ -284,13 +255,33 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	gi_fh = fopen(file_path_test, "wb");
 
 	if(gi_fh == NULL) {
-		free(uncompr);
 		return GEOIP_TEST_IO_ERR;
 	}
-
-	fwrite(uncompr, 1, offset, gi_fh);
+	char block[block_size];
+	for (;;) {
+		int amt;
+		amt = gzread(gz_fh, block, block_size);
+		if (amt == -1) {
+			gzclose(gz_fh);
+			return GEOIP_GZIP_READ_ERR;
+		}
+		if (amt == 0) {
+			break;
+		}
+		fwrite(block,1,block_size,gi_fh);
+	}
+	gzclose(gz_fh);
+	unlink(file_path_gz);
+	free(file_path_gz);
 	fclose(gi_fh);
-	free(uncompr);
+
+	if (verbose == 1)
+		GeoIP_printf(f,"Done\n");
+
+	if (verbose == 1) {
+		f_str = malloc(strlen(WritingFile) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
+		sprintf(f_str,WritingFile,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+	}
 
 	/* sanity check */
 	gi = GeoIP_open(file_path_test, GEOIP_STANDARD);
@@ -359,7 +350,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	int offset = 0, err;
 	int block_size = 1024;
 	char * request_uri;
-	char *uncompr = NULL, *compr;
+	char * compr;
 	unsigned long comprLen;
 	FILE *comp_fh, *cur_db_fh, *gi_fh;
 	gzFile gz_fh;
@@ -635,15 +626,22 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (verbose == 1)
 		GeoIP_printf(f,"Uncompressing gzip file ... ");
 
+	file_path_test = malloc(sizeof(char) * (strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) + 6));
+	if (file_path_test == NULL)
+		return GEOIP_OUT_OF_MEMORY_ERR;
+	strcpy(file_path_test,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+	strcat(file_path_test,".test");
+	gi_fh = fopen(file_path_test, "wb");
+	if(gi_fh == NULL) {
+		return GEOIP_TEST_IO_ERR;
+	}
 	/* uncompress gzip file */
 	offset = 0;
 	gz_fh = gzopen(file_path_gz, "rb");
+	char block[block_size];
 	for (;;) {
 		int amt;
-		uncompr = realloc(uncompr, offset+block_size);
-		if (uncompr == NULL)
-			return GEOIP_OUT_OF_MEMORY_ERR;
-		amt = gzread(gz_fh, &uncompr[offset], block_size);
+		amt = gzread(gz_fh, block, block_size);
 		if (amt == -1) {
 			gzclose(gz_fh);
 			return GEOIP_GZIP_READ_ERR;
@@ -651,11 +649,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		if (amt == 0) {
 			break;
 		}
-		offset += amt;
+		fwrite(block,1,amt,gi_fh);
 	}
 	gzclose(gz_fh);
 	unlink(file_path_gz);
 	free(file_path_gz);
+	fclose(gi_fh);
 
 	if (verbose == 1)
 		GeoIP_printf(f,"Done\n");
@@ -663,26 +662,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (verbose == 1) {
 		f_str = malloc(strlen(WritingFile) + strlen(geoipfilename) - 1);
 		sprintf(f_str,WritingFile,geoipfilename);
-	}
-
-	/* write uncompressed GeoIP.dat.test file */
-	file_path_test = malloc(sizeof(char) * (strlen(geoipfilename) + 6));
-	if (file_path_test == NULL)
-		return GEOIP_OUT_OF_MEMORY_ERR;
-	strcpy(file_path_test,geoipfilename);
-	strcat(file_path_test,".test");
-	gi_fh = fopen(file_path_test, "wb");
-
-	if(gi_fh == NULL) {
-		free(uncompr);
-		return GEOIP_TEST_IO_ERR;
-	}
-
-	fwrite(uncompr, 1, offset, gi_fh);
-	fclose(gi_fh);
-	free(uncompr);
-	if (verbose == 1) {
-		printf("file path test is %s \n",file_path_test);
 	}
 
 	/* sanity check */
