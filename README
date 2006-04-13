@@ -1,4 +1,4 @@
-				GeoIP 1.3.14
+				GeoIP 1.3.15
 				------------
 
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
@@ -11,17 +11,19 @@ GeoIP_country_xxx_by_xxx functions return NULL if a country can not
 be found (it used to return '--' or 'N/A'.  Be sure to check the
 return value for NULL, to avoid segmentation faults!
 
-GeoIP is a C library that enables the user to find the country that any
-IP address or hostname originates from.  It contains a free GeoIP Country database
+GeoIP is a C library that enables the user to find geographical and
+network information of an IP address.
+Included is a free GeoLite Country database
 that is updated at the beginning of every month.
-To download the latest free GeoIP Country database, go to:
-http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz
-
-This database simply contains IP blocks
-as keys, and countries as values.  We also offer a paid database
-that has greater accuracy than the free version, as well as paid databases
-with city level resolution.  For more details on the paid products see:
+To download the latest free GeoLite Country database, go to:
 http://www.maxmind.com/app/geoip_country
+
+There is also a free city-level geolocation database, GeoLite City,
+available from:
+http://www.maxmind.com/app/geolitecity
+
+We also offer commercial GeoIP databases with greater accuracy and
+additional network information, for more details, see:
 http://www.maxmind.com/app/products
 
 As of version 1.3.6, the GeoIP C library is thread safe.
@@ -29,6 +31,11 @@ As of version 1.3.6, the GeoIP C library is thread safe.
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
 visitors, for credit card fraud detection, and for software export controls. 
+
+If you use GeoIP to block access from high risk countries in order
+to reduce fraud or abuse, you should also block access from known
+proxy servers.  For more details, see:
+http://www.maxmind.com/app/proxy
 
 To install, run:
 
@@ -38,9 +45,6 @@ make check
 make install
 
 The GeoIP C library relies on GNU make, not on BSD make
-
-For more information, including how to purchase database updates, go to
-http://maxmind.com/
 
 MEMORY CACHING AND OTHER OPTIONS
 
@@ -60,6 +64,11 @@ GEOIP_INDEX_CACHE - just cache
         GEOIP_MEMORY_CACHE - useful for larger databases such as
 	GeoIP Organization and GeoIP City.  Note, for GeoIP Country, Region
 	and Netspeed databases, GEOIP_INDEX_CACHE is equivalent to GEOIP_MEMORY_CACHE
+
+The options can be combined using bit operators.  For example you can
+use both GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE by calling:
+
+    GeoIP_open("/path/to/GeoIP.dat", GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE);
 
 EXAMPLES
 
