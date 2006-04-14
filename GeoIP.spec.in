@@ -1,6 +1,6 @@
 Name:	    @PACKAGE@
 Version:    @VERSION@
-Summary:    GeoIP is a C library find what country an IP address or hostname originates from.
+Summary:    GeoIP is a C library finds the location of an IP address.
 Release:    1
 Group:	    System Environment/Libraries
 URL:	    http://www.maxmind.com/app/c
@@ -10,15 +10,16 @@ License:    GPL
 BuildRoot:  %{_tmppath}/%{name}-%{version}-root
 
 %description
-GeoIP is a C library that enables the user to find the country that any
-IP address or hostname originates from.  It contains a free GeoIP Country database
+GeoIP is a C library that enables the user to find geographical and
+network information of an IP address.
+Included is a free GeoLite Country database
 that is updated at the beginning of every month.
-To download the latest free GeoIP Country database, go to:
-http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz
+To download the latest free GeoLite Country database, go to:
+http://www.maxmind.com/app/geoip_country
 
-This module can be used to automatically select the geographically closest
-mirror, to analyze your web server logs to determine the countries of your
-visitors, for credit card fraud detection, and for software export controls.
+There is also a free city-level geolocation database, GeoLite City,
+available from:
+http://www.maxmind.com/app/geolitecity
 
 %package devel
 Summary: GeoIP headers, libraries
@@ -66,6 +67,9 @@ chmod 755 $RPM_BUILD_ROOT/%{_libdir}/*
 %{_libdir}/*.la
 
 %changelog
+* Fri Apr 14 2006 Thomas Mather <tjmather@maxmind.com>
+- Updated description to reference free GeoLite City database
+
 * Thu Jul  7 2005 Thomas Mather <tjmather@maxmind.com>
 - Updated description to reflect monthly updates for free country database.
 
