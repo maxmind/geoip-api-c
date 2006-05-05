@@ -268,7 +268,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		if (amt == 0) {
 			break;
 		}
-		fwrite(block,1,block_size,gi_fh);
+		fwrite(block,1,amt,gi_fh);
 	}
 	gzclose(gz_fh);
 	unlink(file_path_gz);
