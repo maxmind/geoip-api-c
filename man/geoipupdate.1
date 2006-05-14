@@ -1,4 +1,4 @@
-.TH GEOIPUPDATE 1 "2 Jun 2004"
+.TH GEOIPUPDATE 1 "14 May 2006"
 .UC 4
 .SH NAME
 geoipupdate - a program for updating the MaxMind GeoIP databases
@@ -27,14 +27,14 @@ Defaults to GeoIP.conf in the system configuration directory.
 .SH USAGE
 Typically you'll want to write a crontab to run on the first day
 of each month that will run geoipupdate.  Below is a sample
-crontab that runs geoipupdate monthly:
+crontab that runs geoipupdate on each Wendesday at midnight:
 .PP
 .RS
 # top of crontab
 .PP
 MAILTO=your@email.com
 .PP
-33 3 1 * * /usr/local/bin/geoipupdate -v
+0 0 * * 3 /usr/local/bin/geoipupdate -v
 .PP
 # end of crontab
 .RE
@@ -50,7 +50,7 @@ Written by T.J. Mather
 .SH "REPORTING BUGS"
 Report bugs to <support@maxmind.com>
 .SH COPYRIGHT
-Copyright © 2004 MaxMind LLC
+Copyright © 2006 MaxMind LLC
 
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY
