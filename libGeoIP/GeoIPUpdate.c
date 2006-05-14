@@ -123,6 +123,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char *f_str;
 	GeoIP * gi;
 	char * db_info;
+	char block[block_size];
 
 	_GeoIP_setup_dbfilename();
 
@@ -257,7 +258,6 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	if(gi_fh == NULL) {
 		return GEOIP_TEST_IO_ERR;
 	}
-	char block[block_size];
 	for (;;) {
 		int amt;
 		amt = gzread(gz_fh, block, block_size);
@@ -369,6 +369,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	char *tmpstr;
 	int dbtype;
 	int lookupresult = 1;
+	char block[block_size];
 
 	hostlist = gethostbyname(GeoIPUpdateHost);
 
@@ -638,7 +639,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	/* uncompress gzip file */
 	offset = 0;
 	gz_fh = gzopen(file_path_gz, "rb");
-	char block[block_size];
 	for (;;) {
 		int amt;
 		amt = gzread(gz_fh, block, block_size);
