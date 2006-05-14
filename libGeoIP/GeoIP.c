@@ -20,19 +20,19 @@
 
 #include "GeoIP.h"
 
-#include <netdb.h>
-#include <sys/socket.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #ifndef _WIN32
 #include <netdb.h>
+#include <sys/socket.h>
 #include <netinet/in.h> /* For ntohl */
 #include <arpa/inet.h>
 #else
 #include <windows.h>
+#define snprintf _snprintf
 #endif
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <sys/types.h> /* for fstat */
 #include <sys/stat.h>	/* for fstat */
@@ -365,13 +365,14 @@ GeoIP* GeoIP_new (int flags) {
 
 GeoIP* GeoIP_open (const char * filename, int flags) {
 	struct stat buf;
+	GeoIP * gi;
 #ifdef _WIN32
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
 		return NULL;
 #endif
 
-	GeoIP *gi = (GeoIP *)malloc(sizeof(GeoIP));
+	gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
 	gi->file_path = malloc(sizeof(char) * (strlen(filename)+1));
