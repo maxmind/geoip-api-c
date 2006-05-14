@@ -25,16 +25,15 @@ Verbose mode, prints out the steps that geoipupdate takes.
 Specifies the configuration file that contains the license key.
 Defaults to GeoIP.conf in the system configuration directory.
 .SH USAGE
-Typically you'll want to write a crontab to run on the first day
-of each month that will run geoipupdate.  Below is a sample
-crontab that runs geoipupdate on each Wendesday at midnight:
+Typically you'll want to write a weekly crontab that will run geoipupdate.
+Below is a sample crontab that runs geoipupdate on each Wendesday at noon:
 .PP
 .RS
 # top of crontab
 .PP
 MAILTO=your@email.com
 .PP
-0 0 * * 3 /usr/local/bin/geoipupdate -v
+12 0 * * 3 /usr/local/bin/geoipupdate
 .PP
 # end of crontab
 .RE
