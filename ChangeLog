@@ -1,5 +1,8 @@
+	* Fixed NetWare compiler issue with char block[block_size] declaration (Guenter Knauf)
+	* Updated geoipupdate example to run weekly
+
 1.3.17	2006-5-14
-	* Fixed headers for Windows/Netware compliation (Guenter Knauf)
+	* Fixed headers for Windows/Netware compilation (Guenter Knauf)
 	* Fixed Received Error -21 (Sanity check database_info string failed)
 		when running geoipupdate with GeoIP Country when UserId and
 		productIds were not specified.  Bug was introduced in 1.3.15.

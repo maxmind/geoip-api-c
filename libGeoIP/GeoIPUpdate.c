@@ -40,6 +40,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define BLOCK_SIZE 1024
+
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
 const char *GeoIPHTTPRequestMD5 = "GET /app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
@@ -109,7 +111,6 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char * buf;
 	struct sockaddr_in sa;
 	int offset = 0, err;
-	int block_size = 1024;
 	char * request_uri;
 	char * compr;
 	unsigned long comprLen;
@@ -123,7 +124,8 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char *f_str;
 	GeoIP * gi;
 	char * db_info;
-	char block[block_size];
+	char block[BLOCK_SIZE];
+	int block_size = BLOCK_SIZE;
 
 	_GeoIP_setup_dbfilename();
 
@@ -348,7 +350,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	char * buf;
 	struct sockaddr_in sa;
 	int offset = 0, err;
-	int block_size = 1024;
 	char * request_uri;
 	char * compr;
 	unsigned long comprLen;
@@ -369,7 +370,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	char *tmpstr;
 	int dbtype;
 	int lookupresult = 1;
-	char block[block_size];
+	char block[BLOCK_SIZE];
+	int block_size = BLOCK_SIZE;
 
 	hostlist = gethostbyname(GeoIPUpdateHost);
 
