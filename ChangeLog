@@ -1,3 +1,6 @@
+	* Fixed alpha-3 codes ordering, replaced TLS,TKM,TUN,TON with TKM,TUN,TON,TLS
+	* TP/East Timor changed to TL/Timor-Leste, reflecting changes in ISO-3166
+	* Added Netware and Windows makefiles (Guenter Knauf)
 	* Fixed NetWare compiler issue with char block[block_size] declaration (Guenter Knauf)
 	* Updated geoipupdate example to run weekly
 
