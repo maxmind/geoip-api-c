@@ -1,3 +1,2 @@
-24.24.24.24
-80.24.24.24
-67.4.4.4
+24.24.24.24	# Should return Ithaca, NY, US
+80.24.24.24	# Should return Madrid, 29, ES
