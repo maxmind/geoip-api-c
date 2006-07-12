@@ -1,5 +1,5 @@
 There are two licenses, one for the C library software, and one for
-the March 2002 database.
+the GeoLite Country database.
 
 Note that commercial licenses are available, if you don't want
 to use the GPL, or don't want to include the advertising clause.
@@ -7,16 +7,33 @@ For details, e-mail support@maxmind.com
 
 SOFTWARE LICENSE (C library)
 
-The GeoIP C Library is licensed under the GPL.  For details see
-the COPYING file.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-DATA LICENSE (GeoIP March 2002 Database)
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-Copyright (c) 2002 MaxMind.com.  All Rights Reserved.
+Optional GPL License Exception for PHP. As a special exception,
+MaxMind LLC gives permission to distribute derivative works that 
+are formed with GPL-licensed GeoIP software and with software
+licensed under version 3.0 of the PHP license. You must obey the 
+GNU General Public License in all respects for all of the
+code used other than code licensed under version 3.0 of the PHP 
+license.
+
+For a copy of the GPL License, see the COPYING file.
+
+DATA LICENSE (GeoLite Country Database)
+
+Copyright (c) 2006 MaxMind, LLC.  All Rights Reserved.
 
 All advertising materials and documentation mentioning features or use of
 this database must display the following acknowledgement:
-"This product includes GeoIP data created by MaxMind, available from
+"This product includes GeoLite data created by MaxMind, available from
 http://maxmind.com/"
 
 Redistribution and use with or without modification, are permitted provided
@@ -31,10 +48,10 @@ http://maxmind.com/"
 3. "MaxMind" may not be used to endorse or promote products derived from this
 database without specific prior written permission.
 
-THIS DATABASE IS PROVIDED BY MAXMIND.COM ``AS IS'' AND ANY 
+THIS DATABASE IS PROVIDED BY MAXMIND LLC ``AS IS'' AND ANY 
 EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL MAXMIND.COM BE LIABLE FOR ANY 
+DISCLAIMED. IN NO EVENT SHALL MAXMIND LLC BE LIABLE FOR ANY 
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND

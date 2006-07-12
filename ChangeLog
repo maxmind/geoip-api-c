@@ -1,3 +1,4 @@
+	* Updated LICENSE file to add GPL License Exception for PHP
 	* Fixed alpha-3 codes ordering, replaced TLS,TKM,TUN,TON with TKM,TUN,TON,TLS
 	* TP/East Timor changed to TL/Timor-Leste, reflecting changes in ISO-3166
 	* Added Netware and Windows makefiles (Guenter Knauf)
