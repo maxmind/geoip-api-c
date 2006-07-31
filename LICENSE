@@ -2,30 +2,24 @@ There are two licenses, one for the C library software, and one for
 the GeoLite Country database.
 
 Note that commercial licenses are available, if you don't want
-to use the GPL, or don't want to include the advertising clause.
+to use the LGPL, or don't want to include the advertising clause.
 For details, e-mail support@maxmind.com
 
 SOFTWARE LICENSE (C library)
 
+Copyright (C) 2006 MaxMind LLC
+
 This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public
+modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either
-version 2 of the License, or (at your option) any later version.
+version 2.1 of the License, or (at your option) any later version.
 
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+Lesser General Public License for more details.
 
-Optional GPL License Exception for PHP. As a special exception,
-MaxMind LLC gives permission to distribute derivative works that 
-are formed with GPL-licensed GeoIP software and with software
-licensed under version 3.0 of the PHP license. You must obey the 
-GNU General Public License in all respects for all of the
-code used other than code licensed under version 3.0 of the PHP 
-license.
-
-For a copy of the GPL License, see the COPYING file.
+For a copy of the LGPL License, see the COPYING file.
 
 DATA LICENSE (GeoLite Country Database)
 
