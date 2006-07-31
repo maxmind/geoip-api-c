@@ -5,7 +5,7 @@ INCLUDES =	\
 	-Wall -ansi				\
 	$(NULL)
 
-check_PROGRAMS = test-geoip test-geoip-proxy
+check_PROGRAMS = test-geoip
 
 #if WITH_CITY
 noinst_PROGRAMS = benchmark test-geoip-region test-geoip-city test-geoip-org test-geoip-asnum test-geoip-isp test-geoip-netspeed
@@ -20,11 +20,6 @@ test_geoip_SOURCES = test-geoip.c
 test_geoip_LDFLAGS =
 test_geoip_DEPENDENCIES = $(DEPS)
 test_geoip_LDADD = $(LDADDS)
-
-test_geoip_proxy_SOURCES = test-geoip-proxy.c
-test_geoip_proxy_LDFLAGS =
-test_geoip_proxy_DEPENDENCIES = $(DEPS)
-test_geoip_proxy_LDADD = $(LDADDS)
 
 test_geoip_region_SOURCES = test-geoip-region.c
 test_geoip_region_LDFLAGS =
