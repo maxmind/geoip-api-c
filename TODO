@@ -1,3 +1,10 @@
+Rutger Okhuizen 7/31/2006
+
+Implement waiting algorithm for GEOIP_CHECK_CACHE,
+so stat is called on every lookup.
+
+-----------------------
+
 Maurice Cinquini
 
 *** ifndef WIN32 on netdb.h ? ***
@@ -18,8 +25,6 @@ to GeoIP_region_by_name
 
 
 
-
-memory cache should check for updated file
 
 Performance improvements suggested by Jason Linhart
 1. cluster nodes to improve disk performance when using GEOIP_STANDARD
