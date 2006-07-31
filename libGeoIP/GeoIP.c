@@ -446,6 +446,8 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 }
 
 void GeoIP_delete (GeoIP *gi) {
+	if (gi == NULL )
+		return;
 	if (gi->GeoIPDatabase != NULL)
 		fclose(gi->GeoIPDatabase);
 	if (gi->cache != NULL)
