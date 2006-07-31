@@ -200,31 +200,43 @@ void _setup_segments(GeoIP * gi) {
 static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
-
 	if (gi->flags & GEOIP_CHECK_CACHE) {
-		if (fstat(fileno(gi->GeoIPDatabase), &buf) != -1) {
-			if (buf.st_mtime > gi->mtime) {
+		if (stat(gi->file_path, &buf) != -1) {
+			if (buf.st_mtime != gi->mtime) {
 				/* GeoIP Database file updated */
 				if (gi->flags & GEOIP_MEMORY_CACHE) {
 					/* reload database into memory cache */
-					if (realloc(gi->cache, buf.st_size) != NULL) {
-						if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
-							fprintf(stderr,"Error reading file %s\n",gi->file_path);
-							return -1;
-						}
-						gi->mtime = buf.st_mtime;
-					}
-				} else {
-					/* refresh filehandle */
-					fclose(gi->GeoIPDatabase);
-					if (gi->databaseSegments != NULL)
-						free(gi->databaseSegments);
-					gi->GeoIPDatabase = fopen(gi->file_path,"rb");
-					if (gi->GeoIPDatabase == NULL) {
-						fprintf(stderr,"Error Opening file %s\n",gi->file_path);
+					if ((gi->cache = (unsigned char*) realloc(gi->cache, buf.st_size)) == NULL) {
+						fprintf(stderr,"Out of memory when reloading %s\n",gi->file_path);
 						return -1;
 					}
-					_setup_segments(gi);
+				}
+				/* refresh filehandle */
+				fclose(gi->GeoIPDatabase);
+				gi->GeoIPDatabase = fopen(gi->file_path,"rb");
+				if (gi->GeoIPDatabase == NULL) {
+					fprintf(stderr,"Error Opening file %s when reloading\n",gi->file_path);
+					return -1;
+				}
+				gi->mtime = buf.st_mtime;
+				if (gi->flags & GEOIP_MEMORY_CACHE) {
+					if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
+						fprintf(stderr,"Error reading file %s when reloading\n",gi->file_path);
+						return -1;
+					}
+				}
+				if (gi->databaseSegments != NULL)
+					free(gi->databaseSegments);
+				_setup_segments(gi);
+				if (gi->flags & GEOIP_INDEX_CACHE) {                        
+					gi->index_cache = (unsigned char *) realloc(gi->index_cache, sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
+					if (gi->index_cache != NULL) {
+						fseek(gi->GeoIPDatabase, 0, SEEK_SET);
+						if (fread(gi->index_cache, sizeof(unsigned char), gi->databaseSegments[0] * (long)gi->record_length * 2, gi->GeoIPDatabase) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
+							fprintf(stderr,"Error reading file %s where reloading\n",gi->file_path);
+							return -1;
+						}
+					}
 				}
 			}
 		}
