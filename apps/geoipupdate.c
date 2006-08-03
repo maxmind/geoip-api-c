@@ -45,6 +45,22 @@ void my_printf(char * str) {
 	free(str);
 }
 
+void print_status (int err, char * license_file) {
+	if (err == GEOIP_NO_NEW_UPDATES) {
+		fprintf(stderr,"GeoIP Database up to date\n");
+	} else if (err == GEOIP_LICENSE_KEY_INVALID_ERR) {
+		fprintf(stderr,"Invalid License Key in %s - Please visit http://www.maxmind.com/app/products for a subscription\n",license_file);
+	} else if (err == GEOIP_USER_ID_INVALID_ERR){
+		fprintf(stderr,"Invalid UserID\n");
+	} else if (err == GEOIP_PRODUCT_ID_INVALID_ERR){
+		fprintf(stderr,"Invalid product ID or subscription expired\n");
+	} else if (err < 0) {
+		fprintf(stderr,"Received Error %d (%s) when attempting to update GeoIP Database\n",err, GeoIP_get_error_message(err));
+	} else {
+		fprintf(stderr,"Updated database\n");
+	}
+}
+
 int main (int argc, char *argv[]) {
   int verbose = 0;
   char * license_file = NULL;
@@ -228,25 +244,13 @@ int main (int argc, char *argv[]) {
 		client_ipaddr = NULL;
 		for (i = 0; i < num_product_ids; i++) {
 			err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
+			print_status(err, license_file);
 		}
 	} else {
 		/* Old format with just license key for MaxMind GeoIP Country database updates 
 		 * here for backwards compatibility */
 		err = GeoIP_update_database(the_license_key_str, verbose, &my_printf);
-	}
-
-	if (err == GEOIP_NO_NEW_UPDATES) {
-		fprintf(stderr,"GeoIP Database up to date\n");
-	} else if (err == GEOIP_LICENSE_KEY_INVALID_ERR) {
-		fprintf(stderr,"Invalid License Key in %s - Please visit http://maxmind.com/ for a subscription\n",license_file);
-	} else if (err == GEOIP_USER_ID_INVALID_ERR){
-		fprintf(stderr,"Invalid UserID\n");
-	} else if (err == GEOIP_PRODUCT_ID_INVALID_ERR){
-		fprintf(stderr,"Invalid product ID or subscription expired\n");
-	} else if (err < 0) {
-		fprintf(stderr,"Received Error %d (%s) when attempting to update GeoIP Database\n",err, GeoIP_get_error_message(err));
-	} else {
-		fprintf(stderr,"Updated database(s).\n");
+		print_status(err, license_file);
 	}
 
 	if (the_product_id_str != NULL) {
