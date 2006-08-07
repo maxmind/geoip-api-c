@@ -1,3 +1,4 @@
+1.4.0	2006-8-7
 	* Changed license from GPL to LGPL, so that PHP Extension can be included in PECL (Olivier Hill)
 	* Rewrote GEOIP_CHECK_CACHE code, fixed numerous bugs
 		- CheckCache now works if GeoIP file is overwriten by mv command
@@ -5,6 +6,8 @@
 		- Fixed segfault issue in GEOIP_MEMORY_CACHE mode
 		- Fixed garbage data appearing in GEOIP_INDEX_CACHE mode
 		- Fixed realloc in case realloc returns new memory block (Andre Morozov of Stone Steps)
+	* Updated geoipupdate to print status messages for each database instead of just last database
+	* Check that gi is not null before running code in GeoIP_delete
 	* Updated LICENSE file to add GPL License Exception for PHP
 	* Fixed alpha-3 codes ordering, replaced TLS,TKM,TUN,TON with TKM,TUN,TON,TLS
 	* TP/East Timor changed to TL/Timor-Leste, reflecting changes in ISO-3166

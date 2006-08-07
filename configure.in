@@ -1,7 +1,7 @@
 AC_INIT(libGeoIP/GeoIP.c)
 dnl AM_CONFIG_HEADER(config.h)
 
-VERSION=1.3.17
+VERSION=1.4.0
 PACKAGE=GeoIP
 GEOIP_VERSION_INFO=`echo $VERSION | awk -F. '{ printf "%d:%d:%d", $1+$2, $3, $2 }'`
 AC_SUBST(GEOIP_VERSION_INFO)

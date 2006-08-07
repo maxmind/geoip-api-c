@@ -1,5 +1,5 @@
-				GeoIP 1.3.17
-				------------
+				GeoIP 1.4.0
+				-----------
 
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
 GeoIPRegion.region is no longer a pointer but an in-structure
