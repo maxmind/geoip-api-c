@@ -147,6 +147,8 @@ void _setup_segments(GeoIP * gi) {
 	unsigned char delim[3];
 	unsigned char buf[SEGMENT_RECORD_LENGTH];
 
+	gi->databaseSegments = NULL;
+
 	/* default to GeoIP Country Edition */
 	gi->databaseType = GEOIP_COUNTRY_EDITION;
 	gi->record_length = STANDARD_RECORD_LENGTH;
@@ -225,9 +227,15 @@ int _check_mtime(GeoIP *gi) {
 						return -1;
 					}
 				}
-				if (gi->databaseSegments != NULL)
+				if (gi->databaseSegments != NULL) {
 					free(gi->databaseSegments);
+					gi->databaseSegments = NULL;
+				}
 				_setup_segments(gi);
+				if (gi->databaseSegments == NULL) {
+					fprintf(stderr, "Error reading file %s -- corrupt\n", gi->file_path);
+					return -1;
+				}
 				if (gi->flags & GEOIP_INDEX_CACHE) {                        
 					gi->index_cache = (unsigned char *) realloc(gi->index_cache, sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
 					if (gi->index_cache != NULL) {
@@ -387,10 +395,13 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
-	gi->file_path = malloc(sizeof(char) * (strlen(filename)+1));
-	if (gi->file_path == NULL)
+	size_t len = sizeof(char) * (strlen(filename)+1);
+	gi->file_path = malloc(len);
+	if (gi->file_path == NULL) {
+		free(gi);
 		return NULL;
-	strcpy(gi->file_path, filename);
+	}
+	strncpy(gi->file_path, filename, len);
 	gi->GeoIPDatabase = fopen(filename,"rb");
 	if (gi->GeoIPDatabase == NULL) {
 		fprintf(stderr,"Error Opening file %s\n",filename);
@@ -401,6 +412,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		if (flags & GEOIP_MEMORY_CACHE) {
 			if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
 				fprintf(stderr,"Error stating file %s\n",filename);
+				free(gi->file_path);
 				free(gi);
 				return NULL;
 			}
@@ -410,6 +422,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 				if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
 					fprintf(stderr,"Error reading file %s\n",filename);
 					free(gi->cache);
+					free(gi->file_path);
 					free(gi);
 					return NULL;
 				}
@@ -418,6 +431,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			if (flags & GEOIP_CHECK_CACHE) {
 				if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
 					fprintf(stderr,"Error stating file %s\n",filename);
+					free(gi->file_path);
 					free(gi);
 					return NULL;
 				}
@@ -433,6 +447,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 				fseek(gi->GeoIPDatabase, 0, SEEK_SET);
 				if (fread(gi->index_cache, sizeof(unsigned char), gi->databaseSegments[0] * (long)gi->record_length * 2, gi->GeoIPDatabase) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
 					fprintf(stderr,"Error reading file %s\n",filename);
+					free(gi->databaseSegments);
 					free(gi->index_cache);
 					free(gi);
 					return NULL;
@@ -791,12 +806,14 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
 		fread(buf, sizeof(char), MAX_ORG_RECORD_LENGTH, gi->GeoIPDatabase);
-		org_buf = malloc(sizeof(char) * (strlen(buf)+1));
-		strcpy(org_buf, buf);
+		size_t len = sizeof(char) * (strlen(buf)+1);
+		org_buf = malloc(len);
+		strncpy(org_buf, buf, len);
 	} else {
 		buf_pointer = gi->cache + (long)record_pointer;
-		org_buf = malloc(sizeof(char) * (strlen(buf_pointer)+1));
-		strcpy(org_buf, buf_pointer);
+		size_t len = sizeof(char) * (strlen(buf_pointer)+1);
+		org_buf = malloc(len);
+		strncpy(org_buf, buf_pointer, len);
 	}
 	return org_buf;
 }

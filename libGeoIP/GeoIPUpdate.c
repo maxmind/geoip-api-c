@@ -99,10 +99,12 @@ const char * GeoIP_get_error_message(int i) {
 
 void GeoIP_printf(void (*f)(char *), const char *str) {
 	char * f_str;
-	f_str = malloc(strlen(str)+1);
-	strcpy(f_str,str);
+	size_t len = strlen(str)+1;
+	f_str = malloc(len);
+	strncpy(f_str,str,len);
 	if (f != NULL)
 		(*f)(f_str);
+	free(f_str);
 }
 
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char *)) {
@@ -119,7 +121,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char * file_path_gz, * file_path_test;
 	MD5_CONTEXT context;
 	unsigned char buffer[1024], digest[16];
-	char hex_digest[32] = "00000000000000000000000000000000";
+	char hex_digest[33] = "00000000000000000000000000000000\0";
 	unsigned int i;
 	char *f_str;
 	GeoIP * gi;
@@ -131,10 +133,12 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], "rb")) == NULL) {
-		f_str = malloc(strlen(NoCurrentDB) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
-		sprintf(f_str,NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+		size_t len = strlen(NoCurrentDB) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1;
+		f_str = malloc(len);
+		snprintf(f_str, len, NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	} else {
 		md5_init(&context);
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
@@ -142,12 +146,16 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		md5_final (&context);
     memcpy(digest,context.buf,16);
 		fclose (cur_db_fh);
-		for (i = 0; i < 16; i++)
-			sprintf (&hex_digest[2*i], "%02x", digest[i]);
-		f_str = malloc(strlen(MD5Info) + strlen(hex_digest) - 1);
-		sprintf(f_str, MD5Info, hex_digest);
+		for (i = 0; i < 16; i++) {
+			// "%02x" will write 3 chars
+			snprintf (&hex_digest[2*i], 3, "%02x", digest[i]);
+		}
+		size_t len = strlen(MD5Info) + strlen(hex_digest) - 1;
+		f_str = malloc(len);
+		snprintf(f_str, len, MD5Info, hex_digest);
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	}
 
 	hostlist = gethostbyname(GeoIPUpdateHost);
@@ -226,14 +234,17 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	strcpy(file_path_gz,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
-		f_str = malloc(strlen(SavingGzip) + strlen(file_path_gz) - 1);
-		sprintf(f_str,SavingGzip,file_path_gz);
+		size_t len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
+		f_str = malloc(len);
+		snprintf(f_str, len, SavingGzip,file_path_gz);
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	}
 	comp_fh = fopen(file_path_gz, "wb");
 
 	if(comp_fh == NULL) {
+		free(file_path_gz);
 		free(buf);
 		return GEOIP_GZIP_IO_ERR;
 	}
@@ -258,12 +269,15 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	gi_fh = fopen(file_path_test, "wb");
 
 	if(gi_fh == NULL) {
+		free(file_path_test);
 		return GEOIP_TEST_IO_ERR;
 	}
 	for (;;) {
 		int amt;
 		amt = gzread(gz_fh, block, block_size);
 		if (amt == -1) {
+			free(file_path_test);
+			fclose(gi_fh);
 			gzclose(gz_fh);
 			return GEOIP_GZIP_READ_ERR;
 		}
@@ -283,6 +297,9 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	if (verbose == 1) {
 		f_str = malloc(strlen(WritingFile) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1);
 		sprintf(f_str,WritingFile,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+		if (f != NULL)
+			(*f)(f_str);
+		free(f_str);
 	}
 
 	/* sanity check */
@@ -359,8 +376,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	MD5_CONTEXT context;
 	MD5_CONTEXT context2;
 	unsigned char buffer[1024], digest[16] ,digest2[16];
-	char hex_digest[33] = "00000000000000000000000000000000";
-	char hex_digest2[33] = "00000000000000000000000000000000";
+	char hex_digest[33] = "0000000000000000000000000000000\0";
+	char hex_digest2[33] = "0000000000000000000000000000000\0";
 	unsigned int i;
 	char *f_str;
 	GeoIP * gi;
@@ -436,6 +453,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	} else {
 		md5_init(&context);
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
@@ -449,6 +467,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		sprintf(f_str, MD5Info, hex_digest);
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	}
 	if (verbose == 1) {
 		printf("MD5 sum of database %s is %s \n",geoipfilename,hex_digest);
@@ -456,6 +475,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (client_ipaddr[0] == NULL) {
 		/* We haven't gotten our IP address yet, so let's request it */
 		if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+			free(geoipfilename);
 			return GEOIP_SOCKET_OPEN_ERR;
 		}
 
@@ -468,11 +488,15 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			GeoIP_printf(f,"Connecting to MaxMind GeoIP Update server\n");
 
 		/* Download gzip file */
-		if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
+		if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0) {
+			free(geoipfilename);
 			return GEOIP_CONNECTION_ERR;
+		}
 		request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequestMD5)+1036));
-		if (request_uri == NULL)
+		if (request_uri == NULL) {
+			free(geoipfilename);
 			return GEOIP_OUT_OF_MEMORY_ERR;
+		}
 
 		/* get client ip address from MaxMind web page */
 		sprintf(request_uri,"GET /app/update_getipaddr HTTP/1.0\nHost: %s\n\n",GeoIPUpdateHost);
@@ -482,8 +506,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		}
 		free(request_uri);
 		buf = malloc(sizeof(char) * (block_size+1));
-		if (buf == NULL)
+		if (buf == NULL) {
+			free(geoipfilename);
 			return GEOIP_OUT_OF_MEMORY_ERR;
+		}
 		offset = 0;
 
 		for (;;){
@@ -515,14 +541,15 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	ipaddress = client_ipaddr[0];
 
 	/* make a md5 sum of ip address and license_key and store it in hex_digest2 */
-	request_uri = malloc(sizeof(char) * 2036);
+	size_t request_uri_len = sizeof(char) * 2036;
+	request_uri = malloc(request_uri_len);
 	md5_init(&context2);
 	md5_write (&context2, license_key, 12);//add license key to the md5 sum
 	md5_write (&context2, ipaddress, strlen(ipaddress));//add ip address to the md5 sum
 	md5_final (&context2);
   memcpy(digest2,context2.buf,16);
 	for (i = 0; i < 16; i++)
-		sprintf (&hex_digest2[2*i], "%02x", digest2[i]);// change the digest to a hex digest
+		snprintf (&hex_digest2[2*i], 3, "%02x", digest2[i]);// change the digest to a hex digest
 	if (verbose == 1) {
 		printf("md5sum of ip address and license key is %s \n",hex_digest2);
 	}
@@ -539,7 +566,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	sa.sin_family = AF_INET;
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
-	sprintf(request_uri,GeoIPHTTPRequestMD5,hex_digest,hex_digest2,user_id,data_base_type);
+	snprintf(request_uri, request_uri_len, GeoIPHTTPRequestMD5,hex_digest,hex_digest2,user_id,data_base_type);
 	send(sock, request_uri, strlen(request_uri),0);
 	if (verbose == 1) {
 		printf("sending request %s\n",request_uri);
@@ -604,14 +631,17 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	strcpy(file_path_gz,geoipfilename);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
-		f_str = malloc(strlen(SavingGzip) + strlen(file_path_gz) - 1);
-		sprintf(f_str,SavingGzip,file_path_gz);
+		size_t len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
+		f_str = malloc(len);
+		snprintf(f_str,len,SavingGzip,file_path_gz);
 		if (f != NULL)
 			(*f)(f_str);
+		free(f_str);
 	}
 	comp_fh = fopen(file_path_gz, "wb");
 
 	if(comp_fh == NULL) {
+		free(file_path_gz);
 		free(buf);
 		return GEOIP_GZIP_IO_ERR;
 	}
@@ -630,12 +660,16 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		GeoIP_printf(f,"Uncompressing gzip file ... ");
 
 	file_path_test = malloc(sizeof(char) * (strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) + 6));
-	if (file_path_test == NULL)
+	if (file_path_test == NULL) {
+		free(file_path_gz);
 		return GEOIP_OUT_OF_MEMORY_ERR;
+	}
 	strcpy(file_path_test,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	strcat(file_path_test,".test");
 	gi_fh = fopen(file_path_test, "wb");
 	if(gi_fh == NULL) {
+		free(file_path_test);
+		free(file_path_gz);
 		return GEOIP_TEST_IO_ERR;
 	}
 	/* uncompress gzip file */
@@ -645,7 +679,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		int amt;
 		amt = gzread(gz_fh, block, block_size);
 		if (amt == -1) {
+			free(file_path_gz);
+			free(file_path_test);
 			gzclose(gz_fh);
+			fclose(gi_fh);
 			return GEOIP_GZIP_READ_ERR;
 		}
 		if (amt == 0) {
@@ -664,6 +701,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (verbose == 1) {
 		f_str = malloc(strlen(WritingFile) + strlen(geoipfilename) - 1);
 		sprintf(f_str,WritingFile,geoipfilename);
+		free(f_str);
 	}
 
 	/* sanity check */
