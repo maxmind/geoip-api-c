@@ -1,3 +1,4 @@
+	* Fixed build issue when using --as-needed flag (Diego 'Flameeyes' Pettenò)
 	* Add sanity checking for filename returned by MaxMind.com server for geoipupdate filename
 		(Dean Gaudet, arctic.org)
 	* Fixed memory leaks under error conditions, buffer overflow using sprintf,
