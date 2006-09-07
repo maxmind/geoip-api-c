@@ -43,7 +43,8 @@ typedef enum {
 	GEOIP_SANITY_LOOKUP_FAIL      = -22, /* Sanity check ip address lookup failed */
 	GEOIP_RENAME_ERR              = -23, /* Rename error while installing db, check errno */
 	GEOIP_USER_ID_INVALID_ERR     = -24, /* Invalid userID */
-	GEOIP_PRODUCT_ID_INVALID_ERR  = -25  /* Invalid product ID or subscription expired */
+	GEOIP_PRODUCT_ID_INVALID_ERR  = -25, /* Invalid product ID or subscription expired */
+	GEOIP_INVALID_SERVER_RESPONSE = -26  /* Server returned invalid response */
 } GeoIPUpdateCode;
 
 const char * GeoIP_get_error_message(int i);

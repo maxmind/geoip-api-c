@@ -92,6 +92,8 @@ const char * GeoIP_get_error_message(int i) {
     return "Invalid userID";
   case GEOIP_PRODUCT_ID_INVALID_ERR:
     return "Invalid product ID or subscription expired";
+  case GEOIP_INVALID_SERVER_RESPONSE:
+    return "Server returned something unexpected";
   default:
     return "no error";
   }  
@@ -437,6 +439,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	buf[offset] = 0;
 	offset = 0;
 	tmpstr = strstr(buf, "\r\n\r\n") + 4;
+	if (tmpstr[0] == '.' || strchr(tmpstr, '/') != NULL) {
+		free(buf);
+		return GEOIP_INVALID_SERVER_RESPONSE;
+	}
 	geoipfilename = _GeoIP_full_path_to(tmpstr);
 	free(buf);
 
