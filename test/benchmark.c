@@ -1,67 +1,108 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
-/* benchmark.c
- *
- * Copyright (C) 2006 MaxMind LLC
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
-
+#include <stdio.h>
 #include <GeoIP.h>
+#include <GeoIPCity.h>
+#include <sys/time.h>
 
-const int numIps = 70;
-const int numLoops = 1000;
 
-int main () {
-  FILE *f;
-  char ipAddress[numIps][30];
-  char expectedCountry[numIps][3];
-  char expectedCountry3[numIps][4];
-  const char * returnedCountry;
-	GeoIP * gi;
-	int failed = 0;
-	int test_num = 0;
-	int i, j;
-	/*gi = GeoIP_open("../data/GeoIP.dat", GEOIP_MEMORY_CACHE);*/
-	gi = GeoIP_open("../data/GeoIP.dat", GEOIP_STANDARD);
+char *ipstring[4] = {"24.24.24.24","80.24.24.80",
+"200.24.24.40","68.24.24.46"};
+int numipstrings = 4;
+struct timeval timer_t1;
+struct timeval timer_t2;
 
-	if (gi == NULL) {
-		fprintf(stderr, "Error opening database\n");
-		exit(1);
-	}
 
-  f = fopen("country_test.txt","r");
+void timerstart(){
+  gettimeofday(&timer_t1,NULL);
+}
+double timerstop(){
+  gettimeofday(&timer_t2,NULL);
+  int a1 = timer_t2.tv_sec - timer_t1.tv_sec;
+  int a2 = timer_t2.tv_usec - timer_t1.tv_usec;
+  if (a1 < 0){
+    a1 = a1 - 1;
+    a2 = a2 + 1000000;
+  }
+  double r = (((double) a1) + (((double) a2) / 1000000));
+  return r;
+}
 
-	while (fscanf(f, "%s", ipAddress[test_num]) != EOF) {
-		fscanf(f, "%s", expectedCountry[test_num]);
-		fscanf(f, "%s", expectedCountry3[test_num]);
-		test_num++;
-	}
+void testgeoipcountry(int flags,const char *msg,int numlookups){
+  GeoIP *i = GeoIP_open("/usr/local/share/GeoIP/GeoIP.dat",flags);
+  if (i == NULL){
+    printf("error: GeoIP.dat does not exist\n");
+    return;
+  }
+  const char *str;
+  timerstart();
+  int i4 = 0;
+  int i2 = 0;
+  for (i2 = 0;i2 < numlookups;i2++){
+    str = GeoIP_country_name_by_addr(i,ipstring[i4]);
+    i4 = (i4 + 1) % numipstrings;
+  }
+  double t = timerstop();
+  printf("%s\n", msg);
+  printf("%d lookups made in %f seconds \n",numlookups,t);
+  GeoIP_delete(i);
+}
 
-	for (i = 0; i < numLoops; i++) {
-		for (j =0; j < numIps; j++) {
-			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress[j]);
-			if (strcmp(returnedCountry, expectedCountry[j]) != 0) {
-				fprintf(stderr,"Test for %s failed, got %s, expected %s\n",ipAddress[j],returnedCountry,expectedCountry[j]);
-				failed = 1;
-			}
-		}
-	}
+void testgeoipregion(int flags,const char *msg,int numlookups){
+  GeoIP *i = GeoIP_open("/usr/local/share/GeoIP/GeoIPRegion.dat",flags);
+  if (i == NULL){
+    printf("error: GeoIPRegion.dat does not exist\n");
+    return;
+  }
+  GeoIPRegion *i3;
+  timerstart();
+  int i4 = 0;
+  int i2 = 0;
+  for (i2 = 0;i2 < numlookups;i2++){
+    i3 = GeoIP_region_by_addr(i,ipstring[i4]);
+    GeoIPRegion_delete(i3); 
+    i4 = (i4 + 1) % numipstrings;
+  }
+  double t = timerstop();
+  printf("%s\n", msg);
+  printf("%d lookups made in %f seconds \n",numlookups,t);
+  GeoIP_delete(i);
+}
 
-	printf("Ran %d lookups\n", numIps * numLoops);
+void testgeoipcity(int flags,const char *msg,int numlookups){
+  GeoIP *i = GeoIP_open("/usr/local/share/GeoIP/GeoIPCity.dat",flags);
+  if (i == NULL){
+    printf("error: GeoLiteCity.dat does not exist\n");
+    return;
+  }
+  GeoIPRecord * i3;
+  timerstart();
+  int i4 = 0;
+  int i2 = 0;
+  for (i2 = 0;i2 < numlookups;i2++){
+    i3 = GeoIP_record_by_addr(i,ipstring[i4]);
+    GeoIPRecord_delete(i3);
+    i4 = (i4 + 1) % numipstrings;
+  }
+  double t = timerstop();
+  printf("%s\n", msg);
+  printf("%d lookups made in %f seconds \n",numlookups,t);
+  GeoIP_delete(i);
+}
 
-	fclose(f);
-	GeoIP_delete(gi);
-	return failed;
+int main(){
+  int time = 300*numipstrings;
+  testgeoipcountry(0,"GeoIP Country",100*time);
+  testgeoipcountry(GEOIP_CHECK_CACHE,"GeoIP Country with GEOIP_CHECK_CACHE",100*time);
+  testgeoipcountry(GEOIP_MEMORY_CACHE,"GeoIP Country with GEOIP_MEMORY_CACHE",1000*time);
+  testgeoipcountry(GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE,"GeoIP Country with GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE",1000*time);
+
+  testgeoipregion(0,"GeoIP Region",100*time);
+  testgeoipregion(GEOIP_CHECK_CACHE,"GeoIP Region with GEOIP_CHECK_CACHE",100*time);
+  testgeoipregion(GEOIP_MEMORY_CACHE,"GeoIP Region with GEOIP_MEMORY_CACHE",1000*time);
+  testgeoipregion(GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE,"GeoIP Region with GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE",1000*time);
+
+  testgeoipcity(0,"GeoIP City",50*time);
+  testgeoipcity(GEOIP_INDEX_CACHE,"GeoIP City with GEOIP_INDEX_CACHE",200*time);
+  testgeoipcity(GEOIP_INDEX_CACHE | GEOIP_CHECK_CACHE,"GeoIP City with GEOIP_INDEX_CACHE and GEOIP_CHECK_CACHE",200*time);
+  testgeoipcity(GEOIP_MEMORY_CACHE,"GeoIP City with GEOIP_MEMORY_CACHE",500*time);
+  return 0;
 }
