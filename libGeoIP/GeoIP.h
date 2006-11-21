@@ -108,6 +108,7 @@ extern const char GeoIP_country_continent[247][3];
 #define GEOIP_API
 #endif  /* DLL */
 
+GEOIP_API void GeoIP_setup_custom_directory(char *dir);
 GEOIP_API GeoIP* GeoIP_open_type (int type, int flags);
 GEOIP_API GeoIP* GeoIP_new(int flags);
 GEOIP_API GeoIP* GeoIP_open(const char * filename, int flags);

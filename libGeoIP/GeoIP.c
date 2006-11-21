@@ -75,30 +75,44 @@ const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA"
 
 const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition"};
 
+char * custom_directory = NULL;
+
+void GeoIP_setup_custom_directory (char * dir) {
+	custom_directory = dir;
+}
+
 char *_GeoIP_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
 
+	if (custom_directory == NULL){
 #ifndef _WIN32
-	memset(path, 0, sizeof(char) * 1024);
-	snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
+		memset(path, 0, sizeof(char) * 1024);
+		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
 #else
-	char buf[MAX_PATH], *p, *q = NULL;
-	int len;
-	memset(buf, 0, sizeof(buf));
-	len = GetModuleFileName(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
-	for (p = buf + len; p > buf; p--)
-		if (*p == '\\')
-		{
-			if (!q)
-				q = p;
-			else
-				*p = '/';
-		}
-	*q = 0;
-	memset(path, 0, sizeof(char) * 1024);
-	snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", buf, file_name);
+		char buf[MAX_PATH], *p, *q = NULL;
+		int len;
+		memset(buf, 0, sizeof(buf));
+		len = GetModuleFileName(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
+		for (p = buf + len; p > buf; p--)
+			if (*p == '\\')
+				{
+					if (!q)
+						q = p;
+					else
+						*p = '/';
+				}
+		*q = 0;
+		memset(path, 0, sizeof(char) * 1024);
+		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", buf, file_name);
 #endif
-
+	} else {
+		int l = strlen(custom_directory);
+		if (custom_directory[l-1] != '/') {
+			snprintf(path, sizeof(char) * 1024 - 1, "%s/%s",custom_directory, file_name);
+		} else {
+			snprintf(path, sizeof(char) * 1024 - 1, "%s%s", custom_directory, file_name);
+		}
+	}
 	return path;
 }
 
@@ -386,6 +400,7 @@ GeoIP* GeoIP_new (int flags) {
 GeoIP* GeoIP_open (const char * filename, int flags) {
 	struct stat buf;
 	GeoIP * gi;
+
 #ifdef _WIN32
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
