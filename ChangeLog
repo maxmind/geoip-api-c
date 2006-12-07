@@ -1,3 +1,4 @@
+	* Added GeoIP_region_name_by_code, to lookup region name from region code (Frank Mather)
 	* Fixed build issue when using --as-needed flag (Diego 'Flameeyes' Pettenò)
 	* Add sanity checking for filename returned by MaxMind.com server for geoipupdate filename
 		(Dean Gaudet, arctic.org)

@@ -152,6 +152,9 @@ GEOIP_API char *GeoIP_name_by_name (GeoIP* gi, const char *host);
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
 
+/* Convert region code to region name */
+GEOIP_API const char * GeoIP_region_name_by_code(const char *country_code, const char *region_code);
+
 #ifdef BSD
 #define memcpy(dest, src, n) bcopy(src, dest, n)
 #endif
