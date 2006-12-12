@@ -454,8 +454,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (geoipfilename, "rb")) == NULL) {
-		f_str = malloc(strlen(NoCurrentDB) + strlen(geoipfilename) - 1);
-		sprintf(f_str,NoCurrentDB, geoipfilename);
+		size_t len = strlen(NoCurrentDB) + strlen(geoipfilename) - 1;
+		f_str = malloc(len);
+		snprintf(f_str, len, NoCurrentDB, geoipfilename);
 
 		if (f != NULL)
 			(*f)(f_str);
@@ -469,8 +470,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		fclose (cur_db_fh);
 		for (i = 0; i < 16; i++)
 			sprintf (&hex_digest[2*i], "%02x", digest[i]);
-		f_str = malloc(strlen(MD5Info) + strlen(hex_digest) - 1);
-		sprintf(f_str, MD5Info, hex_digest);
+		size_t len = strlen(MD5Info) + strlen(hex_digest) - 1;
+		f_str = malloc(len);
+		snprintf(f_str, len, MD5Info, hex_digest);
 		if (f != NULL)
 			(*f)(f_str);
 		free(f_str);
@@ -705,8 +707,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		GeoIP_printf(f,"Done\n");
 
 	if (verbose == 1) {
-		f_str = malloc(strlen(WritingFile) + strlen(geoipfilename) - 1);
-		sprintf(f_str,WritingFile,geoipfilename);
+		size_t len = strlen(WritingFile) + strlen(geoipfilename) - 1;
+		f_str = malloc(len);
+		snprintf(f_str,len,WritingFile,geoipfilename);
 		free(f_str);
 	}
 
