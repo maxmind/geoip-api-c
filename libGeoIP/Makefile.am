@@ -5,10 +5,10 @@ EXTRA_DIST = md5.h global.h types.h GeoIP_internal.h
 AM_CPPFLAGS = -DGEOIPDATADIR=\"$(pkgdatadir)\" -Wall
 
 if WITH_CITY
-libGeoIP_la_SOURCES = GeoIP.c GeoIPCity.c regionName.c
+libGeoIP_la_SOURCES = GeoIP.c GeoIPCity.c regionName.c timeZone.c
 include_HEADERS = GeoIP.h GeoIPCity.h GeoIPUpdate.h
 else
-libGeoIP_la_SOURCES = GeoIP.c regionName.c
+libGeoIP_la_SOURCES = GeoIP.c regionName.c timeZone.c
 include_HEADERS = GeoIP.h GeoIPUpdate.h
 endif
 
