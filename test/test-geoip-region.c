@@ -80,9 +80,10 @@ int main () {
 		gir = GeoIP_region_by_name (gi, ipAddress);
 		time_zone = GeoIP_time_zone_by_country_and_region(gir->country_code, gir->region);
 		if (gir != NULL) {
-			printf("%s, %s, %s\n",
+			printf("%s, %s, %s, %s\n",
 						gir->country_code,
 						(!gir->region[0]) ? "N/A" : gir->region,
+						GeoIP_region_name_by_code(gir->country_code, gir->region),
 						time_zone);
 		} else {
 			printf("NULL!\n");
