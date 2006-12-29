@@ -1,4 +1,9 @@
+1.4.1	2007-1-1
+	* Replaced CS/Serbia and Montenegro with RS/Serbia, removed ZR/Zaire, added ME/Montenegro
+	* Added GeoIP_time_zone_by_country_and_region, to lookup zoneinfo timezone by country and region (Frank Mather)
 	* Added GeoIP_region_name_by_code, to lookup region name from region code (Frank Mather)
+	* added -f and -d flags to enable custom paths for geoiplookup utility program (Frank Mather)
+	* Added benchmarks for GeoIP Region and City in test/benchmark.c (Frank Mather)
 	* Fixed build issue when using --as-needed flag (Diego 'Flameeyes' Pettenò)
 	* Add sanity checking for filename returned by MaxMind.com server for geoipupdate filename
 		(Dean Gaudet, arctic.org)

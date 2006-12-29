@@ -86,8 +86,8 @@ const char GeoIP_country_code[247][3] = { "--","AP","EU","AD","AE","AF","AG","AI
 	"SR","ST","SV","SY","SZ","TC","TD","TF","TG","TH",
 	"TJ","TK","TM","TN","TO","TL","TR","TT","TV","TW",
 	"TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE",
-	"VG","VI","VN","VU","WF","WS","YE","YT","CS","ZA",
-	"ZM","ZR","ZW","A1","A2","O1"};
+	"VG","VI","VN","VU","WF","WS","YE","YT","RS","ZA",
+	"ZM","ME","ZW","A1","A2","O1"};
 
 const char GeoIP_country_code3[247][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","ANT",
 	"AGO","AQ","ARG","ASM","AUT","AUS","ABW","AZE","BIH","BRB",
@@ -112,8 +112,8 @@ const char GeoIP_country_code3[247][4] = { "--","AP","EU","AND","ARE","AFG","ATG
 	"SUR","STP","SLV","SYR","SWZ","TCA","TCD","TF","TGO","THA",
 	"TJK","TKL","TKM","TUN","TON","TLS","TUR","TTO","TUV","TWN",
 	"TZA","UKR","UGA","UM","USA","URY","UZB","VAT","VCT","VEN",
-	"VGB","VIR","VNM","VUT","WLF","WSM","YEM","YT","SCG","ZAF",
-	"ZMB","ZR","ZWE","A1","A2","O1"};
+	"VGB","VIR","VNM","VUT","WLF","WSM","YEM","YT","SRB","ZAF",
+	"ZMB","MNE","ZWE","A1","A2","O1"};
 
 const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Netherlands Antilles",
 	"Angola","Antarctica","Argentina","American Samoa","Austria","Australia","Aruba","Azerbaijan","Bosnia and Herzegovina","Barbados",
@@ -138,8 +138,8 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 	"Sao Tome and Principe","El Salvador","Syrian Arab Republic","Swaziland","Turks and Caicos Islands","Chad","French Southern Territories","Togo","Thailand",
 	"Tajikistan","Tokelau","Turkmenistan","Tunisia","Tonga","Timor-Leste","Turkey","Trinidad and Tobago","Tuvalu","Taiwan",
 	"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
-	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia and Montenegro","South Africa",
-	"Zambia","Zaire","Zimbabwe","Anonymous Proxy","Satellite Provider","Other"};
+	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
+	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other"};
 
 const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA",
 	"AF","AN","SA","OC","EU","OC","SA","AS","EU","SA",
@@ -165,7 +165,7 @@ const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA"
 	"AS","OC","AS","AF","OC","AS","AS","SA","OC","AS",
 	"AF","EU","AF","OC","NA","SA","AS","EU","SA","SA",
 	"SA","SA","AS","OC","OC","OC","AS","AF","EU","AF",
-	"AF","AF","AF"};
+	"AF","EU","AF"};
 
 const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition"};
 
