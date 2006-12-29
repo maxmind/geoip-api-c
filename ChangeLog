@@ -1,5 +1,6 @@
 1.4.1	2007-1-1
 	* Replaced CS/Serbia and Montenegro with RS/Serbia, removed ZR/Zaire, added ME/Montenegro
+	* Added AX/Aland Islands, GG/Guernsey, IM/Isle of Man, JE/Jersey (ISO-3166-1 changes)
 	* Added GeoIP_time_zone_by_country_and_region, to lookup zoneinfo timezone by country and region (Frank Mather)
 	* Added GeoIP_region_name_by_code, to lookup region name from region code (Frank Mather)
 	* added -f and -d flags to enable custom paths for geoiplookup utility program (Frank Mather)

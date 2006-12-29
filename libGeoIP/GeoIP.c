@@ -63,7 +63,7 @@
 		} \
 }
 
-const char GeoIP_country_code[247][3] = { "--","AP","EU","AD","AE","AF","AG","AI","AL","AM","AN",
+const char GeoIP_country_code[251][3] = { "--","AP","EU","AD","AE","AF","AG","AI","AL","AM","AN",
 	"AO","AQ","AR","AS","AT","AU","AW","AZ","BA","BB",
 	"BD","BE","BF","BG","BH","BI","BJ","BM","BN","BO",
 	"BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD",
@@ -87,9 +87,9 @@ const char GeoIP_country_code[247][3] = { "--","AP","EU","AD","AE","AF","AG","AI
 	"TJ","TK","TM","TN","TO","TL","TR","TT","TV","TW",
 	"TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE",
 	"VG","VI","VN","VU","WF","WS","YE","YT","RS","ZA",
-	"ZM","ME","ZW","A1","A2","O1"};
+	"ZM","ME","ZW","A1","A2","O1","AX","GG","IM","JE"};
 
-const char GeoIP_country_code3[247][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","ANT",
+const char GeoIP_country_code3[251][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","ANT",
 	"AGO","AQ","ARG","ASM","AUT","AUS","ABW","AZE","BIH","BRB",
 	"BGD","BEL","BFA","BGR","BHR","BDI","BEN","BMU","BRN","BOL",
 	"BRA","BHS","BTN","BV","BWA","BLR","BLZ","CAN","CC","COD",
@@ -113,9 +113,9 @@ const char GeoIP_country_code3[247][4] = { "--","AP","EU","AND","ARE","AFG","ATG
 	"TJK","TKL","TKM","TUN","TON","TLS","TUR","TTO","TUV","TWN",
 	"TZA","UKR","UGA","UM","USA","URY","UZB","VAT","VCT","VEN",
 	"VGB","VIR","VNM","VUT","WLF","WSM","YEM","YT","SRB","ZAF",
-	"ZMB","MNE","ZWE","A1","A2","O1"};
+	"ZMB","MNE","ZWE","A1","A2","O1","ALA","GGY","IMN","JEY"};
 
-const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Netherlands Antilles",
+const char * GeoIP_country_name[251] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Netherlands Antilles",
 	"Angola","Antarctica","Argentina","American Samoa","Austria","Australia","Aruba","Azerbaijan","Bosnia and Herzegovina","Barbados",
 	"Bangladesh","Belgium","Burkina Faso","Bulgaria","Bahrain","Burundi","Benin","Bermuda","Brunei Darussalam","Bolivia",
 	"Brazil","Bahamas","Bhutan","Bouvet Island","Botswana","Belarus","Belize","Canada","Cocos (Keeling) Islands","Congo, The Democratic Republic of the",
@@ -139,9 +139,9 @@ const char * GeoIP_country_name[247] = {"N/A","Asia/Pacific Region","Europe","An
 	"Tajikistan","Tokelau","Turkmenistan","Tunisia","Tonga","Timor-Leste","Turkey","Trinidad and Tobago","Tuvalu","Taiwan",
 	"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
 	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
-	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other"};
+	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey"};
 
-const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA",
+const char GeoIP_country_continent[251][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA",
 	"AF","AN","SA","OC","EU","OC","SA","AS","EU","SA",
 	"AS","EU","AF","EU","AS","AF","AF","SA","AS","SA",
 	"SA","SA","AS","AF","AF","EU","SA","NA","AS","AF",
@@ -165,7 +165,7 @@ const char GeoIP_country_continent[247][3] = {"--","AS","EU","EU","AS","AS","SA"
 	"AS","OC","AS","AF","OC","AS","AS","SA","OC","AS",
 	"AF","EU","AF","OC","NA","SA","AS","EU","SA","SA",
 	"SA","SA","AS","OC","OC","OC","AS","AF","EU","AF",
-	"AF","EU","AF"};
+	"AF","EU","AF","--","--","--","EU","EU","EU","EU"};
 
 const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition"};
 
