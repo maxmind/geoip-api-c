@@ -44,7 +44,6 @@
 
 #include <sys/types.h>
 
-
 #ifndef HAVE_BYTE_TYPEDEF
 #undef byte	    /* maybe there is a macro with this name */
 #ifndef __riscos__
