@@ -1,4 +1,4 @@
-.TH GEOIPLOOKUP 1 "29 Jul 2002"
+.TH GEOIPLOOKUP 1 "2 Jan 2007"
 .UC 4
 .SH NAME
 geoiplookup - look up country using IP Address or hostname
@@ -17,6 +17,10 @@ will find the Country that 80.60.233.195 originates from, in long format:
 .I Netherlands
 .PP
 .SH OPTIONS
+.IP "-f"
+Specify a custom path to a single GeoIP datafile.
+.IP "-d"
+Specify a custom directory containing GeoIP datafile(s).  By default geoiplookup looks in DATADIR
 .IP "-l"
 By default, geoiplookup returns the ISO 3166 country code.  By specifying this
 option, geoiplookup prints the long format, namely the full country name.
@@ -27,7 +31,7 @@ Written by T.J. Mather
 .SH "REPORTING BUGS"
 Report bugs to <support@maxmind.com>
 .SH COPYRIGHT
-Copyright © 2002 MaxMind.com
+Copyright © 2006 MaxMind LLC
 
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY

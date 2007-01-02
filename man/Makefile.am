@@ -6,3 +6,4 @@ DEFAULT_MAN = $(mandir)/man1/geoipupdate.1
 
 install-data-hook: install-man
 	cat geoipupdate.1 | sed s,CONF_DIR,$(sysconfdir), > $(DESTDIR)$(DEFAULT_MAN)
+	cat geoiplookup.1 | sed s,DATADIR,$(pkgdatadir), > $(DESTDIR)$(DEFAULT_MAN)
