@@ -1,3 +1,6 @@
+	* Moved var definitions to top of code, defined size_t (Guenter Knauf)
+	* Added Makefile.win32 and Makefile.netware to EXTRA_DIST in Makefile.am (Guenter Knauf)
+
 1.4.1	2007-1-2
 	* Replaced CS/Serbia and Montenegro with RS/Serbia, removed ZR/Zaire, added ME/Montenegro
 	* Added AX/Aland Islands, GG/Guernsey, IM/Isle of Man, JE/Jersey (ISO-3166-1 changes)
