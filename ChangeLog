@@ -1,3 +1,4 @@
+	* Replaced _WIN32 with WIN32 since WIN32 is already set by compilers
 	* Moved var definitions to top of code, defined size_t (Guenter Knauf)
 	* Added Makefile.win32, Makefile.netware, get_ver.awk, geoip.ico to EXTRA_DIST in Makefile.am (Guenter Knauf)
 

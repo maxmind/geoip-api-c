@@ -20,7 +20,7 @@
 
 #include "GeoIP.h"
 
-#ifndef _WIN32
+#ifndef WIN32
 #include <netdb.h>
 #include <sys/socket.h>
 #include <netinet/in.h> /* For ntohl */
@@ -179,7 +179,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
 
 	if (custom_directory == NULL){
-#ifndef _WIN32
+#ifndef WIN32
 		memset(path, 0, sizeof(char) * 1024);
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
 #else
@@ -496,7 +496,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	GeoIP * gi;
 	size_t len;
 
-#ifdef _WIN32
+#ifdef WIN32
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
 		return NULL;

@@ -26,7 +26,7 @@
 #include "global.h"
 #include "md5.h"
 #include <sys/types.h>
-#ifndef _WIN32
+#ifndef WIN32
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
