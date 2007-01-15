@@ -111,7 +111,7 @@ void GeoIP_printf(void (*f)(char *), const char *str) {
 
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char *)) {
 	struct hostent *hostlist;
-	int sock, len;
+	int sock;
 	char * buf;
 	struct sockaddr_in sa;
 	int offset = 0, err;
@@ -130,12 +130,13 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char * db_info;
 	char block[BLOCK_SIZE];
 	int block_size = BLOCK_SIZE;
+	size_t len;
 
 	_GeoIP_setup_dbfilename();
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], "rb")) == NULL) {
-		size_t len = strlen(NoCurrentDB) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1;
+		len = strlen(NoCurrentDB) + strlen(GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) - 1;
 		f_str = malloc(len);
 		snprintf(f_str, len, NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 		if (f != NULL)
@@ -146,13 +147,13 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
 			md5_write (&context, buffer, len);
 		md5_final (&context);
-    memcpy(digest,context.buf,16);
+		memcpy(digest,context.buf,16);
 		fclose (cur_db_fh);
 		for (i = 0; i < 16; i++) {
 			// "%02x" will write 3 chars
 			snprintf (&hex_digest[2*i], 3, "%02x", digest[i]);
 		}
-		size_t len = strlen(MD5Info) + strlen(hex_digest) - 1;
+		len = strlen(MD5Info) + strlen(hex_digest) - 1;
 		f_str = malloc(len);
 		snprintf(f_str, len, MD5Info, hex_digest);
 		if (f != NULL)
@@ -365,7 +366,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 
 short int GeoIP_update_database_general (char * user_id,char * license_key,char *data_base_type, int verbose,char ** client_ipaddr, void (*f)( char *)) {
 	struct hostent *hostlist;
-	int sock, len;
+	int sock;
 	char * buf;
 	struct sockaddr_in sa;
 	int offset = 0, err;
@@ -391,6 +392,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	int lookupresult = 1;
 	char block[BLOCK_SIZE];
 	int block_size = BLOCK_SIZE;
+	size_t len;
+	size_t request_uri_len;
 
 	hostlist = gethostbyname(GeoIPUpdateHost);
 
@@ -466,11 +469,11 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
 			md5_write (&context, buffer, len);
 		md5_final (&context);
-    memcpy(digest,context.buf,16);
+		memcpy(digest,context.buf,16);
 		fclose (cur_db_fh);
 		for (i = 0; i < 16; i++)
 			sprintf (&hex_digest[2*i], "%02x", digest[i]);
-		size_t len = strlen(MD5Info) + strlen(hex_digest) - 1;
+		len = strlen(MD5Info) + strlen(hex_digest) - 1;
 		f_str = malloc(len);
 		snprintf(f_str, len, MD5Info, hex_digest);
 		if (f != NULL)
@@ -549,13 +552,13 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	ipaddress = client_ipaddr[0];
 
 	/* make a md5 sum of ip address and license_key and store it in hex_digest2 */
-	size_t request_uri_len = sizeof(char) * 2036;
+	request_uri_len = sizeof(char) * 2036;
 	request_uri = malloc(request_uri_len);
 	md5_init(&context2);
 	md5_write (&context2, license_key, 12);//add license key to the md5 sum
 	md5_write (&context2, ipaddress, strlen(ipaddress));//add ip address to the md5 sum
 	md5_final (&context2);
-  memcpy(digest2,context2.buf,16);
+	memcpy(digest2,context2.buf,16);
 	for (i = 0; i < 16; i++)
 		snprintf (&hex_digest2[2*i], 3, "%02x", digest2[i]);// change the digest to a hex digest
 	if (verbose == 1) {

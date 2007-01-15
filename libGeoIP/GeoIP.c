@@ -494,6 +494,7 @@ GeoIP* GeoIP_new (int flags) {
 GeoIP* GeoIP_open (const char * filename, int flags) {
 	struct stat buf;
 	GeoIP * gi;
+	size_t len;
 
 #ifdef _WIN32
 	WSADATA wsa;
@@ -504,7 +505,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
-	size_t len = sizeof(char) * (strlen(filename)+1);
+	len = sizeof(char) * (strlen(filename)+1);
 	gi->file_path = malloc(len);
 	if (gi->file_path == NULL) {
 		free(gi);
@@ -898,6 +899,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	char buf[MAX_ORG_RECORD_LENGTH];
 	char * org_buf, * buf_pointer;
 	int record_pointer;
+	size_t len;
 
 	if (gi->databaseType != GEOIP_ORG_EDITION &&
 			gi->databaseType != GEOIP_ISP_EDITION &&
@@ -915,12 +917,12 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
 		fread(buf, sizeof(char), MAX_ORG_RECORD_LENGTH, gi->GeoIPDatabase);
-		size_t len = sizeof(char) * (strlen(buf)+1);
+		len = sizeof(char) * (strlen(buf)+1);
 		org_buf = malloc(len);
 		strncpy(org_buf, buf, len);
 	} else {
 		buf_pointer = gi->cache + (long)record_pointer;
-		size_t len = sizeof(char) * (strlen(buf_pointer)+1);
+		len = sizeof(char) * (strlen(buf_pointer)+1);
 		org_buf = malloc(len);
 		strncpy(org_buf, buf_pointer, len);
 	}

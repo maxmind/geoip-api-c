@@ -28,7 +28,7 @@ void usage() {
 }
 
 int main (int argc, char *argv[]) {
-	const char * hostname = NULL;
+	char * hostname = NULL;
 	char * db_info;
 	GeoIP * gi;
 	int i;
