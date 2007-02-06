@@ -37,7 +37,7 @@
 const char *GeoIPConfFile = "GeoIP.conf";
 
 void usage() {
-  fprintf(stderr,"Usage: geoipupdate [-hv] [-f license_file]\n");
+  fprintf(stderr,"Usage: geoipupdate [-hv] [-f license_file] [-d custom directory]\n");
 }
 
 void my_printf(char * str) {
@@ -82,13 +82,14 @@ int main (int argc, char *argv[]) {
 	int *the_product_id_stral = NULL;
 	int num_product_ids = 0;
 	char * client_ipaddr = NULL;
+	char * custom_directory = NULL;
 	int c;
 	int err = 0;
 	int i;
 
 	opterr = 0;
 
-	while ((c = getopt (argc, argv, "hvf:")) != -1)
+	while ((c = getopt (argc, argv, "hvf:d:")) != -1)
     switch (c) {
 		case 'h':
 			usage();
@@ -97,6 +98,9 @@ int main (int argc, char *argv[]) {
 			verbose = 1;
 		case 'f':
 			license_file = optarg;
+			break;
+		case 'd':
+			custom_directory = optarg;
 			break;
 		case '?':
 			if (isprint (optopt))
@@ -111,6 +115,9 @@ int main (int argc, char *argv[]) {
 			abort();
 		}
 
+	if (custom_directory != NULL) {
+		GeoIP_setup_custom_directory(custom_directory);
+	}
 	if (license_file == NULL) {
 		license_file = malloc(sizeof(char) * (strlen(SYSCONFDIR)+strlen(GeoIPConfFile)+2));
 		license_file[0] = '\0';
