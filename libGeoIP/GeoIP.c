@@ -176,6 +176,7 @@ void GeoIP_setup_custom_directory (char * dir) {
 }
 
 char *_GeoIP_full_path_to(const char *file_name) {
+	int len;
 	char *path = malloc(sizeof(char) * 1024);
 
 	if (custom_directory == NULL){
@@ -184,7 +185,6 @@ char *_GeoIP_full_path_to(const char *file_name) {
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
 #else
 		char buf[MAX_PATH], *p, *q = NULL;
-		int len;
 		memset(buf, 0, sizeof(buf));
 		len = GetModuleFileName(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
 		for (p = buf + len; p > buf; p--)
@@ -200,8 +200,8 @@ char *_GeoIP_full_path_to(const char *file_name) {
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", buf, file_name);
 #endif
 	} else {
-		int l = strlen(custom_directory);
-		if (custom_directory[l-1] != '/') {
+		len = strlen(custom_directory);
+		if (custom_directory[len-1] != '/') {
 			snprintf(path, sizeof(char) * 1024 - 1, "%s/%s",custom_directory, file_name);
 		} else {
 			snprintf(path, sizeof(char) * 1024 - 1, "%s%s", custom_directory, file_name);

@@ -237,7 +237,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	strcpy(file_path_gz,GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
-		size_t len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
+		len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
 		f_str = malloc(len);
 		snprintf(f_str, len, SavingGzip,file_path_gz);
 		if (f != NULL)
@@ -457,7 +457,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (geoipfilename, "rb")) == NULL) {
-		size_t len = strlen(NoCurrentDB) + strlen(geoipfilename) - 1;
+		len = strlen(NoCurrentDB) + strlen(geoipfilename) - 1;
 		f_str = malloc(len);
 		snprintf(f_str, len, NoCurrentDB, geoipfilename);
 
@@ -642,7 +642,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	strcpy(file_path_gz,geoipfilename);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
-		size_t len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
+		len = strlen(SavingGzip) + strlen(file_path_gz) - 1;
 		f_str = malloc(len);
 		snprintf(f_str,len,SavingGzip,file_path_gz);
 		if (f != NULL)
@@ -710,7 +710,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		GeoIP_printf(f,"Done\n");
 
 	if (verbose == 1) {
-		size_t len = strlen(WritingFile) + strlen(geoipfilename) - 1;
+		len = strlen(WritingFile) + strlen(geoipfilename) - 1;
 		f_str = malloc(len);
 		snprintf(f_str,len,WritingFile,geoipfilename);
 		free(f_str);
