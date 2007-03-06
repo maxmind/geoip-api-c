@@ -70,6 +70,7 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	}
 
 	/* get country */
+	record->continent_code = (char *) GeoIP_country_continent[record_buf[0]];
 	record->country_code	= (char *) GeoIP_country_code [record_buf[0]];
 	record->country_code3 = (char *) GeoIP_country_code3[record_buf[0]];
 	record->country_name	= (char *) GeoIP_country_name [record_buf[0]];
