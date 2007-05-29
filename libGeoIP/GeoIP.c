@@ -141,6 +141,9 @@ const char * GeoIP_country_name[251] = {"N/A","Asia/Pacific Region","Europe","An
 	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
 	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey"};
 
+/* Possible continent codes are AF, AS, EU, NA, OC, SA for Africa, Asia, Europe, North America, Oceania
+and South America. */
+
 const char GeoIP_country_continent[251][3] = {"--","AS","EU","EU","AS","AS","SA","SA","EU","AS","SA",
 	"AF","AN","SA","OC","EU","OC","SA","AS","EU","SA",
 	"AS","EU","AF","EU","AS","AF","AF","SA","AS","SA",
