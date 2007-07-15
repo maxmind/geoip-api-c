@@ -554,6 +554,8 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			gi->cache = NULL;
 		}
 		gi->flags = flags;
+		gi->charset = GEOIP_CHARSET_ISO_8859_1;
+
 		_setup_segments(gi);
 		if (flags & GEOIP_INDEX_CACHE) {                        
 			gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
@@ -970,4 +972,14 @@ char *GeoIP_org_by_name (GeoIP* gi, const char *name) {
 
 unsigned char GeoIP_database_edition (GeoIP* gi) {
 	return gi->databaseType;
+}
+
+int GeoIP_charset( GeoIP* gi){
+  return gi->charset;
+}
+
+int GeoIP_set_charset(  GeoIP* gi, int charset ){
+  int old_charset = gi->charset;
+  gi->charset = charset;
+  return old_charset;
 }

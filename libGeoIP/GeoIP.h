@@ -47,8 +47,15 @@ typedef struct GeoIPTag {
 	time_t mtime;
 	int flags;
 	char record_length;
+	int charset; /* 0 iso-8859-1 1 utf8 */
 	int record_iter; /* used in GeoIP_next_record */
 } GeoIP;
+
+
+typedef enum {
+	GEOIP_CHARSET_ISO_8859_1 = 0,
+	GEOIP_CHARSET_UTF8       = 1
+} GeoIPCharset;
 
 typedef struct GeoIPRegionTag {
 	char country_code[3];
@@ -151,6 +158,9 @@ GEOIP_API char *GeoIP_name_by_name (GeoIP* gi, const char *host);
 
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
+
+GEOIP_API int GeoIP_charset (GeoIP* gi);
+GEOIP_API int GeoIP_set_charset (GeoIP* gi, int charset);
 
 /* Convert region code to region name */
 GEOIP_API const char * GeoIP_region_name_by_code(const char *country_code, const char *region_code);

@@ -1,3 +1,6 @@
+	* Added GeoIP_set_charset function - enables UTF8 output of city name if GEOIP_CHARSET_UTF8 flag is passed
+		to GeoIP_set_charset
+	* Fixed segfault issue if calling GeoIP_db_avail before opening a database
 	* Added continent_code to GeoIP City's record struct (Frank Mather)
 
 1.4.2	2007-2-8
