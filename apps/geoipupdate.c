@@ -157,9 +157,9 @@ int main (int argc, char *argv[]) {
 					a_ptr++;
 				}
 				/* alloc the array of product ids */
-				the_product_id_str = (char **) malloc((num_product_ids+1)*4); /* array of strings */
-				the_product_id_strl = (int *) malloc((num_product_ids+1)*4);  /* array of string lengths */
-				the_product_id_stral = (int *) malloc((num_product_ids+1)*4); /* array of string alloc lengths */
+				the_product_id_str = (char **) malloc((num_product_ids+1)sizeof(char*)); /* array of strings */
+				the_product_id_strl = (int *) malloc((num_product_ids+1)sizeof(char*));  /* array of string lengths */
+				the_product_id_stral = (int *) malloc((num_product_ids+1)sizeof(char*)); /* array of string alloc lengths */
 				while (a_ptr[0] != '\0') {
 					/* add new product id to the array of product ids */
 					the_product_id_str[num_product_ids] = (char *) malloc(20); /* the string */
@@ -185,11 +185,11 @@ int main (int argc, char *argv[]) {
 					/* new product id add, realloc the arrays */
 					num_product_ids = num_product_ids + 1;
 					/* array of string */
-					the_product_id_str = (char **) realloc(the_product_id_str,(num_product_ids+1)*4);
+					the_product_id_str = (char **) realloc(the_product_id_str,(num_product_ids+1)sizeof(char*));
 					/* array of string lengths */
-					the_product_id_strl = (int *) realloc(the_product_id_strl,(num_product_ids+1)*4);
+					the_product_id_strl = (int *) realloc(the_product_id_strl,(num_product_ids+1)sizeof(char*));
 					/* array of string alloc lengths */
-					the_product_id_stral = (int *) realloc(the_product_id_stral,(num_product_ids+1)*4);
+					the_product_id_stral = (int *) realloc(the_product_id_stral,(num_product_ids+1)sizeof(char*));
 				}
 			}
 

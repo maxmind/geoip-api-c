@@ -1,3 +1,4 @@
+	* Replaced 4 with sizeof(char*) to fix issues with geoipupdate on 64 Bit machines
 	* Added GeoIP_set_charset function - enables UTF8 output of city name if GEOIP_CHARSET_UTF8 flag is passed
 		to GeoIP_set_charset
 	* Fixed segfault issue if calling GeoIP_db_avail before opening a database
