@@ -70,6 +70,11 @@ use both GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE by calling:
 
     GeoIP_open("/path/to/GeoIP.dat", GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE);
 
+By default, the city name is returned in iso-8859-1 charset.  To obtain the
+city name in utf8 instead, run:
+
+    gi->set_charset(GEOIP_CHARSET_UTF8);
+
 EXAMPLES
 
 See
