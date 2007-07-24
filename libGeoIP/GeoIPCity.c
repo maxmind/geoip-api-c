@@ -53,6 +53,8 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	record = malloc(sizeof(GeoIPRecord));
 	memset(record, 0, sizeof(GeoIPRecord));
 
+	record->charset = gi->charset;
+
 	record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
 	if (gi->cache == NULL) {
