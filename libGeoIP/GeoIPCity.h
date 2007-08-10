@@ -28,7 +28,6 @@ extern "C" {
 #endif
 
 typedef struct GeoIPRecordTag {
-	char *continent_code;
 	char *country_code;
 	char *country_code3;
 	char *country_name;
@@ -40,6 +39,7 @@ typedef struct GeoIPRecordTag {
 	int dma_code;
 	int area_code;
 	int charset;
+	char *continent_code;
 } GeoIPRecord;
 
 GeoIPRecord * GeoIP_record_by_ipnum (GeoIP* gi, unsigned long ipnum);
