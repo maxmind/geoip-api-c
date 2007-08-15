@@ -34,6 +34,7 @@ int main (int argc, char *argv[]) {
 	int i;
 	char *custom_directory = NULL;
 	char *custom_file = NULL;
+	int version_flag = 0;
 
 	if (argc < 2) {
 		usage();
@@ -42,17 +43,7 @@ int main (int argc, char *argv[]) {
 	i = 1;
 	while (i < argc) {
 		if (strcmp(argv[i],"-v") == 0) {
-			gi = GeoIP_new(GEOIP_STANDARD);
-			if (gi != NULL) {
-				db_info = GeoIP_database_info(gi);
-				printf("%s\n",db_info);
-				free(db_info);
-				GeoIP_delete(gi);
-				exit(0);
-			} else {
-				printf("error opening database\n");
-				exit(0);
-			}
+			version_flag = 1;
 		} else if (strcmp(argv[i],"-f") == 0) {
 			if ((i+1) < argc){
 				i++;
@@ -84,7 +75,13 @@ int main (int argc, char *argv[]) {
 		if (NULL == gi) {
 			printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 		} else {
-			geoiplookup(gi,hostname,i);
+			if (version_flag == 1) {
+				db_info = GeoIP_database_info(gi);
+				printf("%s: %s\n",GeoIPDBDescription[i],db_info);
+				free(db_info);
+			} else {
+				geoiplookup(gi,hostname,i);
+			}
 		}
 		GeoIP_delete(gi);
 	} else {
@@ -95,7 +92,13 @@ int main (int argc, char *argv[]) {
 				if (NULL == gi) {
 					printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 				} else {
-					geoiplookup(gi,hostname,i);
+					if (version_flag == 1) {
+						db_info = GeoIP_database_info(gi);
+						printf("%s: %s\n",GeoIPDBDescription[i],db_info);
+						free(db_info);
+					} else {
+						geoiplookup(gi,hostname,i);
+					}
 				}
 				GeoIP_delete(gi);
 			}
