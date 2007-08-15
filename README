@@ -75,6 +75,8 @@ city name in utf8 instead, run:
 
     gi->set_charset(GEOIP_CHARSET_UTF8);
 
+To get the netmask of the netblock of the last lookup, use gi->netmask.
+
 EXAMPLES
 
 See
@@ -86,8 +88,9 @@ test/
      test-geoip-org.c
      test-geoip-netspeed.c
 
-For examples of how to use the API.  The test-geoip.c works with both the free and paid
-GeoIP Country databases.  The other example programs require the paid databases available
+for examples of how to use the API.  The test-geoip.c program works with both the GeoLite and
+GeoIP Country databases.  The test-geoip-city.c program works with both the GeoLite and
+GeoIP City databases.  The other example programs require the paid databases available
 from http://www.maxmind.com/app/products
 
 AUTOMATIC UPDATES
