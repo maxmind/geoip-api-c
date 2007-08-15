@@ -426,6 +426,7 @@ unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 		}
 
 		if (x >= gi->databaseSegments[0]) {
+			gi->netmask = 32 - depth;
 			return x;
 		}
 		offset = x;
@@ -776,7 +777,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 		fseek(gi->GeoIPDatabase, -4l, SEEK_CUR);
 	}
 	if (hasStructureInfo == 1) {
-		fseek(gi->GeoIPDatabase, -3l, SEEK_CUR);
+		fseek(gi->GeoIPDatabase, -6l, SEEK_CUR);
 	} else {
 		/* no structure info, must be pre Sep 2002 database, go back to end */
 		fseek(gi->GeoIPDatabase, -3l, SEEK_END);
