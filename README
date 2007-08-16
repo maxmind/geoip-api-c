@@ -73,9 +73,9 @@ use both GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE by calling:
 By default, the city name is returned in iso-8859-1 charset.  To obtain the
 city name in utf8 instead, run:
 
-    gi->set_charset(GEOIP_CHARSET_UTF8);
+    GeoIP_set_charset(gi, GEOIP_CHARSET_UTF8);
 
-To get the netmask of the netblock of the last lookup, use gi->netmask.
+To get the netmask of the netblock of the last lookup, use GeoIP_last_netblock(gi).
 
 EXAMPLES
 

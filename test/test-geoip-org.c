@@ -49,7 +49,7 @@ int main (int argc, char* argv[]) {
 		org = GeoIP_name_by_name (gi, (const char *)host);
 
 		if (org != NULL) {
-			printf("%s\t%s\n", host, org);
+			printf("%s\t%s\t%d\n", host, org, GeoIP_last_netmask(gi));
 			free(org);
 		}
 	}

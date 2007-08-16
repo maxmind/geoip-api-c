@@ -984,3 +984,8 @@ int GeoIP_set_charset(  GeoIP* gi, int charset ){
   gi->charset = charset;
   return old_charset;
 }
+
+int GeoIP_last_netmask (GeoIP* gi) {
+  return gi->netmask;
+}
+
