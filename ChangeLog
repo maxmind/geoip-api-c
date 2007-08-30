@@ -1,3 +1,4 @@
+1.4.3	2007-8-30
 	! CHANGE with geoiplookup facility: -v flag now returns database info for all databases, not just GeoIP Country
 	* Added ability to get netmask of network block from last lookup using GeoIP_last_netmask
 	* Fixed GeoIP_database_info bug with GeoLite City
