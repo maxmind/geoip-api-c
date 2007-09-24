@@ -46,6 +46,7 @@ typedef struct GeoIPTag {
 	char databaseType;
 	time_t mtime;
 	int flags;
+	off_t	size;
 	char record_length;
 	int charset; /* 0 iso-8859-1 1 utf8 */
 	int record_iter; /* used in GeoIP_next_record */
@@ -68,6 +69,7 @@ typedef enum {
 	GEOIP_MEMORY_CACHE = 1,
 	GEOIP_CHECK_CACHE = 2,
 	GEOIP_INDEX_CACHE = 4,
+	GEOIP_MMAP_CACHE = 8,
 } GeoIPOptions;
 
 typedef enum {

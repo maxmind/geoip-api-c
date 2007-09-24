@@ -65,6 +65,8 @@ GEOIP_INDEX_CACHE - just cache
 	GeoIP Organization and GeoIP City.  Note, for GeoIP Country, Region
 	and Netspeed databases, GEOIP_INDEX_CACHE is equivalent to GEOIP_MEMORY_CACHE
 
+GEOIP_MMAP_CACHE - load database into mmap shared memory
+
 The options can be combined using bit operators.  For example you can
 use both GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE by calling:
 

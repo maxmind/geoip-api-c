@@ -25,6 +25,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h> /* For ntohl */
 #include <arpa/inet.h>
+
+#include <sys/mman.h>
+
 #else
 #include <windows.h>
 #define snprintf _snprintf
@@ -318,12 +321,17 @@ int _check_mtime(GeoIP *gi) {
 		if (stat(gi->file_path, &buf) != -1) {
 			if (buf.st_mtime != gi->mtime) {
 				/* GeoIP Database file updated */
-				if (gi->flags & GEOIP_MEMORY_CACHE) {
+				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
+				    if ( gi->flags & GEOIP_MMAP_CACHE) {
+					munmap(gi->cache, gi->size);
+					gi->cache = NULL;
+				    } else {
 					/* reload database into memory cache */
 					if ((gi->cache = (unsigned char*) realloc(gi->cache, buf.st_size)) == NULL) {
 						fprintf(stderr,"Out of memory when reloading %s\n",gi->file_path);
 						return -1;
 					}
+				    }
 				}
 				/* refresh filehandle */
 				fclose(gi->GeoIPDatabase);
@@ -333,10 +341,20 @@ int _check_mtime(GeoIP *gi) {
 					return -1;
 				}
 				gi->mtime = buf.st_mtime;
-				if (gi->flags & GEOIP_MEMORY_CACHE) {
-					if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
-						fprintf(stderr,"Error reading file %s when reloading\n",gi->file_path);
-						return -1;
+				gi->size = buf.st_size;
+
+				if ( gi->flags & GEOIP_MMAP_CACHE) {
+				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_SHARED, fileno(gi->GeoIPDatabase), 0);
+				    if ( gi->cache == MAP_FAILED ) {
+
+					    fprintf(stderr,"Error remapping file %s when reloading\n",gi->file_path);
+					    gi->cache = 0;
+					    return -1;
+				    }
+				} else if ( gi->flags & GEOIP_MEMORY_CACHE ) {
+				    if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
+					    fprintf(stderr,"Error reading file %s when reloading\n",gi->file_path);
+					    return -1;
 					}
 				}
 				if (gi->databaseSegments != NULL) {
@@ -524,7 +542,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		free(gi);
 		return NULL;
 	} else {
-		if (flags & GEOIP_MEMORY_CACHE) {
+		if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
 			if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
 				fprintf(stderr,"Error stating file %s\n",filename);
 				free(gi->file_path);
@@ -532,8 +550,20 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 				return NULL;
 			}
 			gi->mtime = buf.st_mtime;
-			gi->cache = (unsigned char *) malloc(sizeof(unsigned char) * buf.st_size);
-			if (gi->cache != NULL) {
+			gi->size = buf.st_size;
+			/* MMAP added my Peter Shipley */
+			if ( flags & GEOIP_MMAP_CACHE) {
+			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_SHARED, fileno(gi->GeoIPDatabase), 0);
+			    if ( gi->cache == MAP_FAILED ) {
+				fprintf(stderr,"Error mmaping file %s\n",filename);
+				free(gi->file_path);
+				free(gi);
+				return NULL;
+			    }
+			} else {
+			    gi->cache = (unsigned char *) malloc(sizeof(unsigned char) * buf.st_size);
+
+			    if (gi->cache != NULL) {
 				if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
 					fprintf(stderr,"Error reading file %s\n",filename);
 					free(gi->cache);
@@ -541,6 +571,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 					free(gi);
 					return NULL;
 				}
+			    }
 			}
 		} else {
 			if (flags & GEOIP_CHECK_CACHE) {
@@ -582,8 +613,14 @@ void GeoIP_delete (GeoIP *gi) {
 		return;
 	if (gi->GeoIPDatabase != NULL)
 		fclose(gi->GeoIPDatabase);
-	if (gi->cache != NULL)
+	if (gi->cache != NULL) {
+	    if ( gi->flags & GEOIP_MMAP_CACHE) {
+		munmap(gi->cache, gi->size);
+	    } else {
 		free(gi->cache);
+	    }
+	    gi->cache = NULL;
+	}
 	if (gi->index_cache != NULL)
 		free(gi->index_cache);
 	if (gi->file_path != NULL)
