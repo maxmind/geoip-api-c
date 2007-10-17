@@ -344,7 +344,7 @@ int _check_mtime(GeoIP *gi) {
 				gi->size = buf.st_size;
 
 				if ( gi->flags & GEOIP_MMAP_CACHE) {
-				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_SHARED, fileno(gi->GeoIPDatabase), 0);
+				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 				    if ( gi->cache == MAP_FAILED ) {
 
 					    fprintf(stderr,"Error remapping file %s when reloading\n",gi->file_path);
@@ -553,7 +553,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			gi->size = buf.st_size;
 			/* MMAP added my Peter Shipley */
 			if ( flags & GEOIP_MMAP_CACHE) {
-			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_SHARED, fileno(gi->GeoIPDatabase), 0);
+			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 			    if ( gi->cache == MAP_FAILED ) {
 				fprintf(stderr,"Error mmaping file %s\n",filename);
 				free(gi->file_path);
