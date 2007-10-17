@@ -455,39 +455,33 @@ unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 	return 0;
 }
 
-unsigned long _GeoIP_addr_to_num (const char *addr) {
-	int i;
-	char tok[4];
-	int octet;
-	int j = 0, k = 0;
-	unsigned long ipnum = 0;
-	char c = 0;
-
-	for (i=0; i<4; i++) {
-		for (;;) {
-			c = addr[k++];
-			if (c == '.' || c == '\0') {
-				tok[j] = '\0';
-				octet = atoi(tok);
-				if (octet > 255)
-					return 0;
-				ipnum += (octet << ((3-i)*8));
-				j = 0;
-				break;
-			} else if (c >= '0' && c<= '9') {
-				if (j > 2) {
-					return 0;
-				}
-				tok[j++] = c;
-			} else {
+unsigned long 
+_GeoIP_addr_to_num(const char *addr)
+{
+	unsigned  int      c, octet, t;
+	unsigned long      ipnum;
+	
+	octet = ipnum = 0;
+	while ((c = *addr++)) {
+		if (c == '.') {
+			if (octet > 255)
 				return 0;
-			}
-		}
-		if(c == '\0' && i<3) {
-			return 0;
+			ipnum <<= 8;
+			ipnum += octet;
+			octet = 0;
+		} else {
+			t = octet;
+			octet <<= 3;
+			octet += t;
+			octet += t;
+			c -= '0';
+			if (c > 9)
+				return 0;
+			octet += c;
 		}
 	}
-	return ipnum;
+	ipnum <<= 8;
+	return ipnum + octet;
 }
 
 GeoIP* GeoIP_open_type (int type, int flags) {
