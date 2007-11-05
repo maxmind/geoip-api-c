@@ -5,6 +5,10 @@ Note that commercial licenses are available, if you don't want
 to use the LGPL, or don't want to include the advertising clause.
 For details, e-mail support@maxmind.com
 
+Also note that while the core GeoIP library is licensed under the
+LGPL, the libGeoIPUpdate library depends on md5.c and types.h
+which are licensed under the GPL.
+
 SOFTWARE LICENSE (C library)
 
 Copyright (C) 2006 MaxMind LLC

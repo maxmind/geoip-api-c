@@ -1,4 +1,7 @@
+	* Clarified that while core GeoIP library is LGPL, libGeoIPUpdate depends on md5.c and types.h which are GPL.
+	* speedup the conversion from ipstring to ipnum in _GeoIP_addr_to_num. Doubles the speed of GEOIP_MEMORY_CACHE and GEOIP_MMAP_CACHE
 	* Added new mmap shared memory caching option, GEOIP_MMAP_CACHE (Peter Shipley, LookSmart)
+		- mmaps: our maps are shared, but we need only private readonly pages
 
 1.4.3	2007-8-30
 	! CHANGE with geoiplookup facility: -v flag now returns database info for all databases, not just GeoIP Country
