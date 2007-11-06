@@ -1,3 +1,4 @@
+	* Check for illegal IP strings, return 0 if IP is not well formed IPv4 e.g. 1.2.3.4.5 and 1.2.3
 	* Clarified that while core GeoIP library is LGPL, libGeoIPUpdate depends on md5.c and types.h which are GPL.
 	* speedup the conversion from ipstring to ipnum in _GeoIP_addr_to_num. Doubles the speed of GEOIP_MEMORY_CACHE and GEOIP_MMAP_CACHE
 	* Added new mmap shared memory caching option, GEOIP_MMAP_CACHE (Peter Shipley, LookSmart)

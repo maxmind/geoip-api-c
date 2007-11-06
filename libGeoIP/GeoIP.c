@@ -455,12 +455,13 @@ unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 	return 0;
 }
 
-unsigned long 
+unsigned long
 _GeoIP_addr_to_num(const char *addr)
 {
-	unsigned  int      c, octet, t;
-	unsigned long      ipnum;
-	
+	unsigned int    c, octet, t;
+	unsigned long   ipnum;
+	int             i = 3;
+
 	octet = ipnum = 0;
 	while ((c = *addr++)) {
 		if (c == '.') {
@@ -468,6 +469,7 @@ _GeoIP_addr_to_num(const char *addr)
 				return 0;
 			ipnum <<= 8;
 			ipnum += octet;
+			i--;
 			octet = 0;
 		} else {
 			t = octet;
@@ -480,6 +482,8 @@ _GeoIP_addr_to_num(const char *addr)
 			octet += c;
 		}
 	}
+	if ((octet > 255) || (i != 0))
+		return 0;
 	ipnum <<= 8;
 	return ipnum + octet;
 }
