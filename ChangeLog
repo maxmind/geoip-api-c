@@ -1,3 +1,5 @@
+	* Updated original geoipupdate to return "Invalid product ID or subscription expired"
+	* Added BL/Saint Barthelemy, MF/Saint Martin (ISO-3166-1 additions)
 	* Check for illegal IP strings, return 0 if IP is not well formed IPv4 e.g. 1.2.3.4.5 and 1.2.3
 	* Clarified that while core GeoIP library is LGPL, libGeoIPUpdate depends on md5.c and types.h which are GPL.
 	* speedup the conversion from ipstring to ipnum in _GeoIP_addr_to_num. Doubles the speed of GEOIP_MEMORY_CACHE and GEOIP_MMAP_CACHE

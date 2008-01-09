@@ -222,6 +222,9 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 			GeoIP_printf(f,"Failed\n");
 		free(buf);
 		return GEOIP_LICENSE_KEY_INVALID_ERR;
+	} else if (strstr(compr, "Invalid product ID or subscription expired") != NULL){
+		free(buf);
+		return GEOIP_PRODUCT_ID_INVALID_ERR;
 	} else if (strstr(compr, "No new updates available") != NULL) {
 		free(buf);
 		return GEOIP_NO_NEW_UPDATES;
