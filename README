@@ -26,7 +26,8 @@ We also offer commercial GeoIP databases with greater accuracy and
 additional network information, for more details, see:
 http://www.maxmind.com/app/products
 
-As of version 1.3.6, the GeoIP C library is thread safe.
+As of version 1.3.6, the GeoIP C library is thread safe, as long as
+GEOIP_CHECK_CACHE is not used.
 
 This module can be used to automatically select the geographically closest
 mirror, to analyze your web server logs to determine the countries of your
