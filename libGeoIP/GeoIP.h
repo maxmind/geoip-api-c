@@ -107,6 +107,8 @@ extern const char *GeoIPCityDBFileName;
 extern const char *GeoIPOrgDBFileName;
 extern const char *GeoIPISPDBFileName;
 
+/* Warning: do not use those arrays as doing so may break your
+ * program with newer GeoIP versions */
 extern const char GeoIP_country_code[253][3];
 extern const char GeoIP_country_code3[253][4];
 extern const char * GeoIP_country_name[253];
@@ -158,6 +160,24 @@ GEOIP_API void GeoIP_assign_region_by_inetaddr(GeoIP* gi, unsigned long inetaddr
 GEOIP_API char *GeoIP_name_by_ipnum (GeoIP* gi, unsigned long ipnum);
 GEOIP_API char *GeoIP_name_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API char *GeoIP_name_by_name (GeoIP* gi, const char *host);
+
+/** return two letter country code */
+GEOIP_API const char* GeoIP_code_by_id(int id);
+
+/** return three letter country code */
+GEOIP_API const char* GeoIP_code3_by_id(int id);
+
+/** return full name of country */
+GEOIP_API const char* GeoIP_name_by_id(int id);
+
+/** return continent of country */
+GEOIP_API const char* GeoIP_continent_by_id(int id);
+
+/** return id by country code **/
+GEOIP_API int GeoIP_id_by_code(const char *country);
+
+/** return return number of known countries */
+GEOIP_API unsigned GeoIP_num_countries(void);
 
 GEOIP_API char *GeoIP_database_info (GeoIP* gi);
 GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);

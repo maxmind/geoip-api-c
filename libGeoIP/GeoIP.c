@@ -93,6 +93,8 @@ const char GeoIP_country_code[253][3] = { "--","AP","EU","AD","AE","AF","AG","AI
 	"ZM","ME","ZW","A1","A2","O1","AX","GG","IM","JE",
   "BL","MF"};
 
+static const unsigned num_GeoIP_countries = (unsigned)(sizeof(GeoIP_country_code)/sizeof(GeoIP_country_code[0]));
+
 const char GeoIP_country_code3[253][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","ANT",
 	"AGO","AQ","ARG","ASM","AUT","AUS","ABW","AZE","BIH","BRB",
 	"BGD","BEL","BFA","BGR","BHR","BDI","BEN","BMU","BRN","BOL",
@@ -1028,3 +1030,59 @@ int GeoIP_last_netmask (GeoIP* gi) {
   return gi->netmask;
 }
 
+
+/** return two letter country code */
+const char* GeoIP_code_by_id(int id)
+{
+       if (id < 0 || id >= num_GeoIP_countries)
+               return NULL;
+
+       return GeoIP_country_code[id];
+}
+
+/** return three letter country code */
+const char* GeoIP_code3_by_id(int id)
+{
+       if (id < 0 || id >= num_GeoIP_countries)
+               return NULL;
+
+       return GeoIP_country_code3[id];
+}
+
+
+/** return full name of country */
+const char* GeoIP_name_by_id(int id)
+{
+       if (id < 0 || id >= num_GeoIP_countries)
+               return NULL;
+
+       return GeoIP_country_name[id];
+}
+
+/** return continent of country */
+const char* GeoIP_continent_by_id(int id)
+{
+       if (id < 0 || id >= num_GeoIP_countries)
+               return NULL;
+
+       return GeoIP_country_continent[id];
+}
+
+/** return id by country code **/
+int GeoIP_id_by_code(const char *country)
+{
+       unsigned i;
+
+       for ( i = 0; i < num_GeoIP_countries; ++i)
+       {
+               if (strcmp(country, GeoIP_country_code[i]) == 0)
+                       return i;
+       }
+
+       return 0;
+}
+
+unsigned GeoIP_num_countries(void)
+{
+       return num_GeoIP_countries;
+}
