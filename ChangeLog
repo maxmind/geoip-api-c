@@ -1,3 +1,5 @@
+	* Update add more timezones to GeoIP_time_zone_by_country_and_region
+		( Boris Zentner )
 	* Add array access functions so programs can avoid accessing the
 		arrays directly which whould break binary compatability (Ludwig Nussel at SUSE)
 	* Updated README to state API is only thread-safe if GEOIP_CHECK_CACHE is not used
