@@ -24,7 +24,7 @@
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-v] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-d custom_dir] [-f custom_file] [-v] <ipaddress|hostname>\n");
 }
 
 int main (int argc, char *argv[]) {
@@ -71,14 +71,13 @@ int main (int argc, char *argv[]) {
 
 	if (custom_file != NULL) {
 		gi = GeoIP_open(custom_file, GEOIP_STANDARD);
-		i = GeoIP_database_edition(gi);
 		if (NULL == gi) {
-			printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
+			printf("%s not available, skipping...\n", custom_file);
 		} else {
+  		i = GeoIP_database_edition(gi);
 			if (version_flag == 1) {
 				db_info = GeoIP_database_info(gi);
 				printf("%s: %s\n",GeoIPDBDescription[i],db_info);
-				free(db_info);
 			} else {
 				geoiplookup(gi,hostname,i);
 			}
@@ -139,6 +138,7 @@ void geoiplookup(GeoIP* gi,char *hostname,int i) {
 			printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 		} else {
 			printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
+      GeoIPRegion_delete(region);
 		}
 	} else if (GEOIP_CITY_EDITION_REV0 == i) {
 		gir = GeoIP_record_by_name(gi, hostname);

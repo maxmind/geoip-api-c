@@ -1,3 +1,6 @@
+	* Fixed segfault with geoiplookup, if used with a custom_file database, that 
+		could not be opened. ( Boris Zentner )
+	* Add Usage info for options -f and -d in geoipupdate ( Boris Zentner )
 	* Fixed segfault with geoipupdate when called with a illformed license file
 		( Boris Zentner )
 	* Update add more timezones to GeoIP_time_zone_by_country_and_region
