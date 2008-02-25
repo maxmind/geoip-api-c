@@ -69,6 +69,7 @@ int main (int argc, char *argv[]) {
 	unsigned char *lineptr = malloc(sizeof(char) * n);
 	char *a_license_key_str, *a_ptr;
 	char *the_license_key_str = "";
+  char * the_reference_empty_license_key_str = the_license_key_str;
 	char *a_user_id_str = NULL;
 	/* the string that holds the user id */
 	char *the_user_id_str = NULL;
@@ -269,7 +270,9 @@ int main (int argc, char *argv[]) {
 		free(the_product_id_stral);
 	}
 
-	free(the_license_key_str);
+  if ( the_reference_empty_license_key_str != the_license_key_str )
+    free(the_license_key_str);
+
 	if (the_user_id_str)
 		free(the_user_id_str);
 

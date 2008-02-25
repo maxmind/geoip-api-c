@@ -1,3 +1,5 @@
+	* Fixed segfault with geoipupdate when called with a illformed license file
+		( Boris Zentner )
 	* Update add more timezones to GeoIP_time_zone_by_country_and_region
 		( Boris Zentner )
 	* Add array access functions so programs can avoid accessing the
