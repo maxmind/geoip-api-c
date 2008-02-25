@@ -363,6 +363,12 @@ int _check_mtime(GeoIP *gi) {
 					    return -1;
 					}
 				}
+
+                                if ( gi->databaseInfo != NULL ){
+                                        free(gi->databaseInfo);
+					gi->databaseInfo = NULL;
+				}
+
 				if (gi->databaseSegments != NULL) {
 					free(gi->databaseSegments);
 					gi->databaseSegments = NULL;
@@ -532,6 +538,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
+        gi->databaseInfo = NULL; /* make sure it is NULL on startup */
 	len = sizeof(char) * (strlen(filename)+1);
 	gi->file_path = malloc(len);
 	if (gi->file_path == NULL) {
@@ -631,6 +638,8 @@ void GeoIP_delete (GeoIP *gi) {
 		free(gi->file_path);
 	if (gi->databaseSegments != NULL)
 		free(gi->databaseSegments);
+	if (gi->databaseInfo != NULL)
+                free(gi->databaseInfo);
 	free(gi);
 }
 
@@ -796,7 +805,9 @@ int GeoIP_id_by_ipnum (GeoIP* gi, unsigned long ipnum) {
 	return ret;
 }
 
-char *GeoIP_database_info (GeoIP* gi) {
+/* internal use only use GeoIP_database_info instead */
+static 
+char *__GeoIP_database_info (GeoIP* gi) {
 	int i;
 	unsigned char buf[3];
 	char *retval;
@@ -839,6 +850,14 @@ char *GeoIP_database_info (GeoIP* gi) {
 	}
 	return NULL;
 }
+
+
+char *GeoIP_database_info (GeoIP* gi) {
+  if ( gi->databaseInfo == NULL )
+    gi->databaseInfo = __GeoIP_database_info(gi);
+  return gi->databaseInfo;
+}
+
 
 /* GeoIP Region Edition functions */
 
