@@ -1,13 +1,14 @@
-	! Change The result of GeoIP_database_info is cached and freed by libgeoip now. 
-		If you ever free the result of GeoIP_database_info change your code.
-		Please notice, that __YOU__ need to free the results of
+	* Notice, that __YOU__ need to free the results of
+
+			GeoIP_database_info
 			GeoIP_name_by_ipnum
 			GeoIP_name_by_addr
 			GeoIP_name_by_name
 			GeoIP_org_by_ipnum
 			GeoIP_org_by_addr
 			GeoIP_org_by_name
-		as before!
+
+		not libgeoip
 		( Boris Zentner, Andrew Cheung )
 	* Fixed segfault with geoiplookup, if used with a custom_file database, that 
 		could not be opened. ( Boris Zentner )
