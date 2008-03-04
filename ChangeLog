@@ -1,3 +1,7 @@
+	* Add HTTP Proxy Server support for geoipupdate via the "http_proxy" 
+		environment variable.
+		ie: export http_proxy="http://proxy-hostname:port" 
+		( Andrew Droffner, Derek Nicol )
 	* Notice, that __YOU__ need to free the results of
 
 			GeoIP_database_info

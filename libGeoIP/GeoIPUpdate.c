@@ -42,9 +42,19 @@
 
 #define BLOCK_SIZE 1024
 
+/* Update DB Host & HTTP GET Request formats:
+ * ------------------------------------------
+ * GET must support an optional HTTP Proxy.
+ */
 const char *GeoIPUpdateHost = "updates.maxmind.com";
-const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
-const char *GeoIPHTTPRequestMD5 = "GET /app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
+/* This is the direct, or proxy port number. */
+static int GeoIPHTTPPort = 80;
+/* License-only format (OLD) */
+const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
+/* General DB Types formats */
+const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\n\n";
+const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\nHost: %s\n\n";
+const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
 
 /* messages */
 const char *NoCurrentDB = "%s can't be opened, proceeding to download database\n";
@@ -109,6 +119,72 @@ void GeoIP_printf(void (*f)(char *), const char *str) {
 	free(f_str);
 }
 
+/* Support HTTP Proxy Host
+ * --------------------------------------------------
+ * Use typical OS support for the optional HTTP Proxy.
+ *
+ * Proxy adds http://{real-hostname} to URI format strings:
+ * sprintf("GET %s%s/ HTTP/1.0\r\n",GeoIPProxyHTTP,GeoIPProxiedHost, ...);
+ */
+
+/* The Protocol is usually "" OR "http://" with a proxy. */
+static char *GeoIPProxyHTTP = "";
+/* GeoIP Hostname where proxy forwards requests. */
+static char *GeoIPProxiedHost = "";
+
+/* Read http_proxy env. variable & parse it.
+ * -----------------------------------------
+ * Allow only these formats:
+ * "http://server.com", "http://server.com:8080"
+ * OR
+ * "server.com", "server.com:8080"
+ *
+ * A "user:password@" part will break this.
+ */
+short int parse_http_proxy(char **proxy_host, int *port) {
+	char * http_proxy;
+	char * port_value;
+
+	if ((http_proxy = getenv("http_proxy"))) {
+
+		if (! strncmp("http://", http_proxy, 7)) http_proxy += 7;
+
+		*proxy_host = strdup(http_proxy);
+		if ( *proxy_host == NULL )
+			return 0; /* let the other functions deal with the memory error */
+
+		if ((port_value = strchr(*proxy_host, ':'))) {
+			*port_value++ = '\0';
+			*port = atoi(port_value);
+		}
+		else {
+			*port = 80;
+		}
+		return(1);
+	}
+	else {
+		return(0);
+	}
+}
+
+/* Get the GeoIP host or the current HTTP Proxy host. */
+struct hostent *GeoIP_get_host_or_proxy (void) {
+	char * hostname = (char *) GeoIPUpdateHost;
+	char * proxy_host;
+	int proxy_port;
+
+	/* Set Proxy from OS: Unix/Linux */
+	if (parse_http_proxy(&proxy_host,&proxy_port)) {
+		hostname = proxy_host;
+		GeoIPProxyHTTP = "http://";
+		GeoIPProxiedHost = (char *) GeoIPUpdateHost;
+		GeoIPHTTPPort = proxy_port;
+	}
+
+	/* Resolve DNS host entry. */
+	return(gethostbyname(hostname));
+}
+
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char *)) {
 	struct hostent *hostlist;
 	int sock;
@@ -161,7 +237,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		free(f_str);
 	}
 
-	hostlist = gethostbyname(GeoIPUpdateHost);
+	hostlist = GeoIP_get_host_or_proxy();
 
 	if (hostlist == NULL)
 		return GEOIP_DNS_ERR;
@@ -174,13 +250,16 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	}
 
 	memset(&sa, 0, sizeof(struct sockaddr_in));
-	sa.sin_port = htons(80);
+	sa.sin_port = htons(GeoIPHTTPPort);
 	memcpy(&sa.sin_addr, hostlist->h_addr_list[0], hostlist->h_length);
 	sa.sin_family = AF_INET;
 
 	if (verbose == 1)
 		GeoIP_printf(f,"Connecting to MaxMind GeoIP Update server\n");
 
+	if (verbose == 1)
+		printf("via Host or Proxy Server: %s:%d\n", hostlist->h_name, GeoIPHTTPPort);
+	
 	/* Download gzip file */
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
@@ -188,7 +267,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequest)+36));
 	if (request_uri == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
-	sprintf(request_uri,GeoIPHTTPRequest,license_key, hex_digest);
+	sprintf(request_uri,GeoIPHTTPRequest,GeoIPProxyHTTP,GeoIPProxiedHost,license_key, hex_digest);
 	send(sock, request_uri, strlen(request_uri),0);
 	free(request_uri);
 
@@ -398,7 +477,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	size_t len;
 	size_t request_uri_len;
 
-	hostlist = gethostbyname(GeoIPUpdateHost);
+	hostlist = GeoIP_get_host_or_proxy();
 
 	if (hostlist == NULL)
 		return GEOIP_DNS_ERR;
@@ -410,9 +489,16 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	}
 
 	memset(&sa, 0, sizeof(struct sockaddr_in));
-	sa.sin_port = htons(80);
+	sa.sin_port = htons(GeoIPHTTPPort);
 	memcpy(&sa.sin_addr, hostlist->h_addr_list[0], hostlist->h_length);
 	sa.sin_family = AF_INET;
+	
+	if (verbose == 1)
+		GeoIP_printf(f,"Connecting to MaxMind GeoIP server\n");
+
+	if (verbose == 1)
+		printf("via Host or Proxy Server: %s:%d\n", hostlist->h_name, GeoIPHTTPPort);
+	
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
 	request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequestMD5)+1036));
@@ -420,7 +506,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		return GEOIP_OUT_OF_MEMORY_ERR;
 
 	/* get the file name from a web page using the product id */
-	sprintf(request_uri,"GET /app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\n\n",data_base_type,GeoIPUpdateHost);
+	sprintf(request_uri,GeoIPHTTPRequestFilename,GeoIPProxyHTTP,GeoIPProxiedHost,data_base_type,GeoIPUpdateHost);
 	if (verbose == 1) {
 		printf("sending request %s \n",request_uri);
 	}
@@ -494,7 +580,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		}
 
 		memset(&sa, 0, sizeof(struct sockaddr_in));
-		sa.sin_port = htons(80);
+		sa.sin_port = htons(GeoIPHTTPPort);
 		memcpy(&sa.sin_addr, hostlist->h_addr_list[0], hostlist->h_length);
 		sa.sin_family = AF_INET;
 
@@ -513,7 +599,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		}
 
 		/* get client ip address from MaxMind web page */
-		sprintf(request_uri,"GET /app/update_getipaddr HTTP/1.0\nHost: %s\n\n",GeoIPUpdateHost);
+		sprintf(request_uri,GeoIPHTTPRequestClientIP,GeoIPProxyHTTP,GeoIPProxiedHost,GeoIPUpdateHost);
 		send(sock, request_uri, strlen(request_uri),0); /* send the request */
 		if (verbose == 1) {
 			printf("sending request %s", request_uri);
@@ -575,12 +661,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		return GEOIP_SOCKET_OPEN_ERR;
 	}
 	memset(&sa, 0, sizeof(struct sockaddr_in));
-	sa.sin_port = htons(80);
+	sa.sin_port = htons(GeoIPHTTPPort);
 	memcpy(&sa.sin_addr, hostlist->h_addr_list[0], hostlist->h_length);
 	sa.sin_family = AF_INET;
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
-	snprintf(request_uri, request_uri_len, GeoIPHTTPRequestMD5,hex_digest,hex_digest2,user_id,data_base_type);
+	snprintf(request_uri, request_uri_len, GeoIPHTTPRequestMD5,GeoIPProxyHTTP,GeoIPProxiedHost,hex_digest,hex_digest2,user_id,data_base_type);
 	send(sock, request_uri, strlen(request_uri),0);
 	if (verbose == 1) {
 		printf("sending request %s\n",request_uri);
