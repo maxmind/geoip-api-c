@@ -218,7 +218,7 @@ void GeoIPRecord_delete (GeoIPRecord *gir) {
 char * _iso_8859_1__utf8(const char * iso) {
 	char c, k;
 	char * p;
-	char * t = iso;
+	char * t = (char *)iso;
 	int len = 0;
 	while ( ( c = *t++) ){
 		if ( c < 0 )

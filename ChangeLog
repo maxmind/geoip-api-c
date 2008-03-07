@@ -1,3 +1,4 @@
+	* Added cast in _iso_8859_1__utf8 function to fix NetWare/Win32 compilation issue (Guenter Knauf)
 	* Add HTTP Proxy Server support for geoipupdate via the "http_proxy" 
 		environment variable.
 		ie: export http_proxy="http://proxy-hostname:port" 
