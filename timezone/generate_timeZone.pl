@@ -1,59 +1,62 @@
 #!/usr/bin/perl
-
 use strict;
+
+# Obtain timezone.txt from http://www.maxmind.com/timezone.txt
 
 # Used to generate timeZone.c
 # usage: ./generate_timeZone.pl > ../libGeoIP/timeZone.c
 
-my $old_country;
-my $old_region;
-my $had_region;
+my $tz;
 
-# Obtain timezone.txt from http://www.maxmind.com/timezone.txt
-open(FILE,"timezone.txt");
-my $str = <FILE>;
+open my $fh, '<', 'timezone.txt' or die $!;
+
 print "#include <string.h> \n";
-print "const char* GeoIP_time_zone_by_country_and_region(const char * country,const char * region) {\n";
+print
+"const char* GeoIP_time_zone_by_country_and_region(const char * country,const char * region) {\n";
 print "  const char* timezone = NULL;\n";
-print <<END;
-  if (country == NULL) {
-    return NULL;
-  }
-  if (region == NULL) {
-    region = "";
-  }
-END
-
-while ($str = <FILE>) {
-  $str =~ s!\s*$!!; 
-  my ($country,$region,$timezone) = split("\t",$str);
-  if ($country ne $old_country) {
-    if ($had_region) {
-      print "    }\n";
-      $had_region = "";
-    }
-    if ($old_country ne "") {
-      print "  } else if (strcmp(country," . qq(") . $country . qq(") . ") == 0) {\n";
-    } else {
-      print "  if (strcmp(country," . qq(") . $country . qq(") . ") == 0) {\n";
-    }
-  }
-  if ($region ne "") {
-    $had_region = 1;
-    if ($old_region ne "") {
-      print "    } else if (strcmp(region," . qq(") . $region . qq(") . ") == 0) {\n  ";
-    } else {
-      print "    if (strcmp(region," . qq(") . $region . qq(") . ") == 0) {\n  ";
-    }
-  } elsif ($old_region ne "") {
-    print "    } else {\n  ";
-  }
-  print qq(    timezone = ") . $timezone . qq(") . ";\n";
-  $old_country = $country;
-  $old_region = $region;
-}
+print "  if (country == NULL) {\n";
+print "    return NULL;\n";
 print "  }\n";
-print "  return timezone;\n";
-print "}\n";
+print "  if (region == NULL) {\n";
+print '    region = "";', "\n";
+print "  }\n";
 
-close(FILE);
+local $_ = <$fh>;    # skip first line
+while (<$fh>) {
+  chomp;
+  my ( $country, $region, $timezone ) = split /\t/;
+  $tz->{$country}->{ $region || '' } = $timezone;
+}
+
+my $first_country;
+for my $c ( sort keys %$tz ) {
+  print( ( defined $first_country ) ? '  else if' : '  if' );
+  $first_country ||= $c;
+  my $def = delete $tz->{$c}->{''};
+  if ( my @reg = sort keys %{ $tz->{$c} } ) {
+    my @tz = values %{ $tz->{$c} };
+
+    printf( qq! ( strcmp (country, "%s") == 0 ) {\n!, $c );
+    for ( 0 .. $#reg ) {
+
+      # have regions
+
+      print( ( $_ == 0 ) ? '    if' : '    else if' );
+      printf( qq! ( strcmp (region, "%s") == 0 ) {\n!, $reg[$_] );
+      printf( qq!      timezone = "%s";\n!,            $tz[$_] );
+      printf( qq!    }\n! );
+    }
+    printf( qq!  else { timezone = "%s"; }\n!, $def ) if defined $def;
+    print qq[  }\n];
+  }
+  else {
+
+    # only default tz
+    printf( qq! ( strcmp (country, "%s") == 0 ) {\n!, $c );
+    printf( qq!    timezone = "%s";\n!,               $def );
+    printf(qq!  }\n!);
+
+  }
+}
+
+print qq[  return timezone;\n}\n];

@@ -1,3 +1,4 @@
+	* Update timezone/generate_timeZone.pl ( Boris Zentner ) 
 	* Update libGeoIP/timeZone.c ( Boris Zentner )
 	* Added GeoIP_printf and GeoIP_fprintf as a experimental feature to
 		libGeoIPUpdate. ( Boris Zentner, Andrew Droffner )
