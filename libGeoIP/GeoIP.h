@@ -186,6 +186,7 @@ GEOIP_API int GeoIP_charset (GeoIP* gi);
 GEOIP_API int GeoIP_set_charset (GeoIP* gi, int charset);
 
 GEOIP_API int GeoIP_last_netmask (GeoIP* gi);
+GEOIP_API char **GeoIP_range_by_ip (GeoIP* gi, const char *addr);
 
 /* Convert region code to region name */
 GEOIP_API const char * GeoIP_region_name_by_code(const char *country_code, const char *region_code);

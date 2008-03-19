@@ -26,6 +26,7 @@ int main (int argc, char* argv[]) {
         char * org;
 	int generate = 0;
 	char host[50];
+	char **ret;
 
 	if (argc == 2)
 		if (!strcmp(argv[1],"gen"))
@@ -45,11 +46,14 @@ int main (int argc, char* argv[]) {
 		exit(1);
 	}
 
+	printf("IP\torganization\tnetmask\tbeginIp\tendIp\n");
 	while (fscanf(f, "%s", host) != EOF) {
 		org = GeoIP_name_by_name (gi, (const char *)host);
 
 		if (org != NULL) {
-			printf("%s\t%s\t%d\n", host, org, GeoIP_last_netmask(gi));
+			ret = GeoIP_range_by_ip(gi, (const char *)host);
+
+			printf("%s\t%s\t%d\t%s\t%s\n", host, org, GeoIP_last_netmask(gi), ret[0], ret[1]);
 			free(org);
 		}
 	}

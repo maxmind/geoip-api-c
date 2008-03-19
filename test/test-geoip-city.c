@@ -28,6 +28,7 @@ int main (int argc, char* argv[]) {
 	int generate = 0;
 	char host[50];
 	const char * time_zone = NULL;
+	char **ret;
 
 	if (argc == 2)
 		if (!strcmp(argv[1],"gen"))
@@ -51,8 +52,9 @@ int main (int argc, char* argv[]) {
 		gir = GeoIP_record_by_name (gi, (const char *)host);
 
 		if (gir != NULL) {
+			ret = GeoIP_range_by_ip(gi, (const char *)host);
 			time_zone = GeoIP_time_zone_by_country_and_region(gir->country_code, gir->region);
-			printf("%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\t%d\t%s\n", host,
+			printf("%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\t%d\t%s\t%s\t%s\n", host,
 					 gir->country_code,
 					 gir->region,
 					 GeoIP_region_name_by_code(gir->country_code, gir->region),
@@ -62,7 +64,9 @@ int main (int argc, char* argv[]) {
 					 gir->longitude,
 					 gir->dma_code,
 					 gir->area_code,
-					 time_zone);
+					 time_zone,
+					 ret[0],
+					 ret[1]);
 			GeoIPRecord_delete(gir);
 		}
 	}

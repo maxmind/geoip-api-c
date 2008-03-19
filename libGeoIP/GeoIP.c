@@ -978,6 +978,105 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	return org_buf;
 }
 
+char *_GeoIP_num_to_addr (GeoIP* gi, unsigned long ipnum) {
+	char *ret_str;
+	char *cur_str;
+	int octet[4];
+	int num_chars_written, i;
+
+	ret_str = malloc(sizeof(char) * 16);
+	cur_str = ret_str;
+
+	for (i = 0; i<4; i++) {
+		octet[3 - i] = ipnum % 256;
+		ipnum >>= 8;
+	}
+
+	for (i = 0; i<4; i++) {
+		num_chars_written = sprintf(cur_str, "%d", octet[i]);
+		cur_str += num_chars_written;
+
+		if (i < 3) {
+			cur_str[0] = '.';
+			cur_str++;
+		}
+	}
+
+	return ret_str;
+}
+
+char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
+	unsigned long ipnum;
+	unsigned long left_seek;
+	unsigned long right_seek;
+	int left_netmask;
+	int right_netmask;
+	int orig_netmask;
+	int target_value;
+	int left_value;
+	int right_value;
+	int i;
+	unsigned long cur_bit;
+	char **ret;
+
+	ret = malloc(sizeof(char *) * 2);
+
+	if (addr == NULL) {
+		return 0;
+	}
+	ipnum = _GeoIP_addr_to_num(addr);
+	left_seek = ipnum;
+	right_seek = ipnum;
+	target_value = _GeoIP_seek_record(gi, ipnum);
+	left_value = target_value;
+	right_value = target_value;
+	orig_netmask = GeoIP_last_netmask(gi);
+	left_netmask = orig_netmask;
+	right_netmask = orig_netmask;
+
+	while (left_value == target_value) {
+		/* Go to beginning of netblock defined by netmask */
+		for (i = 32; i > left_netmask; i--) {
+			cur_bit = (1 << (32 - i));
+			if (left_seek & cur_bit) {
+				left_seek -= cur_bit;
+			}
+		}
+
+		/* nudge beyond netblock defined by netmask */
+		left_seek--;
+
+		left_value = _GeoIP_seek_record(gi, left_seek);
+		left_netmask = GeoIP_last_netmask(gi);
+	}
+	/* now that we went one IP address beyond the edge go back to the boundary */
+	left_seek++;
+	ret[0] = _GeoIP_num_to_addr(gi, left_seek);
+
+	while (right_value == target_value) {
+		/* Go to beginning of netblock defined by netmask */
+		for (i = 32; i > right_netmask; i--) {
+			cur_bit = (1 << (32 - i));
+			if ( !( right_seek & cur_bit ) ) {
+				right_seek += cur_bit;
+			}
+		}
+
+		/* nudge beyond netblock defined by netmask */
+		right_seek++;
+
+		right_value = _GeoIP_seek_record(gi, right_seek);
+		right_netmask = GeoIP_last_netmask(gi);
+	}
+	/* now that we went one IP address beyond the edge go back to the boundary */
+	right_seek--;
+	ret[1] = _GeoIP_num_to_addr(gi, right_seek);
+
+	gi->netmask = orig_netmask;
+
+	return ret;
+}
+
 char *GeoIP_name_by_ipnum (GeoIP* gi, unsigned long ipnum) {
 	return _get_name(gi,ipnum);  
 }
