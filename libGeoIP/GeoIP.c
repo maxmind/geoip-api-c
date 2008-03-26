@@ -329,8 +329,11 @@ int _check_mtime(GeoIP *gi) {
 				/* GeoIP Database file updated */
 				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
 				    if ( gi->flags & GEOIP_MMAP_CACHE) {
+#ifndef WIN32
+							/* MMAP is only availon UNIX */
 					munmap(gi->cache, gi->size);
 					gi->cache = NULL;
+#endif
 				    } else {
 					/* reload database into memory cache */
 					if ((gi->cache = (unsigned char*) realloc(gi->cache, buf.st_size)) == NULL) {
@@ -350,13 +353,20 @@ int _check_mtime(GeoIP *gi) {
 				gi->size = buf.st_size;
 
 				if ( gi->flags & GEOIP_MMAP_CACHE) {
+#ifdef WIN32
+					fprintf(stderr, "GEOIP_MMAP_CACHE is not supported on WIN32\n");
+					gi->cache = 0;
+					return -1;
+#else
 				    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 				    if ( gi->cache == MAP_FAILED ) {
 
 					    fprintf(stderr,"Error remapping file %s when reloading\n",gi->file_path);
+
 					    gi->cache = 0;
 					    return -1;
 				    }
+#endif
 				} else if ( gi->flags & GEOIP_MEMORY_CACHE ) {
 				    if (fread(gi->cache, sizeof(unsigned char), buf.st_size, gi->GeoIPDatabase) != (size_t) buf.st_size) {
 					    fprintf(stderr,"Error reading file %s when reloading\n",gi->file_path);
@@ -556,8 +566,10 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 			}
 			gi->mtime = buf.st_mtime;
 			gi->size = buf.st_size;
+
 			/* MMAP added my Peter Shipley */
-			if ( flags & GEOIP_MMAP_CACHE) {
+			if ( flags & GEOIP_MMAP_CACHE ) {
+#ifndef WIN32
 			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 			    if ( gi->cache == MAP_FAILED ) {
 				fprintf(stderr,"Error mmaping file %s\n",filename);
@@ -565,6 +577,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 				free(gi);
 				return NULL;
 			    }
+#endif
 			} else {
 			    gi->cache = (unsigned char *) malloc(sizeof(unsigned char) * buf.st_size);
 
@@ -619,8 +632,10 @@ void GeoIP_delete (GeoIP *gi) {
 	if (gi->GeoIPDatabase != NULL)
 		fclose(gi->GeoIPDatabase);
 	if (gi->cache != NULL) {
-	    if ( gi->flags & GEOIP_MMAP_CACHE) {
+	    if ( gi->flags & GEOIP_MMAP_CACHE ) {
+#ifndef WIN32
 		munmap(gi->cache, gi->size);
+#endif
 	    } else {
 		free(gi->cache);
 	    }
