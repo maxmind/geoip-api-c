@@ -23,7 +23,7 @@
 #ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
 #endif
-#ifndef _WIN32
+#if !defined(WIN32) && !defined(WIN64)
 #include <netdb.h>  /* For gethostbyname */
 #include <netinet/in.h> /* For ntohl */
 #else

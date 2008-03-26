@@ -1,3 +1,5 @@
+	* Add WIN64 since WIN32 is not defined on WIN64 Systems
+		( Boris Zentner, Greg Ferrar )
 	* Fix WIN32 compilation by encircle all MMAP functions with #ifdef WIN32 #endif pairs. MMAP is not avail in W32 ( Boris Zentner, Greg Ferrar ) 
 	* Update timezone/generate_timeZone.pl ( Boris Zentner ) 
 	* Update libGeoIP/timeZone.c ( Boris Zentner )

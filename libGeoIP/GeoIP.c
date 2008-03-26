@@ -20,7 +20,7 @@
 
 #include "GeoIP.h"
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(WIN64)
 #include <netdb.h>
 #include <sys/socket.h>
 #include <netinet/in.h> /* For ntohl */
@@ -192,7 +192,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
 
 	if (custom_directory == NULL){
-#ifndef WIN32
+#if !defined(WIN32) && !defined(WIN64)
 		memset(path, 0, sizeof(char) * 1024);
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
 #else
@@ -329,7 +329,7 @@ int _check_mtime(GeoIP *gi) {
 				/* GeoIP Database file updated */
 				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
 				    if ( gi->flags & GEOIP_MMAP_CACHE) {
-#ifndef WIN32
+#if !defined(WIN32) && !defined(WIN64)
 							/* MMAP is only availon UNIX */
 					munmap(gi->cache, gi->size);
 					gi->cache = NULL;
@@ -353,7 +353,7 @@ int _check_mtime(GeoIP *gi) {
 				gi->size = buf.st_size;
 
 				if ( gi->flags & GEOIP_MMAP_CACHE) {
-#ifdef WIN32
+#if defined(WIN32) || defined(WIN64)
 					fprintf(stderr, "GEOIP_MMAP_CACHE is not supported on WIN32\n");
 					gi->cache = 0;
 					return -1;
@@ -534,7 +534,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	GeoIP * gi;
 	size_t len;
 
-#ifdef WIN32
+#if defined(WIN32) || defined(WIN64)
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
 		return NULL;
@@ -569,7 +569,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 
 			/* MMAP added my Peter Shipley */
 			if ( flags & GEOIP_MMAP_CACHE ) {
-#ifndef WIN32
+#if !defined(WIN32) && !defined(WIN64)
 			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 			    if ( gi->cache == MAP_FAILED ) {
 				fprintf(stderr,"Error mmaping file %s\n",filename);
@@ -633,7 +633,7 @@ void GeoIP_delete (GeoIP *gi) {
 		fclose(gi->GeoIPDatabase);
 	if (gi->cache != NULL) {
 	    if ( gi->flags & GEOIP_MMAP_CACHE ) {
-#ifndef WIN32
+#if !defined(WIN32) && !defined(WIN64)
 		munmap(gi->cache, gi->size);
 #endif
 	    } else {
