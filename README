@@ -1,6 +1,12 @@
 				GeoIP 1.4.4
 				-----------
 
+The new perl script geoipupdate-pureperl.pl is a drop in replacement for
+geoipupdate. Useful, if you like to customize, pre or postprocess new or
+old databases. To archive the databases or signal apache whatever.
+Another advantage is, that geoipupdate-pureperl.pl is able to handle proxy
+requests even with authentication.
+
 IMPORTANT API Change for 1.3.x and above users for GeoIP Region database
 GeoIPRegion.region is no longer a pointer but an in-structure
 array so test the first byte of region == 0 rather testing if the region

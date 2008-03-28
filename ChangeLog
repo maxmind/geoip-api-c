@@ -1,3 +1,4 @@
+	* Add geoipupdate-pureperl.pl a alternative geoipupdate version. with Proxy Server support via via the "http_proxy" environment variable. Easy to customize. ( Boris Zentner ) 
 	* Add WIN64 since WIN32 is not defined on WIN64 Systems
 		( Boris Zentner, Greg Ferrar )
 	* Fix WIN32 compilation by encircle all MMAP functions with #ifdef WIN32 #endif pairs. MMAP is not avail in W32 ( Boris Zentner, Greg Ferrar ) 
