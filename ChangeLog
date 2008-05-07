@@ -1,7 +1,8 @@
+	* Added GeoIP_range_by_ip, returns the start and end IP address for the range containing the IP address.
+		This range has a constant value in the GeoIP database.
 	* Add geoipupdate-pureperl.pl a alternative geoipupdate version. with Proxy Server support via via the "http_proxy" environment variable. Easy to customize. ( Boris Zentner ) 
-	* Add WIN64 since WIN32 is not defined on WIN64 Systems
-		( Boris Zentner, Greg Ferrar )
-	* Fix WIN32 compilation by encircle all MMAP functions with #ifdef WIN32 #endif pairs. MMAP is not avail in W32 ( Boris Zentner, Greg Ferrar ) 
+	* Add WIN64 since WIN32 is not defined on WIN64 Systems ( Boris Zentner )
+	* Fix WIN32 compilation by encircle all MMAP functions with #ifdef WIN32 #endif pairs. MMAP is not avail in W32 ( Boris Zentner ) 
 	* Update timezone/generate_timeZone.pl ( Boris Zentner ) 
 	* Update libGeoIP/timeZone.c ( Boris Zentner )
 	* Added GeoIP_printf and GeoIP_fprintf as a experimental feature to
