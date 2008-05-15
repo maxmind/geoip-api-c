@@ -72,7 +72,6 @@ int main (int argc, char *argv[]) {
 	if (custom_file != NULL) {
 		gi = GeoIP_open(custom_file, GEOIP_STANDARD);
 		i = GeoIP_database_edition(gi);
-		
 		if (NULL == gi) {
 			printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 		} else {
@@ -119,17 +118,19 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 	GeoIPRegion    *region;
 	GeoIPRecord    *gir;
 	const char     *org;
-	uint32_t        ipnum;
-	
-	ipnum = _GeoIP_lookupaddress(hostname);
-	if (ipnum == 0) {
+
+	geoipv6_t       ipnum;
+	ipnum = _GeoIP_lookupaddress_v6(hostname);
+	if (__GEOIP_V6_IS_NULL(ipnum)) {
 		printf("%s: can't resolve hostname ( %s )\n", GeoIPDBDescription[i], hostname);
 
 	}
 	else {
 
-		if (GEOIP_DOMAIN_EDITION == i) {
-			domain_name = GeoIP_name_by_ipnum(gi, ipnum);
+
+#if 0
+		if (GEOIP_DOMAIN_EDITION_V6 == i) {
+			domain_name = GeoIP_name_by_name_v6(gi, hostname);
 			if (domain_name == NULL) {
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 			}
@@ -137,8 +138,11 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: %s\n", GeoIPDBDescription[i], domain_name);
 			}
 		}
-		else if (GEOIP_COUNTRY_EDITION == i) {
-                        country_id = GeoIP_id_by_ipnum(gi, ipnum);
+#endif
+
+		if (GEOIP_COUNTRY_EDITION_V6 == i) {
+
+			country_id = GeoIP_id_by_ipnum_v6(gi, ipnum);
 			country_code = GeoIP_country_code[country_id];
 			country_name = GeoIP_country_name[country_id];
 			if (country_id == 0) {
@@ -148,62 +152,65 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: %s, %s\n", GeoIPDBDescription[i], country_code, country_name);
 			}
 		}
-		else if (GEOIP_REGION_EDITION_REV0 == i || GEOIP_REGION_EDITION_REV1 == i) {
-			region = GeoIP_region_by_ipnum(gi, ipnum);
-			if (NULL == region) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-				printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
-				GeoIPRegion_delete(region);
-			}
-		}
-		else if (GEOIP_CITY_EDITION_REV0 == i) {
-			gir = GeoIP_record_by_ipnum(gi, ipnum);
-			if (NULL == gir) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-				printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region,
-				       gir->city, gir->postal_code, gir->latitude, gir->longitude);
-			}
-		}
-		else if (GEOIP_CITY_EDITION_REV1 == i) {
-			gir = GeoIP_record_by_ipnum(gi, ipnum);
-			if (NULL == gir) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
-				       gir->latitude, gir->longitude, gir->dma_code, gir->area_code);
-			}
-		}
-		else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
-			org = GeoIP_org_by_ipnum(gi, ipnum);
-			if (org == NULL) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-				printf("%s: %s\n", GeoIPDBDescription[i], org);
-			}
-		}
-		else if (GEOIP_NETSPEED_EDITION == i) {
-			netspeed = GeoIP_id_by_ipnum(gi, ipnum);
-			if (netspeed == GEOIP_UNKNOWN_SPEED) {
-				printf("%s: Unknown\n", GeoIPDBDescription[i]);
-			}
-			else if (netspeed == GEOIP_DIALUP_SPEED) {
-				printf("%s: Dialup\n", GeoIPDBDescription[i]);
-			}
-			else if (netspeed == GEOIP_CABLEDSL_SPEED) {
-				printf("%s: Cable/DSL\n", GeoIPDBDescription[i]);
-			}
-			else if (netspeed == GEOIP_CORPORATE_SPEED) {
-				printf("%s: Corporate\n", GeoIPDBDescription[i]);
-			}
+	}
+
+#if 0
+
+	else
+	if (GEOIP_REGION_EDITION_REV0 == i || GEOIP_REGION_EDITION_REV1 == i) {
+		region = GeoIP_region_by_name_v6(gi, hostname);
+		if (NULL == region) {
+			printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 		}
 		else {
-			printf("Can not handle database type -- try geoiplookup6\n");
+			printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
 		}
 	}
+	else if (GEOIP_CITY_EDITION_REV0 == i) {
+		gir = GeoIP_record_by_name(gi, hostname);
+		if (NULL == gir) {
+			printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+		}
+		else {
+			printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region,
+			       gir->city, gir->postal_code, gir->latitude, gir->longitude);
+		}
+	}
+	else if (GEOIP_CITY_EDITION_REV1 == i) {
+		gir = GeoIP_record_by_name(gi, hostname);
+		if (NULL == gir) {
+			printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+		}
+		else {
+			printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
+			       gir->latitude, gir->longitude, gir->dma_code, gir->area_code);
+		}
+	}
+	else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
+		org = GeoIP_org_by_name_v6(gi, hostname);
+		if (org == NULL) {
+			printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+		}
+		else {
+			printf("%s: %s\n", GeoIPDBDescription[i], org);
+		}
+	}
+	else if (GEOIP_NETSPEED_EDITION == i) {
+		netspeed = GeoIP_id_by_name_v6(gi, hostname);
+		if (netspeed == GEOIP_UNKNOWN_SPEED) {
+			printf("%s: Unknown\n", GeoIPDBDescription[i]);
+		}
+		else if (netspeed == GEOIP_DIALUP_SPEED) {
+			printf("%s: Dialup\n", GeoIPDBDescription[i]);
+		}
+		else if (netspeed == GEOIP_CABLEDSL_SPEED) {
+			printf("%s: Cable/DSL\n", GeoIPDBDescription[i]);
+		}
+		else if (netspeed == GEOIP_CORPORATE_SPEED) {
+			printf("%s: Corporate\n", GeoIPDBDescription[i]);
+		}
+
+	}
+#endif
+
 }

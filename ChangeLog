@@ -1,3 +1,44 @@
+	* remove unused code from GeoIP_country_name_by_addr and  
+GeoIP_country_code3_by_addr ( Boris Zentner )
+	* Fix geoiplookup and geoiplookup6 to distinguish between failed  
+namelookups and unknown ips ( Boris Zentner )
+	* add geoiplookup6 that can handle the new database type  
+GEOIP_COUNTRY_EDITION_V6 ( Boris Zentner )
+	* add new functions to handle ipv6
+
+		GEOIP_API const char *GeoIP_country_name_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API const char *GeoIP_country_code_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API const char *GeoIP_country_code3_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API char *GeoIP_org_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API char *GeoIP_org_by_addr_v6 (GeoIP* gi, const char *addr);
+		GEOIP_API char *GeoIP_org_by_name_v6 (GeoIP* gi, const char *name);
+		GEOIP_API int GeoIP_id_by_addr_v6 (GeoIP* gi, const char *addr);
+		GEOIP_API int GeoIP_id_by_name_v6 (GeoIP* gi, const char *host);
+		GEOIP_API int GeoIP_id_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API GeoIPRegion * GeoIP_region_by_addr_v6 (GeoIP* gi, const char *addr);
+		GEOIP_API GeoIPRegion * GeoIP_region_by_name_v6 (GeoIP* gi, const char *host);
+		GEOIP_API GeoIPRegion * GeoIP_region_by_ipnum_v6 (GeoIP *gi, geoipv6_t ipnum);
+		GEOIP_API void GeoIP_assign_region_by_inetaddr_v6(GeoIP* gi, geoipv6_t inetaddr, GeoIPRegion *gir);
+		GEOIP_API char *GeoIP_name_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
+		GEOIP_API char *GeoIP_name_by_addr_v6 (GeoIP* gi, const char *addr);
+		GEOIP_API char *GeoIP_name_by_name_v6 (GeoIP* gi, const char *name);
+
+		# allowed input for addr
+		2001:4860:0:1001::68
+		::85.8.93.71
+		::1
+		::5508::5d47
+		::ffff:5508::5d47
+
+		# allowed input for host
+		ipv6.google.com
+		2001:4860:0:1001::68
+		::85.8.93.71
+		::1
+		::5508::5d47
+		::ffff:5508::5d47
+         ( Boris Zentner )
+	* Fix geoiplookup usage string ( add -d -f ) ( Boris Zentner )
 	* Added GeoIP_range_by_ip, returns the start and end IP address for the range containing the IP address.
 		This range has a constant value in the GeoIP database.
 	* Add geoipupdate-pureperl.pl a alternative geoipupdate version. with Proxy Server support via via the "http_proxy" environment variable. Easy to customize. ( Boris Zentner ) 

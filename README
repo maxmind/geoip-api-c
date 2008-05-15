@@ -1,6 +1,13 @@
 				GeoIP 1.4.4
 				-----------
 
+*** Experimental IPv6 notice ***
+
+- the experimental IPv6 part of libGeoIP may change in the future.
+- It is possible, that geoiplookup and geoiplookup6 will merged.
+
+***
+
 The new perl script geoipupdate-pureperl.pl is a drop in replacement for
 geoipupdate. Useful, if you like to customize, pre or postprocess new or
 old databases. To archive the databases or signal apache whatever.
