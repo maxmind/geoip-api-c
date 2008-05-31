@@ -1,3 +1,4 @@
+	* Fix sync geoiplookup's man page with the code ( Klaus Heinz ) 
 	* remove unused code from GeoIP_country_name_by_addr and  
 GeoIP_country_code3_by_addr ( Boris Zentner )
 	* Fix geoiplookup and geoiplookup6 to distinguish between failed  
