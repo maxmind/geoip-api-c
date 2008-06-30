@@ -63,7 +63,7 @@ while (my $str = <FILE>){
     substr($region_code,1,1)+100;
   }else{
     $region_code2 = $region_code;
-    $region_code2 =~ s!^0+!!g;
+    $region_code2 =~ s!^0!!g;
     $region_code2 =~ s!\s+!!g;
   }
   readcode($last_country_code,$country_code,$region_code,$region_code2,$name);
