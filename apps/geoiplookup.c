@@ -71,11 +71,11 @@ int main (int argc, char *argv[]) {
 
 	if (custom_file != NULL) {
 		gi = GeoIP_open(custom_file, GEOIP_STANDARD);
-		i = GeoIP_database_edition(gi);
 		
 		if (NULL == gi) {
-			printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
+			printf("%s not available, skipping...\n", custom_file);
 		} else {
+		  i = GeoIP_database_edition(gi);
 			if (version_flag == 1) {
 				db_info = GeoIP_database_info(gi);
 				printf("%s: %s\n",GeoIPDBDescription[i],db_info);
