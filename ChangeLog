@@ -1,12 +1,11 @@
+	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
+	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
 	* Sync regionName.c with a recent fips code list ( Boris Zentner )
 	* Fix segfault when open failed for a custom file (-f) ( Boris Zentner )
 	* Fix sync geoiplookup's man page with the code ( Klaus Heinz ) 
-	* remove unused code from GeoIP_country_name_by_addr and  
-GeoIP_country_code3_by_addr ( Boris Zentner )
-	* Fix geoiplookup and geoiplookup6 to distinguish between failed  
-namelookups and unknown ips ( Boris Zentner )
-	* add geoiplookup6 that can handle the new database type  
-GEOIP_COUNTRY_EDITION_V6 ( Boris Zentner )
+	* remove unused code from GeoIP_country_name_by_addr and GeoIP_country_code3_by_addr ( Boris Zentner )
+	* Fix geoiplookup and geoiplookup6 to distinguish between failed namelookups and unknown ips ( Boris Zentner )
+	* add geoiplookup6 that can handle the new database type GEOIP_COUNTRY_EDITION_V6 ( Boris Zentner )
 	* add new functions to handle ipv6
 
 		GEOIP_API const char *GeoIP_country_name_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
@@ -42,6 +41,7 @@ GEOIP_COUNTRY_EDITION_V6 ( Boris Zentner )
 		::ffff:5508::5d47
          ( Boris Zentner )
 	* Fix geoiplookup usage string ( add -d -f ) ( Boris Zentner )
+>>>>>>> 1.120
 	* Added GeoIP_range_by_ip, returns the start and end IP address for the range containing the IP address.
 		This range has a constant value in the GeoIP database.
 	* Add geoipupdate-pureperl.pl a alternative geoipupdate version. with Proxy Server support via via the "http_proxy" environment variable. Easy to customize. ( Boris Zentner ) 
