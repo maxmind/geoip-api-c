@@ -28,14 +28,14 @@ Specifies the configuration file that contains the license key.
 Defaults to CONF_DIR/GeoIP.conf
 .SH USAGE
 Typically you'll want to write a weekly crontab that will run geoipupdate.
-Below is a sample crontab that runs geoipupdate on each Wendesday at noon:
+Below is a sample crontab that runs geoipupdate on each Wednesday at noon:
 .PP
 .RS
 # top of crontab
 .PP
 MAILTO=your@email.com
 .PP
-0 12 * * 3 /usr/local/bin/geoipupdate
+0 12 * * 3 BIN_DIR/geoipupdate
 .PP
 # end of crontab
 .RE
