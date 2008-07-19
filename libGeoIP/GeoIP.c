@@ -42,6 +42,10 @@ static geoipv6_t IPV6_NULL;
 #include <sys/types.h> /* for fstat */
 #include <sys/stat.h>	/* for fstat */
 
+#ifdef HAVE_GETTIMEOFDAY
+#include <sys/time.h> /* for gettimeofday */
+#endif
+
 #ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
 #endif
@@ -338,14 +342,24 @@ void _setup_segments(GeoIP * gi) {
 static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
-	if (gi->flags & GEOIP_CHECK_CACHE) {
+  struct timeval t;
+		
+	/* stat only has second granularity, so don't
+	   call it more than once a second */
+	gettimeofday(&t, NULL);
+	if (t.tv_sec == gi->last_mtime_check){
+		return 0;
+	}
+	gi->last_mtime_check = t.tv_sec;
+
+  if (gi->flags & GEOIP_CHECK_CACHE) {
 		if (stat(gi->file_path, &buf) != -1) {
 			if (buf.st_mtime != gi->mtime) {
 				/* GeoIP Database file updated */
 				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
 				    if ( gi->flags & GEOIP_MMAP_CACHE) {
 #if !defined(WIN32) && !defined(WIN64)
-							/* MMAP is only availon UNIX */
+							/* MMAP is only avail on UNIX */
 					munmap(gi->cache, gi->size);
 					gi->cache = NULL;
 #endif

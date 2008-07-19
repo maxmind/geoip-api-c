@@ -61,6 +61,7 @@ typedef struct GeoIPTag {
 	int charset; /* 0 iso-8859-1 1 utf8 */
 	int record_iter; /* used in GeoIP_next_record */
 	int netmask; /* netmask of last lookup - set using depth in _GeoIP_seek_record */
+	time_t last_mtime_check;
 } GeoIP;
 
 

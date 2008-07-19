@@ -1,3 +1,4 @@
+	* CHECK_CACHE stat the database file not faster than once a second anymore ( Patrick McManus )
 	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
 	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
 	* Sync regionName.c with a recent fips code list ( Boris Zentner )

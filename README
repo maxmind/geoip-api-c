@@ -121,6 +121,18 @@ automically each week.  For more details see:
 
 http://www.maxmind.com/app/license_key
 
+RESOURCES Mailinglists
+
+Please join the very low traffic mailinglists you are interested in.
+
+http://sourceforge.net/mail/?group_id=66844
+
+Preformance Patches.
+
+Patrick McManus provide a patch to enhance the lookupspeed in MEMORY_CACHE mode. If you feel, that the current MEMORY_CACHE mode is to slow try the patch:
+
+http://sourceforge.net/mailarchive/forum.php?forum_name=geoip-c-discuss&max_rows=25&style=nested&viewmonth=200803
+
 TROUBLESHOOTING
 
 Note that it is recommended that you use GNU make.  Also, if you are using
