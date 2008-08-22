@@ -1363,67 +1363,42 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	unsigned long left_seek;
 	unsigned long right_seek;
-	int left_netmask;
-	int right_netmask;
+	unsigned long mask;
 	int orig_netmask;
 	int target_value;
-	int left_value;
-	int right_value;
 	int i;
-	unsigned long cur_bit;
 	char **ret;
-
-	ret = malloc(sizeof(char *) * 2);
-
+	
 	if (addr == NULL) {
 		return 0;
 	}
+
+	ret = malloc(sizeof(char *) * 2);
+
 	ipnum = _GeoIP_addr_to_num(addr);
-	left_seek = ipnum;
-	right_seek = ipnum;
 	target_value = _GeoIP_seek_record(gi, ipnum);
-	left_value = target_value;
-	right_value = target_value;
 	orig_netmask = GeoIP_last_netmask(gi);
-	left_netmask = orig_netmask;
-	right_netmask = orig_netmask;
+	mask = 0xffffffff << 32 - orig_netmask;	
+	left_seek = ipnum & mask;
+	right_seek = left_seek + ( 0xffffffff & ~mask );
 
-	while (left_value == target_value) {
+	while (left_seek != 0 
+	  && target_value == _GeoIP_seek_record(gi, left_seek - 1) ) {
+		
 		/* Go to beginning of netblock defined by netmask */
-		for (i = 32; i > left_netmask; i--) {
-			cur_bit = (1 << (32 - i));
-			if (left_seek & cur_bit) {
-				left_seek -= cur_bit;
-			}
-		}
-
-		/* nudge beyond netblock defined by netmask */
-		left_seek--;
-
-		left_value = _GeoIP_seek_record(gi, left_seek);
-		left_netmask = GeoIP_last_netmask(gi);
+		mask = 0xffffffff << 32 - GeoIP_last_netmask(gi);
+		left_seek = --left_seek & mask;
 	}
-	/* now that we went one IP address beyond the edge go back to the boundary */
-	left_seek++;
 	ret[0] = _GeoIP_num_to_addr(gi, left_seek);
 
-	while (right_value == target_value) {
-		/* Go to beginning of netblock defined by netmask */
-		for (i = 32; i > right_netmask; i--) {
-			cur_bit = (1 << (32 - i));
-			if ( !( right_seek & cur_bit ) ) {
-				right_seek += cur_bit;
-			}
-		}
-
-		/* nudge beyond netblock defined by netmask */
-		right_seek++;
-
-		right_value = _GeoIP_seek_record(gi, right_seek);
-		right_netmask = GeoIP_last_netmask(gi);
+	while (right_seek != 0xffffffff
+	  && target_value == _GeoIP_seek_record(gi, right_seek + 1) ) {
+		
+		/* Go to end of netblock defined by netmask */
+		mask = 0xffffffff << 32 - GeoIP_last_netmask(gi);
+		right_seek = ++right_seek & mask;
+		right_seek += 0xffffffff & ~mask;
 	}
-	/* now that we went one IP address beyond the edge go back to the boundary */
-	right_seek--;
 	ret[1] = _GeoIP_num_to_addr(gi, right_seek);
 
 	gi->netmask = orig_netmask;

@@ -1,3 +1,17 @@
+	* Fix small memoryleak and wrap around in GeoIP_range_by_ip
+Notice, that you are responsible to free the return value of GeoIP_range_by_ip
+as well as both pointers ie: ( Boris Zentner )
+
+		r = GeoIP_range_by_ip(gi, '24.24.24.24');
+		if ( r ){
+			...
+			if ( r[0] )
+				free(r[0]);
+			if ( r[1] )
+				free(r[1]);
+			free(r);
+		}
+
 	* CHECK_CACHE stat the database file not faster than once a second anymore ( Patrick McManus )
 	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
 	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
