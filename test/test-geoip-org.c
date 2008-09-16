@@ -18,47 +18,50 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+
 #include "GeoIP.h"
 
-int main (int argc, char* argv[]) {
-	FILE *f;
-	GeoIP * gi;
-        char * org;
-	int generate = 0;
-	char host[50];
-	char **ret;
+int 
+main(int argc, char *argv[])
+{
+  FILE           *f;
+  GeoIP          *gi;
+  char           *org;
+  int             generate = 0;
+  char            host[50];
+  char          **ret;
+  if (argc == 2)
+    if (!strcmp(argv[1], "gen"))
+      generate = 1;
 
-	if (argc == 2)
-		if (!strcmp(argv[1],"gen"))
-			generate = 1;
+  gi = GeoIP_open("../data/GeoIPOrg.dat", GEOIP_INDEX_CACHE);
 
-	gi = GeoIP_open("../data/GeoIPOrg.dat", GEOIP_INDEX_CACHE);
+  if (gi == NULL) {
+    fprintf(stderr, "Error opening database\n");
+    exit(1);
+  }
 
-	if (gi == NULL) {
-		fprintf(stderr, "Error opening database\n");
-		exit(1);
-	}
+  f = fopen("org_test.txt", "r");
 
-	f = fopen("org_test.txt","r");
+  if (f == NULL) {
+    fprintf(stderr, "Error opening org_test.txt\n");
+    exit(1);
+  }
 
-	if (f == NULL) {
-		fprintf(stderr, "Error opening org_test.txt\n");
-		exit(1);
-	}
+  printf("IP\torganization\tnetmask\tbeginIp\tendIp\n");
+  while (fscanf(f, "%s", host) != EOF) {
+    org = GeoIP_name_by_name(gi, (const char *) host);
 
-	printf("IP\torganization\tnetmask\tbeginIp\tendIp\n");
-	while (fscanf(f, "%s", host) != EOF) {
-		org = GeoIP_name_by_name (gi, (const char *)host);
+    if (org != NULL) {
+      ret = GeoIP_range_by_ip(gi, (const char *) host);
 
-		if (org != NULL) {
-			ret = GeoIP_range_by_ip(gi, (const char *)host);
+      printf("%s\t%s\t%d\t%s\t%s\n", host, org, GeoIP_last_netmask(gi), ret[0], ret[1]);
+      GeoIP_range_by_ip_delete(ret);
+      free(org);
+    }
+  }
 
-			printf("%s\t%s\t%d\t%s\t%s\n", host, org, GeoIP_last_netmask(gi), ret[0], ret[1]);
-			free(org);
-		}
-	}
-
-	fclose(f);
-	GeoIP_delete(gi);
-	return 0;
+  fclose(f);
+  GeoIP_delete(gi);
+  return 0;
 }

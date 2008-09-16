@@ -45,7 +45,7 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	int str_length = 0;
 	int j;
 	double latitude = 0, longitude = 0;
-	int dmaarea_combo = 0;
+	int metroarea_combo = 0;
 	int bytes_read = 0;
 	if (seek_record == gi->databaseSegments[0])		
 		return NULL;
@@ -122,14 +122,14 @@ for (j = 0; j < 3; ++j)
 		longitude += (record_buf[j] << (j * 8));
 	record->longitude = longitude/10000 - 180;
 
-	/* get area code and dma code for post April 2002 databases and for US locations */
+	/* get area code and metro code for post April 2002 databases and for US locations */
 	if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
 		if (!strcmp(record->country_code, "US")) {
 			record_buf += 3;
 			for (j = 0; j < 3; ++j)
-				dmaarea_combo += (record_buf[j] << (j * 8));
-			record->dma_code = dmaarea_combo/1000;
-			record->area_code = dmaarea_combo % 1000;
+				metroarea_combo += (record_buf[j] << (j * 8));
+			record->metro_code = metroarea_combo/1000;
+			record->area_code = metroarea_combo % 1000;
 		}
 	}
 

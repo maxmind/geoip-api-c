@@ -786,8 +786,10 @@ unsigned long _GeoIP_lookupaddress (const char *host) {
 	struct hostent phe2;
 	struct hostent * phe = &phe2;
 	char *buf = NULL;
+#ifdef HAVE_GETHOSTBYNAME_R
 	int buflength = 16384;
 	int herr = 0;
+#endif
 	int result = 0;
 #ifdef HAVE_GETHOSTBYNAME_R
 	buf = malloc(buflength);
@@ -1366,7 +1368,6 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	unsigned long mask;
 	int orig_netmask;
 	int target_value;
-	int i;
 	char **ret;
 	
 	if (addr == NULL) {
@@ -1378,7 +1379,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	ipnum = _GeoIP_addr_to_num(addr);
 	target_value = _GeoIP_seek_record(gi, ipnum);
 	orig_netmask = GeoIP_last_netmask(gi);
-	mask = 0xffffffff << 32 - orig_netmask;	
+	mask = 0xffffffff << ( 32 - orig_netmask );	
 	left_seek = ipnum & mask;
 	right_seek = left_seek + ( 0xffffffff & ~mask );
 
@@ -1386,7 +1387,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	  && target_value == _GeoIP_seek_record(gi, left_seek - 1) ) {
 		
 		/* Go to beginning of netblock defined by netmask */
-		mask = 0xffffffff << 32 - GeoIP_last_netmask(gi);
+		mask = 0xffffffff << ( 32 - GeoIP_last_netmask(gi) );
 		left_seek = --left_seek & mask;
 	}
 	ret[0] = _GeoIP_num_to_addr(gi, left_seek);
@@ -1395,7 +1396,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	  && target_value == _GeoIP_seek_record(gi, right_seek + 1) ) {
 		
 		/* Go to end of netblock defined by netmask */
-		mask = 0xffffffff << 32 - GeoIP_last_netmask(gi);
+		mask = 0xffffffff << ( 32 - GeoIP_last_netmask(gi) );
 		right_seek = ++right_seek & mask;
 		right_seek += 0xffffffff & ~mask;
 	}
@@ -1404,6 +1405,16 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	gi->netmask = orig_netmask;
 
 	return ret;
+}
+
+void GeoIP_range_by_ip_delete( char ** ptr ){
+	if ( ptr ){
+		if ( ptr[0] )
+			free(ptr[0]);
+		if ( ptr[1] )
+			free(ptr[1]);
+		free(ptr);
+	}
 }
 
 char *GeoIP_name_by_ipnum (GeoIP* gi, unsigned long ipnum) {

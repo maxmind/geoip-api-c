@@ -1,17 +1,11 @@
-	* Fix small memoryleak and wrap around in GeoIP_range_by_ip
-Notice, that you are responsible to free the return value of GeoIP_range_by_ip
-as well as both pointers ie: ( Boris Zentner )
-
+1.4.5	2008-09-16
+	* metro_code replace the depreciated dma_code field ( Boris Zentner )
+	* Add new function GeoIP_range_by_ip_delete
 		r = GeoIP_range_by_ip(gi, '24.24.24.24');
-		if ( r ){
-			...
-			if ( r[0] )
-				free(r[0]);
-			if ( r[1] )
-				free(r[1]);
-			free(r);
-		}
-
+		...
+		GeoIP_range_by_ip_delete(r); ( Boris Zentner )
+	* Fix small memoryleak and wrap around in GeoIP_range_by_ip ( Boris
+	Zentner )
 	* CHECK_CACHE stat the database file not faster than once a second anymore ( Patrick McManus )
 	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
 	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
@@ -56,7 +50,6 @@ as well as both pointers ie: ( Boris Zentner )
 		::ffff:5508::5d47
          ( Boris Zentner )
 	* Fix geoiplookup usage string ( add -d -f ) ( Boris Zentner )
->>>>>>> 1.120
 	* Added GeoIP_range_by_ip, returns the start and end IP address for the range containing the IP address.
 		This range has a constant value in the GeoIP database.
 	* Add geoipupdate-pureperl.pl a alternative geoipupdate version. with Proxy Server support via via the "http_proxy" environment variable. Easy to customize. ( Boris Zentner ) 

@@ -23,3 +23,4 @@ geoipupdate_SOURCES = geoipupdate.c
 geoipupdate_LDFLAGS =
 geoipupdate_DEPENDENCIES = $(top_builddir)/libGeoIP/libGeoIP.la $(top_builddir)/libGeoIP/libGeoIPUpdate.la
 geoipupdate_LDADD = $(top_builddir)/libGeoIP/libGeoIPUpdate.la $(top_builddir)/libGeoIP/libGeoIP.la
+EXTRA_DIST = geoipupdate-pureperl.pl

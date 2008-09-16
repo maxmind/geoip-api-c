@@ -2,7 +2,7 @@ NULL =
 
 INCLUDES =	\
 	-I$(top_srcdir)/libGeoIP		\
-	-Wall -ansi				\
+	-Wall					\
 	$(NULL)
 
 check_PROGRAMS = test-geoip

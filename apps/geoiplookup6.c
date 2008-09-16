@@ -183,7 +183,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 		}
 		else {
 			printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
-			       gir->latitude, gir->longitude, gir->dma_code, gir->area_code);
+			       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
 		}
 	}
 	else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
