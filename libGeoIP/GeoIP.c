@@ -1388,7 +1388,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 		
 		/* Go to beginning of netblock defined by netmask */
 		mask = 0xffffffff << ( 32 - GeoIP_last_netmask(gi) );
-		left_seek = --left_seek & mask;
+		left_seek = ( left_seek - 1 ) & mask;
 	}
 	ret[0] = _GeoIP_num_to_addr(gi, left_seek);
 
@@ -1397,7 +1397,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 		
 		/* Go to end of netblock defined by netmask */
 		mask = 0xffffffff << ( 32 - GeoIP_last_netmask(gi) );
-		right_seek = ++right_seek & mask;
+		right_seek = ( right_seek + 1 ) & mask;
 		right_seek += 0xffffffff & ~mask;
 	}
 	ret[1] = _GeoIP_num_to_addr(gi, right_seek);

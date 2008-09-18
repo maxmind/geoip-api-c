@@ -1,11 +1,11 @@
+	* avoid pre/postincrement and assignment on the same variable ( Boris Zentner )
 1.4.5	2008-09-16
 	* metro_code replace the depreciated dma_code field ( Boris Zentner )
 	* Add new function GeoIP_range_by_ip_delete
 		r = GeoIP_range_by_ip(gi, '24.24.24.24');
 		...
 		GeoIP_range_by_ip_delete(r); ( Boris Zentner )
-	* Fix small memoryleak and wrap around in GeoIP_range_by_ip ( Boris
-	Zentner )
+	* Fix small memoryleak and wrap around in GeoIP_range_by_ip ( Boris Zentner )
 	* CHECK_CACHE stat the database file not faster than once a second anymore ( Patrick McManus )
 	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
 	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
