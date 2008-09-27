@@ -40,6 +40,9 @@ AC_CHECK_HEADERS(stdint.h)
 AC_CHECK_HEADERS(zlib.h, , AC_MSG_ERROR(Zlib header (zlib.h) not found. Tor requires zlib to build. You may need to install a zlib development package.))
 
 AC_CHECK_FUNC(gettimeofday, AC_DEFINE(HAVE_GETTIMEOFDAY))
+AC_CHECK_FUNC(vasprintf, AC_DEFINE(HAVE_VASPRINTF))
+AC_CHECK_FUNC(vsnprintf, AC_DEFINE(HAVE_VSNPRINTF))
+AC_CHECK_FUNC(vsprintf, AC_DEFINE(HAVE_VSPRINTF))
 
 AC_CHECK_FUNC(gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME),
 	AC_CHECK_LIB(nsl, gethostbyname, AC_DEFINE(HAVE_GETHOSTBYNAME)

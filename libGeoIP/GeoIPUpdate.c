@@ -107,33 +107,53 @@ const char * GeoIP_get_error_message(int i) {
   }  
 }
 int GeoIP_fprintf(int (*f)(FILE *, char *),FILE *fp, const char *str, ...) {
-	va_list ap;
-	int rc;
+  va_list ap;
+  int rc;
   char * f_str;
   if ( f == NULL )
     return 0;
-	va_start(ap, str);
+  va_start(ap, str);
+#if defined(HAVE_VASPRINTF)
   vasprintf(&f_str, str, ap);
+#elif defined (HAVE_VSNPRINTF)
+  f_str = malloc(4096);
+  if ( f_str )
+    vsnprintf(f_str, 4096, str, ap);
+#else
+  f_str = malloc(4096);
+  if ( f_str )
+    vsprintf(f_str, str, ap);
+#endif
   va_end(ap);
   if (  f_str == NULL )
     return -1;
   rc = (*f)(fp, f_str);
   free(f_str);
-	return(rc);
+  return(rc);
 }
 
 void GeoIP_printf(void (*f)(char *), const char *str,...) {
   va_list params;
-	char * f_str;
+  char * f_str;
   if (f == NULL)
-		return;
+    return;
   va_start(params, str);
+#if defined(HAVE_VASPRINTF)
   vasprintf(&f_str, str, params);
+#elif defined (HAVE_VSNPRINTF)
+  f_str = malloc(4096);
+  if ( f_str )
+    vsnprintf(f_str, 4096, str, params);
+#else
+  f_str = malloc(4096);
+  if ( f_str )
+    vsprintf(f_str, str, params);
+#endif
   va_end(params);
   if ( f_str == NULL )
     return;
-	(*f)(f_str);
-	free(f_str);
+  (*f)(f_str);
+  free(f_str);
 }
 
 /* Support HTTP Proxy Host

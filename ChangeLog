@@ -1,3 +1,4 @@
+	* GeoIPUpdate.c use vasprintf if avail, otherwise try vsnprintf and sprintf ( Boris Zentner )
 	* avoid pre/postincrement and assignment on the same variable ( Boris Zentner )
 1.4.5	2008-09-16
 	* metro_code replace the depreciated dma_code field ( Boris Zentner )
