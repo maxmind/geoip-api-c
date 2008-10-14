@@ -64,7 +64,7 @@ int main (int argc, char *argv[]) {
 		exit(1);
 	}
 
-	if (custom_file != NULL) {
+	if (custom_directory != NULL) {
 		GeoIP_setup_custom_directory(custom_directory);
 	}
 	_GeoIP_setup_dbfilename();
