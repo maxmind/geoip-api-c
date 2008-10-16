@@ -180,5 +180,4 @@ from XORG X-Server). It happens at least with gcc 3.3.1 and with gcc
 If GEOIP_MMAP_CACHE doesn't work on a 64bit machine, try adding
 the flag "MAP_32BIT" to the mmap call.
 
-Please contact support@maxmind.com with any questions or bug
-reports.
+To submit a patch, please contact support@maxmind.com 
