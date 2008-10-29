@@ -1,3 +1,4 @@
+	* Add manpage for geoiplookup6 ( Boris Zentner )
 	* Fix -d command line option ( Klaus Heinz )
 	* GeoIPUpdate.c use vasprintf if avail, otherwise try vsnprintf and sprintf ( Boris Zentner )
 	* avoid pre/postincrement and assignment on the same variable ( Boris Zentner )
