@@ -1,9 +1,9 @@
 .TH GEOIPLOOKUP6 1 "28 Oct 2008"
 .UC 4
 .SH NAME
-geouplookup6 - look up country using IP Address or hostname
+geouplookup6 \- look up country using IP Address or hostname
 .SH SYNOPSIS
-geouplookup6 [-d directory] [-f filename] [-v] <ipaddress|hostname>
+geouplookup6 [\-d directory] [\-f filename] [\-v] <ipaddress|hostname>
 .SH DESCRIPTION
 geouplookup6 uses the GeoIP library and database to find the Country
 that an IP address or hostname originates from. You must install a database suitable for geoiplookup6. IE: GeoIPv6.dat
@@ -22,11 +22,11 @@ will find the Country that 2001:4860:0:1001::68 originates from, in the followin
 .PP geoiplookup6 www.maxmind.com does not work, since there is no ipv6 
 .PP DNS entry
 .SH OPTIONS
-.IP "-f"
+.IP "\-f"
 Specify a custom path to a single GeoIP datafile.
-.IP "-d"
+.IP "\-d"
 Specify a custom directory containing GeoIP datafile(s).  By default geouplookup6 looks in DATADIR
-.IP "-v"
+.IP "\-v"
 Lists the date and build number for the GeoIP datafile(s).
 .SH AUTHOR
 Written by T.J. Mather

@@ -1,9 +1,9 @@
 .TH GEOIPLOOKUP 1 "2 Jan 2007"
 .UC 4
 .SH NAME
-geoiplookup - look up country using IP Address or hostname
+geoiplookup \- look up country using IP Address or hostname
 .SH SYNOPSIS
-geoiplookup [-d directory] [-f filename] [-v] <ipaddress|hostname>
+geoiplookup [\-d directory] [\-f filename] [\-v] <ipaddress|hostname>
 .SH DESCRIPTION
 geoiplookup uses the GeoIP library and database to find the Country
 that an IP address or hostname originates from.
@@ -17,11 +17,11 @@ will find the Country that 80.60.233.195 originates from, in the following forma
 .I NL, Netherlands
 .PP
 .SH OPTIONS
-.IP "-f"
+.IP "\-f"
 Specify a custom path to a single GeoIP datafile.
-.IP "-d"
+.IP "\-d"
 Specify a custom directory containing GeoIP datafile(s).  By default geoiplookup looks in DATADIR
-.IP "-v"
+.IP "\-v"
 Lists the date and build number for the GeoIP datafile(s).
 .SH AUTHOR
 Written by T.J. Mather

@@ -1,9 +1,9 @@
 .TH GEOIPUPDATE 1 "14 May 2006"
 .UC 4
 .SH NAME
-geoipupdate - a program for updating the MaxMind GeoIP databases
+geoipupdate \- a program for updating the MaxMind GeoIP databases
 .SH SYNOPSIS
-geoipupdate [-v] [-f licensefile]
+geoipupdate [\-v] [\-f licensefile]
 .SH DESCRIPTION
 geoipupdate automatically updates the GeoIP database for GeoIP
 subscribers.  It connects to the MaxMind GeoIP Update server
@@ -14,16 +14,16 @@ HTTP (80) ports be open.
 .PP
 For example
 .PP
-.I geoipupdate -v
+.I geoipupdate \-v
 .PP
 Performs the update in verbose mode.
 .PP
 .SH OPTIONS
-.IP "-v"
+.IP "\-v"
 Verbose mode, prints out the steps that geoipupdate takes.
-.IP "-d"
+.IP "\-d"
 Specify a custom directory target to install the GeoIP datafile(s).  By default geoipupdate installs to DATADIR
-.IP "-f"
+.IP "\-f"
 Specifies the configuration file that contains the license key.
 Defaults to CONF_DIR/GeoIP.conf
 .SH USAGE
