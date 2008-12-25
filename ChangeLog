@@ -1,3 +1,4 @@
+	* Add proper WIN32/64 support ( Gerald Combs ) 
 	* Escape - in all manpages ( Patrick Matthaei )
 	* Add manpage for geoiplookup6 ( Boris Zentner )
 	* Fix -d command line option ( Klaus Heinz )

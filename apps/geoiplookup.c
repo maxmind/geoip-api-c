@@ -21,6 +21,13 @@
 #include <GeoIP.h>
 #include <GeoIPCity.h>
 #include <GeoIP_internal.h>
+
+#if defined(WIN32) || defined(WIN64) 
+# ifndef uint32_t 
+typedef unsigned int uint32_t; 
+# endif 
+#endif 
+
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {

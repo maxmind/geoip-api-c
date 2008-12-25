@@ -22,18 +22,11 @@
 
 static geoipv6_t IPV6_NULL;
 
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(WIN32) && !defined(WIN64) 
 #include <netdb.h>
-#include <sys/socket.h>
-#include <netinet/in.h> /* For ntohl */
-#include <arpa/inet.h>
-
 #include <sys/mman.h>
+#endif /* !defined(WIN32) && !defined(WIN64) */ 
 
-#else
-#include <windows.h>
-#define snprintf _snprintf
-#endif
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -186,6 +179,68 @@ const char GeoIP_country_continent[253][3] = {"--","AS","EU","EU","AS","AS","SA"
   "SA","SA"};
 
 geoipv6_t _GeoIP_lookupaddress_v6 (const char *host);
+   
+#if defined(WIN32) || defined(WIN64) 
+/* http://www.mail-archive.com/users@ipv6.org/msg02107.html */ 
+static const char * _GeoIP_inet_ntop(int af, const void *src, char *dst, socklen_t cnt) 
+{ 
+        if (af == AF_INET) 
+        { 
+                struct sockaddr_in in; 
+                memset(&in, 0, sizeof(in)); 
+                in.sin_family = AF_INET; 
+                memcpy(&in.sin_addr, src, sizeof(struct in_addr)); 
+                getnameinfo((struct sockaddr *)&in, sizeof(struct 
+sockaddr_in), dst, cnt, NULL, 0, NI_NUMERICHOST); 
+                return dst; 
+        } 
+        else if (af == AF_INET6) 
+        { 
+                struct sockaddr_in6 in; 
+                memset(&in, 0, sizeof(in)); 
+                in.sin6_family = AF_INET6; 
+                memcpy(&in.sin6_addr, src, sizeof(struct in_addr6)); 
+                getnameinfo((struct sockaddr *)&in, sizeof(struct 
+sockaddr_in6), dst, cnt, NULL, 0, NI_NUMERICHOST); 
+                return dst; 
+        } 
+        return NULL; 
+} 
+ 
+static int _GeoIP_inet_pton(int af, const char *src, void *dst) 
+{ 
+        struct addrinfo hints, *res, *ressave; 
+ 
+        memset(&hints, 0, sizeof(struct addrinfo)); 
+        hints.ai_family = af; 
+ 
+        if (getaddrinfo(src, NULL, &hints, &res) != 0) 
+        { 
+                fprintf(stderr, "Couldn't resolve host %s\n", src); 
+                return -1; 
+        } 
+ 
+        ressave = res; 
+ 
+        while (res) 
+        { 
+                memcpy(dst, res->ai_addr, res->ai_addrlen); 
+                res = res->ai_next; 
+        } 
+ 
+        freeaddrinfo(ressave); 
+        return 0; 
+}
+#else
+static int _GeoIP_inet_pton(int af, const char *src, void *dst) {
+  return inet_pton(af, src, dst);
+}
+static const char * _GeoIP_inet_ntop(int af, const void *src, char *dst, socklen_t cnt) {
+  return inet_ntop(af, src, dst, cnt);
+}
+
+#endif /* defined(WIN32) || defined(WIN64) */ 
+ 
 
 int __GEOIP_V6_IS_NULL(geoipv6_t v6) {
         int i; 
@@ -342,7 +397,8 @@ void _setup_segments(GeoIP * gi) {
 static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
-  struct timeval t;
+#if !defined(WIN32) && !defined(WIN64) 
+        struct timeval t;
 		
 	/* stat only has second granularity, so don't
 	   call it more than once a second */
@@ -351,6 +407,20 @@ int _check_mtime(GeoIP *gi) {
 		return 0;
 	}
 	gi->last_mtime_check = t.tv_sec;
+#else /* !defined(WIN32) && !defined(WIN64) */ 
+   FILETIME ft; 
+   ULONGLONG t; 
+ 
+   /* stat only has second granularity, so don't 
+      call it more than once a second */ 
+   GetSystemTimeAsFileTime(&ft); 
+   t = FILETIME_TO_USEC(ft) / 1000 / 1000; 
+   if (t == gi->last_mtime_check){ 
+      return 0; 
+   } 
+   gi->last_mtime_check = t; 
+#endif /* !defined(WIN32) && !defined(WIN64) */ 
+ 
 
   if (gi->flags & GEOIP_CHECK_CACHE) {
 		if (stat(gi->file_path, &buf) != -1) {
@@ -428,9 +498,10 @@ int _check_mtime(GeoIP *gi) {
 	return 0;
 }
 
+#define ADDR_STR_LEN (8 * 4 + 7 + 1) 
 unsigned int _GeoIP_seek_record_v6 (GeoIP *gi, geoipv6_t ipnum) {
        int depth;
-       char paddr[8 * 4 + 7 + 1];
+       char paddr[ADDR_STR_LEN];
        unsigned int x;
        unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
        const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
@@ -498,7 +569,7 @@ unsigned int _GeoIP_seek_record_v6 (GeoIP *gi, geoipv6_t ipnum) {
        }
 
        /* shouldn't reach here */
-        inet_pton(AF_INET6, &ipnum.s6_addr[0], paddr );        
+        _GeoIP_inet_ntop(AF_INET6, &ipnum.s6_addr[0], paddr, ADDR_STR_LEN); 
        fprintf(stderr,"Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n", paddr);
        return 0;
 }
@@ -507,7 +578,7 @@ geoipv6_t
 _GeoIP_addr_to_num_v6(const char *addr)
 {
        geoipv6_t       ipnum;
-        if ( 1 == inet_pton(AF_INET6, addr, &ipnum.s6_addr[0] ) )
+        if ( 1 == _GeoIP_inet_pton(AF_INET6, addr, &ipnum.s6_addr[0] ) )
           return ipnum;
        return IPV6_NULL;
 }
