@@ -882,8 +882,7 @@ unsigned long _GeoIP_lookupaddress (const char *host) {
 			buflength = buflength * 2;
 			buf = realloc(buf,buflength);
 		}
-#endif
-#ifndef HAVE_GETHOSTBYNAME_R
+#else
 		/* Some systems do not support gethostbyname_r, such as Mac OS X */
 		phe = gethostbyname(host);
 #endif
@@ -891,7 +890,7 @@ unsigned long _GeoIP_lookupaddress (const char *host) {
 			free(buf);
 			return 0;
 		}
-		addr = *((unsigned long *) phe->h_addr_list[0]);
+		addr = *((in_addr_t *) phe->h_addr_list[0]);
 	}
 #ifdef HAVE_GETHOSTBYNAME_R
 	free(buf);

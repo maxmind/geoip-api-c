@@ -1,3 +1,5 @@
+	* Fix _GeoIP_lookupaddress for 64bit big endian systems like ppc64 (
+	Peter Volkov )
 	* Add proper WIN32/64 support ( Gerald Combs ) 
 	* Escape - in all manpages ( Patrick Matthaei )
 	* Add manpage for geoiplookup6 ( Boris Zentner )
