@@ -1,5 +1,6 @@
-	* Fix _GeoIP_lookupaddress for 64bit big endian systems like ppc64 (
-	Peter Volkov )
+	* Change logic in generate_regionName.pl and GeoIP_region_name_by_code to handle any mixture of two letter fips codes matching [A-Z0-9]{2} the change allow GZ and WE region codes ( Boris Zentner )
+	* Sync regionName.c with http://www.maxmind.com/app/fips10_4 from Dec 17th, 2008 ( Boris Zentner )
+	* Fix _GeoIP_lookupaddress for 64bit big endian systems like ppc64 ( Peter Volkov )
 	* Add proper WIN32/64 support ( Gerald Combs ) 
 	* Escape - in all manpages ( Patrick Matthaei )
 	* Add manpage for geoiplookup6 ( Boris Zentner )

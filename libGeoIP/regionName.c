@@ -1,255 +1,259 @@
 #include <string.h>
 #include <stdio.h>
+
 const char * GeoIP_region_name_by_code(const char * country_code,const char * region_code) {
   const char * name = NULL;
   int region_code2 = -1;
   if (region_code == NULL) { return NULL; }
-  if ((region_code[0] >= 65) & (region_code[0] < (65 + 26))) {
-    if ((region_code[1] >= 65) & (region_code[1] < (65 + 26))) {
-      if ((strcmp(country_code,"US") == 0) | 
-        (strcmp(country_code,"CA") == 0)) {
-          region_code2 = ((region_code[0]-65)*26)+(region_code[1]-65);
-      }
-    }
-    if ((region_code[1] >= 48) & (region_code[1] < (48 + 10))) {
-      region_code2 = ((region_code[0]-65)*10)+(region_code[1]-48)+100;
-    }
+     
+  if   (((region_code[0] >= 48) && (region_code[0] < (48 + 10)))
+         &&  ((region_code[1] >= 48) && (region_code[1] < (48 + 10)))
+     ){
+
+     /* only numbers, that shorten the large switch statements */
+     region_code2 = ( region_code[0] - 48 ) * 10 + region_code[1] - 48;
   }
-  if ((region_code[0] >= 48) & (region_code[0] < (48 + 10))) {
-    if ((region_code[1] >= 48) & (region_code[1] < (48 + 10))) {
-      region_code2 = ((region_code[0]-48)*10)+(region_code[1]-48);
-    }
+
+  else if (    (   ((region_code[0] >= 65) && (region_code[0] < (65 + 26)))
+           || ((region_code[0] >= 48) && (region_code[0] < (48 + 10))))
+      &&  (   ((region_code[1] >= 65) && (region_code[1] < (65 + 26)))
+           || ((region_code[1] >= 48) && (region_code[1] < (48 + 10))))
+     ){
+  
+    region_code2 = ( region_code[0] - 48 ) * ( 65 + 26 - 48 ) + region_code[1] - 48 + 100;
   }
+
   if (region_code2 == -1) {return NULL;}
+
   if (strcmp(country_code,"CA") == 0) {
     switch (region_code2) {
-      case 1:
+      case 849:
       name = "Alberta";
       break;
-      case 28:
+      case 893:
       name = "British Columbia";
       break;
-      case 313:
+      case 1365:
       name = "Manitoba";
       break;
-      case 339:
+      case 1408:
       name = "New Brunswick";
       break;
-      case 343:
+      case 1412:
       name = "Newfoundland";
       break;
-      case 356:
+      case 1425:
       name = "Nova Scotia";
       break;
-      case 358:
+      case 1427:
       name = "Nunavut";
       break;
-      case 377:
+      case 1463:
       name = "Ontario";
       break;
-      case 394:
+      case 1497:
       name = "Prince Edward Island";
       break;
-      case 418:
+      case 1538:
       name = "Quebec";
       break;
-      case 478:
+      case 1632:
       name = "Saskatchewan";
       break;
-      case 357:
+      case 1426:
       name = "Northwest Territories";
       break;
-      case 643:
+      case 1899:
       name = "Yukon Territory";
       break;
     }
   }
   if (strcmp(country_code,"US") == 0) {
     switch (region_code2) {
-      case 0:
+      case 848:
       name = "Armed Forces Americas";
       break;
-      case 4:
+      case 852:
       name = "Armed Forces Europe";
       break;
-      case 10:
+      case 858:
       name = "Alaska";
       break;
-      case 11:
+      case 859:
       name = "Alabama";
       break;
-      case 15:
+      case 863:
       name = "Armed Forces Pacific";
       break;
-      case 17:
+      case 865:
       name = "Arkansas";
       break;
-      case 18:
+      case 866:
       name = "American Samoa";
       break;
-      case 25:
+      case 873:
       name = "Arizona";
       break;
-      case 52:
+      case 934:
       name = "California";
       break;
-      case 66:
+      case 948:
       name = "Colorado";
       break;
-      case 71:
+      case 953:
       name = "Connecticut";
       break;
-      case 80:
+      case 979:
       name = "District of Columbia";
       break;
-      case 82:
+      case 981:
       name = "Delaware";
       break;
-      case 141:
+      case 1074:
       name = "Florida";
       break;
-      case 142:
+      case 1075:
       name = "Federated States of Micronesia";
       break;
-      case 156:
+      case 1106:
       name = "Georgia";
       break;
-      case 176:
+      case 1126:
       name = "Guam";
       break;
-      case 190:
+      case 1157:
       name = "Hawaii";
       break;
-      case 208:
+      case 1192:
       name = "Iowa";
       break;
-      case 211:
+      case 1195:
       name = "Idaho";
       break;
-      case 219:
+      case 1203:
       name = "Illinois";
       break;
-      case 221:
+      case 1205:
       name = "Indiana";
       break;
-      case 278:
+      case 1296:
       name = "Kansas";
       break;
-      case 284:
+      case 1302:
       name = "Kentucky";
       break;
-      case 286:
+      case 1321:
       name = "Louisiana";
       break;
-      case 312:
+      case 1364:
       name = "Massachusetts";
       break;
-      case 315:
+      case 1367:
       name = "Maryland";
       break;
-      case 316:
+      case 1368:
       name = "Maine";
       break;
-      case 319:
+      case 1371:
       name = "Marshall Islands";
       break;
-      case 320:
+      case 1372:
       name = "Michigan";
       break;
-      case 325:
+      case 1377:
       name = "Minnesota";
       break;
-      case 326:
+      case 1378:
       name = "Missouri";
       break;
-      case 327:
+      case 1379:
       name = "Northern Mariana Islands";
       break;
-      case 330:
+      case 1382:
       name = "Mississippi";
       break;
-      case 331:
+      case 1383:
       name = "Montana";
       break;
-      case 340:
+      case 1409:
       name = "North Carolina";
       break;
-      case 341:
+      case 1410:
       name = "North Dakota";
       break;
-      case 342:
+      case 1411:
       name = "Nebraska";
       break;
-      case 345:
+      case 1414:
       name = "New Hampshire";
       break;
-      case 347:
+      case 1416:
       name = "New Jersey";
       break;
-      case 350:
+      case 1419:
       name = "New Mexico";
       break;
-      case 359:
+      case 1428:
       name = "Nevada";
       break;
-      case 362:
+      case 1431:
       name = "New York";
       break;
-      case 371:
+      case 1457:
       name = "Ohio";
       break;
-      case 374:
+      case 1460:
       name = "Oklahoma";
       break;
-      case 381:
+      case 1467:
       name = "Oregon";
       break;
-      case 390:
+      case 1493:
       name = "Pennsylvania";
       break;
-      case 407:
+      case 1510:
       name = "Puerto Rico";
       break;
-      case 412:
+      case 1515:
       name = "Palau";
       break;
-      case 450:
+      case 1587:
       name = "Rhode Island";
       break;
-      case 470:
+      case 1624:
       name = "South Carolina";
       break;
-      case 471:
+      case 1625:
       name = "South Dakota";
       break;
-      case 507:
+      case 1678:
       name = "Tennessee";
       break;
-      case 517:
+      case 1688:
       name = "Texas";
       break;
-      case 539:
+      case 1727:
       name = "Utah";
       break;
-      case 546:
+      case 1751:
       name = "Virginia";
       break;
-      case 554:
+      case 1759:
       name = "Virgin Islands";
       break;
-      case 565:
+      case 1770:
       name = "Vermont";
       break;
-      case 572:
+      case 1794:
       name = "Washington";
       break;
-      case 593:
+      case 1815:
       name = "West Virginia";
       break;
-      case 580:
+      case 1802:
       name = "Wisconsin";
       break;
-      case 596:
+      case 1818:
       name = "Wyoming";
       break;
     }
@@ -1482,6 +1486,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 6:
       name = "Sitrah";
       break;
+      case 7:
+      name = "Ar Rifa' wa al Mintaqah al Janubiyah";
+      break;
       case 8:
       name = "Al Mintaqah al Gharbiyah";
       break;
@@ -1591,6 +1598,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 6:
       name = "Zou";
+      break;
+      case 10:
+      name = "Borgou Department";
       break;
       case 14:
       name = "Littoral";
@@ -2206,6 +2216,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"CI") == 0) {
     switch (region_code2) {
+      case 5:
+      name = "Atacama";
+      break;
+      case 6:
+      name = "Biobio";
+      break;
       case 51:
       name = "Sassandra";
       break;
@@ -2460,10 +2476,10 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Atlantico";
       break;
       case 5:
-      name = "BolÃ­var Department";
+      name = "Bolivar Department";
       break;
       case 6:
-      name = "BoyacÃ¡ Department";
+      name = "Boyaca Department";
       break;
       case 7:
       name = "Caldas Department";
@@ -2723,7 +2739,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Jablonec nad Nisou";
       break;
       case 23:
-      name = "Jiein";
+      name = "Jicin";
       break;
       case 24:
       name = "Jihlava";
@@ -2750,7 +2766,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Pardubice";
       break;
       case 52:
-      name = "Hlavni Mesto Praha";
+      name = "Hlavni mesto Praha";
       break;
       case 61:
       name = "Semily";
@@ -2759,43 +2775,43 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Trutnov";
       break;
       case 78:
-      name = "Jihomoravsky Kraj";
+      name = "Jihomoravsky kraj";
       break;
       case 79:
-      name = "Jihocesky Kraj";
+      name = "Jihocesky kraj";
       break;
       case 80:
       name = "Vysocina";
       break;
       case 81:
-      name = "Karlovarsky Kraj";
+      name = "Karlovarsky kraj";
       break;
       case 82:
-      name = "Kralovehradecky Kraj";
+      name = "Kralovehradecky kraj";
       break;
       case 83:
-      name = "Liberecky Kraj";
+      name = "Liberecky kraj";
       break;
       case 84:
-      name = "Olomoucky Kraj";
+      name = "Olomoucky kraj";
       break;
       case 85:
-      name = "Moravskoslezsky Kraj";
+      name = "Moravskoslezsky kraj";
       break;
       case 86:
-      name = "Pardubicky Kraj";
+      name = "Pardubicky kraj";
       break;
       case 87:
-      name = "Plzensky Kraj";
+      name = "Plzensky kraj";
       break;
       case 88:
-      name = "Stredocesky Kraj";
+      name = "Stredocesky kraj";
       break;
       case 89:
-      name = "Ustecky Kraj";
+      name = "Ustecky kraj";
       break;
       case 90:
-      name = "Zlinsky Kraj";
+      name = "Zlinsky kraj";
       break;
     }
   }
@@ -3650,61 +3666,61 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 99:
       name = "Basse-Normandie";
       break;
-      case 101:
+      case 832:
       name = "Bourgogne";
       break;
-      case 102:
+      case 833:
       name = "Bretagne";
       break;
-      case 103:
+      case 834:
       name = "Centre";
       break;
-      case 104:
+      case 835:
       name = "Champagne-Ardenne";
       break;
-      case 105:
+      case 836:
       name = "Corse";
       break;
-      case 106:
+      case 837:
       name = "Franche-Comte";
       break;
-      case 107:
+      case 838:
       name = "Haute-Normandie";
       break;
-      case 108:
+      case 839:
       name = "Ile-de-France";
       break;
-      case 109:
+      case 840:
       name = "Languedoc-Roussillon";
       break;
-      case 111:
+      case 875:
       name = "Limousin";
       break;
-      case 112:
+      case 876:
       name = "Lorraine";
       break;
-      case 113:
+      case 877:
       name = "Midi-Pyrenees";
       break;
-      case 114:
+      case 878:
       name = "Nord-Pas-de-Calais";
       break;
-      case 115:
+      case 879:
       name = "Pays de la Loire";
       break;
-      case 116:
+      case 880:
       name = "Picardie";
       break;
-      case 117:
+      case 881:
       name = "Poitou-Charentes";
       break;
-      case 118:
+      case 882:
       name = "Provence-Alpes-Cote d'Azur";
       break;
-      case 119:
+      case 883:
       name = "Rhone-Alpes";
       break;
-      case 121:
+      case 918:
       name = "Alsace";
       break;
     }
@@ -3811,691 +3827,691 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 97:
       name = "West Glamorgan";
       break;
-      case 101:
+      case 832:
       name = "Barking and Dagenham";
       break;
-      case 102:
+      case 833:
       name = "Barnet";
       break;
-      case 103:
+      case 834:
       name = "Barnsley";
       break;
-      case 104:
+      case 835:
       name = "Bath and North East Somerset";
       break;
-      case 105:
+      case 836:
       name = "Bedfordshire";
       break;
-      case 106:
+      case 837:
       name = "Bexley";
       break;
-      case 107:
+      case 838:
       name = "Birmingham";
       break;
-      case 108:
+      case 839:
       name = "Blackburn with Darwen";
       break;
-      case 109:
+      case 840:
       name = "Blackpool";
       break;
-      case 111:
+      case 875:
       name = "Bolton";
       break;
-      case 112:
+      case 876:
       name = "Bournemouth";
       break;
-      case 113:
+      case 877:
       name = "Bracknell Forest";
       break;
-      case 114:
+      case 878:
       name = "Bradford";
       break;
-      case 115:
+      case 879:
       name = "Brent";
       break;
-      case 116:
+      case 880:
       name = "Brighton and Hove";
       break;
-      case 117:
+      case 881:
       name = "Bristol";
       break;
-      case 118:
+      case 882:
       name = "Bromley";
       break;
-      case 119:
+      case 883:
       name = "Buckinghamshire";
       break;
-      case 121:
+      case 918:
       name = "Bury";
       break;
-      case 122:
+      case 919:
       name = "Calderdale";
       break;
-      case 123:
+      case 920:
       name = "Cambridgeshire";
       break;
-      case 124:
+      case 921:
       name = "Camden";
       break;
-      case 125:
+      case 922:
       name = "Cheshire";
       break;
-      case 126:
+      case 923:
       name = "Cornwall";
       break;
-      case 127:
+      case 924:
       name = "Coventry";
       break;
-      case 128:
+      case 925:
       name = "Croydon";
       break;
-      case 129:
+      case 926:
       name = "Cumbria";
       break;
-      case 131:
+      case 961:
       name = "Darlington";
       break;
-      case 132:
+      case 962:
       name = "Derby";
       break;
-      case 133:
+      case 963:
       name = "Derbyshire";
       break;
-      case 134:
+      case 964:
       name = "Devon";
       break;
-      case 135:
+      case 965:
       name = "Doncaster";
       break;
-      case 136:
+      case 966:
       name = "Dorset";
       break;
-      case 137:
+      case 967:
       name = "Dudley";
       break;
-      case 138:
+      case 968:
       name = "Durham";
       break;
-      case 139:
+      case 969:
       name = "Ealing";
       break;
-      case 141:
+      case 1004:
       name = "East Riding of Yorkshire";
       break;
-      case 142:
+      case 1005:
       name = "East Sussex";
       break;
-      case 143:
+      case 1006:
       name = "Enfield";
       break;
-      case 144:
+      case 1007:
       name = "Essex";
       break;
-      case 145:
+      case 1008:
       name = "Gateshead";
       break;
-      case 146:
+      case 1009:
       name = "Gloucestershire";
       break;
-      case 147:
+      case 1010:
       name = "Greenwich";
       break;
-      case 148:
+      case 1011:
       name = "Hackney";
       break;
-      case 149:
+      case 1012:
       name = "Halton";
       break;
-      case 151:
+      case 1047:
       name = "Hammersmith and Fulham";
       break;
-      case 152:
+      case 1048:
       name = "Hampshire";
       break;
-      case 153:
+      case 1049:
       name = "Haringey";
       break;
-      case 154:
+      case 1050:
       name = "Harrow";
       break;
-      case 155:
+      case 1051:
       name = "Hartlepool";
       break;
-      case 156:
+      case 1052:
       name = "Havering";
       break;
-      case 157:
+      case 1053:
       name = "Herefordshire";
       break;
-      case 158:
+      case 1054:
       name = "Hertford";
       break;
-      case 159:
+      case 1055:
       name = "Hillingdon";
       break;
-      case 161:
+      case 1090:
       name = "Hounslow";
       break;
-      case 162:
+      case 1091:
       name = "Isle of Wight";
       break;
-      case 163:
+      case 1092:
       name = "Islington";
       break;
-      case 164:
+      case 1093:
       name = "Kensington and Chelsea";
       break;
-      case 165:
+      case 1094:
       name = "Kent";
       break;
-      case 166:
+      case 1095:
       name = "Kingston upon Hull";
       break;
-      case 167:
+      case 1096:
       name = "Kingston upon Thames";
       break;
-      case 168:
+      case 1097:
       name = "Kirklees";
       break;
-      case 169:
+      case 1098:
       name = "Knowsley";
       break;
-      case 171:
+      case 1133:
       name = "Lambeth";
       break;
-      case 172:
+      case 1134:
       name = "Lancashire";
       break;
-      case 173:
+      case 1135:
       name = "Leeds";
       break;
-      case 174:
+      case 1136:
       name = "Leicester";
       break;
-      case 175:
+      case 1137:
       name = "Leicestershire";
       break;
-      case 176:
+      case 1138:
       name = "Lewisham";
       break;
-      case 177:
+      case 1139:
       name = "Lincolnshire";
       break;
-      case 178:
+      case 1140:
       name = "Liverpool";
       break;
-      case 179:
+      case 1141:
       name = "London";
       break;
-      case 181:
+      case 1176:
       name = "Luton";
       break;
-      case 182:
+      case 1177:
       name = "Manchester";
       break;
-      case 183:
+      case 1178:
       name = "Medway";
       break;
-      case 184:
+      case 1179:
       name = "Merton";
       break;
-      case 185:
+      case 1180:
       name = "Middlesbrough";
       break;
-      case 186:
+      case 1181:
       name = "Milton Keynes";
       break;
-      case 187:
+      case 1182:
       name = "Newcastle upon Tyne";
       break;
-      case 188:
+      case 1183:
       name = "Newham";
       break;
-      case 189:
+      case 1184:
       name = "Norfolk";
       break;
-      case 191:
+      case 1219:
       name = "Northamptonshire";
       break;
-      case 192:
+      case 1220:
       name = "North East Lincolnshire";
       break;
-      case 193:
+      case 1221:
       name = "North Lincolnshire";
       break;
-      case 194:
+      case 1222:
       name = "North Somerset";
       break;
-      case 195:
+      case 1223:
       name = "North Tyneside";
       break;
-      case 196:
+      case 1224:
       name = "Northumberland";
       break;
-      case 197:
+      case 1225:
       name = "North Yorkshire";
       break;
-      case 198:
+      case 1226:
       name = "Nottingham";
       break;
-      case 199:
+      case 1227:
       name = "Nottinghamshire";
       break;
-      case 201:
+      case 1262:
       name = "Oldham";
       break;
-      case 202:
+      case 1263:
       name = "Oxfordshire";
       break;
-      case 203:
+      case 1264:
       name = "Peterborough";
       break;
-      case 204:
+      case 1265:
       name = "Plymouth";
       break;
-      case 205:
+      case 1266:
       name = "Poole";
       break;
-      case 206:
+      case 1267:
       name = "Portsmouth";
       break;
-      case 207:
+      case 1268:
       name = "Reading";
       break;
-      case 208:
+      case 1269:
       name = "Redbridge";
       break;
-      case 209:
+      case 1270:
       name = "Redcar and Cleveland";
       break;
-      case 211:
+      case 1305:
       name = "Richmond upon Thames";
       break;
-      case 212:
+      case 1306:
       name = "Rochdale";
       break;
-      case 213:
+      case 1307:
       name = "Rotherham";
       break;
-      case 214:
+      case 1308:
       name = "Rutland";
       break;
-      case 215:
+      case 1309:
       name = "Salford";
       break;
-      case 216:
+      case 1310:
       name = "Shropshire";
       break;
-      case 217:
+      case 1311:
       name = "Sandwell";
       break;
-      case 218:
+      case 1312:
       name = "Sefton";
       break;
-      case 219:
+      case 1313:
       name = "Sheffield";
       break;
-      case 221:
+      case 1348:
       name = "Slough";
       break;
-      case 222:
+      case 1349:
       name = "Solihull";
       break;
-      case 223:
+      case 1350:
       name = "Somerset";
       break;
-      case 224:
+      case 1351:
       name = "Southampton";
       break;
-      case 225:
+      case 1352:
       name = "Southend-on-Sea";
       break;
-      case 226:
+      case 1353:
       name = "South Gloucestershire";
       break;
-      case 227:
+      case 1354:
       name = "South Tyneside";
       break;
-      case 228:
+      case 1355:
       name = "Southwark";
       break;
-      case 229:
+      case 1356:
       name = "Staffordshire";
       break;
-      case 231:
+      case 1391:
       name = "St. Helens";
       break;
-      case 232:
+      case 1392:
       name = "Stockport";
       break;
-      case 233:
+      case 1393:
       name = "Stockton-on-Tees";
       break;
-      case 234:
+      case 1394:
       name = "Stoke-on-Trent";
       break;
-      case 235:
+      case 1395:
       name = "Suffolk";
       break;
-      case 236:
+      case 1396:
       name = "Sunderland";
       break;
-      case 237:
+      case 1397:
       name = "Surrey";
       break;
-      case 238:
+      case 1398:
       name = "Sutton";
       break;
-      case 239:
+      case 1399:
       name = "Swindon";
       break;
-      case 241:
+      case 1434:
       name = "Tameside";
       break;
-      case 242:
+      case 1435:
       name = "Telford and Wrekin";
       break;
-      case 243:
+      case 1436:
       name = "Thurrock";
       break;
-      case 244:
+      case 1437:
       name = "Torbay";
       break;
-      case 245:
+      case 1438:
       name = "Tower Hamlets";
       break;
-      case 246:
+      case 1439:
       name = "Trafford";
       break;
-      case 247:
+      case 1440:
       name = "Wakefield";
       break;
-      case 248:
+      case 1441:
       name = "Walsall";
       break;
-      case 249:
+      case 1442:
       name = "Waltham Forest";
       break;
-      case 251:
+      case 1477:
       name = "Wandsworth";
       break;
-      case 252:
+      case 1478:
       name = "Warrington";
       break;
-      case 253:
+      case 1479:
       name = "Warwickshire";
       break;
-      case 254:
+      case 1480:
       name = "West Berkshire";
       break;
-      case 255:
+      case 1481:
       name = "Westminster";
       break;
-      case 256:
+      case 1482:
       name = "West Sussex";
       break;
-      case 257:
+      case 1483:
       name = "Wigan";
       break;
-      case 258:
+      case 1484:
       name = "Wiltshire";
       break;
-      case 259:
+      case 1485:
       name = "Windsor and Maidenhead";
       break;
-      case 261:
+      case 1520:
       name = "Wirral";
       break;
-      case 262:
+      case 1521:
       name = "Wokingham";
       break;
-      case 263:
+      case 1522:
       name = "Wolverhampton";
       break;
-      case 264:
+      case 1523:
       name = "Worcestershire";
       break;
-      case 265:
+      case 1524:
       name = "York";
       break;
-      case 266:
+      case 1525:
       name = "Antrim";
       break;
-      case 267:
+      case 1526:
       name = "Ards";
       break;
-      case 268:
+      case 1527:
       name = "Armagh";
       break;
-      case 269:
+      case 1528:
       name = "Ballymena";
       break;
-      case 271:
+      case 1563:
       name = "Ballymoney";
       break;
-      case 272:
+      case 1564:
       name = "Banbridge";
       break;
-      case 273:
+      case 1565:
       name = "Belfast";
       break;
-      case 274:
+      case 1566:
       name = "Carrickfergus";
       break;
-      case 275:
+      case 1567:
       name = "Castlereagh";
       break;
-      case 276:
+      case 1568:
       name = "Coleraine";
       break;
-      case 277:
+      case 1569:
       name = "Cookstown";
       break;
-      case 278:
+      case 1570:
       name = "Craigavon";
       break;
-      case 279:
+      case 1571:
       name = "Down";
       break;
-      case 281:
+      case 1606:
       name = "Dungannon";
       break;
-      case 282:
+      case 1607:
       name = "Fermanagh";
       break;
-      case 283:
+      case 1608:
       name = "Larne";
       break;
-      case 284:
+      case 1609:
       name = "Limavady";
       break;
-      case 285:
+      case 1610:
       name = "Lisburn";
       break;
-      case 286:
+      case 1611:
       name = "Derry";
       break;
-      case 287:
+      case 1612:
       name = "Magherafelt";
       break;
-      case 288:
+      case 1613:
       name = "Moyle";
       break;
-      case 289:
+      case 1614:
       name = "Newry and Mourne";
       break;
-      case 291:
+      case 1649:
       name = "Newtownabbey";
       break;
-      case 292:
+      case 1650:
       name = "North Down";
       break;
-      case 293:
+      case 1651:
       name = "Omagh";
       break;
-      case 294:
+      case 1652:
       name = "Strabane";
       break;
-      case 295:
+      case 1653:
       name = "Aberdeen City";
       break;
-      case 296:
+      case 1654:
       name = "Aberdeenshire";
       break;
-      case 297:
+      case 1655:
       name = "Angus";
       break;
-      case 298:
+      case 1656:
       name = "Argyll and Bute";
       break;
-      case 299:
+      case 1657:
       name = "Scottish Borders";
       break;
-      case 301:
+      case 1692:
       name = "Clackmannanshire";
       break;
-      case 302:
+      case 1693:
       name = "Dumfries and Galloway";
       break;
-      case 303:
+      case 1694:
       name = "Dundee City";
       break;
-      case 304:
+      case 1695:
       name = "East Ayrshire";
       break;
-      case 305:
+      case 1696:
       name = "East Dunbartonshire";
       break;
-      case 306:
+      case 1697:
       name = "East Lothian";
       break;
-      case 307:
+      case 1698:
       name = "East Renfrewshire";
       break;
-      case 308:
+      case 1699:
       name = "Edinburgh";
       break;
-      case 309:
+      case 1700:
       name = "Falkirk";
       break;
-      case 311:
+      case 1735:
       name = "Fife";
       break;
-      case 312:
+      case 1736:
       name = "Glasgow City";
       break;
-      case 313:
+      case 1737:
       name = "Highland";
       break;
-      case 314:
+      case 1738:
       name = "Inverclyde";
       break;
-      case 315:
+      case 1739:
       name = "Midlothian";
       break;
-      case 316:
+      case 1740:
       name = "Moray";
       break;
-      case 317:
+      case 1741:
       name = "North Ayrshire";
       break;
-      case 318:
+      case 1742:
       name = "North Lanarkshire";
       break;
-      case 319:
+      case 1743:
       name = "Orkney";
       break;
-      case 321:
+      case 1778:
       name = "Perth and Kinross";
       break;
-      case 322:
+      case 1779:
       name = "Renfrewshire";
       break;
-      case 323:
+      case 1780:
       name = "Shetland Islands";
       break;
-      case 324:
+      case 1781:
       name = "South Ayrshire";
       break;
-      case 325:
+      case 1782:
       name = "South Lanarkshire";
       break;
-      case 326:
+      case 1783:
       name = "Stirling";
       break;
-      case 327:
+      case 1784:
       name = "West Dunbartonshire";
       break;
-      case 328:
+      case 1785:
       name = "Eilean Siar";
       break;
-      case 329:
+      case 1786:
       name = "West Lothian";
       break;
-      case 331:
+      case 1821:
       name = "Isle of Anglesey";
       break;
-      case 332:
+      case 1822:
       name = "Blaenau Gwent";
       break;
-      case 333:
+      case 1823:
       name = "Bridgend";
       break;
-      case 334:
+      case 1824:
       name = "Caerphilly";
       break;
-      case 335:
+      case 1825:
       name = "Cardiff";
       break;
-      case 336:
+      case 1826:
       name = "Ceredigion";
       break;
-      case 337:
+      case 1827:
       name = "Carmarthenshire";
       break;
-      case 338:
+      case 1828:
       name = "Conwy";
       break;
-      case 339:
+      case 1829:
       name = "Denbighshire";
       break;
-      case 341:
+      case 1864:
       name = "Flintshire";
       break;
-      case 342:
+      case 1865:
       name = "Gwynedd";
       break;
-      case 343:
+      case 1866:
       name = "Merthyr Tydfil";
       break;
-      case 344:
+      case 1867:
       name = "Monmouthshire";
       break;
-      case 345:
+      case 1868:
       name = "Neath Port Talbot";
       break;
-      case 346:
+      case 1869:
       name = "Newport";
       break;
-      case 347:
+      case 1870:
       name = "Pembrokeshire";
       break;
-      case 348:
+      case 1871:
       name = "Powys";
       break;
-      case 349:
+      case 1872:
       name = "Rhondda Cynon Taff";
       break;
-      case 351:
+      case 1907:
       name = "Swansea";
       break;
-      case 352:
+      case 1908:
       name = "Torfaen";
       break;
-      case 353:
+      case 1909:
       name = "Vale of Glamorgan";
       break;
-      case 354:
+      case 1910:
       name = "Wrexham";
       break;
     }
@@ -5942,7 +5958,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Mazandaran";
       break;
       case 18:
-      name = "SemnÄn Province";
+      name = "Semnan Province";
       break;
       case 19:
       name = "Markazi";
@@ -6444,6 +6460,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"KH") == 0) {
     switch (region_code2) {
+      case 0:
+      name = "Banteay Meanchey";
+      break;
+      case 1:
+      name = "Batdambang";
+      break;
       case 2:
       name = "Kampong Cham";
       break;
@@ -6451,7 +6473,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Kampong Chhnang";
       break;
       case 4:
-      name = "Kampong Spoe";
+      name = "Kampong Speu";
       break;
       case 5:
       name = "Kampong Thum";
@@ -6463,19 +6485,19 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Kandal";
       break;
       case 8:
-      name = "Kaoh Kong";
+      name = "Koh Kong";
       break;
       case 9:
       name = "Kracheh";
       break;
       case 10:
-      name = "Mondol Kiri";
+      name = "Mondulkiri";
       break;
       case 11:
       name = "Phnum Penh";
       break;
       case 12:
-      name = "Pouthisat";
+      name = "Pursat";
       break;
       case 13:
       name = "Preah Vihear";
@@ -6484,19 +6506,19 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Prey Veng";
       break;
       case 15:
-      name = "Rotanokiri";
+      name = "Ratanakiri Kiri";
       break;
       case 16:
-      name = "Siemreab-Otdar Meanchey";
+      name = "Siem Reap";
       break;
       case 17:
-      name = "Stoeng Treng";
+      name = "Stung Treng";
       break;
       case 18:
       name = "Svay Rieng";
       break;
       case 19:
-      name = "Takev";
+      name = "Takeo";
       break;
       case 29:
       name = "Batdambang";
@@ -7971,76 +7993,76 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 99:
       name = "Struga";
       break;
-      case 101:
+      case 832:
       name = "Strumica";
       break;
-      case 102:
+      case 833:
       name = "Studenicani";
       break;
-      case 103:
+      case 834:
       name = "Suto Orizari";
       break;
-      case 104:
+      case 835:
       name = "Sveti Nikole";
       break;
-      case 105:
+      case 836:
       name = "Tearce";
       break;
-      case 106:
+      case 837:
       name = "Tetovo";
       break;
-      case 107:
+      case 838:
       name = "Topolcani";
       break;
-      case 108:
+      case 839:
       name = "Valandovo";
       break;
-      case 109:
+      case 840:
       name = "Vasilevo";
       break;
-      case 111:
+      case 875:
       name = "Veles";
       break;
-      case 112:
+      case 876:
       name = "Velesta";
       break;
-      case 113:
+      case 877:
       name = "Vevcani";
       break;
-      case 114:
+      case 878:
       name = "Vinica";
       break;
-      case 115:
+      case 879:
       name = "Vitoliste";
       break;
-      case 116:
+      case 880:
       name = "Vranestica";
       break;
-      case 117:
+      case 881:
       name = "Vrapciste";
       break;
-      case 118:
+      case 882:
       name = "Vratnica";
       break;
-      case 119:
+      case 883:
       name = "Vrutok";
       break;
-      case 121:
+      case 918:
       name = "Zajas";
       break;
-      case 122:
+      case 919:
       name = "Zelenikovo";
       break;
-      case 123:
+      case 920:
       name = "Zelino";
       break;
-      case 124:
+      case 921:
       name = "Zitose";
       break;
-      case 125:
+      case 922:
       name = "Zletovo";
       break;
-      case 126:
+      case 923:
       name = "Zrnovci";
       break;
     }
@@ -8959,6 +8981,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 16:
       name = "Zelaya";
       break;
+      case 17:
+      name = "Autonoma Atlantico Norte";
+      break;
+      case 18:
+      name = "Region Autonoma Atlantico Sur";
+      break;
     }
   }
   if (strcmp(country_code,"NL") == 0) {
@@ -9171,49 +9199,49 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 10:
       name = "Chatham Islands";
       break;
-      case 147:
+      case 1010:
       name = "Auckland";
       break;
-      case 148:
+      case 1011:
       name = "Bay of Plenty";
       break;
-      case 149:
+      case 1012:
       name = "Canterbury";
       break;
-      case 151:
+      case 1047:
       name = "Gisborne";
       break;
-      case 152:
+      case 1048:
       name = "Hawke's Bay";
       break;
-      case 153:
+      case 1049:
       name = "Manawatu-Wanganui";
       break;
-      case 154:
+      case 1050:
       name = "Marlborough";
       break;
-      case 155:
+      case 1051:
       name = "Nelson";
       break;
-      case 156:
+      case 1052:
       name = "Northland";
       break;
-      case 157:
+      case 1053:
       name = "Otago";
       break;
-      case 158:
+      case 1054:
       name = "Southland";
       break;
-      case 159:
+      case 1055:
       name = "Taranaki";
       break;
-      case 161:
+      case 1090:
       name = "Waikato";
       break;
-      case 162:
+      case 1091:
       name = "Wellington";
       break;
-      case 163:
+      case 1092:
       name = "West Coast";
       break;
     }
@@ -9635,196 +9663,196 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 72:
       name = "Tawitawi";
       break;
-      case 101:
+      case 832:
       name = "Angeles";
       break;
-      case 102:
+      case 833:
       name = "Bacolod";
       break;
-      case 103:
+      case 834:
       name = "Bago";
       break;
-      case 104:
+      case 835:
       name = "Baguio";
       break;
-      case 105:
+      case 836:
       name = "Bais";
       break;
-      case 106:
+      case 837:
       name = "Basilan City";
       break;
-      case 107:
+      case 838:
       name = "Batangas City";
       break;
-      case 108:
+      case 839:
       name = "Butuan";
       break;
-      case 109:
+      case 840:
       name = "Cabanatuan";
       break;
-      case 111:
+      case 875:
       name = "Cadiz";
       break;
-      case 112:
+      case 876:
       name = "Cagayan de Oro";
       break;
-      case 113:
+      case 877:
       name = "Calbayog";
       break;
-      case 114:
+      case 878:
       name = "Caloocan";
       break;
-      case 115:
+      case 879:
       name = "Canlaon";
       break;
-      case 116:
+      case 880:
       name = "Cavite City";
       break;
-      case 117:
+      case 881:
       name = "Cebu City";
       break;
-      case 118:
+      case 882:
       name = "Cotabato";
       break;
-      case 119:
+      case 883:
       name = "Dagupan";
       break;
-      case 121:
+      case 918:
       name = "Danao";
       break;
-      case 122:
+      case 919:
       name = "Dapitan";
       break;
-      case 123:
+      case 920:
       name = "Davao City";
       break;
-      case 124:
+      case 921:
       name = "Dipolog";
       break;
-      case 125:
+      case 922:
       name = "Dumaguete";
       break;
-      case 126:
+      case 923:
       name = "General Santos";
       break;
-      case 127:
+      case 924:
       name = "Gingoog";
       break;
-      case 128:
+      case 925:
       name = "Iligan";
       break;
-      case 129:
+      case 926:
       name = "Iloilo City";
       break;
-      case 131:
+      case 961:
       name = "Iriga";
       break;
-      case 132:
+      case 962:
       name = "La Carlota";
       break;
-      case 133:
+      case 963:
       name = "Laoag";
       break;
-      case 134:
+      case 964:
       name = "Lapu-Lapu";
       break;
-      case 135:
+      case 965:
       name = "Legaspi";
       break;
-      case 136:
+      case 966:
       name = "Lipa";
       break;
-      case 137:
+      case 967:
       name = "Lucena";
       break;
-      case 138:
+      case 968:
       name = "Mandaue";
       break;
-      case 139:
+      case 969:
       name = "Manila";
       break;
-      case 141:
+      case 1004:
       name = "Marawi";
       break;
-      case 142:
+      case 1005:
       name = "Naga";
       break;
-      case 143:
+      case 1006:
       name = "Olongapo";
       break;
-      case 144:
+      case 1007:
       name = "Ormoc";
       break;
-      case 145:
+      case 1008:
       name = "Oroquieta";
       break;
-      case 146:
+      case 1009:
       name = "Ozamis";
       break;
-      case 147:
+      case 1010:
       name = "Pagadian";
       break;
-      case 148:
+      case 1011:
       name = "Palayan";
       break;
-      case 149:
+      case 1012:
       name = "Pasay";
       break;
-      case 151:
+      case 1047:
       name = "Puerto Princesa";
       break;
-      case 152:
+      case 1048:
       name = "Quezon City";
       break;
-      case 153:
+      case 1049:
       name = "Roxas";
       break;
-      case 154:
+      case 1050:
       name = "San Carlos";
       break;
-      case 155:
+      case 1051:
       name = "San Carlos";
       break;
-      case 156:
+      case 1052:
       name = "San Jose";
       break;
-      case 157:
+      case 1053:
       name = "San Pablo";
       break;
-      case 158:
+      case 1054:
       name = "Silay";
       break;
-      case 159:
+      case 1055:
       name = "Surigao";
       break;
-      case 161:
+      case 1090:
       name = "Tacloban";
       break;
-      case 162:
+      case 1091:
       name = "Tagaytay";
       break;
-      case 163:
+      case 1092:
       name = "Tagbilaran";
       break;
-      case 164:
+      case 1093:
       name = "Tangub";
       break;
-      case 165:
+      case 1094:
       name = "Toledo";
       break;
-      case 166:
+      case 1095:
       name = "Trece Martires";
       break;
-      case 167:
+      case 1096:
       name = "Zamboanga";
       break;
-      case 168:
+      case 1097:
       name = "Aurora";
       break;
-      case 172:
+      case 1134:
       name = "Quezon";
       break;
-      case 173:
+      case 1135:
       name = "Negros Occidental";
       break;
     }
@@ -10053,6 +10081,16 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 87:
       name = "Zachodniopomorskie";
+      break;
+    }
+  }
+  if (strcmp(country_code,"PS") == 0) {
+    switch (region_code2) {
+      case 1131:
+      name = "Gaza";
+      break;
+      case 1798:
+      name = "West Bank";
       break;
     }
   }
@@ -10350,9 +10388,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"RS") == 0) {
     switch (region_code2) {
-      case 0:
-      name = "Serbia proper";
-      break;
       case 1:
       name = "Kosovo";
       break;
@@ -10636,6 +10671,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 91:
       name = "Krasnoyarskiy Kray";
       break;
+      case 942:
+      name = "Chechnya Republic";
+      break;
     }
   }
   if (strcmp(country_code,"RW") == 0) {
@@ -10844,6 +10882,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 35:
       name = "Upper Nile";
+      break;
+      case 44:
+      name = "Central Equatoria State";
       break;
     }
   }
@@ -11172,199 +11213,199 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 99:
       name = "Radece";
       break;
-      case 101:
+      case 832:
       name = "Radenci";
       break;
-      case 102:
+      case 833:
       name = "Radlje ob Dravi";
       break;
-      case 103:
+      case 834:
       name = "Radovljica";
       break;
-      case 106:
+      case 837:
       name = "Rogasovci";
       break;
-      case 107:
+      case 838:
       name = "Rogaska Slatina";
       break;
-      case 108:
+      case 839:
       name = "Rogatec";
       break;
-      case 111:
+      case 875:
       name = "Semic";
       break;
-      case 112:
+      case 876:
       name = "Sencur";
       break;
-      case 113:
+      case 877:
       name = "Sentilj";
       break;
-      case 114:
+      case 878:
       name = "Sentjernej";
       break;
-      case 116:
+      case 880:
       name = "Sevnica";
       break;
-      case 117:
+      case 881:
       name = "Sezana";
       break;
-      case 118:
+      case 882:
       name = "Skocjan";
       break;
-      case 119:
+      case 883:
       name = "Skofja Loka";
       break;
-      case 121:
+      case 918:
       name = "Skofljica";
       break;
-      case 122:
+      case 919:
       name = "Slovenj Gradec";
       break;
-      case 124:
+      case 921:
       name = "Slovenske Konjice";
       break;
-      case 125:
+      case 922:
       name = "Smarje pri Jelsah";
       break;
-      case 126:
+      case 923:
       name = "Smartno ob Paki";
       break;
-      case 127:
+      case 924:
       name = "Sostanj";
       break;
-      case 128:
+      case 925:
       name = "Starse";
       break;
-      case 129:
+      case 926:
       name = "Store";
       break;
-      case 131:
+      case 961:
       name = "Sveti Jurij";
       break;
-      case 132:
+      case 962:
       name = "Tolmin";
       break;
-      case 133:
+      case 963:
       name = "Trbovlje";
       break;
-      case 134:
+      case 964:
       name = "Trebnje";
       break;
-      case 135:
+      case 965:
       name = "Trzic";
       break;
-      case 136:
+      case 966:
       name = "Turnisce";
       break;
-      case 137:
+      case 967:
       name = "Velenje";
       break;
-      case 138:
+      case 968:
       name = "Velike Lasce";
       break;
-      case 141:
+      case 1004:
       name = "Vipava";
       break;
-      case 142:
+      case 1005:
       name = "Vitanje";
       break;
-      case 143:
+      case 1006:
       name = "Vodice";
       break;
-      case 145:
+      case 1008:
       name = "Vrhnika";
       break;
-      case 146:
+      case 1009:
       name = "Vuzenica";
       break;
-      case 147:
+      case 1010:
       name = "Zagorje ob Savi";
       break;
-      case 149:
+      case 1012:
       name = "Zavrc";
       break;
-      case 151:
+      case 1047:
       name = "Zelezniki";
       break;
-      case 152:
+      case 1048:
       name = "Ziri";
       break;
-      case 153:
+      case 1049:
       name = "Zrece";
       break;
-      case 164:
+      case 1093:
       name = "Dobrova-Horjul-Polhov Gradec";
       break;
-      case 167:
+      case 1096:
       name = "Domzale";
       break;
-      case 174:
+      case 1136:
       name = "Jesenice";
       break;
-      case 176:
+      case 1138:
       name = "Kamnik";
       break;
-      case 177:
+      case 1139:
       name = "Kocevje";
       break;
-      case 182:
+      case 1177:
       name = "Kuzma";
       break;
-      case 183:
+      case 1178:
       name = "Lenart";
       break;
-      case 185:
+      case 1180:
       name = "Litija";
       break;
-      case 186:
+      case 1181:
       name = "Ljutomer";
       break;
-      case 187:
+      case 1182:
       name = "Loska Dolina";
       break;
-      case 189:
+      case 1184:
       name = "Luce";
       break;
-      case 191:
+      case 1219:
       name = "Majsperk";
       break;
-      case 192:
+      case 1220:
       name = "Maribor";
       break;
-      case 195:
+      case 1223:
       name = "Miren-Kostanjevica";
       break;
-      case 197:
+      case 1225:
       name = "Novo Mesto";
       break;
-      case 199:
+      case 1227:
       name = "Piran";
       break;
-      case 205:
+      case 1266:
       name = "Preddvor";
       break;
-      case 207:
+      case 1268:
       name = "Ptuj";
       break;
-      case 211:
+      case 1305:
       name = "Ribnica";
       break;
-      case 213:
+      case 1307:
       name = "Ruse";
       break;
-      case 217:
+      case 1311:
       name = "Sentjur pri Celju";
       break;
-      case 218:
+      case 1312:
       name = "Slovenska Bistrica";
       break;
-      case 232:
+      case 1392:
       name = "Videm";
       break;
-      case 233:
+      case 1393:
       name = "Vojnik";
       break;
-      case 235:
+      case 1395:
       name = "Zalec";
       break;
     }
@@ -11989,11 +12030,17 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 72:
       name = "Yasothon";
       break;
+      case 73:
+      name = "Nakhon Phanom";
+      break;
       case 75:
       name = "Ubon Ratchathani";
       break;
       case 76:
       name = "Udon Thani";
+      break;
+      case 77:
+      name = "Amnat Charoen";
       break;
       case 78:
       name = "Mukdahan";
@@ -12070,6 +12117,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 23:
       name = "Susah";
       break;
+      case 26:
+      name = "Chaiyaphum Province";
+      break;
       case 27:
       name = "Bin";
       break;
@@ -12080,7 +12130,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Qabis";
       break;
       case 30:
-      name = "QafÅah";
+      name = "Qafsah";
       break;
       case 31:
       name = "Qibili";
@@ -12626,8 +12676,20 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 25:
       name = "Western";
       break;
+      case 33:
+      name = "Jinja";
+      break;
+      case 36:
+      name = "Kalangala";
+      break;
       case 37:
       name = "Kampala";
+      break;
+      case 42:
+      name = "Kiboga";
+      break;
+      case 52:
+      name = "Mbarara";
       break;
       case 56:
       name = "Mubende";
@@ -12643,6 +12705,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 69:
       name = "Katakwi";
+      break;
+      case 71:
+      name = "Masaka";
       break;
       case 73:
       name = "Nakasongola";
@@ -13159,6 +13224,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 85:
       name = "Thai Nguyen";
       break;
+      case 86:
+      name = "Vinh Puc Province";
+      break;
       case 87:
       name = "Can Tho";
       break;
@@ -13319,6 +13387,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"ZA") == 0) {
     switch (region_code2) {
+      case 1:
+      name = "North-Western Province";
+      break;
       case 2:
       name = "KwaZulu-Natal";
       break;
