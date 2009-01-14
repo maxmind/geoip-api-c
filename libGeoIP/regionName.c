@@ -5,22 +5,22 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   const char * name = NULL;
   int region_code2 = -1;
   if (region_code == NULL) { return NULL; }
-     
-  if   (((region_code[0] >= 48) && (region_code[0] < (48 + 10)))
-         &&  ((region_code[1] >= 48) && (region_code[1] < (48 + 10)))
-     ){
 
-     /* only numbers, that shorten the large switch statements */
-     region_code2 = ( region_code[0] - 48 ) * 10 + region_code[1] - 48;
+  if (   ((region_code[0] >= 48) && (region_code[0] < (48 + 10)))
+      && ((region_code[1] >= 48) && (region_code[1] < (48 + 10)))
+  ) {
+
+    /* only numbers, that shorten the large switch statements */
+    region_code2 = (region_code[0] - 48) * 10 + region_code[1] - 48;
   }
 
-  else if (    (   ((region_code[0] >= 65) && (region_code[0] < (65 + 26)))
-           || ((region_code[0] >= 48) && (region_code[0] < (48 + 10))))
-      &&  (   ((region_code[1] >= 65) && (region_code[1] < (65 + 26)))
-           || ((region_code[1] >= 48) && (region_code[1] < (48 + 10))))
-     ){
-  
-    region_code2 = ( region_code[0] - 48 ) * ( 65 + 26 - 48 ) + region_code[1] - 48 + 100;
+  else if (    (    ((region_code[0] >= 65) && (region_code[0] < (65 + 26)))
+                 || ((region_code[0] >= 48) && (region_code[0] < (48 + 10))))
+            && (    ((region_code[1] >= 65) && (region_code[1] < (65 + 26)))
+                 || ((region_code[1] >= 48) && (region_code[1] < (48 + 10))))
+  ) {
+
+    region_code2 = (region_code[0] - 48) * (65 + 26 - 48) + region_code[1] - 48 + 100;
   }
 
   if (region_code2 == -1) {return NULL;}
@@ -39,7 +39,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1408:
       name = "New Brunswick";
       break;
-      case 1412:
+      case 1418:
       name = "Newfoundland";
       break;
       case 1425:
