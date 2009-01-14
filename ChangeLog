@@ -1,3 +1,4 @@
+	* Sync FIPS codes again Jan 14th, 2009 ( Boris Zentner )
 	* Fix CA,NL regioncode. ( Boris Zentner )
 	* Change logic in generate_regionName.pl and GeoIP_region_name_by_code to handle any mixture of two letter fips codes matching [A-Z0-9]{2} the change allow GZ and WE region codes ( Boris Zentner )
 	* Sync regionName.c with http://www.maxmind.com/app/fips10_4 from Dec 17th, 2008 ( Boris Zentner )

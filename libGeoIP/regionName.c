@@ -563,6 +563,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 12:
       name = "Malanje";
       break;
+      case 13:
+      name = "Namibe";
+      break;
       case 14:
       name = "Moxico";
       break;
@@ -1599,11 +1602,41 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 6:
       name = "Zou";
       break;
+      case 7:
+      name = "Alibori";
+      break;
+      case 8:
+      name = "Atakora";
+      break;
+      case 9:
+      name = "Atlanyique";
+      break;
       case 10:
-      name = "Borgou Department";
+      name = "Borgou";
+      break;
+      case 11:
+      name = "Collines";
+      break;
+      case 12:
+      name = "Kouffo";
+      break;
+      case 13:
+      name = "Donga";
       break;
       case 14:
       name = "Littoral";
+      break;
+      case 15:
+      name = "Mono";
+      break;
+      case 16:
+      name = "Oueme";
+      break;
+      case 17:
+      name = "Plateau";
+      break;
+      case 18:
+      name = "Zou";
       break;
     }
   }
@@ -10882,6 +10915,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 35:
       name = "Upper Nile";
+      break;
+      case 40:
+      name = "Al Wahadah State";
       break;
       case 44:
       name = "Central Equatoria State";
