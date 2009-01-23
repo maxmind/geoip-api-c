@@ -34,7 +34,7 @@ for my $c ( sort keys %$tz ) {
   $first_country ||= $c;
   my $def = delete $tz->{$c}->{''};
   if ( my @reg = sort keys %{ $tz->{$c} } ) {
-    my @tz = values %{ $tz->{$c} };
+    my @tz = map{ $tz->{$c}->{$_} } @reg;
 
     printf( qq! ( strcmp (country, "%s") == 0 ) {\n!, $c );
     for ( 0 .. $#reg ) {

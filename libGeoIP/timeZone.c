@@ -114,40 +114,43 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   }
   else if ( strcmp (country, "CA") == 0 ) {
     if ( strcmp (region, "AB") == 0 ) {
-      timezone = "America/Yellowknife";
+      timezone = "America/Edmonton";
     }
     else if ( strcmp (region, "BC") == 0 ) {
       timezone = "America/Vancouver";
     }
     else if ( strcmp (region, "MB") == 0 ) {
-      timezone = "America/Rainy_River";
+      timezone = "America/Winnipeg";
     }
     else if ( strcmp (region, "NB") == 0 ) {
       timezone = "America/Halifax";
     }
-    else if ( strcmp (region, "NF") == 0 ) {
-      timezone = "America/Winnipeg";
+    else if ( strcmp (region, "NL") == 0 ) {
+      timezone = "America/St_Johns";
     }
     else if ( strcmp (region, "NS") == 0 ) {
-      timezone = "America/Montreal";
+      timezone = "America/Halifax";
     }
     else if ( strcmp (region, "NT") == 0 ) {
-      timezone = "America/St_Johns";
+      timezone = "America/Yellowknife";
     }
     else if ( strcmp (region, "NU") == 0 ) {
       timezone = "America/Rankin_Inlet";
     }
     else if ( strcmp (region, "ON") == 0 ) {
-      timezone = "America/Halifax";
+      timezone = "America/Rainy_River";
     }
     else if ( strcmp (region, "PE") == 0 ) {
-      timezone = "America/Regina";
-    }
-    else if ( strcmp (region, "QC") == 0 ) {
       timezone = "America/Halifax";
     }
+    else if ( strcmp (region, "QC") == 0 ) {
+      timezone = "America/Montreal";
+    }
     else if ( strcmp (region, "SK") == 0 ) {
-      timezone = "America/Edmonton";
+      timezone = "America/Regina";
+    }
+    else if ( strcmp (region, "YT") == 0 ) {
+      timezone = "America/Whitehorse";
     }
   }
   else if ( strcmp (country, "CC") == 0 ) {
@@ -707,52 +710,52 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   }
   else if ( strcmp (country, "US") == 0 ) {
     if ( strcmp (region, "AK") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Anchorage";
     }
     else if ( strcmp (region, "AL") == 0 ) {
       timezone = "America/Chicago";
     }
     else if ( strcmp (region, "AR") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "AZ") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/Phoenix";
     }
     else if ( strcmp (region, "CA") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/Los_Angeles";
     }
     else if ( strcmp (region, "CO") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Denver";
     }
     else if ( strcmp (region, "CT") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "DC") == 0 ) {
-      timezone = "Pacific/Honolulu";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "DE") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "FL") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "GA") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "HI") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "Pacific/Honolulu";
     }
     else if ( strcmp (region, "IA") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "ID") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Denver";
     }
     else if ( strcmp (region, "IL") == 0 ) {
       timezone = "America/Chicago";
     }
     else if ( strcmp (region, "IN") == 0 ) {
-      timezone = "America/Denver";
+      timezone = "America/Indianapolis";
     }
     else if ( strcmp (region, "KS") == 0 ) {
       timezone = "America/Chicago";
@@ -761,100 +764,103 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "LA") == 0 ) {
-      timezone = "America/Phoenix";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "MA") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "MD") == 0 ) {
-      timezone = "America/Denver";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "ME") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "MI") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "MN") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "MO") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "MS") == 0 ) {
-      timezone = "America/Los_Angeles";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "MT") == 0 ) {
-      timezone = "America/Los_Angeles";
+      timezone = "America/Denver";
     }
     else if ( strcmp (region, "NC") == 0 ) {
-      timezone = "America/Los_Angeles";
-    }
-    else if ( strcmp (region, "ND") == 0 ) {
-      timezone = "America/Denver";
-    }
-    else if ( strcmp (region, "NE") == 0 ) {
       timezone = "America/New_York";
     }
-    else if ( strcmp (region, "NH") == 0 ) {
+    else if ( strcmp (region, "ND") == 0 ) {
       timezone = "America/Chicago";
+    }
+    else if ( strcmp (region, "NE") == 0 ) {
+      timezone = "America/Chicago";
+    }
+    else if ( strcmp (region, "NH") == 0 ) {
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "NJ") == 0 ) {
-      timezone = "America/Denver";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "NM") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/Denver";
     }
     else if ( strcmp (region, "NV") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/Los_Angeles";
     }
     else if ( strcmp (region, "NY") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "OH") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "OK") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "OR") == 0 ) {
-      timezone = "America/New_York";
-    }
-    else if ( strcmp (region, "PA") == 0 ) {
       timezone = "America/Los_Angeles";
     }
+    else if ( strcmp (region, "PA") == 0 ) {
+      timezone = "America/New_York";
+    }
     else if ( strcmp (region, "RI") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "SC") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "SD") == 0 ) {
-      timezone = "America/Denver";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "TN") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "TX") == 0 ) {
-      timezone = "America/New_York";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "UT") == 0 ) {
-      timezone = "America/Indianapolis";
+      timezone = "America/Denver";
     }
     else if ( strcmp (region, "VA") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/New_York";
     }
     else if ( strcmp (region, "VT") == 0 ) {
       timezone = "America/New_York";
     }
     else if ( strcmp (region, "WA") == 0 ) {
-      timezone = "America/Chicago";
+      timezone = "America/Los_Angeles";
     }
     else if ( strcmp (region, "WI") == 0 ) {
-      timezone = "America/Anchorage";
+      timezone = "America/Chicago";
     }
     else if ( strcmp (region, "WV") == 0 ) {
       timezone = "America/New_York";
+    }
+    else if ( strcmp (region, "WY") == 0 ) {
+      timezone = "America/Denver";
     }
   }
   else if ( strcmp (country, "UY") == 0 ) {
