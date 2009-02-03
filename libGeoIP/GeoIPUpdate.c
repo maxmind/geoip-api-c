@@ -40,6 +40,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
+
 #define BLOCK_SIZE 1024
 
 /* Update DB Host & HTTP GET Request formats:
@@ -243,7 +244,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	char block[BLOCK_SIZE];
 	int block_size = BLOCK_SIZE;
 	size_t len;
-
+	size_t written;
 	_GeoIP_setup_dbfilename();
 
 	/* get MD5 of current GeoIP database file */
@@ -354,9 +355,12 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		return GEOIP_GZIP_IO_ERR;
 	}
 
-	fwrite(compr, 1, comprLen, comp_fh);
+	written = fwrite(compr, 1, comprLen, comp_fh);
 	fclose(comp_fh);
 	free(buf);
+
+        if ( written != comprLen )
+		return GEOIP_GZIP_IO_ERR;
 
 	if (verbose == 1)
 		GeoIP_printf(f,"Done\n");
@@ -389,7 +393,12 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 		if (amt == 0) {
 			break;
 		}
-		fwrite(block,1,amt,gi_fh);
+		if ( fwrite(block,1,amt,gi_fh) != amt ){
+			free(file_path_test);
+			fclose(gi_fh);
+			gzclose(gz_fh);
+			return GEOIP_GZIP_READ_ERR;
+		}
 	}
 	gzclose(gz_fh);
 	unlink(file_path_gz);
@@ -648,8 +657,8 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	request_uri_len = sizeof(char) * 2036;
 	request_uri = malloc(request_uri_len);
 	md5_init(&context2);
-	md5_write (&context2, license_key, 12);//add license key to the md5 sum
-	md5_write (&context2, ipaddress, strlen(ipaddress));//add ip address to the md5 sum
+	md5_write (&context2, (byte *)license_key, 12);//add license key to the md5 sum
+	md5_write (&context2, (byte *)ipaddress, strlen(ipaddress));//add ip address to the md5 sum
 	md5_final (&context2);
 	memcpy(digest2,context2.buf,16);
 	for (i = 0; i < 16; i++)
