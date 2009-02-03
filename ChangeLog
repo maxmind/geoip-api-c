@@ -1,3 +1,11 @@
+	* Add README.OSX to build fat binaries easy ( Boris Zentner )
+	* Silence vasprintf warning via AC_GNU_SOURCE ( Boris Zentner )
+	* Add several Makefiles to build a static GeoIP.lib for w32 ( Stanislaw Pusep and Randy Kobes )
+	* Silence signedness warnings ( Peter Volkov )
+	* Remove --with-city configure option. ( Boris Zentner )
+	* Remove configure's --with-dbdir option. Use the similar --datadir instead ( Peter Volkov )
+	* Various autotools improvements and cleanups. Including parallel
+	build fix ( Peter Volkov )
 	* Fix libGeoIP/timeZone.c ( Martin Haller )
 	* Fix timezone/generate_timeZone.pl ( Boris Zenter )
 	* Sync FIPS codes again Jan 14th, 2009 ( Boris Zentner )

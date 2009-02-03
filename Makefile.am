@@ -1,5 +1,3 @@
-NULL =
-
 INCLUDES = -Wall -ansi
 
 SUBDIRS =		\
@@ -8,7 +6,6 @@ SUBDIRS =		\
 	conf		\
 	data		\
 	test		\
-	man		\
-	$(NULL)
+	man
 
-EXTRA_DIST = READMEwin32.txt GeoIPWinDLL.patch TODO bootstrap GeoIP.spec GeoIP.spec.in Makefile.netware Makefile.win32 get_ver.awk geoip.ico
+EXTRA_DIST = README.MinGW READMEwin32.txt GeoIPWinDLL.patch TODO bootstrap GeoIP.spec GeoIP.spec.in Makefile.netware Makefile.win32 get_ver.awk geoip.ico
