@@ -1,6 +1,6 @@
 lib_LTLIBRARIES = libGeoIP.la libGeoIPUpdate.la
 
-EXTRA_DIST = md5.h global.h types.h GeoIP_internal.h
+EXTRA_DIST = Makefile.vc md5.h global.h types.h GeoIP_internal.h
 
 AM_CPPFLAGS = -DGEOIPDATADIR=\"$(pkgdatadir)\" -Wall
 

@@ -33,5 +33,5 @@ test_geoip_city_SOURCES = test-geoip-city.c
 
 benchmark_SOURCES = benchmark.c
 
-EXTRA_DIST = country_test.txt country_test2.txt country_test_name.txt region_test.txt
+EXTRA_DIST = Makefile.vc country_test.txt country_test2.txt country_test_name.txt region_test.txt
 TESTS = test-geoip
