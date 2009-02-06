@@ -171,8 +171,8 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 			}
 			else {
-				printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region,
-				       gir->city, gir->postal_code, gir->latitude, gir->longitude);
+				printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, gir->region || "",
+				       gir->city || "", gir->postal_code || "", gir->latitude, gir->longitude);
 			}
 		}
 		else if (GEOIP_CITY_EDITION_REV1 == i) {
@@ -181,7 +181,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 			}
 			else {
-				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region, gir->city, gir->postal_code,
+				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, gir->region || "", gir->city || "", gir->postal_code || "",
 				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
 			}
 		}

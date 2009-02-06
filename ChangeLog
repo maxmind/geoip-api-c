@@ -1,3 +1,4 @@
+	* Fix possible segfault in apps/geoiplookup with null pointers in non gnu printf implementations for example solaris ( Boris Zentner )
 	* Add README.OSX to build fat binaries easy ( Boris Zentner )
 	* Silence vasprintf warning via AC_GNU_SOURCE ( Boris Zentner )
 	* Add several Makefiles to build a static GeoIP.lib for w32 ( Stanislaw Pusep and Randy Kobes )
