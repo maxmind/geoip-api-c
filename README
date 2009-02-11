@@ -135,6 +135,8 @@ http://sourceforge.net/mailarchive/forum.php?forum_name=geoip-c-discuss&max_rows
 
 TROUBLESHOOTING
 
+If you run into trouble building your application with GeoIP support, try adding -fms-extensions to your CFLAGS. If you use Solaris and there C-Compiler use -features=extensions instead. These options enable unnamed union support and fix problems like: 'improper member use: dma_code' or 'GeoIPRecord' has no member named 'dma_code'.
+
 Note that it is recommended that you use GNU make.  Also, if you are using
 OpenBSD, GeoIP requires OpenBSD 3.1 or greater.
 
