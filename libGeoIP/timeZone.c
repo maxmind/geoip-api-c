@@ -44,7 +44,30 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Vienna";
   }
   else if ( strcmp (country, "AU") == 0 ) {
-    timezone = "Australia/Queensland";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Australia/Canberra";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Australia/NSW";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Australia/North";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Australia/Queensland";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Australia/South";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Australia/Tasmania";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Australia/Victoria";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Australia/West";
+    }
   }
   else if ( strcmp (country, "AW") == 0 ) {
     timezone = "America/Aruba";
