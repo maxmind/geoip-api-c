@@ -42,6 +42,10 @@ unsigned long inetaddr(const char * name)
 	return inaddr.s_addr;
 }
 
+static const char * _mk_NA ( const char * p ){
+  return p ? p : "N/A";
+}
+
 int main () {
 	GeoIP * gi;
 	GeoIPRegion * gir, giRegion;
@@ -71,10 +75,7 @@ int main () {
 		printf("lookup of private IP address: country = %s, region = %s\n", gir->country_code, gir->region);
 	}
 
-  while (fscanf(f, "%s", ipAddress) != EOF) {
-    fscanf(f, "%s", expectedCountry);
-    fscanf(f, "%s", expectedCountry3);
-
+  while (fscanf(f, "%s%s%s", ipAddress, expectedCountry, expectedCountry3 ) != EOF) {
 		printf("ip = %s\n",ipAddress);
 
 		gir = GeoIP_region_by_name (gi, ipAddress);
@@ -83,8 +84,8 @@ int main () {
 			printf("%s, %s, %s, %s\n",
 						gir->country_code,
 						(!gir->region[0]) ? "N/A" : gir->region,
-						GeoIP_region_name_by_code(gir->country_code, gir->region),
-						time_zone);
+						_mk_NA(GeoIP_region_name_by_code(gir->country_code, gir->region)),
+						_mk_NA(time_zone));
 		} else {
 			printf("NULL!\n");
 		}

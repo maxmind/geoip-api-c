@@ -21,6 +21,11 @@
 #include "GeoIP.h"
 #include "GeoIPCity.h"
 
+
+static const char * _mk_NA( const char * p ){
+ return p ? p : "N/A";
+}
+
 int 
 main(int argc, char *argv[])
 {
@@ -56,16 +61,16 @@ main(int argc, char *argv[])
       ret = GeoIP_range_by_ip(gi, (const char *) host);
       time_zone = GeoIP_time_zone_by_country_and_region(gir->country_code, gir->region);
       printf("%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\t%d\t%s\t%s\t%s\n", host,
-	     gir->country_code,
-	     gir->region,
-	     GeoIP_region_name_by_code(gir->country_code, gir->region),
-	     gir->city,
-	     gir->postal_code,
+	     _mk_NA(gir->country_code),
+	     _mk_NA(gir->region),
+	     _mk_NA(GeoIP_region_name_by_code(gir->country_code, gir->region)),
+	     _mk_NA(gir->city),
+	     _mk_NA(gir->postal_code),
 	     gir->latitude,
 	     gir->longitude,
 	     gir->metro_code,
 	     gir->area_code,
-	     time_zone,
+	     _mk_NA(time_zone),
 	     ret[0],
 	     ret[1]);
       GeoIP_range_by_ip_delete(ret);

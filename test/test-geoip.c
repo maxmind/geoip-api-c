@@ -60,9 +60,7 @@ int main () {
 
 		f = fopen(SRCDIR"/test/country_test.txt","r");
 
-		while (fscanf(f, "%s", ipAddress) != EOF) {
-			fscanf(f, "%s", expectedCountry);
-			fscanf(f, "%s", expectedCountry3);
+		while (fscanf(f, "%s%s%s", ipAddress, expectedCountry, expectedCountry3) != EOF) {
 			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
 				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
@@ -88,8 +86,7 @@ int main () {
 		fclose(f);
 
 		f = fopen(SRCDIR"/test/country_test2.txt","r");
-		while (fscanf(f, "%s", ipAddress) != EOF) {
-			fscanf(f, "%s", expectedCountry);
+		while (fscanf(f, "%s%s", ipAddress, expectedCountry ) != EOF) {
 			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
 				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
@@ -100,8 +97,7 @@ int main () {
 		fclose(f);
 
 		f = fopen(SRCDIR"/test/country_test_name.txt","r");
-		while (fscanf(f, "%s", ipAddress) != EOF) {
-			fscanf(f, "%s", expectedCountry);
+		while (fscanf(f, "%s%s", ipAddress, expectedCountry) != EOF) {
 			returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
 				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);

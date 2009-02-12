@@ -20,6 +20,10 @@
 
 #include "GeoIP.h"
 
+static const char * _mk_NA( const char * p ){
+ return p ? p : "N/A";
+}
+
 int main (int argc, char* argv[]) {
 	FILE *f;
 	GeoIP * gi;
@@ -49,7 +53,7 @@ int main (int argc, char* argv[]) {
 		org = GeoIP_org_by_name (gi, (const char *)host);
 
 		if (org != NULL) {
-			printf("%s\t%s\n", host, org);
+			printf("%s\t%s\n", host, _mk_NA(org));
 			free(org);
 		}
 	}

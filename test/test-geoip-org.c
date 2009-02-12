@@ -21,6 +21,10 @@
 
 #include "GeoIP.h"
 
+static const char * _mk_NA( const char * p ){
+ return p ? p : "N/A";
+}
+
 int 
 main(int argc, char *argv[])
 {
@@ -55,7 +59,7 @@ main(int argc, char *argv[])
     if (org != NULL) {
       ret = GeoIP_range_by_ip(gi, (const char *) host);
 
-      printf("%s\t%s\t%d\t%s\t%s\n", host, org, GeoIP_last_netmask(gi), ret[0], ret[1]);
+      printf("%s\t%s\t%d\t%s\t%s\n", host, _mk_NA(org), GeoIP_last_netmask(gi), ret[0], ret[1]);
       GeoIP_range_by_ip_delete(ret);
       free(org);
     }

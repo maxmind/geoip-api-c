@@ -111,19 +111,21 @@ int GeoIP_fprintf(int (*f)(FILE *, char *),FILE *fp, const char *str, ...) {
   va_list ap;
   int rc;
   char * f_str;
+  int silence;
+
   if ( f == NULL )
     return 0;
   va_start(ap, str);
 #if defined(HAVE_VASPRINTF)
-  vasprintf(&f_str, str, ap);
+  silence = vasprintf(&f_str, str, ap);
 #elif defined (HAVE_VSNPRINTF)
   f_str = malloc(4096);
   if ( f_str )
-    vsnprintf(f_str, 4096, str, ap);
+    silence = vsnprintf(f_str, 4096, str, ap);
 #else
   f_str = malloc(4096);
   if ( f_str )
-    vsprintf(f_str, str, ap);
+    silence = vsprintf(f_str, str, ap);
 #endif
   va_end(ap);
   if (  f_str == NULL )
@@ -136,19 +138,20 @@ int GeoIP_fprintf(int (*f)(FILE *, char *),FILE *fp, const char *str, ...) {
 void GeoIP_printf(void (*f)(char *), const char *str,...) {
   va_list params;
   char * f_str;
+  int silence;
   if (f == NULL)
     return;
   va_start(params, str);
 #if defined(HAVE_VASPRINTF)
-  vasprintf(&f_str, str, params);
+  silence = vasprintf(&f_str, str, params);
 #elif defined (HAVE_VSNPRINTF)
   f_str = malloc(4096);
   if ( f_str )
-    vsnprintf(f_str, 4096, str, params);
+    silence = vsnprintf(f_str, 4096, str, params);
 #else
   f_str = malloc(4096);
   if ( f_str )
-    vsprintf(f_str, str, params);
+    silence = vsprintf(f_str, str, params);
 #endif
   va_end(params);
   if ( f_str == NULL )
@@ -501,6 +504,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	int block_size = BLOCK_SIZE;
 	size_t len;
 	size_t request_uri_len;
+	size_t size;
 
 	hostlist = GeoIP_get_host_or_proxy();
 
@@ -754,9 +758,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		return GEOIP_GZIP_IO_ERR;
 	}
 
-	fwrite(compr, 1, comprLen, comp_fh);
+	size = fwrite(compr, 1, comprLen, comp_fh);
 	fclose(comp_fh);
 	free(buf);
+        if ( size != comprLen ) {
+		return GEOIP_GZIP_IO_ERR;
+	}
 
 	if (verbose == 1) {
 		GeoIP_printf(f, "download data to a gz file named %s \n",file_path_gz);
@@ -793,7 +800,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 		if (amt == 0) {
 			break;
 		}
-		fwrite(block,1,amt,gi_fh);
+		if ( amt != fwrite(block,1,amt,gi_fh) ){
+			return GEOIP_GZIP_IO_ERR;
+		}
 	}
 	gzclose(gz_fh);
 	unlink(file_path_gz);
