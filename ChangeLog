@@ -1,3 +1,6 @@
+	* Fix sign error in _iso_8859_1__utf8 for PPC64 ( Boris Zentner )
+	* Change WIN32 to _WIN32, since _WIN32 is defined by default. _WIN32 is also defined for WIN64 machines ( Boris Zentner )
+	! Remove the WSAStartup call from GeoIP_open. All Applications need to call WSAStartup and WSACleanup to initialize the Windows Socket library. Before they use any of the GeoIP_*_by_name functions. ( Boris Zentner )
 	* geoiplookup and test-geoip-* output N/A instead of (null) ( Boris Zentner )
 	* Silence various warnings. ( Boris Zentner )
 	* Add more timezone region's for Australia

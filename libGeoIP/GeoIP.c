@@ -22,10 +22,10 @@
 
 static geoipv6_t IPV6_NULL;
 
-#if !defined(WIN32) && !defined(WIN64) 
+#if !defined(_WIN32) 
 #include <netdb.h>
 #include <sys/mman.h>
-#endif /* !defined(WIN32) && !defined(WIN64) */ 
+#endif /* !defined(_WIN32) */ 
 
 #include <errno.h>
 #include <stdio.h>
@@ -180,7 +180,7 @@ const char GeoIP_country_continent[253][3] = {"--","AS","EU","EU","AS","AS","SA"
 
 geoipv6_t _GeoIP_lookupaddress_v6 (const char *host);
    
-#if defined(WIN32) || defined(WIN64) 
+#if defined(_WIN32)
 /* http://www.mail-archive.com/users@ipv6.org/msg02107.html */ 
 static const char * _GeoIP_inet_ntop(int af, const void *src, char *dst, socklen_t cnt) 
 { 
@@ -239,7 +239,7 @@ static const char * _GeoIP_inet_ntop(int af, const void *src, char *dst, socklen
   return inet_ntop(af, src, dst, cnt);
 }
 
-#endif /* defined(WIN32) || defined(WIN64) */ 
+#endif /* defined(_WIN32) */ 
  
 
 int __GEOIP_V6_IS_NULL(geoipv6_t v6) {
@@ -264,7 +264,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 	char *path = malloc(sizeof(char) * 1024);
 
 	if (custom_directory == NULL){
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 		memset(path, 0, sizeof(char) * 1024);
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
 #else
@@ -398,7 +398,7 @@ void _setup_segments(GeoIP * gi) {
 static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
-#if !defined(WIN32) && !defined(WIN64) 
+#if !defined(_WIN32) 
         struct timeval t;
 		
 	/* stat only has second granularity, so don't
@@ -408,7 +408,7 @@ int _check_mtime(GeoIP *gi) {
 		return 0;
 	}
 	gi->last_mtime_check = t.tv_sec;
-#else /* !defined(WIN32) && !defined(WIN64) */ 
+#else /* !defined(_WIN32) */ 
    FILETIME ft; 
    ULONGLONG t; 
  
@@ -420,7 +420,7 @@ int _check_mtime(GeoIP *gi) {
       return 0; 
    } 
    gi->last_mtime_check = t; 
-#endif /* !defined(WIN32) && !defined(WIN64) */ 
+#endif /* !defined(_WIN32) */ 
  
 
   if (gi->flags & GEOIP_CHECK_CACHE) {
@@ -429,7 +429,7 @@ int _check_mtime(GeoIP *gi) {
 				/* GeoIP Database file updated */
 				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
 				    if ( gi->flags & GEOIP_MMAP_CACHE) {
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 							/* MMAP is only avail on UNIX */
 					munmap(gi->cache, gi->size);
 					gi->cache = NULL;
@@ -453,7 +453,7 @@ int _check_mtime(GeoIP *gi) {
 				gi->size = buf.st_size;
 
 				if ( gi->flags & GEOIP_MMAP_CACHE) {
-#if defined(WIN32) || defined(WIN64)
+#if defined(_WIN32)
 					fprintf(stderr, "GEOIP_MMAP_CACHE is not supported on WIN32\n");
 					gi->cache = 0;
 					return -1;
@@ -721,12 +721,6 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	GeoIP * gi;
 	size_t len;
 
-#if defined(WIN32) || defined(WIN64)
-	WSADATA wsa;
-	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
-		return NULL;
-#endif
-
 	gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
@@ -756,7 +750,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 
 			/* MMAP added my Peter Shipley */
 			if ( flags & GEOIP_MMAP_CACHE ) {
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 			    gi->cache = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(gi->GeoIPDatabase), 0);
 			    if ( gi->cache == MAP_FAILED ) {
 				fprintf(stderr,"Error mmaping file %s\n",filename);
@@ -820,7 +814,7 @@ void GeoIP_delete (GeoIP *gi) {
 		fclose(gi->GeoIPDatabase);
 	if (gi->cache != NULL) {
 	    if ( gi->flags & GEOIP_MMAP_CACHE ) {
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 		munmap(gi->cache, gi->size);
 #endif
 	    } else {
@@ -893,7 +887,11 @@ unsigned long _GeoIP_lookupaddress (const char *host) {
 			free(buf);
 			return 0;
 		}
+#if !defined(_WIN32)
 		addr = *((in_addr_t *) phe->h_addr_list[0]);
+#else
+		addr = *(phe->h_addr_list[0]);
+#endif
 	}
 #ifdef HAVE_GETHOSTBYNAME_R
 	free(buf);

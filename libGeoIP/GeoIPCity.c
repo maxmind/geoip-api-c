@@ -21,7 +21,7 @@
 #include <GeoIP.h>
 #include <GeoIP_internal.h>
 #include <GeoIPCity.h>
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 #include <netdb.h>
 #include <netinet/in.h> /* For ntohl */
 #else
@@ -268,7 +268,8 @@ void GeoIPRecord_delete (GeoIPRecord *gir) {
 
 
 char * _iso_8859_1__utf8(const char * iso) {
-	char c, k;
+	signed char c;
+	char k;
 	char * p;
 	char * t = (char *)iso;
 	int len = 0;

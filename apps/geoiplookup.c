@@ -22,7 +22,7 @@
 #include <GeoIPCity.h>
 #include <GeoIP_internal.h>
 
-#if defined(WIN32) || defined(WIN64) 
+#if defined(_WIN32)
 # ifndef uint32_t 
 typedef unsigned int uint32_t; 
 # endif 

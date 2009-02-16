@@ -26,7 +26,7 @@
 #include "global.h"
 #include "md5.h"
 #include <sys/types.h>
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>

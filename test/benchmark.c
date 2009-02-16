@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <GeoIP.h>
 #include <GeoIPCity.h>
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 #include <sys/time.h>
-#endif /* !defined(WIN32) && !defined(WIN64) */
+#endif /* !defined(_WIN32) */
 
 char *ipstring[4] = {"24.24.24.24","80.24.24.80",
 "200.24.24.40","68.24.24.46"};
 int numipstrings = 4;
 
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 struct timeval timer_t1;
 struct timeval timer_t2;
-#else /* !defined(WIN32) && !defined(WIN64) */ 
+#else /* !defined(_WIN32) */ 
 FILETIME timer_t1; /* 100 ns */ 
 FILETIME timer_t2; 
-#endif /* !defined(WIN32) && !defined(WIN64) */ 
+#endif /* !defined(_WIN32) */ 
 
-#if !defined(WIN32) && !defined(WIN64)
+#if !defined(_WIN32)
 void timerstart() {
   gettimeofday(&timer_t1,NULL);
 }
@@ -35,7 +35,7 @@ double timerstop() {
   r = (((double) a1) + (((double) a2) / 1000000));
   return r;
 }
-#else /* !defined(WIN32) && !defined(WIN64) */ 
+#else /* !defined(_WIN32) */ 
 void timerstart() { 
   GetSystemTimeAsFileTime(&timer_t1); 
 } 
@@ -45,7 +45,7 @@ double timerstop() {
   delta = FILETIME_TO_USEC(timer_t2) - FILETIME_TO_USEC(timer_t2); 
   return delta; 
 } 
-#endif /* !defined(WIN32) && !defined(WIN64) */ 
+#endif /* !defined(_WIN32) */ 
 
 void testgeoipcountry(int flags,const char *msg,int numlookups) {
   const char *str = NULL;

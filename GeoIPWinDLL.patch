@@ -10,16 +10,16 @@ diff -u -r1.32 -r1.33
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
-+#ifndef WIN32
++#ifndef _WIN32
  #include <netdb.h>
-+#endif	/* WIN32 */
++#endif	/* _WIN32 */
  #include <assert.h>
  #include <sys/types.h> /* for fstat */
  #include <sys/stat.h>	/* for fstat */
  #include "zlib.h"
  #include "time.h"
  
-+#ifndef WIN32
++#ifndef _WIN32
 +#include <unistd.h>
  #include <netinet/in.h>
  #include <arpa/inet.h>
@@ -27,7 +27,7 @@ diff -u -r1.32 -r1.33
 +#else
 +#include <io.h>
 +#include <windows.h>
-+#endif	/* WIN32 */
++#endif	/* _WIN32 */
  
  #define COUNTRY_BEGIN 16776960;
  const int RECORD_LENGTH = 3;
@@ -35,7 +35,7 @@ diff -u -r1.32 -r1.33
  const char *GeoIPUpdateHost = "updates.maxmind.com";
  const char *GeoIPHTTPRequest = "GET /app/update?license_key=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
  
-+#ifdef WIN32
++#ifdef _WIN32
 +char * _dat_in_module_path () {
 +	HMODULE GeoIPdll;
 +	struct _stat st;
@@ -88,13 +88,13 @@ diff -u -r1.32 -r1.33
 +
 +	return filename;
 +}
-+#endif	/* WIN32 */
++#endif	/* _WIN32 */
 +
  GeoIP* GeoIP_new (int flags) {
  	char * filename;
  	GeoIP * gi;
 +
-+#ifndef WIN32
++#ifndef _WIN32
  	filename = malloc(sizeof(char) * (strlen(DATADIR)+strlen(GeoIPDBFileName)+2));
  	if (filename == NULL)
  		return NULL;
@@ -111,7 +111,7 @@ diff -u -r1.32 -r1.33
 +		fprintf(stderr,"Unable to query registry for database location\n");
 +		return NULL;
 +	}
-+#endif	/* WIN32 */
++#endif	/* _WIN32 */
 +
  	gi = GeoIP_open (filename, flags);
  	free(filename);
@@ -148,11 +148,11 @@ diff -u -r1.19 -r1.20
 -const char *GeoIP_country_name_by_name (GeoIP* gi, const char *host);
 -short int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
 -short int GeoIP_country_id_by_name (GeoIP* gi, const char *host);
-+#ifdef WIN32
++#ifdef _WIN32
 +#define GEOIP_API __declspec(dllexport)
 +#else
 +#define GEOIP_API
-+#endif	/* WIN32 */
++#endif	/* _WIN32 */
  
 -char *GeoIP_database_info (GeoIP* gi);
 -short int GeoIP_update_database (GeoIP* gi, char * license_key, int verbose);
