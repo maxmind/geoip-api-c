@@ -270,7 +270,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 #else
 		char buf[MAX_PATH], *p, *q = NULL;
 		memset(buf, 0, sizeof(buf));
-		len = GetModuleFileName(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
+		len = GetModuleFileNameA(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
 		for (p = buf + len; p > buf; p--)
 			if (*p == '\\')
 				{
@@ -1584,7 +1584,7 @@ int GeoIP_last_netmask (GeoIP* gi) {
 /** return two letter country code */
 const char* GeoIP_code_by_id(int id)
 {
-       if (id < 0 || id >= num_GeoIP_countries)
+       if (id < 0 || id >= (int) num_GeoIP_countries)
                return NULL;
 
        return GeoIP_country_code[id];
@@ -1593,7 +1593,7 @@ const char* GeoIP_code_by_id(int id)
 /** return three letter country code */
 const char* GeoIP_code3_by_id(int id)
 {
-       if (id < 0 || id >= num_GeoIP_countries)
+       if (id < 0 || id >= (int) num_GeoIP_countries)
                return NULL;
 
        return GeoIP_country_code3[id];
@@ -1603,7 +1603,7 @@ const char* GeoIP_code3_by_id(int id)
 /** return full name of country */
 const char* GeoIP_name_by_id(int id)
 {
-       if (id < 0 || id >= num_GeoIP_countries)
+       if (id < 0 || id >= (int) num_GeoIP_countries)
                return NULL;
 
        return GeoIP_country_name[id];
@@ -1612,7 +1612,7 @@ const char* GeoIP_name_by_id(int id)
 /** return continent of country */
 const char* GeoIP_continent_by_id(int id)
 {
-       if (id < 0 || id >= num_GeoIP_countries)
+       if (id < 0 || id >= (int) num_GeoIP_countries)
                return NULL;
 
        return GeoIP_country_continent[id];
