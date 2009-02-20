@@ -74,7 +74,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Armed Forces Americas";
       break;
       case 852:
-      name = "Armed Forces Europe";
+      name = "Armed Forces Europe, Middle East, & Canada";
       break;
       case 858:
       name = "Alaska";
@@ -2249,12 +2249,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"CI") == 0) {
     switch (region_code2) {
-      case 5:
-      name = "Atacama";
-      break;
-      case 6:
-      name = "Biobio";
-      break;
       case 51:
       name = "Sassandra";
       break;
@@ -3906,7 +3900,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Brighton and Hove";
       break;
       case 881:
-      name = "Bristol";
+      name = "Bristol, City of";
       break;
       case 882:
       name = "Bromley";
@@ -4038,7 +4032,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Kent";
       break;
       case 1095:
-      name = "Kingston upon Hull";
+      name = "Kingston upon Hull, City of";
       break;
       case 1096:
       name = "Kingston upon Thames";
@@ -4074,7 +4068,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Liverpool";
       break;
       case 1141:
-      name = "London";
+      name = "London, City of";
       break;
       case 1176:
       name = "Luton";
@@ -4398,7 +4392,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Argyll and Bute";
       break;
       case 1657:
-      name = "Scottish Borders";
+      name = "Scottish Borders, The";
       break;
       case 1692:
       name = "Clackmannanshire";
@@ -4422,7 +4416,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "East Renfrewshire";
       break;
       case 1699:
-      name = "Edinburgh";
+      name = "Edinburgh, City of";
       break;
       case 1700:
       name = "Falkirk";
@@ -4542,7 +4536,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Torfaen";
       break;
       case 1909:
-      name = "Vale of Glamorgan";
+      name = "Vale of Glamorgan, The";
       break;
       case 1910:
       name = "Wrexham";
@@ -6903,7 +6897,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Liban-Nord";
       break;
       case 10:
-      name = "Aakk";
+      name = "Aakk,r";
       break;
       case 11:
       name = "Baalbek-Hermel";
@@ -7537,7 +7531,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Oriental";
       break;
       case 55:
-      name = "Souss-Massa-Dr";
+      name = "Souss-Massa-Dr,a";
       break;
       case 56:
       name = "Tadla-Azilal";
@@ -7549,7 +7543,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Taza-Al Hoceima-Taounate";
       break;
       case 59:
-      name = "La";
+      name = "La,youne-Boujdour-Sakia El Hamra";
       break;
     }
   }
@@ -10432,7 +10426,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   if (strcmp(country_code,"RU") == 0) {
     switch (region_code2) {
       case 1:
-      name = "Adygeya";
+      name = "Adygeya, Republic of";
       break;
       case 2:
       name = "Aginsky Buryatsky AO";

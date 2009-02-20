@@ -43,7 +43,7 @@ open( FILE, "iso3166_2.txt" ) or die $!;
 my $last_country_code = "";
 while ( my $str = <FILE> ) {
   chomp($str);
-  my ( $country_code, $region_code, $name ) = split( ",", $str );
+  my ( $country_code, $region_code, $name ) = split( /,/, $str, 3 );
   $region_code =~ /^[A-Z]{2}$/ or die "Wrong region code";
   my $region_code2 =
     ( ( ord( substr( $region_code, 0, 1 ) ) - 48 ) * ( 65 + 26 - 48 ) ) +
@@ -62,7 +62,7 @@ open( FILE, "fips10_4.txt" ) or die $!;
 $last_country_code = "";
 while ( my $str = <FILE> ) {
   chomp($str);
-  my ( $country_code, $region_code, $name ) = split( ",", $str );
+  my ( $country_code, $region_code, $name ) = split( /,/, $str, 3 );
   next if ( $country_code eq "US" );
   next if ( $country_code eq "CA" );
   my $region_code2;

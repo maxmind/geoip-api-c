@@ -1,3 +1,6 @@
+	* Update region codes in libGeoIP/regionName.c ( Boris Zentner )
+	* Fix regioncode/generate_regionName.pl to handle regioncodes with ',' correct ( Boris Zentner )
+	* Update fips codes 20090201 ( Boris Zentner )
 	* Fix unicode builds on WIN32 and eliminate some warnings ( Stu Redman )
 	* Fix sign error in _iso_8859_1__utf8 for PPC64 ( Boris Zentner )
 	* Change WIN32 to _WIN32, since _WIN32 is defined by default. _WIN32 is also defined for WIN64 machines ( Boris Zentner )
