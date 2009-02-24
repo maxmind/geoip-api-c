@@ -40,7 +40,7 @@ https
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use 5.008;
 use Data::Dumper;
@@ -49,7 +49,7 @@ use File::Spec;
 use Getopt::Std;
 use HTTP::Request::Common;
 use LWP::UserAgent;
-use PerlIO::Gzip;
+use PerlIO::gzip;
 use URI;
 
 my $ua = LWP::UserAgent->new( agent => "pp_geoipupdate/$VERSION" );
