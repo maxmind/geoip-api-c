@@ -1,3 +1,4 @@
+	* Fix geoipupdate's my_printf function ( Boris Zentner )
 	* Fix typo in apps/geoipupdate-pureperl.pl replace PerlIO::Gzip with PerlIO::gzip ( Boris Zentner ) 
 	* Update region codes in libGeoIP/regionName.c ( Boris Zentner )
 	* Fix regioncode/generate_regionName.pl to handle regioncodes with ',' correct ( Boris Zentner )

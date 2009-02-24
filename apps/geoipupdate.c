@@ -41,7 +41,7 @@ void usage() {
 }
 
 void my_printf(char * str) {
-	printf(str);
+	printf("%s", str);
 }
 
 void print_status (int err, char * license_file) {
