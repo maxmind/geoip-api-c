@@ -40,7 +40,7 @@ https
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use 5.008;
 use Data::Dumper;
@@ -220,7 +220,7 @@ sub _gunzip_and_replace {
   {
     local $_;
     open my $gin, '<:gzip', \$content or die $!;
-    open my $gout, '>', $geoip_filename . '.test' or die $!;
+    open my $gout, '>:raw', $geoip_filename . '.test' or die $!;
     print {$gout} $_ while (<$gin>);
   }
 

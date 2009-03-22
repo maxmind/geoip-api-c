@@ -1,3 +1,4 @@
+        * Fix apps/geoipupdate-pureperl.pl output layer on W32 ( Boris Zentner )
 1.4.6	2009-02-25
 	* Fix geoipupdate's my_printf function ( Boris Zentner )
 	* Fix typo in apps/geoipupdate-pureperl.pl replace PerlIO::Gzip with PerlIO::gzip ( Boris Zentner ) 
