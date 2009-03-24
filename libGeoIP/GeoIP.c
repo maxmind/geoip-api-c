@@ -366,10 +366,11 @@ void _setup_segments(GeoIP * gi) {
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = STATE_BEGIN_REV1;
 			} else if (gi->databaseType == GEOIP_CITY_EDITION_REV0 ||
-								 gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
-								 gi->databaseType == GEOIP_ORG_EDITION ||
-								 gi->databaseType == GEOIP_ISP_EDITION ||
-								 gi->databaseType == GEOIP_ASNUM_EDITION) {
+				   gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
+		                   gi->databaseType == GEOIP_ORG_EDITION ||
+		                   gi->databaseType == GEOIP_DOMAIN_EDITION ||
+		 		   gi->databaseType == GEOIP_ISP_EDITION ||
+			  	   gi->databaseType == GEOIP_ASNUM_EDITION) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
@@ -377,8 +378,9 @@ void _setup_segments(GeoIP * gi) {
 				for (j = 0; j < SEGMENT_RECORD_LENGTH; j++) {
 					gi->databaseSegments[0] += (buf[j] << (j * 8));
 				}
-				if (gi->databaseType == GEOIP_ORG_EDITION ||
-						gi->databaseType == GEOIP_ISP_EDITION)
+				if (gi->databaseType == GEOIP_ORG_EDITION    ||
+		                    gi->databaseType == GEOIP_DOMAIN_EDITION ||                                  
+			 	    gi->databaseType == GEOIP_ISP_EDITION)
 					gi->record_length = ORG_RECORD_LENGTH;
 			}
 			break;
@@ -1346,6 +1348,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 
 	if (gi->databaseType != GEOIP_ORG_EDITION &&
 			gi->databaseType != GEOIP_ISP_EDITION &&
+			gi->databaseType != GEOIP_DOMAIN_EDITION &&
 			gi->databaseType != GEOIP_ASNUM_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
 		return NULL;
@@ -1382,6 +1385,7 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
 
   if (gi->databaseType != GEOIP_ORG_EDITION &&
       gi->databaseType != GEOIP_ISP_EDITION &&
+      gi->databaseType != GEOIP_DOMAIN_EDITION &&
       gi->databaseType != GEOIP_ASNUM_EDITION) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
     return NULL;
