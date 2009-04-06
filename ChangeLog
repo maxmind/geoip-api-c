@@ -1,4 +1,5 @@
-        * Add support for DOMAIN_EDITION database type ( Boris Zentner )
+	* Add -i flag for more information on netmask, range_by_ip and the current network range ( Boris Zentner )
+	* Add support for DOMAIN_EDITION database type ( Boris Zentner )
 	* Fix apps/geoipupdate-pureperl.pl output layer on W32 ( Boris Zentner )
 1.4.6	2009-02-25
 	* Fix geoipupdate's my_printf function ( Boris Zentner )

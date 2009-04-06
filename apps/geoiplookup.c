@@ -31,8 +31,11 @@ typedef unsigned int uint32_t;
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-d custom_dir] [-f custom_file] [-v] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-d custom_dir] [-f custom_file] [-v] [-i] <ipaddress|hostname>\n");
 }
+
+/* extra info used in _say_range_ip */
+int info_flag = 0;
 
 int main (int argc, char *argv[]) {
 	char * hostname = NULL;
@@ -51,7 +54,9 @@ int main (int argc, char *argv[]) {
 	while (i < argc) {
 		if (strcmp(argv[i],"-v") == 0) {
 			version_flag = 1;
-		} else if (strcmp(argv[i],"-f") == 0) {
+		} else if (strcmp(argv[i],"-i") == 0) {
+			info_flag = 1;
+                } else if (strcmp(argv[i],"-f") == 0) {
 			if ((i+1) < argc){
 				i++;
 				custom_file = argv[i];
@@ -119,6 +124,99 @@ static const char * _mk_NA( const char * p ){
  return p ? p : "N/A";
 }
 
+static unsigned long
+__addr_to_num(const char *addr)
+{
+	unsigned int    c, octet, t;
+	unsigned long   ipnum;
+	int             i = 3;
+
+	octet = ipnum = 0;
+	while ((c = *addr++)) {
+		if (c == '.') {
+			if (octet > 255)
+				return 0;
+			ipnum <<= 8;
+			ipnum += octet;
+			i--;
+			octet = 0;
+		} else {
+			t = octet;
+			octet <<= 3;
+			octet += t;
+			octet += t;
+			c -= '0';
+			if (c > 9)
+				return 0;
+			octet += c;
+		}
+	}
+	if ((octet > 255) || (i != 0))
+		return 0;
+	ipnum <<= 8;
+	return ipnum + octet;
+}
+
+
+
+/* ptr must be a memory area with at least 16 bytes */
+static char *__num_to_addr_r (unsigned long ipnum, char * ptr) {
+	char *cur_str;
+	int octet[4];
+	int num_chars_written, i;
+
+	cur_str = ptr;
+
+	for (i = 0; i<4; i++) {
+		octet[3 - i] = ipnum % 256;
+		ipnum >>= 8;
+	}
+
+	for (i = 0; i<4; i++) {
+		num_chars_written = sprintf(cur_str, "%d", octet[i]);
+		cur_str += num_chars_written;
+
+		if (i < 3) {
+			cur_str[0] = '.';
+			cur_str++;
+		}
+	}
+
+	return ptr;
+}
+
+void _say_range_by_ip(GeoIP * gi, uint32_t ipnum ) {
+  unsigned long last_nm, mask, low, hi;
+  char ipaddr[16];
+  char tmp[16];
+  char ** range;
+
+  if ( info_flag == 0 )
+    return; /* noop unless extra information is requested */
+
+  range = GeoIP_range_by_ip( gi, __num_to_addr_r( ipnum, ipaddr ) );
+  if ( range == NULL )
+    return;
+
+  printf ( "  ipaddr: %s\n", ipaddr );
+
+  printf( "  range_by_ip:  %s - %s\n", range[0], range[1] );
+  last_nm = GeoIP_last_netmask(gi);
+  mask    = 0xffffffff << ( 32 - last_nm );
+  low     = ipnum & mask;
+  hi      = low + ( 0xffffffff & ~mask );
+  printf( "  network:      %s - %s ::%ld\n",
+    __num_to_addr_r( low, ipaddr ),
+    __num_to_addr_r( hi,  tmp ),
+    last_nm
+  );
+  printf( "  ipnum: %ld\n", ipnum );
+  printf( "  range_by_num: %ld - %ld\n", __addr_to_num(range[0]), __addr_to_num(range[1]) );
+  printf( "  network num:  %ld - %ld ::%ld\n", low, hi, last_nm );
+
+  GeoIP_range_by_ip_delete(range);
+}
+
 void
 geoiplookup(GeoIP * gi, char *hostname, int i)
 {
@@ -146,6 +244,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			}
 			else {
 				printf("%s: %s\n", GeoIPDBDescription[i], domain_name);
+                                _say_range_by_ip(gi, ipnum);
 			}
 		}
 		else if (GEOIP_COUNTRY_EDITION == i) {
@@ -157,6 +256,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			}
 			else {
 				printf("%s: %s, %s\n", GeoIPDBDescription[i], country_code, country_name);
+                                _say_range_by_ip(gi, ipnum);
 			}
 		}
 		else if (GEOIP_REGION_EDITION_REV0 == i || GEOIP_REGION_EDITION_REV1 == i) {
@@ -166,6 +266,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			}
 			else {
 				printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
+                                _say_range_by_ip(gi, ipnum);
 				GeoIPRegion_delete(region);
 			}
 		}
@@ -177,6 +278,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			else {
 				printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region),
 				       _mk_NA(gir->city), _mk_NA(gir->postal_code), gir->latitude, gir->longitude);
+                                _say_range_by_ip(gi, ipnum);
 			}
 		}
 		else if (GEOIP_CITY_EDITION_REV1 == i) {
@@ -187,6 +289,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			else {
 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
 				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
+                                _say_range_by_ip(gi, ipnum);
 			}
 		}
 		else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
@@ -196,6 +299,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			}
 			else {
 				printf("%s: %s\n", GeoIPDBDescription[i], org);
+                                _say_range_by_ip(gi, ipnum);
 			}
 		}
 		else if (GEOIP_NETSPEED_EDITION == i) {
@@ -212,6 +316,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			else if (netspeed == GEOIP_CORPORATE_SPEED) {
 				printf("%s: Corporate\n", GeoIPDBDescription[i]);
 			}
+                        _say_range_by_ip(gi, ipnum);
 		}
 		else {
 
