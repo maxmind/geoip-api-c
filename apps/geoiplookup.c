@@ -210,9 +210,9 @@ void _say_range_by_ip(GeoIP * gi, uint32_t ipnum ) {
     __num_to_addr_r( hi,  tmp ),
     last_nm
   );
-  printf( "  ipnum: %ld\n", ipnum );
-  printf( "  range_by_num: %ld - %ld\n", __addr_to_num(range[0]), __addr_to_num(range[1]) );
-  printf( "  network num:  %ld - %ld ::%ld\n", low, hi, last_nm );
+  printf( "  ipnum: %u\n", ipnum );
+  printf( "  range_by_num: %lu - %lu\n", __addr_to_num(range[0]), __addr_to_num(range[1]) );
+  printf( "  network num:  %lu - %lu ::%lu\n", low, hi, last_nm );
 
   GeoIP_range_by_ip_delete(range);
 }
@@ -223,6 +223,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 	const char     *country_code;
 	const char     *country_name;
 	const char     *domain_name;
+        const char     *asnum_name;
 	int             netspeed;
 	int             country_id;
 	GeoIPRegion    *region;
@@ -244,6 +245,16 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			}
 			else {
 				printf("%s: %s\n", GeoIPDBDescription[i], domain_name);
+                                _say_range_by_ip(gi, ipnum);
+			}
+		}
+		else if (GEOIP_ASNUM_EDITION == i) {
+			asnum_name = GeoIP_name_by_ipnum(gi, ipnum);
+			if (asnum_name == NULL) {
+				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+			}
+			else {
+				printf("%s: %s\n", GeoIPDBDescription[i], asnum_name);
                                 _say_range_by_ip(gi, ipnum);
 			}
 		}
