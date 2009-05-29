@@ -97,6 +97,7 @@ int main (int argc, char *argv[]) {
 			exit(0);
 		case 'v':
 			verbose = 1;
+                        break;
 		case 'f':
 			license_file = optarg;
 			break;
@@ -279,5 +280,5 @@ int main (int argc, char *argv[]) {
 	if (client_ipaddr) {
 		free(client_ipaddr);
 	}
-	exit(0);
+	exit(err);
 }

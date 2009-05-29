@@ -1,3 +1,5 @@
+	* Fix geoipupdate's -v option to not change the license filename ( Thom May )
+	* Fix geoipupdate's exit code ( Thom May )
 	* Add support for ASNUM_EDITION ( Boris Zentner )
 	* Fix -i output for larger values, sign issue ( Boris Zentner )
 	* Add -i flag for more information on netmask, range_by_ip and the current network range ( Boris Zentner )
