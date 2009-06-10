@@ -182,4 +182,27 @@ from XORG X-Server). It happens at least with gcc 3.3.1 and with gcc
 If GEOIP_MMAP_CACHE doesn't work on a 64bit machine, try adding
 the flag "MAP_32BIT" to the mmap call.
 
+If you get a "passing argument 3 of 'gethostbyname_r' from incompatible pointer type"
+error on AIX, download and/or untar a fresh copy of GeoIP.  ( To avoid cached
+results from a previous ./configure run )
+
+cd ./GeoIP-1.4.6
+then edit the file ./configure
+
+and delete these two lines:
+
+#define HAVE_GETHOSTBYNAME_R 1
+
+#define GETHOSTBYNAME_R_RETURNS_INT 1
+
+then save the configure script
+
+and build it as usual
+
+./configure
+make
+sudo make install
+
+
+
 To submit a patch, please contact support@maxmind.com 
