@@ -1,3 +1,4 @@
+	* Update libGeoIP/regionName.c with FIPS codes from 20090723 ( Boris Zentner )
 	* Fix geoipupdate's -v option to not change the license filename ( Thom May )
 	* Fix geoipupdate's exit code ( Thom May )
 	* Add support for ASNUM_EDITION ( Boris Zentner )
