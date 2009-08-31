@@ -162,6 +162,13 @@ GEOIP_API const char *GeoIP_country_name_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum
 GEOIP_API const char *GeoIP_country_code_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
 GEOIP_API const char *GeoIP_country_code3_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
 
+GEOIP_API const char *GeoIP_country_code_by_addr_v6 (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_code_by_name_v6 (GeoIP* gi, const char *host);
+GEOIP_API const char *GeoIP_country_code3_by_addr_v6 (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_code3_by_name_v6 (GeoIP* gi, const char *host);
+GEOIP_API const char *GeoIP_country_name_by_addr_v6 (GeoIP* gi, const char *addr);
+GEOIP_API const char *GeoIP_country_name_by_name_v6 (GeoIP* gi, const char *host);
+
 /* Deprecated - for backwards compatibility only */
 GEOIP_API int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API int GeoIP_country_id_by_name (GeoIP* gi, const char *host);

@@ -1,3 +1,12 @@
+	* Add more IPv6 functions ( Boris Zentner )
+	    const char *GeoIP_country_code_by_addr_v6 (GeoIP* gi, const char *addr);
+	    const char *GeoIP_country_code_by_name_v6 (GeoIP* gi, const char *host);
+	    const char *GeoIP_country_code3_by_addr_v6 (GeoIP* gi, const char *addr);
+	    const char *GeoIP_country_code3_by_name_v6 (GeoIP* gi, const char *host);
+	    const char *GeoIP_country_name_by_addr_v6 (GeoIP* gi, const char *addr);
+	    const char *GeoIP_country_name_by_name_v6 (GeoIP* gi, const char *host);
+	* Make sure that GeoIP_*_v6 functions refuse GEOIP_PROXY_EDITION and
+	    GEOIP_NETSPEED_EDITION databases ( Boris Zentner ) 
 	* Update libGeoIP/regionName.c with FIPS codes from 20090723 ( Boris Zentner )
 	* Fix geoipupdate's -v option to not change the license filename ( Thom May )
 	* Fix geoipupdate's exit code ( Thom May )

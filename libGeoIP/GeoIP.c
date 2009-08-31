@@ -833,16 +833,34 @@ void GeoIP_delete (GeoIP *gi) {
 	free(gi);
 }
 
+const char *GeoIP_country_code_by_name_v6 (GeoIP* gi, const char *name) {
+	int country_id;
+	country_id = GeoIP_id_by_name_v6(gi, name);
+	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+}
+
 const char *GeoIP_country_code_by_name (GeoIP* gi, const char *name) {
 	int country_id;
 	country_id = GeoIP_id_by_name(gi, name);
 	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
 }
 
+const char *GeoIP_country_code3_by_name_v6 (GeoIP* gi, const char *name) {
+	int country_id;
+	country_id = GeoIP_id_by_name_v6(gi, name);
+	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+}
+
 const char *GeoIP_country_code3_by_name (GeoIP* gi, const char *name) {
 	int country_id;
 	country_id = GeoIP_id_by_name(gi, name);
 	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+}
+
+const char *GeoIP_country_name_by_name_v6 (GeoIP* gi, const char *name) {
+	int country_id;
+	country_id = GeoIP_id_by_name_v6(gi, name);
+	return (country_id > 0) ? GeoIP_country_name[country_id] : NULL;
 }
 
 const char *GeoIP_country_name_by_name (GeoIP* gi, const char *name) {
@@ -947,7 +965,7 @@ int GeoIP_id_by_name_v6 (GeoIP* gi, const char *name) {
        if (name == NULL) {
                return 0;
        }
-       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6 && gi->databaseType != GEOIP_PROXY_EDITION && gi->databaseType != GEOIP_NETSPEED_EDITION) {
+       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6) {
                printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
                return 0;
        }
@@ -958,16 +976,34 @@ int GeoIP_id_by_name_v6 (GeoIP* gi, const char *name) {
        return ret;
 }
 
+const char *GeoIP_country_code_by_addr_v6 (GeoIP* gi, const char *addr) {
+	int country_id;
+	country_id = GeoIP_id_by_addr_v6(gi, addr);
+	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+}
+
 const char *GeoIP_country_code_by_addr (GeoIP* gi, const char *addr) {
 	int country_id;
 	country_id = GeoIP_id_by_addr(gi, addr);
 	return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
 }
 
+const char *GeoIP_country_code3_by_addr_v6 (GeoIP* gi, const char *addr) {
+	int country_id;
+	country_id = GeoIP_id_by_addr_v6(gi, addr);
+	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+}
+
 const char *GeoIP_country_code3_by_addr (GeoIP* gi, const char *addr) {
 	int country_id;
 	country_id = GeoIP_id_by_addr(gi, addr);
 	return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+}
+
+const char *GeoIP_country_name_by_addr_v6 (GeoIP* gi, const char *addr) {
+	int country_id;
+	country_id = GeoIP_id_by_addr_v6(gi, addr);
+	return (country_id > 0) ? GeoIP_country_name[country_id] : NULL;
 }
 
 const char *GeoIP_country_name_by_addr (GeoIP* gi, const char *addr) {
@@ -1012,8 +1048,16 @@ const char *GeoIP_country_code3_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum) {
        return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
 }
 
+int GeoIP_country_id_by_addr_v6 (GeoIP* gi, const char *addr) {
+	return GeoIP_id_by_addr_v6(gi, addr);
+}
+
 int GeoIP_country_id_by_addr (GeoIP* gi, const char *addr) {
 	return GeoIP_id_by_addr(gi, addr);
+}
+
+int GeoIP_country_id_by_name_v6 (GeoIP* gi, const char *host) {
+	return GeoIP_id_by_name_v6(gi, host);
 }
 
 int GeoIP_country_id_by_name (GeoIP* gi, const char *host) {
@@ -1026,9 +1070,7 @@ int GeoIP_id_by_addr_v6 (GeoIP* gi, const char *addr) {
        if (addr == NULL) {
                return 0;
        }
-       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6 &&
-                       gi->databaseType != GEOIP_PROXY_EDITION &&
-                       gi->databaseType != GEOIP_NETSPEED_EDITION) {
+       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6) {
                printf("Invalid database type %s, expected %s\n",
                                         GeoIPDBDescription[(int)gi->databaseType],
                                         GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
@@ -1064,9 +1106,7 @@ int GeoIP_id_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum) {
                return 0;
        }
 */     
-       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6 && 
-                       gi->databaseType != GEOIP_PROXY_EDITION &&
-                       gi->databaseType != GEOIP_NETSPEED_EDITION) {
+       if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6) {
                printf("Invalid database type %s, expected %s\n",
                                         GeoIPDBDescription[(int)gi->databaseType],
                                         GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
