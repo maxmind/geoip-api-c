@@ -1,4 +1,5 @@
-	* Delay loading of changed database files for 60 seconds. To avoid
+	* Avoid unnecesary call to gettimeofday when GEOIP_CHECK_CACHE is not set ( John Douglass )
+	* Delayed loading of changed database files for 60 seconds. To avoid
 	  reading halve written databases ( Boris Zentner )
 	* Update README.OSX for Leopard  and Snow Leopard ( Boris Zentner )
 	* Add more IPv6 functions ( Boris Zentner )

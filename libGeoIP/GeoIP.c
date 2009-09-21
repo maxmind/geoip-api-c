@@ -400,32 +400,39 @@ void _setup_segments(GeoIP * gi) {
 static
 int _check_mtime(GeoIP *gi) {
 	struct stat buf;
+
 #if !defined(_WIN32) 
         struct timeval t;
-	/* stat only has second granularity, so don't
-	   call it more than once a second */
-	gettimeofday(&t, NULL);
-	if (t.tv_sec == gi->last_mtime_check){
-		return 0;
-	}
-	gi->last_mtime_check = t.tv_sec;
 #else /* !defined(_WIN32) */ 
-   FILETIME ft; 
-   ULONGLONG t; 
- 
-   /* stat only has second granularity, so don't 
-      call it more than once a second */ 
-   GetSystemTimeAsFileTime(&ft); 
-   t = FILETIME_TO_USEC(ft) / 1000 / 1000; 
-   if (t == gi->last_mtime_check){ 
-      return 0; 
-   } 
-   gi->last_mtime_check = t; 
-#endif /* !defined(_WIN32) */ 
- 
+        FILETIME ft; 
+        ULONGLONG t; 
+#endif /* !defined(_WIN32) */
 
-  if (gi->flags & GEOIP_CHECK_CACHE) {
-		if (stat(gi->file_path, &buf) != -1) {
+        if (gi->flags & GEOIP_CHECK_CACHE) {
+
+#if !defined(_WIN32) 
+                /* stat only has second granularity, so don't
+	         * call it more than once a second */
+	        gettimeofday(&t, NULL);
+	        if (t.tv_sec == gi->last_mtime_check){
+		        return 0;
+	        }
+	        gi->last_mtime_check = t.tv_sec;
+
+#else /* !defined(_WIN32) */ 
+
+                /* stat only has second granularity, so don't 
+                  call it more than once a second */ 
+                GetSystemTimeAsFileTime(&ft); 
+                t = FILETIME_TO_USEC(ft) / 1000 / 1000; 
+                if (t == gi->last_mtime_check){ 
+                        return 0; 
+                } 
+                gi->last_mtime_check = t; 
+
+#endif /* !defined(_WIN32) */ 
+
+                if (stat(gi->file_path, &buf) != -1) {
                         /* make sure that the database file is at least 60
                          * seconds untouched. Otherwise we might load the
                          * database only partly and crash
