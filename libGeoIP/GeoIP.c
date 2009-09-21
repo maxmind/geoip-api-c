@@ -402,7 +402,6 @@ int _check_mtime(GeoIP *gi) {
 	struct stat buf;
 #if !defined(_WIN32) 
         struct timeval t;
-		
 	/* stat only has second granularity, so don't
 	   call it more than once a second */
 	gettimeofday(&t, NULL);
@@ -427,16 +426,20 @@ int _check_mtime(GeoIP *gi) {
 
   if (gi->flags & GEOIP_CHECK_CACHE) {
 		if (stat(gi->file_path, &buf) != -1) {
-			if (buf.st_mtime != gi->mtime) {
+                        /* make sure that the database file is at least 60
+                         * seconds untouched. Otherwise we might load the
+                         * database only partly and crash
+                         */
+			if (buf.st_mtime != gi->mtime && ( buf.st_mtime + 60 < gi->last_mtime_check  ) ) {
 				/* GeoIP Database file updated */
 				if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
-				    if ( gi->flags & GEOIP_MMAP_CACHE) {
+				   if ( gi->flags & GEOIP_MMAP_CACHE) {
 #if !defined(_WIN32)
 							/* MMAP is only avail on UNIX */
 					munmap(gi->cache, gi->size);
 					gi->cache = NULL;
 #endif
-				    } else {
+                                   } else {
 					/* reload database into memory cache */
 					if ((gi->cache = (unsigned char*) realloc(gi->cache, buf.st_size)) == NULL) {
 						fprintf(stderr,"Out of memory when reloading %s\n",gi->file_path);
@@ -465,7 +468,7 @@ int _check_mtime(GeoIP *gi) {
 
 					    fprintf(stderr,"Error remapping file %s when reloading\n",gi->file_path);
 
-					    gi->cache = 0;
+					    gi->cache = NULL;
 					    return -1;
 				    }
 #endif

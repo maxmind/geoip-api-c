@@ -1,3 +1,6 @@
+	* Delay loading of changed database files for 60 seconds. To avoid
+	  reading halve written databases ( Boris Zentner )
+	* Update README.OSX for Leopard  and Snow Leopard ( Boris Zentner )
 	* Add more IPv6 functions ( Boris Zentner )
 	    const char *GeoIP_country_code_by_addr_v6 (GeoIP* gi, const char *addr);
 	    const char *GeoIP_country_code_by_name_v6 (GeoIP* gi, const char *host);
