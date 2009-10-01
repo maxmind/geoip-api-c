@@ -252,6 +252,10 @@ GEOIP_API const char * GeoIP_time_zone_by_country_and_region(const char *country
 #define memcpy(dest, src, n) bcopy(src, dest, n)
 #endif
 
+/* Internal function -- convert iso to utf8; return a malloced utf8 string. */
+char * _GeoIP_iso_8859_1__utf8(const char * iso);
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,3 +1,7 @@
+	* Rename _iso_8859_1__utf8 to _GeoIP_iso_8859_1__utf8 ( Boris Zentner )
+	* GEOIP_ORG_EDITION, GEOIP_ISP_EDITION, GEOIP_DOMAIN_EDITION and
+	    GEOIP_ASNUM_EDITION databases return UTF8 results, if gi->charset is set
+	    to GEOIP_CHARSET_UTF8 ( Boris Zentner )
 	* Avoid unnecesary call to gettimeofday when GEOIP_CHECK_CACHE is not set ( John Douglass )
 	* Delayed loading of changed database files for 60 seconds. To avoid
 	  reading halve written databases ( Boris Zentner )

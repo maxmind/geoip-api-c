@@ -322,6 +322,35 @@ int _file_exists(const char *file_name) {
 	return( (stat(file_name, &file_stat) == 0) ? 1:0);
 }
 
+char * _GeoIP_iso_8859_1__utf8(const char * iso) {
+	signed char c;
+	char k;
+	char * p;
+	char * t = (char *)iso;
+	int len = 0;
+	while ( ( c = *t++) ){
+		if ( c < 0 )
+			len++; 
+	}
+	len += t - iso;
+	t = p = malloc( len );
+	
+	if ( p ){
+		while ( ( c = *iso++ ) ) {
+			if (c < 0 ) {
+				k = 0xc2;
+				if (c >= -64 )
+					k++;
+				*t++ = k;
+				c &= ~0x40;
+			}
+			*t++ = c;
+		}
+		*t++ = 0x00;
+	}
+	return p;
+}
+
 int GeoIP_db_avail(int type) {
 	const char * filePath;
 	if (type < 0 || type >= NUM_DB_TYPES) {
@@ -1413,14 +1442,22 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	if (gi->cache == NULL) {
 		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
 		silence = fread(buf, sizeof(char), MAX_ORG_RECORD_LENGTH, gi->GeoIPDatabase);
-		len = sizeof(char) * (strlen(buf)+1);
-		org_buf = malloc(len);
-		strncpy(org_buf, buf, len);
+                if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
+	          org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf );
+	        } else {
+		  len = sizeof(char) * (strlen(buf)+1);
+		  org_buf = malloc(len);
+		  strncpy(org_buf, buf, len);
+                }
 	} else {
 		buf_pointer = (char *)(gi->cache + (long)record_pointer);
-		len = sizeof(char) * (strlen(buf_pointer)+1);
-		org_buf = malloc(len);
-		strncpy(org_buf, buf_pointer, len);
+                if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
+	          org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf_pointer );
+	        } else {
+		  len = sizeof(char) * (strlen(buf_pointer)+1);
+		  org_buf = malloc(len);
+		  strncpy(org_buf, buf_pointer, len);
+                }
 	}
 	return org_buf;
 }
@@ -1450,14 +1487,22 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
   if (gi->cache == NULL) {
     fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
     silence = fread(buf, sizeof(char), MAX_ORG_RECORD_LENGTH, gi->GeoIPDatabase);
-    len = sizeof(char) * (strlen(buf)+1);
-    org_buf = malloc(len);
-    strncpy(org_buf, buf, len);
+    if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
+      org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf );
+    } else {
+      len = sizeof(char) * (strlen(buf)+1);
+      org_buf = malloc(len);
+      strncpy(org_buf, buf, len);
+    }
   } else {
     buf_pointer = (char *)(gi->cache + (long)record_pointer);
-    len = sizeof(char) * (strlen(buf_pointer)+1);
-    org_buf = malloc(len);
-    strncpy(org_buf, buf_pointer, len);
+    if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
+      org_buf = _GeoIP_iso_8859_1__utf8( (const char * ) buf_pointer );
+    } else {
+      len = sizeof(char) * (strlen(buf_pointer)+1);
+      org_buf = malloc(len);
+      strncpy(org_buf, buf_pointer, len);
+    }
   }
   return org_buf;
 }
