@@ -105,6 +105,7 @@ typedef enum {
 	GEOIP_NETSPEED_EDITION    = 10,
 	GEOIP_DOMAIN_EDITION      = 11,
         GEOIP_COUNTRY_EDITION_V6  = 12,
+        GEOIP_LOCATIONA_EDITION   = 13
 } GeoIPDBTypes;
 
 typedef enum {
@@ -127,6 +128,7 @@ extern const char *GeoIPRegionDBFileName;
 extern const char *GeoIPCityDBFileName;
 extern const char *GeoIPOrgDBFileName;
 extern const char *GeoIPISPDBFileName;
+extern const char *GeoIPLocationADBFileName;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */
