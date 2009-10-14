@@ -1,3 +1,4 @@
+	* Add GEOIP_ACCURACYRADIUS_EDITION database type. ( Boris Zentner )
 	* Add GEOIP_LOCATIONA_EDITION the database to map back from binary to
 	    the csv database ( Boris Zentner )
 	* Change Turkey's continent code from Asia to Europe ( Boris Zentner )
