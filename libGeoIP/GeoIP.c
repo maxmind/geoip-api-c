@@ -169,7 +169,7 @@ const char GeoIP_country_continent[253][3] = {"--","AS","EU","EU","AS","AS","SA"
 	"AF","NA","AS","AF","AF","OC","AF","OC","AF","SA",
 	"EU","EU","AS","OC","OC","OC","AS","SA","SA","OC",
 	"OC","AS","AS","EU","SA","OC","SA","AS","EU","OC",
-	"SA","AS","AF","EU","AS","AF","AS","OC","AF","AF",
+	"SA","AS","AF","EU","EU","AF","AS","OC","AF","AF",
 	"EU","AS","AF","EU","EU","EU","AF","EU","AF","AF",
 	"SA","AF","SA","AS","AF","SA","AF","AF","AF","AS",
 	"AS","OC","AS","AF","OC","AS","EU","SA","OC","AS",
