@@ -1,3 +1,5 @@
+	* Fix geoiplookup/geoiplookup6 output, when the databaseinfo string is
+	    not avail. ( Boris Zentner )
 	* Change continent code for RU from AS to EU ( Boris Zentner )
 	* Add GEOIP_ACCURACYRADIUS_EDITION database type. ( Boris Zentner )
 	* Add GEOIP_LOCATIONA_EDITION the database to map back from binary to
