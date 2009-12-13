@@ -1,3 +1,4 @@
+	* geoiplookup use GeoIPDistance.dat files if avail ( Boris Zentner )
 	* Fix geoiplookup/geoiplookup6 output, when the databaseinfo string is
 	    not avail. ( Boris Zentner )
 	* Change continent code for RU from AS to EU ( Boris Zentner )
