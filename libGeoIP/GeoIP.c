@@ -251,7 +251,7 @@ int __GEOIP_V6_IS_NULL(geoipv6_t v6) {
         return 1;
 }
 
-const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition", "GeoIP Country V6 Edition", "GeoIP Location Ascii Edition", "GeoIP Accuracy Radius"};
+const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition", "GeoIP Country V6 Edition", "GeoIP LocationID ASCII Edition", "GeoIP Accuracy Radius Edition", "GeoIP City with Confidence Edition"};
 
 char * custom_directory = NULL;
 
@@ -315,6 +315,7 @@ void _GeoIP_setup_dbfilename() {
                 GeoIPDBFileName[GEOIP_COUNTRY_EDITION_V6]       = _GeoIP_full_path_to("GeoIPv6.dat");
                 GeoIPDBFileName[GEOIP_LOCATIONA_EDITION]        = _GeoIP_full_path_to("GeoIPLocA.dat");
                 GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION]   = _GeoIP_full_path_to("GeoIPAccuracyRadius.dat");
+                GeoIPDBFileName[GEOIP_CITYCONFIDENCE_EDITION]     = _GeoIP_full_path_to("GeoIPCityConfidence.dat");
 	}
 }
 
@@ -402,7 +403,9 @@ void _setup_segments(GeoIP * gi) {
 		                   gi->databaseType == GEOIP_DOMAIN_EDITION ||
 		 		   gi->databaseType == GEOIP_ISP_EDITION ||
 			  	   gi->databaseType == GEOIP_ASNUM_EDITION ||
-			  	   gi->databaseType == GEOIP_LOCATIONA_EDITION
+			  	   gi->databaseType == GEOIP_LOCATIONA_EDITION ||
+			  	   gi->databaseType == GEOIP_ACCURACYRADIUS_EDITION ||
+			  	   gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION
                                    ) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
@@ -411,6 +414,16 @@ void _setup_segments(GeoIP * gi) {
 				for (j = 0; j < SEGMENT_RECORD_LENGTH; j++) {
 					gi->databaseSegments[0] += (buf[j] << (j * 8));
 				}
+
+                                if ( gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION ) {
+                                  fseek(gi->GeoIPDatabase, gi->databaseSegments[0] * 2 * gi->record_length, SEEK_SET);
+				  silence = fread(buf, gi->record_length, 1, gi->GeoIPDatabase);
+                                  gi->dyn_seg_size = 0;
+ 	                          for (j = 0; j < gi->record_length; j++) {
+					gi->dyn_seg_size += (buf[j] << (j * 8));
+				  }
+                                }
+
 				if (gi->databaseType == GEOIP_ORG_EDITION    ||
 		                    gi->databaseType == GEOIP_DOMAIN_EDITION ||                                  
 			 	    gi->databaseType == GEOIP_ISP_EDITION

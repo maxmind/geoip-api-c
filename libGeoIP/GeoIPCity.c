@@ -36,54 +36,115 @@
 static
 const int FULL_RECORD_LENGTH = 50;
 
+static const int CITYCONFIDENCE_FIXED_RECORD = 7;
+
+
 static
-GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_record_ptr) {
-	int record_pointer;
-	unsigned char *record_buf = NULL;
-	unsigned char *begin_record_buf = NULL;
-	GeoIPRecord * record;
-	int str_length = 0;
-	int j;
-	double latitude = 0, longitude = 0;
-	int metroarea_combo = 0;
-	int bytes_read = 0;
-	if (seek_record == gi->databaseSegments[0])		
+GeoIPRecord    *
+_extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
+{
+	int             record_pointer;
+	unsigned char  *record_buf = NULL;
+	unsigned char  *begin_record_buf = NULL;
+	GeoIPRecord    *record;
+	int             str_length = 0;
+	int             j;
+	double          latitude = 0, longitude = 0;
+	int             metroarea_combo = 0;
+	int             bytes_read = 0;
+	if (seek_record == gi->databaseSegments[0])
 		return NULL;
 
 	record = malloc(sizeof(GeoIPRecord));
 	memset(record, 0, sizeof(GeoIPRecord));
-
 	record->charset = gi->charset;
 
-	record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
+	if (gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION) {
 
-	if (gi->cache == NULL) {
-		fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
-		begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
-		bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
-		if (bytes_read == 0) {
-			/* eof or other error */
-			free(begin_record_buf);
-			free(record);
-			return NULL;
+		unsigned char   tmp_fixed_record[CITYCONFIDENCE_FIXED_RECORD];
+		int             dseg = gi->databaseSegments[0] * gi->record_length * 2 + gi->record_length;
+		int             offset = seek_record - gi->databaseSegments[0] - 1; /* -1 b/c zero is not found. but the array start with 0 */
+
+                record_pointer = offset * CITYCONFIDENCE_FIXED_RECORD + dseg + gi->dyn_seg_size;
+		if (gi->cache == NULL) {
+			fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
+			bytes_read = fread(tmp_fixed_record, sizeof(char), CITYCONFIDENCE_FIXED_RECORD, gi->GeoIPDatabase);
+			if (bytes_read != CITYCONFIDENCE_FIXED_RECORD)
+				return NULL;
+
+			record->country_conf = tmp_fixed_record[0];
+			record->region_conf = tmp_fixed_record[1];
+			record->city_conf = tmp_fixed_record[2];
+			record->postal_conf = tmp_fixed_record[3];
+
+			record_pointer = dseg + tmp_fixed_record[4] +
+				(tmp_fixed_record[5] << 8) + (tmp_fixed_record[6] << 16);
+
+			fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
+			begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
+			bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
+			if (bytes_read == 0) {
+				/* eof or other error */
+				free(begin_record_buf);
+				free(record);
+				return NULL;
+			}
 		}
-	} else {
-		record_buf = gi->cache + (long)record_pointer;
+		else {
+			record_buf = gi->cache + (long) record_pointer;
+
+			record->country_conf = record_buf[0];
+			record->region_conf = record_buf[1];
+			record->city_conf = record_buf[2];
+			record->postal_conf = record_buf[3];
+
+			record_pointer = dseg + record_buf[4] +
+				(record_buf[5] << 8) + (record_buf[6] << 16);
+
+			record_buf = gi->cache + (long) record_pointer;
+		}
+
+	}		/* other city records */
+	else {
+
+		record->country_conf = GEOIP_UNKNOWN_CONF;
+		record->region_conf = GEOIP_UNKNOWN_CONF;
+		record->city_conf = GEOIP_UNKNOWN_CONF;
+		record->postal_conf = GEOIP_UNKNOWN_CONF;
+
+		record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
+
+		if (gi->cache == NULL) {
+			fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
+			begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
+			bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
+			if (bytes_read == 0) {
+				/* eof or other error */
+				free(begin_record_buf);
+				free(record);
+				return NULL;
+			}
+		}
+		else {
+			record_buf = gi->cache + (long) record_pointer;
+		}
 	}
+
+
 
 	/* get country */
 	record->continent_code = (char *) GeoIP_country_continent[record_buf[0]];
-	record->country_code	= (char *) GeoIP_country_code [record_buf[0]];
+	record->country_code = (char *) GeoIP_country_code[record_buf[0]];
 	record->country_code3 = (char *) GeoIP_country_code3[record_buf[0]];
-	record->country_name	= (char *) GeoIP_country_name [record_buf[0]];
+	record->country_name = (char *) GeoIP_country_name[record_buf[0]];
 	record_buf++;
 
 	/* get region */
 	while (record_buf[str_length] != '\0')
 		str_length++;
 	if (str_length > 0) {
-		record->region = malloc(str_length+1);
-		strncpy(record->region, (char *)record_buf, str_length+1);
+		record->region = malloc(str_length + 1);
+		strncpy(record->region, (char *) record_buf, str_length + 1);
 	}
 	record_buf += str_length + 1;
 	str_length = 0;
@@ -92,11 +153,12 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	while (record_buf[str_length] != '\0')
 		str_length++;
 	if (str_length > 0) {
-		if ( gi->charset == GEOIP_CHARSET_UTF8 ) {
-			record->city = _GeoIP_iso_8859_1__utf8( (const char * ) record_buf );
-		} else {
-			record->city = malloc(str_length+1);
-			strncpy(record->city, ( const char * ) record_buf, str_length+1);
+		if (gi->charset == GEOIP_CHARSET_UTF8) {
+			record->city = _GeoIP_iso_8859_1__utf8((const char *) record_buf);
+		}
+		else {
+			record->city = malloc(str_length + 1);
+			strncpy(record->city, (const char *) record_buf, str_length + 1);
 		}
 	}
 	record_buf += (str_length + 1);
@@ -106,29 +168,33 @@ GeoIPRecord * _extract_record(GeoIP* gi, unsigned int seek_record, int *next_rec
 	while (record_buf[str_length] != '\0')
 		str_length++;
 	if (str_length > 0) {
-		record->postal_code = malloc(str_length+1);
-		strncpy(record->postal_code, (char *)record_buf, str_length+1);
+		record->postal_code = malloc(str_length + 1);
+		strncpy(record->postal_code, (char *) record_buf, str_length + 1);
 	}
 	record_buf += (str_length + 1);
 
 	/* get latitude */
-for (j = 0; j < 3; ++j)
+	for (j = 0; j < 3; ++j)
 		latitude += (record_buf[j] << (j * 8));
-	record->latitude = latitude/10000 - 180;
+	record->latitude = latitude / 10000 - 180;
 	record_buf += 3;
 
 	/* get longitude */
 	for (j = 0; j < 3; ++j)
 		longitude += (record_buf[j] << (j * 8));
-	record->longitude = longitude/10000 - 180;
+	record->longitude = longitude / 10000 - 180;
 
-	/* get area code and metro code for post April 2002 databases and for US locations */
-	if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
+	/*
+         * get area code and metro code for post April 2002 databases and for US
+         * locations
+         */
+	if (GEOIP_CITY_EDITION_REV1 == gi->databaseType
+	    || GEOIP_CITYCONFIDENCE_EDITION == gi->databaseType) {
 		if (!strcmp(record->country_code, "US")) {
 			record_buf += 3;
 			for (j = 0; j < 3; ++j)
 				metroarea_combo += (record_buf[j] << (j * 8));
-			record->metro_code = metroarea_combo/1000;
+			record->metro_code = metroarea_combo / 1000;
 			record->area_code = metroarea_combo % 1000;
 		}
 	}
@@ -147,8 +213,9 @@ static
 GeoIPRecord * _get_record(GeoIP* gi, unsigned long ipnum) {
 	unsigned int seek_record;
 
-	if (gi->databaseType != GEOIP_CITY_EDITION_REV0 &&
-			gi->databaseType != GEOIP_CITY_EDITION_REV1) {
+	if (    gi->databaseType != GEOIP_CITY_EDITION_REV0
+             && gi->databaseType != GEOIP_CITY_EDITION_REV1
+             && gi->databaseType != GEOIP_CITYCONFIDENCE_EDITION) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
 		return 0;
 	}

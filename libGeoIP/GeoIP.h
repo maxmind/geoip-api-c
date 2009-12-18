@@ -71,6 +71,7 @@ typedef struct GeoIPTag {
 	int record_iter; /* used in GeoIP_next_record */
 	int netmask; /* netmask of last lookup - set using depth in _GeoIP_seek_record */
 	time_t last_mtime_check;
+        off_t dyn_seg_size; /* currently only used by the cityconfidence database */
 } GeoIP;
 
 
@@ -106,7 +107,8 @@ typedef enum {
 	GEOIP_DOMAIN_EDITION      = 11,
         GEOIP_COUNTRY_EDITION_V6  = 12,
         GEOIP_LOCATIONA_EDITION   = 13,
-        GEOIP_ACCURACYRADIUS_EDITION   = 14
+        GEOIP_ACCURACYRADIUS_EDITION = 14,
+        GEOIP_CITYCONFIDENCE_EDITION   = 15
 } GeoIPDBTypes;
 
 typedef enum {
@@ -131,6 +133,7 @@ extern const char *GeoIPOrgDBFileName;
 extern const char *GeoIPISPDBFileName;
 extern const char *GeoIPLocationADBFileName;
 extern const char *GeoIPAccuracyRadiusFileName;
+extern const char *GeoIPCityConfidenceFileName;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */

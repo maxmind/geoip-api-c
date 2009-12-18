@@ -124,6 +124,15 @@ static const char * _mk_NA( const char * p ){
  return p ? p : "N/A";
 }
 
+static void _mk_conf_str( unsigned char val , char * to, int size){
+  if ( ( val & 0x7f ) == 0x7f ){
+    snprintf(to, 5, "N/A");
+    return;
+  }
+  snprintf(to, 5, "%d", val);
+  return;
+}
+
 static unsigned long
 __addr_to_num(const char *addr)
 {
@@ -300,6 +309,25 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			else {
 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
 				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
+                                _say_range_by_ip(gi, ipnum);
+			}
+		}
+		else if (GEOIP_CITYCONFIDENCE_EDITION == i) {
+			gir = GeoIP_record_by_ipnum(gi, ipnum);
+			if (NULL == gir) {
+				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+			}
+			else {
+                                char country_str[5], region_str[5], city_str[5], postal_str[5];
+                                _mk_conf_str(gir->country_conf, country_str, 5);
+                                _mk_conf_str(gir->region_conf,  region_str,  5);
+                                _mk_conf_str(gir->city_conf,    city_str,    5);
+                                _mk_conf_str(gir->postal_conf,  postal_str,  5);
+
+				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d, %s, %s, %s, %s\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
+				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code,
+                                       country_str, region_str, city_str, postal_str                       
+                                     );
                                 _say_range_by_ip(gi, ipnum);
 			}
 		}

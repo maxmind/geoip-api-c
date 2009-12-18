@@ -27,6 +27,8 @@
 extern "C" {
 #endif
 
+#define  GEOIP_UNKNOWN_CONF  ( 0x7f )
+
 typedef struct GeoIPRecordTag {
 	char *country_code;
 	char *country_code3;
@@ -43,6 +45,8 @@ typedef struct GeoIPRecordTag {
 	int area_code;
 	int charset;
 	char *continent_code;
+        /* confidence factor for Country/Region/City/Postal */
+        unsigned char country_conf, region_conf, city_conf, postal_conf;
 } GeoIPRecord;
 
 GeoIPRecord * GeoIP_record_by_ipnum (GeoIP* gi, unsigned long ipnum);
