@@ -107,7 +107,7 @@ int main (int argc, char *argv[]) {
 				} else {
 					if (version_flag == 1) {
 						db_info = GeoIP_database_info(gi);
-						printf("%s: %s\n",GeoIPDBDescription[i],db_info);
+						printf("%s: %s\n",GeoIPDBDescription[i], db_info == NULL ? "" : db_info );
 						free(db_info);
 					} else {
 						geoiplookup(gi,hostname,i);
