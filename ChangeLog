@@ -1,3 +1,4 @@
+	* Fix default name for the accuracy radius database to GeoIPDistance.dat ( Boris Zentner )
 	* Add GEOIP_CITYCONFIDENCE_EDITION database type. ( Boris Zentner )
 	* geoiplookup use GeoIPDistance.dat files if avail ( Boris Zentner )
 	* Fix geoiplookup/geoiplookup6 output, when the databaseinfo string is

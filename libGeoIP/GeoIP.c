@@ -314,7 +314,7 @@ void _GeoIP_setup_dbfilename() {
 		GeoIPDBFileName[GEOIP_DOMAIN_EDITION]		= _GeoIP_full_path_to("GeoIPDomain.dat");
                 GeoIPDBFileName[GEOIP_COUNTRY_EDITION_V6]       = _GeoIP_full_path_to("GeoIPv6.dat");
                 GeoIPDBFileName[GEOIP_LOCATIONA_EDITION]        = _GeoIP_full_path_to("GeoIPLocA.dat");
-                GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION]   = _GeoIP_full_path_to("GeoIPAccuracyRadius.dat");
+                GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION]   = _GeoIP_full_path_to("GeoIPDistance.dat");
                 GeoIPDBFileName[GEOIP_CITYCONFIDENCE_EDITION]     = _GeoIP_full_path_to("GeoIPCityConfidence.dat");
 	}
 }
