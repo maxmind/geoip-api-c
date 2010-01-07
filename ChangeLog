@@ -1,3 +1,6 @@
+	* Add some IPv4 helper functions
+	    unsigned long GeoIP_addr_to_num(const char *addr);
+	    char *        GeoIP_num_to_addr(unsigned long ipnum); ( Boris Zentner )
 	* Fix default name for the accuracy radius database to GeoIPDistance.dat ( Boris Zentner )
 	* Add GEOIP_CITYCONFIDENCE_EDITION database type. ( Boris Zentner )
 	* geoiplookup use GeoIPDistance.dat files if avail ( Boris Zentner )

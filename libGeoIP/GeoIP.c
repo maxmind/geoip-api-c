@@ -719,7 +719,7 @@ unsigned int _GeoIP_seek_record (GeoIP *gi, unsigned long ipnum) {
 }
 
 unsigned long
-_GeoIP_addr_to_num(const char *addr)
+GeoIP_addr_to_num(const char *addr)
 {
 	unsigned int    c, octet, t;
 	unsigned long   ipnum;
@@ -1152,7 +1152,7 @@ int GeoIP_id_by_addr (GeoIP* gi, const char *addr) {
 					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
 		return 0;
 	}
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	ret = _GeoIP_seek_record(gi, ipnum) - COUNTRY_BEGIN;
 	return ret;
 }
@@ -1361,7 +1361,7 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
 		return 0;
 	}
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	return _get_region(gi, ipnum);
 }
 
@@ -1529,7 +1529,7 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
   return org_buf;
 }
 
-char *_GeoIP_num_to_addr (GeoIP* gi, unsigned long ipnum) {
+char * GeoIP_num_to_addr (unsigned long ipnum) {
 	char *ret_str;
 	char *cur_str;
 	int octet[4];
@@ -1571,7 +1571,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 
 	ret = malloc(sizeof(char *) * 2);
 
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	target_value = _GeoIP_seek_record(gi, ipnum);
 	orig_netmask = GeoIP_last_netmask(gi);
 	mask = 0xffffffff << ( 32 - orig_netmask );	
@@ -1585,7 +1585,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 		mask = 0xffffffff << ( 32 - GeoIP_last_netmask(gi) );
 		left_seek = ( left_seek - 1 ) & mask;
 	}
-	ret[0] = _GeoIP_num_to_addr(gi, left_seek);
+	ret[0] = GeoIP_num_to_addr(left_seek);
 
 	while (right_seek != 0xffffffff
 	  && target_value == _GeoIP_seek_record(gi, right_seek + 1) ) {
@@ -1595,7 +1595,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 		right_seek = ( right_seek + 1 ) & mask;
 		right_seek += 0xffffffff & ~mask;
 	}
-	ret[1] = _GeoIP_num_to_addr(gi, right_seek);
+	ret[1] = GeoIP_num_to_addr(right_seek);
 
 	gi->netmask = orig_netmask;
 
@@ -1625,7 +1625,7 @@ char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	return _get_name(gi, ipnum);
 }
 
