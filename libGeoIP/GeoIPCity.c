@@ -253,7 +253,7 @@ GeoIPRecord * GeoIP_record_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	return _get_record(gi, ipnum);
 }
 
@@ -294,7 +294,7 @@ int GeoIP_record_id_by_addr (GeoIP* gi, const char *addr) {
 	if (addr == NULL) {
 		return 0;
 	}
-	ipnum = _GeoIP_addr_to_num(addr);
+	ipnum = GeoIP_addr_to_num(addr);
 	return _GeoIP_seek_record(gi, ipnum);
 }
 
