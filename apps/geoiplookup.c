@@ -299,6 +299,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region),
 				       _mk_NA(gir->city), _mk_NA(gir->postal_code), gir->latitude, gir->longitude);
                                 _say_range_by_ip(gi, ipnum);
+                                GeoIPRecord_delete(gir);
 			}
 		}
 		else if (GEOIP_CITY_EDITION_REV1 == i) {
@@ -310,6 +311,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
 				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
                                 _say_range_by_ip(gi, ipnum);
+                                GeoIPRecord_delete(gir);
 			}
 		}
 		else if (GEOIP_CITYCONFIDENCE_EDITION == i) {

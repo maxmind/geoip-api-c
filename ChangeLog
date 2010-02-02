@@ -1,3 +1,4 @@
+	* Add missing GeoIPRecord_delete to geoiplookup.c ( Piotr Kaczuba )
 	* Add some IPv4 helper functions
 	    unsigned long GeoIP_addr_to_num(const char *addr);
 	    char *        GeoIP_num_to_addr(unsigned long ipnum); ( Boris Zentner )
