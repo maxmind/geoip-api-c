@@ -331,6 +331,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
                                        country_str, region_str, city_str, postal_str                       
                                      );
                                 _say_range_by_ip(gi, ipnum);
+                                GeoIPRecord_delete(gir);                                
 			}
 		}
 		else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
