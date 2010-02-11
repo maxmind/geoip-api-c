@@ -1,4 +1,3 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /* geoipupdate.c
  *
  * Copyright (C) 2006 MaxMind LLC
@@ -46,7 +45,7 @@ void my_printf(char * str) {
 
 void print_status (int err, char * license_file) {
 	if (err == GEOIP_NO_NEW_UPDATES) {
-		fprintf(stderr,"GeoIP Database up to date\n");
+		fprintf(stdout,"GeoIP Database up to date\n");
 	} else if (err == GEOIP_LICENSE_KEY_INVALID_ERR) {
 		fprintf(stderr,"Invalid License Key in %s - Please visit http://www.maxmind.com/app/products for a subscription\n",license_file);
 	} else if (err == GEOIP_USER_ID_INVALID_ERR){
@@ -56,7 +55,7 @@ void print_status (int err, char * license_file) {
 	} else if (err < 0) {
 		fprintf(stderr,"Received Error %d (%s) when attempting to update GeoIP Database\n",err, GeoIP_get_error_message(err));
 	} else {
-		fprintf(stderr,"Updated database\n");
+		fprintf(stdout,"Updated database\n");
 	}
 }
 
