@@ -35,7 +35,78 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Luanda";
   }
   else if ( strcmp (country, "AR") == 0 ) {
-    timezone = "America/Mendoza";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "America/Argentina/Catamarca";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "America/Argentina/Tucuman";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "America/Argentina/Rio_Gallegos";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "America/Argentina/Cordoba";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "America/Argentina/Tucuman";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "America/Argentina/Tucuman";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "America/Argentina/Jujuy";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "America/Argentina/San_Luis";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "America/Argentina/La_Rioja";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "America/Argentina/Mendoza";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "America/Argentina/San_Luis";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "America/Argentina/Salta";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "America/Argentina/San_Juan";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "America/Argentina/San_Luis";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "America/Argentina/Rio_Gallegos";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "America/Argentina/Buenos_Aires";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "America/Argentina/Catamarca";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "America/Argentina/Ushuaia";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "America/Argentina/Tucuman";
+    }
   }
   else if ( strcmp (country, "AS") == 0 ) {
     timezone = "US/Samoa";
@@ -118,7 +189,87 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "America/La_Paz";
   }
   else if ( strcmp (country, "BR") == 0 ) {
-    timezone = "Brazil/Acre";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "America/Rio_Branco";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "America/Maceio";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "America/Manaus";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "America/Bahia";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "America/Fortaleza";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "America/Campo_Grande";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "America/Belem";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "America/Cuiaba";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "America/Belem";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "America/Recife";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "America/Fortaleza";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "America/Recife";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "America/Porto_Velho";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "America/Boa_Vista";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "27") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "28") == 0 ) {
+      timezone = "America/Maceio";
+    }
+    else if ( strcmp (region, "29") == 0 ) {
+      timezone = "America/Sao_Paulo";
+    }
+    else if ( strcmp (region, "30") == 0 ) {
+      timezone = "America/Recife";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "America/Araguaina";
+    }
   }
   else if ( strcmp (country, "BS") == 0 ) {
     timezone = "America/Nassau";
@@ -179,6 +330,29 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   else if ( strcmp (country, "CC") == 0 ) {
     timezone = "Indian/Cocos";
   }
+  else if ( strcmp (country, "CD") == 0 ) {
+    if ( strcmp (region, "02") == 0 ) {
+      timezone = "Africa/Kinshasa";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Africa/Lubumbashi";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Africa/Kinshasa";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Africa/Kinshasa";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Africa/Lubumbashi";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Africa/Lubumbashi";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Africa/Lubumbashi";
+    }
+  }
   else if ( strcmp (country, "CF") == 0 ) {
     timezone = "Africa/Bangui";
   }
@@ -201,7 +375,99 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Lagos";
   }
   else if ( strcmp (country, "CN") == 0 ) {
-    timezone = "Asia/Chongqing";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Asia/Harbin";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Asia/Harbin";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Urumqi";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "Asia/Harbin";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "Asia/Harbin";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "Asia/Harbin";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "28") == 0 ) {
+      timezone = "Asia/Shanghai";
+    }
+    else if ( strcmp (region, "29") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "30") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "32") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
+    else if ( strcmp (region, "33") == 0 ) {
+      timezone = "Asia/Chongqing";
+    }
   }
   else if ( strcmp (country, "CO") == 0 ) {
     timezone = "America/Bogota";
@@ -243,7 +509,66 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Algiers";
   }
   else if ( strcmp (country, "EC") == 0 ) {
-    timezone = "America/Guayaquil";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Pacific/Galapagos";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "America/Guayaquil";
+    }
   }
   else if ( strcmp (country, "EE") == 0 ) {
     timezone = "Europe/Tallinn";
@@ -258,7 +583,57 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Asmera";
   }
   else if ( strcmp (country, "ES") == 0 ) {
-    timezone = "Europe/Madrid";
+    if ( strcmp (region, "07") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "27") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "29") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "32") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "34") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "39") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "51") == 0 ) {
+      timezone = "Africa/Ceuta";
+    }
+    else if ( strcmp (region, "52") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "53") == 0 ) {
+      timezone = "Atlantic/Canary";
+    }
+    else if ( strcmp (region, "54") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "55") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "56") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "57") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "58") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "59") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
+    else if ( strcmp (region, "60") == 0 ) {
+      timezone = "Europe/Madrid";
+    }
   }
   else if ( strcmp (country, "ET") == 0 ) {
     timezone = "Africa/Addis_Ababa";
@@ -306,7 +681,15 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Gibraltar";
   }
   else if ( strcmp (country, "GL") == 0 ) {
-    timezone = "America/Godthab";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "America/Thule";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "America/Godthab";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "America/Godthab";
+    }
   }
   else if ( strcmp (country, "GM") == 0 ) {
     timezone = "Africa/Banjul";
@@ -354,7 +737,93 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Budapest";
   }
   else if ( strcmp (country, "ID") == 0 ) {
-    timezone = "Asia/Jakarta";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Asia/Pontianak";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Asia/Jayapura";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Asia/Pontianak";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "Asia/Pontianak";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "Asia/Pontianak";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "Asia/Pontianak";
+    }
+    else if ( strcmp (region, "30") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "Asia/Makassar";
+    }
+    else if ( strcmp (region, "33") == 0 ) {
+      timezone = "Asia/Jakarta";
+    }
   }
   else if ( strcmp (country, "IE") == 0 ) {
     timezone = "Europe/Dublin";
@@ -426,7 +895,57 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "America/Cayman";
   }
   else if ( strcmp (country, "KZ") == 0 ) {
-    timezone = "Asia/Almaty";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Asia/Almaty";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Almaty";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Asia/Aqtobe";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Asia/Aqtau";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Asia/Oral";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Asia/Aqtau";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Asia/Almaty";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Aqtobe";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Qyzylorda";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Asia/Almaty";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Asia/Aqtobe";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "Asia/Almaty";
+    }
   }
   else if ( strcmp (country, "LA") == 0 ) {
     timezone = "Asia/Vientiane";
@@ -519,7 +1038,149 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Blantyre";
   }
   else if ( strcmp (country, "MX") == 0 ) {
-    timezone = "America/Chihuahua";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "America/Tijuana";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "America/Hermosillo";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "America/Merida";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "America/Chihuahua";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "America/Monterrey";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "America/Mazatlan";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "America/Mazatlan";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "America/Chihuahua";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "America/Mazatlan";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "America/Monterrey";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "America/Cancun";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "America/Mazatlan";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "America/Hermosillo";
+    }
+    else if ( strcmp (region, "27") == 0 ) {
+      timezone = "America/Merida";
+    }
+    else if ( strcmp (region, "28") == 0 ) {
+      timezone = "America/Monterrey";
+    }
+    else if ( strcmp (region, "29") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "30") == 0 ) {
+      timezone = "America/Mexico_City";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "America/Merida";
+    }
+    else if ( strcmp (region, "32") == 0 ) {
+      timezone = "America/Monterrey";
+    }
+  }
+  else if ( strcmp (country, "MY") == 0 ) {
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Asia/Kuching";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Kuala_Lumpur";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Asia/Kuching";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Asia/Kuching";
+    }
   }
   else if ( strcmp (country, "MZ") == 0 ) {
     timezone = "Africa/Maputo";
@@ -558,7 +1219,51 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Pacific/Niue";
   }
   else if ( strcmp (country, "NZ") == 0 ) {
-    timezone = "Pacific/Auckland";
+    if ( strcmp (region, "85") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "E7") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "E8") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "E9") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F1") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F2") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F3") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F4") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F5") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F7") == 0 ) {
+      timezone = "Pacific/Chatham";
+    }
+    else if ( strcmp (region, "F8") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "F9") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "G1") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "G2") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
+    else if ( strcmp (region, "G3") == 0 ) {
+      timezone = "Pacific/Auckland";
+    }
   }
   else if ( strcmp (country, "OM") == 0 ) {
     timezone = "Asia/Muscat";
@@ -568,6 +1273,9 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   }
   else if ( strcmp (country, "PE") == 0 ) {
     timezone = "America/Lima";
+  }
+  else if ( strcmp (country, "PF") == 0 ) {
+    timezone = "Pacific/Marquesas";
   }
   else if ( strcmp (country, "PG") == 0 ) {
     timezone = "Pacific/Port_Moresby";
@@ -594,7 +1302,63 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Asia/Gaza";
   }
   else if ( strcmp (country, "PT") == 0 ) {
-    timezone = "Atlantic/Azores";
+    if ( strcmp (region, "02") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Atlantic/Madeira";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "Europe/Lisbon";
+    }
   }
   else if ( strcmp (country, "PW") == 0 ) {
     timezone = "Pacific/Palau";
@@ -615,7 +1379,267 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Belgrade";
   }
   else if ( strcmp (country, "RU") == 0 ) {
-    timezone = "Europe/Moscow";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Novokuznetsk";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Asia/Novosibirsk";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Asia/Vladivostok";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Asia/Anadyr";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "Asia/Krasnoyarsk";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "Europe/Kaliningrad";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "Asia/Kamchatka";
+    }
+    else if ( strcmp (region, "27") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "28") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "29") == 0 ) {
+      timezone = "Asia/Novokuznetsk";
+    }
+    else if ( strcmp (region, "30") == 0 ) {
+      timezone = "Asia/Vladivostok";
+    }
+    else if ( strcmp (region, "31") == 0 ) {
+      timezone = "Asia/Krasnoyarsk";
+    }
+    else if ( strcmp (region, "32") == 0 ) {
+      timezone = "Asia/Omsk";
+    }
+    else if ( strcmp (region, "33") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "34") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "35") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "36") == 0 ) {
+      timezone = "Asia/Anadyr";
+    }
+    else if ( strcmp (region, "37") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "38") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "39") == 0 ) {
+      timezone = "Asia/Krasnoyarsk";
+    }
+    else if ( strcmp (region, "40") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "41") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "42") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "43") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "44") == 0 ) {
+      timezone = "Asia/Magadan";
+    }
+    else if ( strcmp (region, "45") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "46") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "47") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "48") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "49") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "50") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "51") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "52") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "53") == 0 ) {
+      timezone = "Asia/Novosibirsk";
+    }
+    else if ( strcmp (region, "54") == 0 ) {
+      timezone = "Asia/Omsk";
+    }
+    else if ( strcmp (region, "55") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "56") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "57") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "58") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "59") == 0 ) {
+      timezone = "Asia/Vladivostok";
+    }
+    else if ( strcmp (region, "60") == 0 ) {
+      timezone = "Europe/Kaliningrad";
+    }
+    else if ( strcmp (region, "61") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "62") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "63") == 0 ) {
+      timezone = "Asia/Yakutsk";
+    }
+    else if ( strcmp (region, "64") == 0 ) {
+      timezone = "Asia/Sakhalin";
+    }
+    else if ( strcmp (region, "65") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "66") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "67") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "68") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "69") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "70") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "71") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "72") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "73") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "74") == 0 ) {
+      timezone = "Asia/Krasnoyarsk";
+    }
+    else if ( strcmp (region, "75") == 0 ) {
+      timezone = "Asia/Novosibirsk";
+    }
+    else if ( strcmp (region, "76") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "77") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "78") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "79") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "80") == 0 ) {
+      timezone = "Asia/Yekaterinburg";
+    }
+    else if ( strcmp (region, "81") == 0 ) {
+      timezone = "Europe/Samara";
+    }
+    else if ( strcmp (region, "82") == 0 ) {
+      timezone = "Asia/Irkutsk";
+    }
+    else if ( strcmp (region, "83") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "84") == 0 ) {
+      timezone = "Europe/Volgograd";
+    }
+    else if ( strcmp (region, "85") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "86") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "87") == 0 ) {
+      timezone = "Asia/Novosibirsk";
+    }
+    else if ( strcmp (region, "88") == 0 ) {
+      timezone = "Europe/Moscow";
+    }
+    else if ( strcmp (region, "89") == 0 ) {
+      timezone = "Asia/Vladivostok";
+    }
   }
   else if ( strcmp (country, "RW") == 0 ) {
     timezone = "Africa/Kigali";
@@ -699,7 +1723,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Pacific/Fakaofo";
   }
   else if ( strcmp (country, "TL") == 0 ) {
-    timezone = "Asia/Jakarta";
+    timezone = "Asia/Dili";
   }
   else if ( strcmp (country, "TM") == 0 ) {
     timezone = "Asia/Ashgabat";
@@ -726,7 +1750,84 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/Dar_es_Salaam";
   }
   else if ( strcmp (country, "UA") == 0 ) {
-    timezone = "Europe/Kiev";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "04") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "05") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Europe/Simferopol";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "11") == 0 ) {
+      timezone = "Europe/Simferopol";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "15") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "16") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "17") == 0 ) {
+      timezone = "Europe/Simferopol";
+    }
+    else if ( strcmp (region, "18") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "19") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "20") == 0 ) {
+      timezone = "Europe/Simferopol";
+    }
+    else if ( strcmp (region, "21") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "22") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "23") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
+    else if ( strcmp (region, "24") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "25") == 0 ) {
+      timezone = "Europe/Uzhgorod";
+    }
+    else if ( strcmp (region, "26") == 0 ) {
+      timezone = "Europe/Zaporozhye";
+    }
+    else if ( strcmp (region, "27") == 0 ) {
+      timezone = "Europe/Kiev";
+    }
   }
   else if ( strcmp (country, "UG") == 0 ) {
     timezone = "Africa/Kampala";
@@ -890,7 +1991,39 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "America/Montevideo";
   }
   else if ( strcmp (country, "UZ") == 0 ) {
-    timezone = "Asia/Tashkent";
+    if ( strcmp (region, "01") == 0 ) {
+      timezone = "Asia/Tashkent";
+    }
+    else if ( strcmp (region, "02") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "03") == 0 ) {
+      timezone = "Asia/Tashkent";
+    }
+    else if ( strcmp (region, "06") == 0 ) {
+      timezone = "Asia/Tashkent";
+    }
+    else if ( strcmp (region, "07") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "08") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "09") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "10") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "12") == 0 ) {
+      timezone = "Asia/Samarkand";
+    }
+    else if ( strcmp (region, "13") == 0 ) {
+      timezone = "Asia/Tashkent";
+    }
+    else if ( strcmp (region, "14") == 0 ) {
+      timezone = "Asia/Tashkent";
+    }
   }
   else if ( strcmp (country, "VA") == 0 ) {
     timezone = "Europe/Vatican";
