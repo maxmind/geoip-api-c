@@ -1,3 +1,4 @@
+	* Update libGeoIP/regionName.c with FIPS codes 20100221 ( Boris Zentner )
 	* Add missing timezones ( Boris Zentner )
 	* Add missing include for Windows 2000 ( Jaap Keute )
 	* 'GeoIP Database up to date' and 'Updated database' prints to stdout

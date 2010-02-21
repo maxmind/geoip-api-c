@@ -6496,9 +6496,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"KH") == 0) {
     switch (region_code2) {
-      case 0:
-      name = "Banteay Meanchey";
-      break;
       case 1:
       name = "Batdambang";
       break;
@@ -6555,6 +6552,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 19:
       name = "Takeo";
+      break;
+      case 25:
+      name = "Banteay Meanchey";
       break;
       case 29:
       name = "Batdambang";
