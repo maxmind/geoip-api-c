@@ -2361,6 +2361,18 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 13:
       name = "Tarapaca";
       break;
+      case 14:
+      name = "Los Lagos";
+      break;
+      case 15:
+      name = "Tarapaca";
+      break;
+      case 16:
+      name = "Arica y Parinacota";
+      break;
+      case 17:
+      name = "Los Rios";
+      break;
     }
   }
   if (strcmp(country_code,"CM") == 0) {
