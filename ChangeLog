@@ -1,4 +1,5 @@
-1.4.7	
+1.4.7
+	* Update libGeoIP/regionName.c with FIPS codes 20100422 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100420 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100221 ( Boris Zentner )
 	* Add missing timezones ( Boris Zentner )

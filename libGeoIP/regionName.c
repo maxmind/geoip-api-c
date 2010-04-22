@@ -12342,7 +12342,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Hatay";
       break;
       case 32:
-      name = "Icel";
+      name = "Mersin";
       break;
       case 33:
       name = "Isparta";
