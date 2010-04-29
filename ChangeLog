@@ -1,4 +1,7 @@
 1.4.7
+	* Fix very minor memleak in geoipupdate ( Boris Zentner )
+	* Add GEOIP_CITYCONFIDENCEDIST_EDITION, GEOIP_LARGE_COUNTRY_EDITION
+	    and GEOIP_LARGE_COUNTRY_EDITION_V6 database types ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100422 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100420 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100221 ( Boris Zentner )

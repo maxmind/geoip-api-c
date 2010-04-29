@@ -658,8 +658,6 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	ipaddress = client_ipaddr[0];
 
 	/* make a md5 sum of ip address and license_key and store it in hex_digest2 */
-	request_uri_len = sizeof(char) * 2036;
-	request_uri = malloc(request_uri_len);
 	md5_init(&context2);
 	md5_write (&context2, (byte *)license_key, 12);//add license key to the md5 sum
 	md5_write (&context2, (byte *)ipaddress, strlen(ipaddress));//add ip address to the md5 sum
@@ -683,6 +681,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	sa.sin_family = AF_INET;
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
+	request_uri_len = sizeof(char) * 2036;
+	request_uri = malloc(request_uri_len);
+	if (request_uri == NULL)
+	        return GEOIP_OUT_OF_MEMORY_ERR;
 	snprintf(request_uri, request_uri_len, GeoIPHTTPRequestMD5,GeoIPProxyHTTP,GeoIPProxiedHost,hex_digest,hex_digest2,user_id,data_base_type);
 	send(sock, request_uri, strlen(request_uri),0);
 	if (verbose == 1) {
