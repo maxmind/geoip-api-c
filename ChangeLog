@@ -1,4 +1,6 @@
 1.4.7
+        * Remove buffered IO functions, to fix issues with dup'ed file
+            descriptors ( Boris Zentner )
 	* Fix very minor memleak in geoipupdate ( Boris Zentner )
 	* Add GEOIP_CITYCONFIDENCEDIST_EDITION, GEOIP_LARGE_COUNTRY_EDITION
 	    and GEOIP_LARGE_COUNTRY_EDITION_V6 database types ( Boris Zentner )

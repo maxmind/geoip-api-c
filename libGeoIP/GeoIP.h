@@ -26,8 +26,7 @@ extern "C" {
 #endif
 
 #include <sys/types.h>
-
-#if !defined(_WIN32) 
+#if !defined(_WIN32)
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>

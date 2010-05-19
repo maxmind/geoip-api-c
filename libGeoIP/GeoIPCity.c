@@ -23,6 +23,7 @@
 #include <GeoIP_internal.h>
 #include <GeoIPCity.h>
 #if !defined(_WIN32)
+#include <unistd.h>
 #include <netdb.h>
 #include <netinet/in.h>	/* For ntohl */
 #else
@@ -80,8 +81,10 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
 									 * start with 0 */
     record_pointer = offset * fixed_rec_size + dseg + gi->dyn_seg_size;
     if (gi->cache == NULL) {
-      fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
-      bytes_read = fread(tmp_fixed_record, sizeof(char), fixed_rec_size, gi->GeoIPDatabase);
+
+	/* read from disk */
+      bytes_read = pread(fileno(gi->GeoIPDatabase), tmp_fixed_record, fixed_rec_size, record_pointer);
+
       if (bytes_read != fixed_rec_size)
 	return NULL;
 
@@ -102,9 +105,10 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
     if (gi->record_length == 4)
 	record_pointer += (tmp_fixed_record[t + 3] << 24);
 
-      fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
       begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
-      bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
+
+      bytes_read = pread(fileno(gi->GeoIPDatabase), record_buf, FULL_RECORD_LENGTH, record_pointer);
+      
       if (bytes_read == 0) {
 	/* eof or other error */
 	free(begin_record_buf);
@@ -148,13 +152,12 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
     record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
     if (gi->cache == NULL) {
-      fseek(gi->GeoIPDatabase, record_pointer, SEEK_SET);
       begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
-      bytes_read = fread(record_buf, sizeof(char), FULL_RECORD_LENGTH, gi->GeoIPDatabase);
+        bytes_read = pread(fileno(gi->GeoIPDatabase), record_buf, FULL_RECORD_LENGTH, record_pointer);
       if (bytes_read == 0) {
-	/* eof or other error */
+        /* eof or other error */
 	free(begin_record_buf);
-	free(record);
+        free(record);
 	return NULL;
       }
     }
