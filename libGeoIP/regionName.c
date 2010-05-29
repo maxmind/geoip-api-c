@@ -2936,51 +2936,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"DK") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Arhus";
-      break;
-      case 2:
-      name = "Bornholm";
-      break;
-      case 3:
-      name = "Frederiksborg";
-      break;
-      case 4:
-      name = "Fyn";
-      break;
-      case 5:
-      name = "Kobenhavn";
-      break;
-      case 6:
-      name = "Staden Kobenhavn";
-      break;
-      case 7:
-      name = "Nordjylland";
-      break;
-      case 8:
-      name = "Ribe";
-      break;
-      case 9:
-      name = "Ringkobing";
-      break;
-      case 10:
-      name = "Roskilde";
-      break;
-      case 11:
-      name = "Sonderjylland";
-      break;
-      case 12:
-      name = "Storstrom";
-      break;
-      case 13:
-      name = "Vejle";
-      break;
-      case 14:
-      name = "Vestsjalland";
-      break;
-      case 15:
-      name = "Viborg";
-      break;
       case 17:
       name = "Hovedstaden";
       break;
@@ -9971,153 +9926,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"PL") == 0) {
     switch (region_code2) {
-      case 23:
-      name = "Biala Podlaska";
-      break;
-      case 24:
-      name = "Bialystok";
-      break;
-      case 25:
-      name = "Bielsko";
-      break;
-      case 26:
-      name = "Bydgoszcz";
-      break;
-      case 27:
-      name = "Chelm";
-      break;
-      case 28:
-      name = "Ciechanow";
-      break;
-      case 29:
-      name = "Czestochowa";
-      break;
-      case 30:
-      name = "Elblag";
-      break;
-      case 31:
-      name = "Gdansk";
-      break;
-      case 32:
-      name = "Gorzow";
-      break;
-      case 33:
-      name = "Jelenia Gora";
-      break;
-      case 34:
-      name = "Kalisz";
-      break;
-      case 35:
-      name = "Katowice";
-      break;
-      case 36:
-      name = "Kielce";
-      break;
-      case 37:
-      name = "Konin";
-      break;
-      case 38:
-      name = "Koszalin";
-      break;
-      case 39:
-      name = "Krakow";
-      break;
-      case 40:
-      name = "Krosno";
-      break;
-      case 41:
-      name = "Legnica";
-      break;
-      case 42:
-      name = "Leszno";
-      break;
-      case 43:
-      name = "Lodz";
-      break;
-      case 44:
-      name = "Lomza";
-      break;
-      case 45:
-      name = "Lublin";
-      break;
-      case 46:
-      name = "Nowy Sacz";
-      break;
-      case 47:
-      name = "Olsztyn";
-      break;
-      case 48:
-      name = "Opole";
-      break;
-      case 49:
-      name = "Ostroleka";
-      break;
-      case 50:
-      name = "Pila";
-      break;
-      case 51:
-      name = "Piotrkow";
-      break;
-      case 52:
-      name = "Plock";
-      break;
-      case 53:
-      name = "Poznan";
-      break;
-      case 54:
-      name = "Przemysl";
-      break;
-      case 55:
-      name = "Radom";
-      break;
-      case 56:
-      name = "Rzeszow";
-      break;
-      case 57:
-      name = "Siedlce";
-      break;
-      case 58:
-      name = "Sieradz";
-      break;
-      case 59:
-      name = "Skierniewice";
-      break;
-      case 60:
-      name = "Slupsk";
-      break;
-      case 61:
-      name = "Suwalki";
-      break;
-      case 62:
-      name = "Szczecin";
-      break;
-      case 63:
-      name = "Tarnobrzeg";
-      break;
-      case 64:
-      name = "Tarnow";
-      break;
-      case 65:
-      name = "Torun";
-      break;
-      case 66:
-      name = "Walbrzych";
-      break;
-      case 67:
-      name = "Warszawa";
-      break;
-      case 68:
-      name = "Wloclawek";
-      break;
-      case 69:
-      name = "Wroclaw";
-      break;
-      case 70:
-      name = "Zamosc";
-      break;
-      case 71:
-      name = "Zielona Gora";
-      break;
       case 72:
       name = "Dolnoslaskie";
       break;
@@ -12248,6 +12056,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 37:
       name = "Zaghouan";
+      break;
+      case 38:
+      name = "Aiana";
+      break;
+      case 39:
+      name = "Manouba";
       break;
     }
   }

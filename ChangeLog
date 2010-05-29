@@ -1,5 +1,6 @@
 1.4.7
-        * Remove buffered IO functions, to fix issues with dup'ed file
+	* Update libGeoIP/regionName.c with FIPS codes 20100529 ( Boris Zentner )
+	* Remove buffered IO functions, to fix issues with dup'ed file
             descriptors ( Boris Zentner )
 	* Fix very minor memleak in geoipupdate ( Boris Zentner )
 	* Add GEOIP_CITYCONFIDENCEDIST_EDITION, GEOIP_LARGE_COUNTRY_EDITION
