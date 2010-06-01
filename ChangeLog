@@ -1,4 +1,5 @@
 1.4.7
+	* Fix typo/segfault in GeoIP_id_by_name_v6 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100529 ( Boris Zentner )
 	* Remove buffered IO functions, to fix issues with dup'ed file
             descriptors ( Boris Zentner )

@@ -1046,7 +1046,7 @@ int GeoIP_id_by_name_v6 (GeoIP* gi, const char *name) {
         ipnum = _GeoIP_lookupaddress_v6(name);
        if (__GEOIP_V6_IS_NULL(ipnum))
                return 0;
-       ret = _GeoIP_seek_record_v6(gi, ipnum) -  - gi->databaseSegments[0];
+       ret = _GeoIP_seek_record_v6(gi, ipnum) - gi->databaseSegments[0];
        return ret;
 }
 
