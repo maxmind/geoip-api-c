@@ -984,7 +984,7 @@ unsigned long _GeoIP_lookupaddress (const char *host) {
 #if !defined(_WIN32)
 		addr = *((in_addr_t *) phe->h_addr_list[0]);
 #else
-		addr = *(phe->h_addr_list[0]);
+                addr = ((IN_ADDR *) phe->h_addr_list[0])->S_un.S_addr;
 #endif
 	}
 #ifdef HAVE_GETHOSTBYNAME_R
