@@ -1,4 +1,7 @@
 1.4.7
+	* Fix continent codes ( Boris Zentner )
+	* Fix 3letter country codes for ATA, BVT, IOT, CXR, CCK, ATF, HMD,
+	    MYT, SGS and UMI ( Boris Zentner )
 	* Fix typo/segfault in GeoIP_id_by_name_v6 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100529 ( Boris Zentner )
 	* Remove buffered IO functions, to fix issues with dup'ed file
