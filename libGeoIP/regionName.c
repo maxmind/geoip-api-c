@@ -346,12 +346,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 14:
       name = "Kapisa";
       break;
-      case 15:
-      name = "Konar";
-      break;
-      case 16:
-      name = "Laghman";
-      break;
       case 17:
       name = "Lowgar";
       break;
@@ -360,12 +354,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 19:
       name = "Nimruz";
-      break;
-      case 21:
-      name = "Paktia";
-      break;
-      case 22:
-      name = "Parvan";
       break;
       case 23:
       name = "Kandahar";
@@ -448,6 +436,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 8:
       name = "Saint Philip";
+      break;
+      case 9:
+      name = "Redonda";
       break;
     }
   }
@@ -556,9 +547,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 9:
       name = "Huila";
-      break;
-      case 10:
-      name = "Luanda";
       break;
       case 12:
       name = "Malanje";
@@ -990,198 +978,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"BD") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Barisal";
-      break;
-      case 4:
-      name = "Bandarban";
-      break;
-      case 5:
-      name = "Comilla";
-      break;
-      case 12:
-      name = "Mymensingh";
-      break;
-      case 13:
-      name = "Noakhali";
-      break;
-      case 15:
-      name = "Patuakhali";
-      break;
-      case 22:
-      name = "Bagerhat";
-      break;
-      case 23:
-      name = "Bhola";
-      break;
-      case 24:
-      name = "Bogra";
-      break;
-      case 25:
-      name = "Barguna";
-      break;
-      case 26:
-      name = "Brahmanbaria";
-      break;
-      case 27:
-      name = "Chandpur";
-      break;
-      case 28:
-      name = "Chapai Nawabganj";
-      break;
-      case 29:
-      name = "Chattagram";
-      break;
-      case 30:
-      name = "Chuadanga";
-      break;
-      case 31:
-      name = "Cox's Bazar";
-      break;
-      case 32:
-      name = "Dhaka";
-      break;
-      case 33:
-      name = "Dinajpur";
-      break;
-      case 34:
-      name = "Faridpur";
-      break;
-      case 35:
-      name = "Feni";
-      break;
-      case 36:
-      name = "Gaibandha";
-      break;
-      case 37:
-      name = "Gazipur";
-      break;
-      case 38:
-      name = "Gopalganj";
-      break;
-      case 39:
-      name = "Habiganj";
-      break;
-      case 40:
-      name = "Jaipurhat";
-      break;
-      case 41:
-      name = "Jamalpur";
-      break;
-      case 42:
-      name = "Jessore";
-      break;
-      case 43:
-      name = "Jhalakati";
-      break;
-      case 44:
-      name = "Jhenaidah";
-      break;
-      case 45:
-      name = "Khagrachari";
-      break;
-      case 46:
-      name = "Khulna";
-      break;
-      case 47:
-      name = "Kishorganj";
-      break;
-      case 48:
-      name = "Kurigram";
-      break;
-      case 49:
-      name = "Kushtia";
-      break;
-      case 50:
-      name = "Laksmipur";
-      break;
-      case 51:
-      name = "Lalmonirhat";
-      break;
-      case 52:
-      name = "Madaripur";
-      break;
-      case 53:
-      name = "Magura";
-      break;
-      case 54:
-      name = "Manikganj";
-      break;
-      case 55:
-      name = "Meherpur";
-      break;
-      case 56:
-      name = "Moulavibazar";
-      break;
-      case 57:
-      name = "Munshiganj";
-      break;
-      case 58:
-      name = "Naogaon";
-      break;
-      case 59:
-      name = "Narail";
-      break;
-      case 60:
-      name = "Narayanganj";
-      break;
-      case 61:
-      name = "Narsingdi";
-      break;
-      case 62:
-      name = "Nator";
-      break;
-      case 63:
-      name = "Netrakona";
-      break;
-      case 64:
-      name = "Nilphamari";
-      break;
-      case 65:
-      name = "Pabna";
-      break;
-      case 66:
-      name = "Panchagar";
-      break;
-      case 67:
-      name = "Parbattya Chattagram";
-      break;
-      case 68:
-      name = "Pirojpur";
-      break;
-      case 69:
-      name = "Rajbari";
-      break;
-      case 70:
-      name = "Rajshahi";
-      break;
-      case 71:
-      name = "Rangpur";
-      break;
-      case 72:
-      name = "Satkhira";
-      break;
-      case 73:
-      name = "Shariyatpur";
-      break;
-      case 74:
-      name = "Sherpur";
-      break;
-      case 75:
-      name = "Sirajganj";
-      break;
-      case 76:
-      name = "Sunamganj";
-      break;
-      case 77:
-      name = "Sylhet";
-      break;
-      case 78:
-      name = "Tangail";
-      break;
-      case 79:
-      name = "Thakurgaon";
-      break;
       case 81:
       name = "Dhaka";
       break;
@@ -1206,9 +1002,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
     switch (region_code2) {
       case 1:
       name = "Antwerpen";
-      break;
-      case 2:
-      name = "Brabant";
       break;
       case 3:
       name = "Hainaut";
@@ -1480,17 +1273,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 2:
       name = "Al Manamah";
       break;
-      case 3:
-      name = "Al Muharraq";
-      break;
       case 5:
       name = "Jidd Hafs";
       break;
       case 6:
       name = "Sitrah";
-      break;
-      case 7:
-      name = "Ar Rifa' wa al Mintaqah al Janubiyah";
       break;
       case 8:
       name = "Al Mintaqah al Gharbiyah";
@@ -1584,24 +1371,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"BJ") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Atakora";
-      break;
-      case 2:
-      name = "Atlantique";
-      break;
-      case 3:
-      name = "Borgou";
-      break;
-      case 4:
-      name = "Mono";
-      break;
-      case 5:
-      name = "Oueme";
-      break;
-      case 6:
-      name = "Zou";
-      break;
       case 7:
       name = "Alibori";
       break;
@@ -2053,9 +1822,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 6:
       name = "Kinshasa";
       break;
-      case 7:
-      name = "Kivu";
-      break;
       case 8:
       name = "Bas-Congo";
       break;
@@ -2070,9 +1836,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 12:
       name = "Sud-Kivu";
-      break;
-      case 13:
-      name = "Cuvette";
       break;
     }
   }
@@ -2136,9 +1899,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1:
       name = "Bouenza";
       break;
-      case 3:
-      name = "Cuvette";
-      break;
       case 4:
       name = "Kouilou";
       break;
@@ -2162,6 +1922,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 12:
       name = "Brazzaville";
+      break;
+      case 13:
+      name = "Cuvette";
+      break;
+      case 14:
+      name = "Cuvette-Ouest";
       break;
     }
   }
@@ -2249,18 +2015,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"CI") == 0) {
     switch (region_code2) {
-      case 5:
-      name = "Atacama";
-      break;
-      case 6:
-      name = "Biobio";
-      break;
-      case 51:
-      name = "Sassandra";
-      break;
-      case 61:
-      name = "Abidjan";
-      break;
       case 74:
       name = "Agneby";
       break;
@@ -2771,53 +2525,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"CZ") == 0) {
     switch (region_code2) {
-      case 3:
-      name = "Blansko";
-      break;
-      case 4:
-      name = "Breclav";
-      break;
-      case 20:
-      name = "Hradec Kralove";
-      break;
-      case 21:
-      name = "Jablonec nad Nisou";
-      break;
-      case 23:
-      name = "Jicin";
-      break;
-      case 24:
-      name = "Jihlava";
-      break;
-      case 30:
-      name = "Kolin";
-      break;
-      case 33:
-      name = "Liberec";
-      break;
-      case 36:
-      name = "Melnik";
-      break;
-      case 37:
-      name = "Mlada Boleslav";
-      break;
-      case 39:
-      name = "Nachod";
-      break;
-      case 41:
-      name = "Nymburk";
-      break;
-      case 45:
-      name = "Pardubice";
-      break;
       case 52:
       name = "Hlavni mesto Praha";
-      break;
-      case 61:
-      name = "Semily";
-      break;
-      case 70:
-      name = "Trutnov";
       break;
       case 78:
       name = "Jihomoravsky kraj";
@@ -3539,30 +3248,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"ET") == 0) {
     switch (region_code2) {
-      case 2:
-      name = "Amhara";
-      break;
-      case 7:
-      name = "Somali";
-      break;
-      case 8:
-      name = "Gambella";
-      break;
-      case 10:
-      name = "Addis Abeba";
-      break;
-      case 11:
-      name = "Southern";
-      break;
-      case 12:
-      name = "Tigray";
-      break;
-      case 13:
-      name = "Benishangul";
-      break;
-      case 14:
-      name = "Afar";
-      break;
       case 44:
       name = "Adis Abeba";
       break;
@@ -3758,75 +3443,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"GB") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Avon";
-      break;
-      case 3:
-      name = "Berkshire";
-      break;
-      case 7:
-      name = "Cleveland";
-      break;
-      case 17:
-      name = "Greater London";
-      break;
-      case 18:
-      name = "Greater Manchester";
-      break;
-      case 20:
-      name = "Hereford and Worcester";
-      break;
-      case 22:
-      name = "Humberside";
-      break;
-      case 28:
-      name = "Merseyside";
-      break;
-      case 37:
-      name = "South Yorkshire";
-      break;
-      case 41:
-      name = "Tyne and Wear";
-      break;
-      case 43:
-      name = "West Midlands";
-      break;
-      case 45:
-      name = "West Yorkshire";
-      break;
-      case 79:
-      name = "Central";
-      break;
-      case 82:
-      name = "Grampian";
-      break;
-      case 84:
-      name = "Lothian";
-      break;
-      case 87:
-      name = "Strathclyde";
-      break;
-      case 88:
-      name = "Tayside";
-      break;
-      case 90:
-      name = "Clwyd";
-      break;
-      case 91:
-      name = "Dyfed";
-      break;
-      case 92:
-      name = "Gwent";
-      break;
-      case 94:
-      name = "Mid Glamorgan";
-      break;
-      case 96:
-      name = "South Glamorgan";
-      break;
-      case 97:
-      name = "West Glamorgan";
-      break;
       case 832:
       name = "Barking and Dagenham";
       break;
@@ -5513,6 +5129,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 42:
       name = "Szekszard";
       break;
+      case 43:
+      name = "Erd";
+      break;
     }
   }
   if (strcmp(country_code,"ID") == 0) {
@@ -5914,9 +5533,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
     switch (region_code2) {
       case 1:
       name = "Azarbayjan-e Bakhtari";
-      break;
-      case 2:
-      name = "Azarbayjan-e Khavari";
       break;
       case 3:
       name = "Chahar Mahall va Bakhtiari";
@@ -7383,123 +6999,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"MA") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Agadir";
-      break;
-      case 2:
-      name = "Al Hoceima";
-      break;
-      case 3:
-      name = "Azilal";
-      break;
-      case 4:
-      name = "Ben Slimane";
-      break;
-      case 5:
-      name = "Beni Mellal";
-      break;
-      case 6:
-      name = "Boulemane";
-      break;
-      case 7:
-      name = "Casablanca";
-      break;
-      case 8:
-      name = "Chaouen";
-      break;
-      case 9:
-      name = "El Jadida";
-      break;
-      case 10:
-      name = "El Kelaa des Srarhna";
-      break;
-      case 11:
-      name = "Er Rachidia";
-      break;
-      case 12:
-      name = "Essaouira";
-      break;
-      case 13:
-      name = "Fes";
-      break;
-      case 14:
-      name = "Figuig";
-      break;
-      case 15:
-      name = "Kenitra";
-      break;
-      case 16:
-      name = "Khemisset";
-      break;
-      case 17:
-      name = "Khenifra";
-      break;
-      case 18:
-      name = "Khouribga";
-      break;
-      case 19:
-      name = "Marrakech";
-      break;
-      case 20:
-      name = "Meknes";
-      break;
-      case 21:
-      name = "Nador";
-      break;
-      case 22:
-      name = "Ouarzazate";
-      break;
-      case 23:
-      name = "Oujda";
-      break;
-      case 24:
-      name = "Rabat-Sale";
-      break;
-      case 25:
-      name = "Safi";
-      break;
-      case 26:
-      name = "Settat";
-      break;
-      case 27:
-      name = "Tanger";
-      break;
-      case 29:
-      name = "Tata";
-      break;
-      case 30:
-      name = "Taza";
-      break;
-      case 32:
-      name = "Tiznit";
-      break;
-      case 33:
-      name = "Guelmim";
-      break;
-      case 34:
-      name = "Ifrane";
-      break;
-      case 35:
-      name = "Laayoune";
-      break;
-      case 36:
-      name = "Tan-Tan";
-      break;
-      case 37:
-      name = "Taounate";
-      break;
-      case 38:
-      name = "Sidi Kacem";
-      break;
-      case 39:
-      name = "Taroudannt";
-      break;
-      case 40:
-      name = "Tetouan";
-      break;
-      case 41:
-      name = "Larache";
-      break;
       case 45:
       name = "Grand Casablanca";
       break;
@@ -7562,38 +7061,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"MD") == 0) {
     switch (region_code2) {
-      case 46:
-      name = "Balti";
-      break;
-      case 47:
-      name = "Cahul";
-      break;
-      case 48:
-      name = "Chisinau";
-      break;
-      case 49:
-      name = "Stinga Nistrului";
-      break;
-      case 50:
-      name = "Edinet";
-      break;
       case 51:
       name = "Gagauzia";
       break;
-      case 52:
-      name = "Lapusna";
-      break;
-      case 53:
-      name = "Orhei";
-      break;
-      case 54:
-      name = "Soroca";
-      break;
-      case 55:
-      name = "Tighina";
-      break;
-      case 56:
-      name = "Ungheni";
+      case 57:
+      name = "Chisinau";
       break;
       case 58:
       name = "Stinga Nistrului";
@@ -8358,62 +7830,62 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1:
       name = "Seenu";
       break;
-      case 2:
-      name = "Aliff";
-      break;
-      case 3:
-      name = "Laviyani";
-      break;
-      case 4:
-      name = "Waavu";
-      break;
       case 5:
       name = "Laamu";
       break;
-      case 7:
-      name = "Haa Aliff";
+      case 30:
+      name = "Alifu";
       break;
-      case 8:
-      name = "Thaa";
-      break;
-      case 12:
-      name = "Meemu";
-      break;
-      case 13:
-      name = "Raa";
-      break;
-      case 14:
-      name = "Faafu";
-      break;
-      case 17:
-      name = "Daalu";
-      break;
-      case 20:
+      case 31:
       name = "Baa";
       break;
-      case 23:
-      name = "Haa Daalu";
+      case 32:
+      name = "Dhaalu";
       break;
-      case 24:
-      name = "Shaviyani";
+      case 33:
+      name = "Faafu ";
       break;
-      case 25:
-      name = "Noonu";
+      case 34:
+      name = "Gaafu Alifu";
       break;
-      case 26:
+      case 35:
+      name = "Gaafu Dhaalu";
+      break;
+      case 36:
+      name = "Haa Alifu";
+      break;
+      case 37:
+      name = "Haa Dhaalu";
+      break;
+      case 38:
       name = "Kaafu";
       break;
-      case 27:
-      name = "Gaafu Aliff";
-      break;
-      case 28:
-      name = "Gaafu Daalu";
-      break;
-      case 29:
-      name = "Naviyani";
+      case 39:
+      name = "Lhaviyani";
       break;
       case 40:
-      name = "Male";
+      name = "Maale";
+      break;
+      case 41:
+      name = "Meemu";
+      break;
+      case 42:
+      name = "Gnaviyani";
+      break;
+      case 43:
+      name = "Noonu";
+      break;
+      case 44:
+      name = "Raa";
+      break;
+      case 45:
+      name = "Shaviyani";
+      break;
+      case 46:
+      name = "Thaa";
+      break;
+      case 47:
+      name = "Vaavu";
       break;
     }
   }
@@ -8842,23 +8314,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 5:
       name = "Lagos";
       break;
-      case 10:
-      name = "Rivers";
-      break;
       case 11:
       name = "Federal Capital Territory";
       break;
-      case 12:
-      name = "Gongola";
-      break;
       case 16:
       name = "Ogun";
-      break;
-      case 17:
-      name = "Ondo";
-      break;
-      case 18:
-      name = "Oyo";
       break;
       case 21:
       name = "Akwa Ibom";
@@ -9056,15 +8516,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 11:
       name = "Zuid-Holland";
-      break;
-      case 12:
-      name = "Dronten";
-      break;
-      case 13:
-      name = "Zuidelijke IJsselmeerpolders";
-      break;
-      case 14:
-      name = "Lelystad";
       break;
       case 15:
       name = "Overijssel";
@@ -9276,9 +8727,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 1092:
       name = "West Coast";
-      break;
-      case 85:
-      name = "Waikato";
       break;
     }
   }
@@ -10788,17 +10236,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"SE") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Alvsborgs Lan";
-      break;
       case 2:
       name = "Blekinge Lan";
       break;
       case 3:
       name = "Gavleborgs Lan";
-      break;
-      case 4:
-      name = "Goteborgs och Bohus Lan";
       break;
       case 5:
       name = "Gotlands Lan";
@@ -10818,14 +10260,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 10:
       name = "Dalarnas Lan";
       break;
-      case 11:
-      name = "Kristianstads Lan";
-      break;
       case 12:
       name = "Kronobergs Lan";
-      break;
-      case 13:
-      name = "Malmohus Lan";
       break;
       case 14:
       name = "Norrbottens Lan";
@@ -10835,9 +10271,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 16:
       name = "Ostergotlands Lan";
-      break;
-      case 17:
-      name = "Skaraborgs Lan";
       break;
       case 18:
       name = "Sodermanlands Lan";
@@ -11391,17 +10824,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 3:
       name = "Diourbel";
       break;
-      case 4:
-      name = "Saint-Louis";
-      break;
       case 5:
       name = "Tambacounda";
       break;
       case 7:
       name = "Thies";
-      break;
-      case 8:
-      name = "Louga";
       break;
       case 9:
       name = "Fatick";
@@ -11693,12 +11120,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"TG") == 0) {
     switch (region_code2) {
-      case 9:
-      name = "Lama-Kara";
-      break;
-      case 18:
-      name = "Tsevie";
-      break;
       case 22:
       name = "Centrale";
       break;
@@ -11997,6 +11418,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 6:
       name = "Jendouba";
       break;
+      case 10:
+      name = "Qafsah";
+      break;
       case 14:
       name = "El Kef";
       break;
@@ -12021,9 +11445,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 23:
       name = "Sousse";
       break;
-      case 26:
-      name = "Ariana";
-      break;
       case 27:
       name = "Ben Arous";
       break;
@@ -12032,9 +11453,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 29:
       name = "Gabes";
-      break;
-      case 30:
-      name = "Gafsa";
       break;
       case 31:
       name = "Kebili";
@@ -12550,35 +11968,20 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"UG") == 0) {
     switch (region_code2) {
-      case 5:
-      name = "Busoga";
+      case 26:
+      name = "Apac";
       break;
-      case 8:
-      name = "Karamoja";
+      case 28:
+      name = "Bundibugyo";
       break;
-      case 12:
-      name = "South Buganda";
+      case 29:
+      name = "Bushenyi";
       break;
-      case 18:
-      name = "Central";
+      case 30:
+      name = "Gulu";
       break;
-      case 20:
-      name = "Eastern";
-      break;
-      case 21:
-      name = "Nile";
-      break;
-      case 22:
-      name = "North Buganda";
-      break;
-      case 23:
-      name = "Northern";
-      break;
-      case 24:
-      name = "Southern";
-      break;
-      case 25:
-      name = "Western";
+      case 31:
+      name = "Hoima";
       break;
       case 33:
       name = "Jinja";
@@ -12589,14 +11992,53 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 37:
       name = "Kampala";
       break;
+      case 38:
+      name = "Kamuli";
+      break;
+      case 39:
+      name = "Kapchorwa";
+      break;
+      case 40:
+      name = "Kasese";
+      break;
+      case 41:
+      name = "Kibale";
+      break;
       case 42:
       name = "Kiboga";
+      break;
+      case 43:
+      name = "Kisoro";
+      break;
+      case 45:
+      name = "Kotido";
+      break;
+      case 46:
+      name = "Kumi";
+      break;
+      case 47:
+      name = "Lira";
+      break;
+      case 50:
+      name = "Masindi";
       break;
       case 52:
       name = "Mbarara";
       break;
       case 56:
       name = "Mubende";
+      break;
+      case 58:
+      name = "Nebbi";
+      break;
+      case 59:
+      name = "Ntungamo";
+      break;
+      case 60:
+      name = "Pallisa";
+      break;
+      case 61:
+      name = "Rakai";
       break;
       case 65:
       name = "Adjumani";
@@ -12610,14 +12052,23 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 69:
       name = "Katakwi";
       break;
+      case 70:
+      name = "Luwero";
+      break;
       case 71:
       name = "Masaka";
+      break;
+      case 72:
+      name = "Moyo";
       break;
       case 73:
       name = "Nakasongola";
       break;
       case 74:
       name = "Sembabule";
+      break;
+      case 76:
+      name = "Tororo";
       break;
       case 77:
       name = "Arua";
@@ -12897,50 +12348,17 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1:
       name = "An Giang";
       break;
-      case 2:
-      name = "Bac Thai";
-      break;
       case 3:
       name = "Ben Tre";
-      break;
-      case 4:
-      name = "Binh Tri Thien";
       break;
       case 5:
       name = "Cao Bang";
       break;
-      case 6:
-      name = "Cuu Long";
-      break;
-      case 7:
-      name = "Dac Lac";
-      break;
       case 9:
       name = "Dong Thap";
       break;
-      case 11:
-      name = "Ha Bac";
-      break;
-      case 12:
-      name = "Hai Hung";
-      break;
       case 13:
       name = "Hai Phong";
-      break;
-      case 14:
-      name = "Ha Nam Ninh";
-      break;
-      case 15:
-      name = "Ha Noi";
-      break;
-      case 16:
-      name = "Ha Son Binh";
-      break;
-      case 17:
-      name = "Ha Tuyen";
-      break;
-      case 19:
-      name = "Hoang Lien Son";
       break;
       case 20:
       name = "Ho Chi Minh";
@@ -12948,35 +12366,14 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 21:
       name = "Kien Giang";
       break;
-      case 22:
-      name = "Lai Chau";
-      break;
       case 23:
       name = "Lam Dong";
       break;
       case 24:
       name = "Long An";
       break;
-      case 25:
-      name = "Minh Hai";
-      break;
-      case 26:
-      name = "Nghe Tinh";
-      break;
-      case 27:
-      name = "Nghia Binh";
-      break;
-      case 28:
-      name = "Phu Khanh";
-      break;
-      case 29:
-      name = "Quang Nam-Da Nang";
-      break;
       case 30:
       name = "Quang Ninh";
-      break;
-      case 31:
-      name = "Song Be";
       break;
       case 32:
       name = "Son La";
@@ -12990,20 +12387,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 35:
       name = "Thai Binh";
       break;
-      case 36:
-      name = "Thuan Hai";
-      break;
       case 37:
       name = "Tien Giang";
       break;
-      case 38:
-      name = "Vinh Phu";
-      break;
       case 39:
       name = "Lang Son";
-      break;
-      case 40:
-      name = "Dong Nai";
       break;
       case 43:
       name = "An Giang";
@@ -13019,9 +12407,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 47:
       name = "Kien Giang";
-      break;
-      case 48:
-      name = "Minh Hai";
       break;
       case 49:
       name = "Song Be";
@@ -13043,12 +12428,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 55:
       name = "Binh Thuan";
-      break;
-      case 56:
-      name = "Can Tho";
-      break;
-      case 57:
-      name = "Gia Lai";
       break;
       case 58:
       name = "Ha Giang";
