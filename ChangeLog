@@ -1,4 +1,5 @@
 1.4.7
+	* Fix typo in DK,18,Midtjylland ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100810 ( Boris Zentner )
 	* Fix continent codes ( Boris Zentner )
 	* Fix 3letter country codes for ATA, BVT, IOT, CXR, CCK, ATF, HMD,

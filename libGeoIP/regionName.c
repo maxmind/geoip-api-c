@@ -2649,7 +2649,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Hovedstaden";
       break;
       case 18:
-      name = "Midtjyllen";
+      name = "Midtjylland";
       break;
       case 19:
       name = "Nordjylland";
