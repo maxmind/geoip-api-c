@@ -1,4 +1,5 @@
 1.4.7
+	* Upd Makefile.vc ( Thomas Winzig )
 	* Fix typo in DK,18,Midtjylland ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100810 ( Boris Zentner )
 	* Fix continent codes ( Boris Zentner )
