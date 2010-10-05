@@ -1,4 +1,4 @@
-.TH GEOIPUPDATE 1 "14 May 2006"
+.TH GEOIPUPDATE 1 "5 Oct 2010"
 .UC 4
 .SH NAME
 geoipupdate \- a program for updating the MaxMind GeoIP databases
@@ -38,6 +38,12 @@ MAILTO=your@email.com
 0 12 * * 3 BIN_DIR/geoipupdate
 .PP
 # end of crontab
+
+.RE
+To use with a proxy server, set the http_proxy environment variable.
+E.g.
+.RS
+export http_proxy="http://proxy-hostname:port"
 .RE
 .SH RETURN CODES
 geoipupdate returns 0 on success, 1 on error.
@@ -46,12 +52,10 @@ geoipupdate returns 0 on success, 1 on error.
 .I CONF_DIR/GeoIP.conf
 .PP
 Configuration file for GeoIP, should contain license key.
-.SH AUTHOR
-Written by T.J. Mather
 .SH "REPORTING BUGS"
 Report bugs to <support@maxmind.com>
 .SH COPYRIGHT
-Copyright © 2006 MaxMind LLC
+Copyright © 2010 MaxMind Inc
 
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY
