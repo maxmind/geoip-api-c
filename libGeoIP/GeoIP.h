@@ -264,9 +264,16 @@ GEOIP_API unsigned long GeoIP_addr_to_num(const char *addr);
 GEOIP_API char *        GeoIP_num_to_addr(unsigned long ipnum);
 
 
-#ifdef BSD
-#define memcpy(dest, src, n) bcopy(src, dest, n)
-#endif
+
+/*
+ * BSD users are unhappy with global memcpy replacement
+ * maybe memcpy is defined there nowadays?
+ *
+  #ifdef BSD
+  #define memcpy(dest, src, n) bcopy(src, dest, n)
+  #endif
+*/
+
 
 /* Internal function -- convert iso to utf8; return a malloced utf8 string. */
 char * _GeoIP_iso_8859_1__utf8(const char * iso);
