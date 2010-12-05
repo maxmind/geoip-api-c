@@ -1778,3 +1778,26 @@ unsigned GeoIP_num_countries(void)
 {
        return num_GeoIP_countries;
 }
+
+const char * GeoIP_lib_version(void)
+{
+       return PACKAGE_VERSION;
+}
+
+int GeoIP_cleanup(void)
+{
+	int i, result = 0;
+	if (GeoIPDBFileName) {
+
+		for (i = 0; i < NUM_DB_TYPES; i++) {
+			if (GeoIPDBFileName[i]) free(GeoIPDBFileName[i]);
+		}
+
+		free(GeoIPDBFileName);
+		GeoIPDBFileName = NULL;
+		result = 1;
+	}
+
+	return result;
+}
+

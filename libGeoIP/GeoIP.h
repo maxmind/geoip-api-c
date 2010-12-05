@@ -263,21 +263,15 @@ GEOIP_API const char * GeoIP_time_zone_by_country_and_region(const char *country
 GEOIP_API unsigned long GeoIP_addr_to_num(const char *addr);
 GEOIP_API char *        GeoIP_num_to_addr(unsigned long ipnum);
 
-
-
-/*
- * BSD users are unhappy with global memcpy replacement
- * maybe memcpy is defined there nowadays?
- *
-  #ifdef BSD
-  #define memcpy(dest, src, n) bcopy(src, dest, n)
-  #endif
-*/
-
-
 /* Internal function -- convert iso to utf8; return a malloced utf8 string. */
 char * _GeoIP_iso_8859_1__utf8(const char * iso);
 
+/* Cleans up memory used to hold file name paths. Returns 1 if successful; otherwise 0. 
+ * */
+GEOIP_API int GeoIP_cleanup(void);
+
+/* Returns the library version in use. Helpful if your loading dynamically. */
+GEOIP_API const char * GeoIP_lib_version(void);
 
 #ifdef __cplusplus
 }
