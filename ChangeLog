@@ -1,4 +1,5 @@
 1.4.7
+	* Fix minor output issue in geoipupdate -v ( Boris Zentner )
 	* Add support for various databases. ( Boris Zentner )
 	* Add experimental tuledo support ( Boris Zentner )
 	* Fix possible buffer overflow in conjunction with

@@ -756,7 +756,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	strcpy(file_path_gz,geoipfilename);
 	strcat(file_path_gz,".gz");
 	if (verbose == 1) {
-    GeoIP_printf(f, "%s%s", SavingGzip, file_path_gz );
+    GeoIP_printf(f, SavingGzip, file_path_gz );
 	}
 	comp_fh = fopen(file_path_gz, "wb");
 
