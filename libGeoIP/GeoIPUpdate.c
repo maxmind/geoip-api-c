@@ -293,7 +293,8 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
 
-	request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequest)+36));
+	request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequest)
+                              + strlen(GeoIPProxyHTTP) + strlen(GeoIPProxiedHost) + 36 + 1));
 	if (request_uri == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
 	sprintf(request_uri,GeoIPHTTPRequest,GeoIPProxyHTTP,GeoIPProxiedHost,license_key, hex_digest);
@@ -529,7 +530,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	
 	if (connect(sock, (struct sockaddr *)&sa, sizeof(struct sockaddr))< 0)
 		return GEOIP_CONNECTION_ERR;
-	request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequestMD5)+1036));
+	request_uri = malloc(sizeof(char) * (strlen(GeoIPHTTPRequestFilename) 
+                                             + strlen(GeoIPProxyHTTP) + strlen(GeoIPProxiedHost)
+                                             + strlen(data_base_type) + strlen(GeoIPUpdateHost) + 1));
 	if (request_uri == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
 
@@ -609,7 +612,10 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			free(geoipfilename);
 			return GEOIP_CONNECTION_ERR;
 		}
-		request_uri = malloc(sizeof(char) * (strlen(license_key) + strlen(GeoIPHTTPRequestMD5)+1036));
+		request_uri = malloc(sizeof(char) * (strlen(GeoIPHTTPRequestClientIP) 
+                                                     + strlen(GeoIPProxyHTTP) 
+                                                     + strlen(GeoIPProxiedHost)
+                                                     + strlen(GeoIPUpdateHost) + 1 ));
 		if (request_uri == NULL) {
 			free(geoipfilename);
 			return GEOIP_OUT_OF_MEMORY_ERR;
