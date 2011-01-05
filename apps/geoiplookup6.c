@@ -113,6 +113,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 	const char     *country_code;
 	const char     *country_name;
 	const char     *domain_name;
+        const char     *asnum_name;        
 	int             netspeed;
 	int             country_id;
 	GeoIPRegion    *region;
@@ -140,7 +141,22 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 		}
 #endif
 
-		if (GEOIP_COUNTRY_EDITION_V6 == i) {
+
+
+		if (GEOIP_LOCATIONA_EDITION_V6 == i || GEOIP_ASNUM_EDITION_V6 == i || GEOIP_REGISTRAR_EDITION_V6 == i ) {
+			asnum_name = GeoIP_name_by_ipnum_v6(gi, ipnum);
+			if (asnum_name == NULL) {
+				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
+			}
+			else {
+				printf("%s: %s\n", GeoIPDBDescription[i], asnum_name);
+                              //  _say_range_by_ip(gi, ipnum);
+			}
+		}
+	
+
+
+		else if (GEOIP_COUNTRY_EDITION_V6 == i) {
 
 			country_id = GeoIP_id_by_ipnum_v6(gi, ipnum);
 			country_code = GeoIP_country_code[country_id];

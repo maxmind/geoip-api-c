@@ -1,6 +1,8 @@
 1.4.7
+	* Add support for various databases. ( Boris Zentner )
+	* Add experimental tuledo support ( Boris Zentner )
 	* Fix possible buffer overflow in conjunction with
-	  http_proxies ( Elso Andras )
+	    http_proxies ( Elso Andras )
 	* Remove memcpy/bcopy macro for BSD ( Boris Zentner )
 	* Add GeoIP_lib_version and GeoIP_cleanup ( Ladar Levison )
 	* Upd Makefile.vc ( Thomas Winzig )

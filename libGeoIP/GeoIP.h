@@ -50,7 +50,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES 20
+#define NUM_DB_TYPES (27+1)
 
 /* 128 bit address in network order */
 typedef struct in6_addr geoipv6_t;
@@ -113,6 +113,17 @@ typedef enum {
         GEOIP_CITYCONFIDENCEDIST_EDITION   = 16,
         GEOIP_LARGE_COUNTRY_EDITION = 17,
         GEOIP_LARGE_COUNTRY_EDITION_V6 = 18,
+        GEOIP_CITYCONFIDENCEDIST_ISP_ORG_EDITION = 19, /* unsued, but gaps are not allowed */
+        GEOIP_CCM_COUNTRY_EDITION =20,  /* unsued, but gaps are not allowed */
+        GEOIP_ASNUM_EDITION_V6 = 21,
+        GEOIP_ISP_EDITION_V6 = 22,
+        GEOIP_ORG_EDITION_V6 = 23,
+        GEOIP_DOMAIN_EDITION_V6 = 24,
+        GEOIP_LOCATIONA_EDITION_V6 = 25,
+        GEOIP_REGISTRAR_EDITION = 26,
+        GEOIP_REGISTRAR_EDITION_V6 = 27,
+
+
 } GeoIPDBTypes;
 
 typedef enum {
@@ -273,6 +284,7 @@ GEOIP_API int GeoIP_cleanup(void);
 /* Returns the library version in use. Helpful if your loading dynamically. */
 GEOIP_API const char * GeoIP_lib_version(void);
 
+#
 #ifdef __cplusplus
 }
 #endif

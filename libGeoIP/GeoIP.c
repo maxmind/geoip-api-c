@@ -254,7 +254,50 @@ int __GEOIP_V6_IS_NULL(geoipv6_t v6) {
         return 1;
 }
 
-const char * GeoIPDBDescription[NUM_DB_TYPES] = {NULL, "GeoIP Country Edition", "GeoIP City Edition, Rev 1", "GeoIP Region Edition, Rev 1", "GeoIP ISP Edition", "GeoIP Organization Edition", "GeoIP City Edition, Rev 0", "GeoIP Region Edition, Rev 0","GeoIP Proxy Edition","GeoIP ASNum Edition","GeoIP Netspeed Edition","GeoIP Domain Name Edition", "GeoIP Country V6 Edition", "GeoIP LocationID ASCII Edition", "GeoIP Accuracy Radius Edition", "GeoIP City with Confidence Edition", "GeoIP City with Confidence and Accuracy Edition"};
+void __GEOIP_PREPARE_TEREDO(geoipv6_t* v6){
+   int i;
+   if ((v6->s6_addr[0]) != 0x20) return;
+   if ((v6->s6_addr[1]) != 0x01) return;
+   if ((v6->s6_addr[2]) != 0x00) return;
+   if ((v6->s6_addr[3]) != 0x00) return;
+  
+   for ( i = 0; i< 12; i++)
+     v6->s6_addr[i] = 0;
+   for ( ; i < 16; i++)
+     v6->s6_addr[i]^=0xff;
+}
+
+const char * GeoIPDBDescription[NUM_DB_TYPES] = {
+  NULL, 
+  "GeoIP Country Edition", 
+  "GeoIP City Edition, Rev 1", 
+  "GeoIP Region Edition, Rev 1", 
+  "GeoIP ISP Edition", 
+  "GeoIP Organization Edition", 
+  "GeoIP City Edition, Rev 0", 
+  "GeoIP Region Edition, Rev 0",
+  "GeoIP Proxy Edition",
+  "GeoIP ASNum Edition",
+  "GeoIP Netspeed Edition",
+  "GeoIP Domain Name Edition", 
+  "GeoIP Country V6 Edition", 
+  "GeoIP LocationID ASCII Edition", 
+  "GeoIP Accuracy Radius Edition",
+  "GeoIP City with Confidence Edition",
+  "GeoIP City with Confidence and Accuracy Edition",
+  "GeoIP Large Country Edition", 
+  "GeoIP Large Country V6 Edition",
+  NULL,
+  "GeoIP CCM Edition",
+  "GeoIP ASNum V6 Edition",
+  "GeoIP ISP V6 Edition", 
+  "GeoIP Organization V6 Edition", 
+  "GeoIP Domain Name V6 Edition", 
+  "GeoIP LocationID ASCII V6 Edition", 
+  "GeoIP Registrar Edition", 
+  "GeoIP Registrar V6 Edition", 
+
+};
 
 char * custom_directory = NULL;
 
@@ -318,10 +361,17 @@ void _GeoIP_setup_dbfilename() {
                 GeoIPDBFileName[GEOIP_COUNTRY_EDITION_V6]       = _GeoIP_full_path_to("GeoIPv6.dat");
                 GeoIPDBFileName[GEOIP_LOCATIONA_EDITION]        = _GeoIP_full_path_to("GeoIPLocA.dat");
                 GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION]   = _GeoIP_full_path_to("GeoIPDistance.dat");
-                GeoIPDBFileName[GEOIP_CITYCONFIDENCE_EDITION]     = _GeoIP_full_path_to("GeoIPCityConfidence.dat");
+                GeoIPDBFileName[GEOIP_CITYCONFIDENCE_EDITION]   = _GeoIP_full_path_to("GeoIPCityConfidence.dat");
                 GeoIPDBFileName[GEOIP_CITYCONFIDENCEDIST_EDITION]     = _GeoIP_full_path_to("GeoIPCityConfidenceDist.dat");
-                GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION]     = _GeoIP_full_path_to("GeoIP.dat");
-                GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION_V6]       = _GeoIP_full_path_to("GeoIPv6.dat");
+                GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION]    = _GeoIP_full_path_to("GeoIP.dat");
+                GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION_V6] = _GeoIP_full_path_to("GeoIPv6.dat");
+		GeoIPDBFileName[GEOIP_ASNUM_EDITION_V6]		= _GeoIP_full_path_to("GeoIPASNumv6.dat");
+		GeoIPDBFileName[GEOIP_ISP_EDITION_V6]		= _GeoIP_full_path_to("GeoIPISPv6.dat");
+		GeoIPDBFileName[GEOIP_ORG_EDITION_V6]		= _GeoIP_full_path_to("GeoIPOrgv6.dat");
+		GeoIPDBFileName[GEOIP_DOMAIN_EDITION_V6]	= _GeoIP_full_path_to("GeoIPDomainv6.dat");
+                GeoIPDBFileName[GEOIP_LOCATIONA_EDITION_V6]     = _GeoIP_full_path_to("GeoIPLocAv6.dat");
+                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION]         = _GeoIP_full_path_to("GeoIPRegistrar.dat");
+                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION_V6]      = _GeoIP_full_path_to("GeoIPRegistrarv6.dat");
 	}
 }
 
@@ -409,7 +459,10 @@ void _setup_segments(GeoIP * gi) {
 		                   gi->databaseType == GEOIP_ORG_EDITION ||
 		                   gi->databaseType == GEOIP_DOMAIN_EDITION ||
 		 		   gi->databaseType == GEOIP_ISP_EDITION ||
+			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION ||
+			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_ASNUM_EDITION ||
+			  	   gi->databaseType == GEOIP_ASNUM_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_LOCATIONA_EDITION ||
 			  	   gi->databaseType == GEOIP_ACCURACYRADIUS_EDITION ||
 			  	   gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION ||
@@ -594,6 +647,8 @@ unsigned int _GeoIP_seek_record_v6 (GeoIP *gi, geoipv6_t ipnum) {
        ssize_t silence;
        int fno = fileno(gi->GeoIPDatabase);
        _check_mtime(gi);
+       if ( gi->databaseType != GEOIP_ASNUM_EDITION_V6 )
+         __GEOIP_PREPARE_TEREDO(&ipnum);
        for (depth = 127; depth >= 0; depth--) {
                if (gi->cache == NULL && gi->index_cache == NULL) {
                        /* read from disk */
@@ -1047,6 +1102,7 @@ int GeoIP_id_by_name_v6 (GeoIP* gi, const char *name) {
         ipnum = _GeoIP_lookupaddress_v6(name);
        if (__GEOIP_V6_IS_NULL(ipnum))
                return 0;
+
        ret = _GeoIP_seek_record_v6(gi, ipnum) - gi->databaseSegments[0];
        return ret;
 }
@@ -1470,6 +1526,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 			gi->databaseType != GEOIP_ISP_EDITION &&
 			gi->databaseType != GEOIP_DOMAIN_EDITION &&
 			gi->databaseType != GEOIP_ASNUM_EDITION &&
+			gi->databaseType != GEOIP_REGISTRAR_EDITION &&
 			gi->databaseType != GEOIP_LOCATIONA_EDITION
                         ) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
@@ -1512,10 +1569,12 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
   size_t len;
   ssize_t silence;
 
-  if (gi->databaseType != GEOIP_ORG_EDITION &&
-      gi->databaseType != GEOIP_ISP_EDITION &&
-      gi->databaseType != GEOIP_DOMAIN_EDITION &&
-      gi->databaseType != GEOIP_ASNUM_EDITION &&
+  if (
+      gi->databaseType != GEOIP_ORG_EDITION_V6 &&
+      gi->databaseType != GEOIP_ISP_EDITION_V6 &&
+      gi->databaseType != GEOIP_DOMAIN_EDITION_V6 &&
+      gi->databaseType != GEOIP_ASNUM_EDITION_V6 &&
+      gi->databaseType != GEOIP_REGISTRAR_EDITION_V6 &&
       gi->databaseType != GEOIP_LOCATIONA_EDITION
       ) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
