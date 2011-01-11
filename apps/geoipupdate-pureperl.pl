@@ -40,7 +40,7 @@ https
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use 5.008;
 use Data::Dumper;
@@ -94,7 +94,7 @@ my ( $user_id, $license_key, @product_ids );
     next if /^\s*#/;    # skip comments
     /^\s*UserId\s+(\d+)/        and $user_id     = $1, next;
     /^\s*LicenseKey\s+(\S{12})/ and $license_key = $1, next;
-    /^\s*ProductIds\s+(\d+(?:\s+\d+)*)/
+    /^\s*ProductIds\s+(\d+(?:[a-zA-Z]{2})?(?:\s+\d+(?:[a-zA-Z]{2})?)*)/    
       and @product_ids = split( /\s+/, $1 ), next;
 
   }
