@@ -260,7 +260,7 @@ void __GEOIP_PREPARE_TEREDO(geoipv6_t* v6){
    if ((v6->s6_addr[1]) != 0x01) return;
    if ((v6->s6_addr[2]) != 0x00) return;
    if ((v6->s6_addr[3]) != 0x00) return;
-  
+
    for ( i = 0; i< 12; i++)
      v6->s6_addr[i] = 0;
    for ( ; i < 16; i++)
@@ -296,7 +296,8 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP LocationID ASCII V6 Edition", 
   "GeoIP Registrar Edition", 
   "GeoIP Registrar V6 Edition", 
-
+  "GeoIP UserType Edition", 
+  "GeoIP UserType V6 Edition", 
 };
 
 char * custom_directory = NULL;
@@ -370,9 +371,10 @@ void _GeoIP_setup_dbfilename() {
 		GeoIPDBFileName[GEOIP_ORG_EDITION_V6]		= _GeoIP_full_path_to("GeoIPOrgv6.dat");
 		GeoIPDBFileName[GEOIP_DOMAIN_EDITION_V6]	= _GeoIP_full_path_to("GeoIPDomainv6.dat");
                 GeoIPDBFileName[GEOIP_LOCATIONA_EDITION_V6]     = _GeoIP_full_path_to("GeoIPLocAv6.dat");
-                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION]         = _GeoIP_full_path_to("GeoIPRegistrar.dat");
-                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION_V6]      = _GeoIP_full_path_to("GeoIPRegistrarv6.dat");
-	}
+                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION]        = _GeoIP_full_path_to("GeoIPRegistrar.dat");
+                GeoIPDBFileName[GEOIP_REGISTRAR_EDITION_V6]     = _GeoIP_full_path_to("GeoIPRegistrarv6.dat");
+                GeoIPDBFileName[GEOIP_USERTYPE_EDITION]         = _GeoIP_full_path_to("GeoIPUserType.dat");
+                GeoIPDBFileName[GEOIP_USERTYPE_EDITION_V6]      = _GeoIP_full_path_to("GeoIPUserTypev6.dat");
 }
 
 static
@@ -408,6 +410,19 @@ char * _GeoIP_iso_8859_1__utf8(const char * iso) {
 		*t++ = 0x00;
 	}
 	return p;
+}
+
+int GeoIP_is_private_ipnum_v4( unsigned long ipnum ){
+return ((ipnum >= 167772160U && ipnum <= 184549375U)
+    || (ipnum >= 2851995648U && ipnum <= 2852061183U)
+    || (ipnum >= 2886729728U && ipnum <= 2887778303U)
+    || (ipnum >= 3232235520U && ipnum <= 3232301055U)
+    || (ipnum >= 2130706432U && ipnum <= 2147483647U))? 1 : 0;
+}
+  
+int GeoIP_is_private_v4( const char * addr ){
+  unsigned long ipnum = GeoIP_addr_to_num(addr);
+  return GeoIP_is_private_ipnum_v4(ipnum);
 }
 
 int GeoIP_db_avail(int type) {
@@ -461,6 +476,8 @@ void _setup_segments(GeoIP * gi) {
 		 		   gi->databaseType == GEOIP_ISP_EDITION ||
 			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION ||
 			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION_V6 ||
+			  	   gi->databaseType == GEOIP_USERTYPE_EDITION ||
+			  	   gi->databaseType == GEOIP_USERTYPE_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_ASNUM_EDITION ||
 			  	   gi->databaseType == GEOIP_ASNUM_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_LOCATIONA_EDITION ||
@@ -647,7 +664,7 @@ unsigned int _GeoIP_seek_record_v6 (GeoIP *gi, geoipv6_t ipnum) {
        ssize_t silence;
        int fno = fileno(gi->GeoIPDatabase);
        _check_mtime(gi);
-       if ( gi->databaseType != GEOIP_ASNUM_EDITION_V6 )
+       if ( GeoIP_teredo(gi) )
          __GEOIP_PREPARE_TEREDO(&ipnum);
        for (depth = 127; depth >= 0; depth--) {
                if (gi->cache == NULL && gi->index_cache == NULL) {
@@ -919,7 +936,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		}
 		gi->flags = flags;
 		gi->charset = GEOIP_CHARSET_ISO_8859_1;
-
+                gi->ext_flags = 1U << GEOIP_TEREDO_BIT;
 		_setup_segments(gi);
 		if (flags & GEOIP_INDEX_CACHE) {                        
 			gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
@@ -1526,6 +1543,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 			gi->databaseType != GEOIP_ISP_EDITION &&
 			gi->databaseType != GEOIP_DOMAIN_EDITION &&
 			gi->databaseType != GEOIP_ASNUM_EDITION &&
+			gi->databaseType != GEOIP_USERTYPE_EDITION &&
 			gi->databaseType != GEOIP_REGISTRAR_EDITION &&
 			gi->databaseType != GEOIP_LOCATIONA_EDITION
                         ) {
@@ -1574,6 +1592,7 @@ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
       gi->databaseType != GEOIP_ISP_EDITION_V6 &&
       gi->databaseType != GEOIP_DOMAIN_EDITION_V6 &&
       gi->databaseType != GEOIP_ASNUM_EDITION_V6 &&
+      gi->databaseType != GEOIP_USERTYPE_EDITION_V6 &&
       gi->databaseType != GEOIP_REGISTRAR_EDITION_V6 &&
       gi->databaseType != GEOIP_LOCATIONA_EDITION
       ) {
@@ -1765,6 +1784,20 @@ char *GeoIP_org_by_name_v6 (GeoIP* gi, const char *name) {
 
 unsigned char GeoIP_database_edition (GeoIP* gi) {
 	return gi->databaseType;
+}
+
+int GeoIP_enable_teredo(GeoIP* gi, int true_false){
+  unsigned int mask = ( 1U << GEOIP_TEREDO_BIT );
+  int b = ( gi->ext_flags & mask ) ? 1 : 0;
+  gi->ext_flags &= ~mask ;
+  if ( true_false )
+    gi->ext_flags |= true_false;
+  return b;
+}
+
+int GeoIP_teredo ( GeoIP* gi ){
+  unsigned int mask = ( 1U << GEOIP_TEREDO_BIT );
+  return ( gi->ext_flags & mask ) ? 1 : 0;
 }
 
 int GeoIP_charset( GeoIP* gi){

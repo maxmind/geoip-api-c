@@ -50,7 +50,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES (27+1)
+#define NUM_DB_TYPES (29+1)
 
 /* 128 bit address in network order */
 typedef struct in6_addr geoipv6_t;
@@ -73,8 +73,13 @@ typedef struct GeoIPTag {
 	int netmask; /* netmask of last lookup - set using depth in _GeoIP_seek_record */
 	time_t last_mtime_check;
         off_t dyn_seg_size; /* currently only used by the cityconfidence database */
+        unsigned int ext_flags; /* bit 0 teredo support enabled */
 } GeoIP;
 
+
+typedef enum {
+  GEOIP_TEREDO_BIT = 0
+} GeoIPExtFlags;
 
 typedef enum {
 	GEOIP_CHARSET_ISO_8859_1 = 0,
@@ -122,6 +127,8 @@ typedef enum {
         GEOIP_LOCATIONA_EDITION_V6 = 25,
         GEOIP_REGISTRAR_EDITION = 26,
         GEOIP_REGISTRAR_EDITION_V6 = 27,
+        GEOIP_USERTYPE_EDITION = 28,
+        GEOIP_USERTYPE_EDITION_V6 = 29,
 
 
 } GeoIPDBTypes;
@@ -259,6 +266,8 @@ GEOIP_API unsigned char GeoIP_database_edition (GeoIP* gi);
 
 GEOIP_API int GeoIP_charset (GeoIP* gi);
 GEOIP_API int GeoIP_set_charset (GeoIP* gi, int charset);
+GEOIP_API int GeoIP_enable_teredo (GeoIP* gi, int true_false );
+GEOIP_API int GeoIP_teredo (GeoIP* gi );
 
 GEOIP_API int GeoIP_last_netmask (GeoIP* gi);
 GEOIP_API char **GeoIP_range_by_ip (GeoIP* gi, const char *addr);

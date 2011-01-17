@@ -1,4 +1,12 @@
 1.4.7
+	* Add GEOIP_USERTYPE_EDITION and GEOIP_USERTYPE_EDITION_V6
+	  datatypes ( Boris Zentner )
+	* Add new functions GeoIP_is_private_ipnum_v4 and GeoIP_is_private_v4
+	  ( Boris Zentner )
+	* Add new functions GeoIP_teredo and GeoIP_enable_teredo.
+	  teredo is enabled by default ( Boris Zentner )
+	* Fix output of geoiplookup for unknown or private regions.
+	    ( Boris Zentner )
 	* Fix geoipupdate-pureperl.pl to accept more product codes.
 	    ( Boris Zentner )
 	* Fix minor output issue in geoipupdate -v ( Boris Zentner )
