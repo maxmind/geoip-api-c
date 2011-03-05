@@ -23,7 +23,6 @@
 
 =cut
 
-
 =pod
 
 pure perl version of geoipupdate. can handle anything, that 
@@ -119,8 +118,7 @@ if ($user_id) {
     die $err if $err and $err !~ /^No new updates available/i;
     print $err;
   }
-}
-else {
+} else {
 
   # Old format with just license key for MaxMind GeoIP Country database updates
   # here for backwards compatibility
@@ -162,21 +160,35 @@ sub GeoIP_update_database_general {
     Digest::MD5->new->add( $license_key, $client_ipaddr )->hexdigest;
   print "md5sum of ip address and license key is $hex_digest2\n" if $verbose;
 
-  $u->path('/app/update_secure');
-  $u->query_form(
-                  db_md5        => $old_md5,
-                  challenge_md5 => $hex_digest2,
-                  user_id       => $user_id,
-                  edition_id    => $product_id
-  );
-  print 'Send request ' . $u->as_string, "\n" if ($verbose);
-  $res = $ua->request( GET $u->as_string, Host => $update_host );
+  my $mk_db_req_cref = sub {
+
+    $u->path('/app/update_secure');
+    $u->query_form(
+                    db_md5        => shift,
+                    challenge_md5 => $hex_digest2,
+                    user_id       => $user_id,
+                    edition_id    => $product_id
+    );
+    print 'Send request ' . $u->as_string, "\n" if ($verbose);
+    return $ua->request( GET $u->as_string, Host => $update_host );
+  };
+  $res = $mk_db_req_cref->($old_md5);
   die $res->status_line unless ( $res->is_success );
 
   # print Dumper($res);
   print "Downloading gzipped GeoIP Database...\n" if $verbose;
 
-  _gunzip_and_replace( $res->content, $geoip_filename );
+  _gunzip_and_replace(
+    $res->content,
+    $geoip_filename,
+    sub {
+
+      # as sanity check request a update for the new downloaded file
+      # md5 of the new unpacked file
+      my $new_md5 = _get_hexdigest(shift);
+      return $mk_db_req_cref->($new_md5);
+    }
+  );
   print "Done\n" if $verbose;
 }
 
@@ -211,23 +223,36 @@ sub _get_hexdigest {
 }
 
 sub _gunzip_and_replace {
-  my ( $content, $geoip_filename ) = @_;
+  my ( $content, $geoip_filename, $sanity_check_c ) = @_;
+  my $max_retry = 1;
 
-  # --- error if our content does not start with the gzip header
-  die $content || 'Not a gzip file' if substr( $content, 0, 2 ) ne "\x1f\x8b";
-  
-  # --- uncompress the gzip data
+  my $tmp_fname = $geoip_filename . '.test';
+
   {
-    local $_;
-    open my $gin, '<:gzip', \$content or die $!;
-    open my $gout, '>:raw', $geoip_filename . '.test' or die $!;
-    print {$gout} $_ while (<$gin>);
+
+    # --- error if our content does not start with the gzip header
+    die $content || 'Not a gzip file' if substr( $content, 0, 2 ) ne "\x1f\x8b";
+
+    # --- uncompress the gzip data
+    {
+      local $_;
+      open my $gin,  '<:gzip', \$content  or die $!;
+      open my $gout, '>:raw',  $tmp_fname or die $!;
+      print {$gout} $_ while (<$gin>);
+    }
+
+    # --- sanity check
+    if ( defined $sanity_check_c ) {
+      die "Download failed" if $max_retry-- <= 0;
+      my $res = $sanity_check_c->($tmp_fname);
+      die $res->status_line unless ( $res->is_success );
+      $content = $res->content;
+
+      redo if ( $content !~ /^No new updates available/ );
+    }
   }
 
-  # --- sanity check
-  # TODO _sanity_check($geoip_filename . '.test')
-
   # --- install GeoIP.dat.test -> GeoIP.dat
-  rename( $geoip_filename . '.test', $geoip_filename ) or die $!;
+  rename( $tmp_fname, $geoip_filename ) or die $!;
 }
 
