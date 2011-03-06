@@ -375,6 +375,7 @@ void _GeoIP_setup_dbfilename() {
                 GeoIPDBFileName[GEOIP_REGISTRAR_EDITION_V6]     = _GeoIP_full_path_to("GeoIPRegistrarv6.dat");
                 GeoIPDBFileName[GEOIP_USERTYPE_EDITION]         = _GeoIP_full_path_to("GeoIPUserType.dat");
                 GeoIPDBFileName[GEOIP_USERTYPE_EDITION_V6]      = _GeoIP_full_path_to("GeoIPUserTypev6.dat");
+  }
 }
 
 static
