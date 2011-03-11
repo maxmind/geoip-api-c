@@ -301,7 +301,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	send(sock, request_uri, strlen(request_uri),0);
 	free(request_uri);
 
-	buf = malloc(sizeof(char) * block_size);
+	buf = malloc(sizeof(char) * block_size + 1);
 	if (buf == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
 
@@ -318,12 +318,19 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 			return GEOIP_SOCKET_READ_ERR;
 		}
 		offset += amt;
-		buf = realloc(buf, offset+block_size);
+		buf = realloc(buf, offset+block_size + 1);
 		if (buf == NULL)
 			return GEOIP_OUT_OF_MEMORY_ERR;
 	}
 
-	compr = strstr(buf, "\r\n\r\n") + 4;
+        buf[offset]=0;
+	compr = strstr(buf, "\r\n\r\n");
+        if ( compr == NULL ) {
+   		free(buf);
+		return GEOIP_INVALID_SERVER_RESPONSE;
+        }
+        /* skip searchstr  "\r\n\r\n" */
+        compr += 4;
 	comprLen = offset + buf - compr;
 
 	if (strstr(compr, "License Key Invalid") != NULL) {
@@ -561,7 +568,13 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	}
 	buf[offset] = 0;
 	offset = 0;
-	tmpstr = strstr(buf, "\r\n\r\n") + 4;
+	tmpstr = strstr(buf, "\r\n\r\n");
+        if ( tmpstr == NULL ) {
+   		free(buf);
+		return GEOIP_INVALID_SERVER_RESPONSE;
+        }
+        /* skip searchstr  "\r\n\r\n" */
+        tmpstr += 4;
 	if (tmpstr[0] == '.' || strchr(tmpstr, '/') != NULL) {
 		free(buf);
 		return GEOIP_INVALID_SERVER_RESPONSE;

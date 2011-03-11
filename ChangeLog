@@ -1,4 +1,6 @@
 1.4.7
+	* Fix possible segfault in geoipupdate if the connection disappear
+	  unexpected. ( Boris Zentner )
 	* Add sanity check for geoipupdate-pureperl.pl ( Boris Zentner )
 	* Add GEOIP_USERTYPE_EDITION and GEOIP_USERTYPE_EDITION_V6
 	  datatypes ( Boris Zentner )
