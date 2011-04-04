@@ -50,7 +50,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES (29+1)
+#define NUM_DB_TYPES (31+1)
 
 /* 128 bit address in network order */
 typedef struct in6_addr geoipv6_t;
@@ -129,8 +129,8 @@ typedef enum {
         GEOIP_REGISTRAR_EDITION_V6 = 27,
         GEOIP_USERTYPE_EDITION = 28,
         GEOIP_USERTYPE_EDITION_V6 = 29,
-
-
+        GEOIP_CITY_EDITION_REV1_V6 = 30,
+        GEOIP_CITY_EDITION_REV0_V6 = 31
 } GeoIPDBTypes;
 
 typedef enum {
@@ -159,10 +159,11 @@ extern const char *GeoIPCityConfidenceFileName;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */
-extern const char GeoIP_country_code[253][3];
-extern const char GeoIP_country_code3[253][4];
-extern const char * GeoIP_country_name[253];
-extern const char GeoIP_country_continent[253][3];
+extern const char GeoIP_country_code[254][3];
+extern const char GeoIP_country_code3[254][4];
+extern const char * GeoIP_country_name[254];
+extern const char * GeoIP_utf8_country_name[254];
+extern const char GeoIP_country_continent[254][3];
 
 #ifdef DLL
 #define GEOIP_API __declspec(dllexport)
@@ -248,6 +249,9 @@ GEOIP_API const char* GeoIP_code_by_id(int id);
 
 /** return three letter country code */
 GEOIP_API const char* GeoIP_code3_by_id(int id);
+
+/** return full name of country in utf8 or iso-8859-1 */
+GEOIP_API const char* GeoIP_country_name_by_id(GeoIP* gi, int id);
 
 /** return full name of country */
 GEOIP_API const char* GeoIP_name_by_id(int id);

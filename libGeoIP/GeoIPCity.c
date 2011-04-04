@@ -170,7 +170,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
   record->continent_code = (char *) GeoIP_country_continent[record_buf[0]];
   record->country_code = (char *) GeoIP_country_code[record_buf[0]];
   record->country_code3 = (char *) GeoIP_country_code3[record_buf[0]];
-  record->country_name = (char *) GeoIP_country_name[record_buf[0]];
+  record->country_name = (char *) GeoIP_country_name_by_id(gi, record_buf[0]);
   record_buf++;
 
   /* get region */
@@ -265,9 +265,9 @@ GeoIPRecord    *
 _get_record_v6(GeoIP * gi, geoipv6_t ipnum)
 {
   unsigned int    seek_record;
-  if (gi->databaseType != GEOIP_CITY_EDITION_REV0 &&
-      gi->databaseType != GEOIP_CITY_EDITION_REV1) {
-    printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
+  if (gi->databaseType != GEOIP_CITY_EDITION_REV0_V6 &&
+      gi->databaseType != GEOIP_CITY_EDITION_REV1_V6) {
+    printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1_V6]);
     return 0;
   }
 
@@ -353,8 +353,8 @@ int
 GeoIP_record_id_by_addr_v6(GeoIP * gi, const char *addr)
 {
   geoipv6_t       ipnum;
-  if (gi->databaseType != GEOIP_CITY_EDITION_REV0 &&
-      gi->databaseType != GEOIP_CITY_EDITION_REV1) {
+  if (gi->databaseType != GEOIP_CITY_EDITION_REV0_V6 &&
+      gi->databaseType != GEOIP_CITY_EDITION_REV1_V6) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
     return 0;
   }

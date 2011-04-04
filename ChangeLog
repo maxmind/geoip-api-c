@@ -1,4 +1,9 @@
 1.4.7
+        * Add support for the new types in geoiplookup6 ( Boris Zentner )
+	* Add new database types GEOIP_CITY_EDITION_REV0_V6, 
+	  GEOIP_CITY_EDITION_REV1_V6, GEOIP_DOMAIN_EDITION_V6, 
+	  GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
+	* Remove AN and FX. Add SX, BQ and CW ( Boris Zentner )
 	* Fix possible segfault in geoipupdate if the connection disappear
 	  unexpected. ( Boris Zentner )
 	* Add sanity check for geoipupdate-pureperl.pl ( Boris Zentner )
