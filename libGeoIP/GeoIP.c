@@ -506,8 +506,10 @@ void _setup_segments(GeoIP * gi) {
                        } else if (gi->databaseType == GEOIP_CITY_EDITION_REV0 ||
 				   gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
 		                   gi->databaseType == GEOIP_ORG_EDITION ||
+		                   gi->databaseType == GEOIP_ORG_EDITION_V6 ||
 		                   gi->databaseType == GEOIP_DOMAIN_EDITION ||
 		 		   gi->databaseType == GEOIP_ISP_EDITION ||
+		 		   gi->databaseType == GEOIP_ISP_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION ||
 			  	   gi->databaseType == GEOIP_REGISTRAR_EDITION_V6 ||
 			  	   gi->databaseType == GEOIP_USERTYPE_EDITION ||
@@ -535,8 +537,10 @@ void _setup_segments(GeoIP * gi) {
 
                                 /* the record_length must be correct from here on */
 				if (gi->databaseType == GEOIP_ORG_EDITION    ||
+				    gi->databaseType == GEOIP_ORG_EDITION_V6 ||
 		                    gi->databaseType == GEOIP_DOMAIN_EDITION ||                                  
 			 	    gi->databaseType == GEOIP_ISP_EDITION    ||
+			 	    gi->databaseType == GEOIP_ISP_EDITION_V6 ||
                                     gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION 
                                     )
 					gi->record_length = ORG_RECORD_LENGTH;

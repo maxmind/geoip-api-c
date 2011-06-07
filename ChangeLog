@@ -1,3 +1,4 @@
+	* Fix GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
 1.4.7
 	* Upd timezone.c Add SX, BQ and CW remove AN and FX ( Boris Zentner )
 	* Add support for the new types in geoiplookup6 ( Boris Zentner )
