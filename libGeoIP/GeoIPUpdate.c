@@ -575,7 +575,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
         }
         /* skip searchstr  "\r\n\r\n" */
         tmpstr += 4;
-	if (tmpstr[0] == '.' || strchr(tmpstr, '/') != NULL) {
+	if (tmpstr[0] == '.' || strchr(tmpstr, '/') != NULL || strchr(tmpstr, '\\') != NULL) {
 		free(buf);
 		return GEOIP_INVALID_SERVER_RESPONSE;
 	}

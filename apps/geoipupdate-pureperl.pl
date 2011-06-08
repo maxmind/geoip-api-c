@@ -39,12 +39,13 @@ https
 use strict;
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use 5.008;
 use Data::Dumper;
 use Digest::MD5;
 use File::Spec;
+use File::Basename;
 use Getopt::Std;
 use HTTP::Request::Common;
 use LWP::UserAgent;
@@ -138,7 +139,8 @@ sub GeoIP_update_database_general {
   print 'Send request ' . $u->as_string, "\n" if ($verbose);
   my $res = $ua->request( GET $u->as_string, Host => $update_host );
   die $res->status_line unless ( $res->is_success );
-  my $geoip_filename = File::Spec->catfile( $opts{d}, $res->content );
+  # make sure to use only the filename for security reason
+  my $geoip_filename = File::Spec->catfile( $opts{d}, basename($res->content) );
 
   # /* get MD5 of current GeoIP database file */
   my $old_md5 = _get_hexdigest($geoip_filename);
