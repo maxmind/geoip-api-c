@@ -50,7 +50,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES (31+1)
+#define NUM_DB_TYPES (33+1)
 
 /* 128 bit address in network order */
 typedef struct in6_addr geoipv6_t;
@@ -114,23 +114,25 @@ typedef enum {
         GEOIP_COUNTRY_EDITION_V6  = 12,
         GEOIP_LOCATIONA_EDITION   = 13,
         GEOIP_ACCURACYRADIUS_EDITION = 14,
-        GEOIP_CITYCONFIDENCE_EDITION   = 15,
+        GEOIP_CITYCONFIDENCE_EDITION = 15,
         GEOIP_CITYCONFIDENCEDIST_EDITION   = 16,
         GEOIP_LARGE_COUNTRY_EDITION = 17,
         GEOIP_LARGE_COUNTRY_EDITION_V6 = 18,
         GEOIP_CITYCONFIDENCEDIST_ISP_ORG_EDITION = 19, /* unsued, but gaps are not allowed */
         GEOIP_CCM_COUNTRY_EDITION =20,  /* unsued, but gaps are not allowed */
-        GEOIP_ASNUM_EDITION_V6 = 21,
-        GEOIP_ISP_EDITION_V6 = 22,
-        GEOIP_ORG_EDITION_V6 = 23,
-        GEOIP_DOMAIN_EDITION_V6 = 24,
-        GEOIP_LOCATIONA_EDITION_V6 = 25,
-        GEOIP_REGISTRAR_EDITION = 26,
-        GEOIP_REGISTRAR_EDITION_V6 = 27,
-        GEOIP_USERTYPE_EDITION = 28,
-        GEOIP_USERTYPE_EDITION_V6 = 29,
-        GEOIP_CITY_EDITION_REV1_V6 = 30,
-        GEOIP_CITY_EDITION_REV0_V6 = 31
+        GEOIP_ASNUM_EDITION_V6         = 21,
+        GEOIP_ISP_EDITION_V6           = 22,
+        GEOIP_ORG_EDITION_V6           = 23,
+        GEOIP_DOMAIN_EDITION_V6        = 24,
+        GEOIP_LOCATIONA_EDITION_V6     = 25,
+        GEOIP_REGISTRAR_EDITION        = 26,
+        GEOIP_REGISTRAR_EDITION_V6     = 27,
+        GEOIP_USERTYPE_EDITION         = 28,
+        GEOIP_USERTYPE_EDITION_V6      = 29,
+        GEOIP_CITY_EDITION_REV1_V6     = 30,
+        GEOIP_CITY_EDITION_REV0_V6     = 31,
+        GEOIP_NETSPEED_EDITION_REV1    = 32,
+        GEOIP_NETSPEED_EDITION_REV1_V6 = 33
 } GeoIPDBTypes;
 
 typedef enum {

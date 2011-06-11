@@ -1,22 +1,24 @@
+	* Add new Datatypes GEOIP_NETSPEED_EDITION_REV1_V6 and
+	    GEOIP_NETSPEED_EDITION_REV1 ( Boris Zentner )
 	* Fix possible directory traversal weakness in geoipupdate-pureperl.pl with
-	  malicious update server ( Boris Zentner )
+	    malicious update server ( Boris Zentner )
 	* Fix GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
 1.4.7
 	* Upd timezone.c Add SX, BQ and CW remove AN and FX ( Boris Zentner )
 	* Add support for the new types in geoiplookup6 ( Boris Zentner )
 	* Add new database types GEOIP_CITY_EDITION_REV0_V6, 
-	  GEOIP_CITY_EDITION_REV1_V6, GEOIP_DOMAIN_EDITION_V6, 
-	  GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
+	    GEOIP_CITY_EDITION_REV1_V6, GEOIP_DOMAIN_EDITION_V6, 
+	    GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
 	* Remove AN and FX. Add SX, BQ and CW ( Boris Zentner )
 	* Fix possible segfault in geoipupdate if the connection disappear
-	  unexpected. ( Boris Zentner )
+	    unexpected. ( Boris Zentner )
 	* Add sanity check for geoipupdate-pureperl.pl ( Boris Zentner )
 	* Add GEOIP_USERTYPE_EDITION and GEOIP_USERTYPE_EDITION_V6
-	  datatypes ( Boris Zentner )
+	    datatypes ( Boris Zentner )
 	* Add new functions GeoIP_is_private_ipnum_v4 and GeoIP_is_private_v4
-	  ( Boris Zentner )
+	    ( Boris Zentner )
 	* Add new functions GeoIP_teredo and GeoIP_enable_teredo.
-	  teredo is enabled by default ( Boris Zentner )
+	    teredo is enabled by default ( Boris Zentner )
 	* Fix output of geoiplookup for unknown or private regions.
 	    ( Boris Zentner )
 	* Fix geoipupdate-pureperl.pl to accept more product codes.

@@ -147,7 +147,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 
 
 
-		if (GEOIP_LOCATIONA_EDITION_V6 == i || GEOIP_ASNUM_EDITION_V6 == i || GEOIP_USERTYPE_EDITION_V6 == i || GEOIP_REGISTRAR_EDITION_V6 == i || GEOIP_DOMAIN_EDITION_V6 == i || GEOIP_ORG_EDITION_V6 == i || GEOIP_ISP_EDITION_V6 == i ) {
+		if (GEOIP_LOCATIONA_EDITION_V6 == i || GEOIP_ASNUM_EDITION_V6 == i || GEOIP_USERTYPE_EDITION_V6 == i || GEOIP_REGISTRAR_EDITION_V6 == i || GEOIP_DOMAIN_EDITION_V6 == i || GEOIP_ORG_EDITION_V6 == i || GEOIP_ISP_EDITION_V6 == i || GEOIP_NETSPEED_EDITION_REV1_V6 == i ) {
 			asnum_name = GeoIP_name_by_ipnum_v6(gi, ipnum);
 			if (asnum_name == NULL) {
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);

@@ -257,7 +257,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
                                 _say_range_by_ip(gi, ipnum);
 			}
 		}
-		else if (GEOIP_LOCATIONA_EDITION == i || GEOIP_ACCURACYRADIUS_EDITION == i || GEOIP_ASNUM_EDITION == i || GEOIP_USERTYPE_EDITION == i || GEOIP_REGISTRAR_EDITION == i ) {
+		else if (GEOIP_LOCATIONA_EDITION == i || GEOIP_ACCURACYRADIUS_EDITION == i || GEOIP_ASNUM_EDITION == i || GEOIP_USERTYPE_EDITION == i || GEOIP_REGISTRAR_EDITION == i || GEOIP_NETSPEED_EDITION_REV1 == i ) {
 			asnum_name = GeoIP_name_by_ipnum(gi, ipnum);
 			if (asnum_name == NULL) {
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
