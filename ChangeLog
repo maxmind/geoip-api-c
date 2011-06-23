@@ -1,3 +1,4 @@
+	* Fix GEOIP_DOMAIN_EDITION_V6 ( Boris Zentner )
 	* Add new Datatypes GEOIP_NETSPEED_EDITION_REV1_V6 and
 	    GEOIP_NETSPEED_EDITION_REV1 ( Boris Zentner )
 	* Fix possible directory traversal weakness in geoipupdate-pureperl.pl with

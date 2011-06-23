@@ -545,6 +545,7 @@ void _setup_segments(GeoIP * gi) {
 				if (gi->databaseType == GEOIP_ORG_EDITION    ||
 				    gi->databaseType == GEOIP_ORG_EDITION_V6 ||
 		                    gi->databaseType == GEOIP_DOMAIN_EDITION ||                                  
+		                    gi->databaseType == GEOIP_DOMAIN_EDITION_V6 ||                                  
 			 	    gi->databaseType == GEOIP_ISP_EDITION    ||
 			 	    gi->databaseType == GEOIP_ISP_EDITION_V6 ||
                                     gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION 
