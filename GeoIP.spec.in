@@ -67,10 +67,10 @@ chmod 755 $RPM_BUILD_ROOT/%{_libdir}/*
 %{_libdir}/*.la
 
 %changelog
-* Fri Apr 14 2006 Thomas Mather <tjmather@maxmind.com>
+* Fri Apr 14 2006 Thomas Mather <geoipapi@maxmind.com>
 - Updated description to reference free GeoLite City database
 
-* Thu Jul  7 2005 Thomas Mather <tjmather@maxmind.com>
+* Thu Jul  7 2005 Thomas Mather <geoipapi@maxmind.com>
 - Updated description to reflect monthly updates for free country database.
 
 * Mon Sep  8 2003 Dr. Peter Bieringer
