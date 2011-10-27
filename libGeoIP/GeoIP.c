@@ -409,8 +409,8 @@ void _GeoIP_setup_dbfilename() {
                 GeoIPDBFileName[GEOIP_USERTYPE_EDITION_V6]      = _GeoIP_full_path_to("GeoIPUserTypev6.dat");
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV0_V6]	= _GeoIP_full_path_to("GeoIPCityv6.dat");
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1_V6]	= _GeoIP_full_path_to("GeoIPCityv6.dat");
-		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]	= _GeoIP_full_path_to("GeoIPNetspeedCell.dat");
-		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1_V6]	= _GeoIP_full_path_to("GeoIPNetseedCellv6.dat");
+		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]	= _GeoIP_full_path_to("GeoIPNetSpeedCell.dat");
+		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1_V6]	= _GeoIP_full_path_to("GeoIPNetSpeedCellv6.dat");
 	  }
 }
 

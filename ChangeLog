@@ -1,3 +1,5 @@
+	* Fix default filenames for GEOIP_NETSPEED_EDITION_REV1 and
+	    GEOIP_NETSPEED_EDITION_REV1_V6 ( Boris Zentner )
 1.4.8
 	* Fix GEOIP_DOMAIN_EDITION_V6 ( Boris Zentner )
 	* Add new Datatypes GEOIP_NETSPEED_EDITION_REV1_V6 and
@@ -41,7 +43,7 @@
 	* Fix typo/segfault in GeoIP_id_by_name_v6 ( Boris Zentner )
 	* Update libGeoIP/regionName.c with FIPS codes 20100529 ( Boris Zentner )
 	* Remove buffered IO functions, to fix issues with dup'ed file
-            descriptors ( Boris Zentner )
+	    descriptors ( Boris Zentner )
 	* Fix very minor memleak in geoipupdate ( Boris Zentner )
 	* Add GEOIP_CITYCONFIDENCEDIST_EDITION, GEOIP_LARGE_COUNTRY_EDITION
 	    and GEOIP_LARGE_COUNTRY_EDITION_V6 database types ( Boris Zentner )
