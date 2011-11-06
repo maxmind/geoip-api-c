@@ -5151,17 +5151,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 5:
       name = "Jambi";
       break;
-      case 6:
-      name = "Jawa Barat";
-      break;
       case 7:
       name = "Jawa Tengah";
       break;
       case 8:
       name = "Jawa Timur";
-      break;
-      case 9:
-      name = "Papua";
       break;
       case 10:
       name = "Yogyakarta";
@@ -5181,20 +5175,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 15:
       name = "Lampung";
       break;
-      case 16:
-      name = "Maluku";
-      break;
       case 17:
       name = "Nusa Tenggara Barat";
       break;
       case 18:
       name = "Nusa Tenggara Timur";
-      break;
-      case 19:
-      name = "Riau";
-      break;
-      case 20:
-      name = "Sulawesi Selatan";
       break;
       case 21:
       name = "Sulawesi Tengah";
@@ -5202,14 +5187,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 22:
       name = "Sulawesi Tenggara";
       break;
-      case 23:
-      name = "Sulawesi Utara";
-      break;
       case 24:
       name = "Sumatera Barat";
-      break;
-      case 25:
-      name = "Sumatera Selatan";
       break;
       case 26:
       name = "Sumatera Utara";
@@ -8505,9 +8484,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 7:
       name = "Noord-Holland";
       break;
-      case 8:
-      name = "Overijssel";
-      break;
       case 9:
       name = "Utrecht";
       break;
@@ -10052,9 +10028,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 2:
       name = "Al Bahah";
       break;
-      case 3:
-      name = "Al Jawf";
-      break;
       case 5:
       name = "Al Madinah";
       break;
@@ -10064,11 +10037,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 8:
       name = "Al Qasim";
       break;
-      case 9:
-      name = "Al Qurayyat";
-      break;
       case 10:
       name = "Ar Riyad";
+      break;
+      case 11:
+      name = "Asir Province";
       break;
       case 13:
       name = "Ha'il";
@@ -12637,10 +12610,16 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Shabwah";
       break;
       case 6:
-      name = "Al Ghaydah";
+      name = "Lahij";
+      break;
+      case 7:
+      name = "Al Bayda'";
       break;
       case 8:
       name = "Al Hudaydah";
+      break;
+      case 9:
+      name = "Al Jawf";
       break;
       case 10:
       name = "Al Mahwit";
@@ -12648,14 +12627,29 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 11:
       name = "Dhamar";
       break;
+      case 12:
+      name = "Hajjah";
+      break;
+      case 13:
+      name = "Ibb";
+      break;
       case 14:
       name = "Ma'rib";
       break;
       case 15:
-      name = "Sa";
+      name = "Sa'dah";
       break;
       case 16:
-      name = "San";
+      name = "San'a'";
+      break;
+      case 17:
+      name = "Taizz";
+      break;
+      case 18:
+      name = "Ad Dali";
+      break;
+      case 19:
+      name = "Amran";
       break;
       case 20:
       name = "Al Bayda'";
@@ -12673,7 +12667,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Lahij";
       break;
       case 25:
-      name = "Ta";
+      name = "Taizz";
       break;
     }
   }
