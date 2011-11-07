@@ -998,6 +998,9 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   else if ( strcmp (country, "MG") == 0 ) {
     timezone = "Indian/Antananarivo";
   }
+  else if ( strcmp (country, "MH") == 0 ) {
+    timezone = "Pacific/Kwajalein";
+  }
   else if ( strcmp (country, "MK") == 0 ) {
     timezone = "Europe/Skopje";
   }
