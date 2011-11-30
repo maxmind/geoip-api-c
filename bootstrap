@@ -6,3 +6,5 @@
 aclocal \
 && automake -i --gnu --add-missing \
 && autoconf
+
+libtoolize -f
