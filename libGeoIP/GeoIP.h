@@ -137,6 +137,7 @@ typedef enum {
         GEOIP_CITYCONF_EDITION         = 35,
         GEOIP_REGIONCONF_EDITION       = 36,
         GEOIP_POSTALCONF_EDITION       = 37,
+        GEOIP_ACCURACYRADIUS_EDITION_V6 = 38
 } GeoIPDBTypes;
 
 typedef enum {
