@@ -333,7 +333,8 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP Country Confidence Edition",
   "GeoIP City Confidence Edition",
   "GeoIP Region Confidence Edition",
-  "GeoIP Postal Confidence Edition"
+  "GeoIP Postal Confidence Edition",
+  "GeoIP Accuracy Radius Edition V6"
 };
 
 char * custom_directory = NULL;
