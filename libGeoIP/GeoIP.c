@@ -537,8 +537,11 @@ void _setup_segments(GeoIP * gi) {
 			  	   gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION ||
                                    gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION ||
                                    gi->databaseType == GEOIP_CITY_EDITION_REV0_V6 ||
-				   gi->databaseType == GEOIP_CITY_EDITION_REV1_V6
- 
+				   gi->databaseType == GEOIP_CITY_EDITION_REV1_V6 ||
+				   gi->databaseType == GEOIP_CITYCONF_EDITION ||
+				   gi->databaseType == GEOIP_COUNTRYCONF_EDITION ||
+				   gi->databaseType == GEOIP_REGIONCONF_EDITION ||
+				   gi->databaseType == GEOIP_POSTALCONF_EDITION
                                    ) {
 				/* City/Org Editions have two segments, read offset of second segment */
 				gi->databaseSegments = malloc(sizeof(int));
@@ -1604,7 +1607,11 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 			gi->databaseType != GEOIP_NETSPEED_EDITION_REV1 &&
 			gi->databaseType != GEOIP_USERTYPE_EDITION &&
 			gi->databaseType != GEOIP_REGISTRAR_EDITION &&
-			gi->databaseType != GEOIP_LOCATIONA_EDITION
+			gi->databaseType != GEOIP_LOCATIONA_EDITION &&
+			gi->databaseType != GEOIP_CITYCONF_EDITION &&
+			gi->databaseType != GEOIP_COUNTRYCONF_EDITION &&
+			gi->databaseType != GEOIP_REGIONCONF_EDITION &&
+			gi->databaseType != GEOIP_POSTALCONF_EDITION
                         ) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
 		return NULL;
