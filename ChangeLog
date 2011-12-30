@@ -1,3 +1,6 @@
+	* Add more database types GEOIP_COUNTRYCONF_EDITION,
+	    GEOIP_CITYCONF_EDITION, GEOIP_REGIONCONF_EDITION and
+	    GEOIP_POSTALCONF_EDITION ( Boris Zentner )
 	* Fix default filenames for GEOIP_NETSPEED_EDITION_REV1 and
 	    GEOIP_NETSPEED_EDITION_REV1_V6 ( Boris Zentner )
 1.4.8

@@ -329,7 +329,11 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP City Edition V6, Rev 1",
   "GeoIP City Edition V6, Rev 0",
   "GeoIP Netspeed Edition, Rev 1",
-  "GeoIP Netspeed Edition V6, Rev1"
+  "GeoIP Netspeed Edition V6, Rev1",
+  "GeoIP Country Confidence Edition",
+  "GeoIP City Confidence Edition",
+  "GeoIP Region Confidence Edition",
+  "GeoIP Postal Confidence Edition"
 };
 
 char * custom_directory = NULL;
@@ -411,6 +415,10 @@ void _GeoIP_setup_dbfilename() {
 		GeoIPDBFileName[GEOIP_CITY_EDITION_REV1_V6]	= _GeoIP_full_path_to("GeoIPCityv6.dat");
 		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]	= _GeoIP_full_path_to("GeoIPNetSpeedCell.dat");
 		GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1_V6]	= _GeoIP_full_path_to("GeoIPNetSpeedCellv6.dat");
+		GeoIPDBFileName[GEOIP_COUNTRYCONF_EDITION]	= _GeoIP_full_path_to("GeoIPCountryConf.dat");
+		GeoIPDBFileName[GEOIP_CITYCONF_EDITION]         = _GeoIP_full_path_to("GeoIPCityConf.dat");
+		GeoIPDBFileName[GEOIP_REGIONCONF_EDITION]	= _GeoIP_full_path_to("GeoIPRegionConf.dat");
+		GeoIPDBFileName[GEOIP_POSTALCONF_EDITION]	= _GeoIP_full_path_to("GeoIPPostalConf.dat");
 	  }
 }
 

@@ -132,7 +132,11 @@ typedef enum {
         GEOIP_CITY_EDITION_REV1_V6     = 30,
         GEOIP_CITY_EDITION_REV0_V6     = 31,
         GEOIP_NETSPEED_EDITION_REV1    = 32,
-        GEOIP_NETSPEED_EDITION_REV1_V6 = 33
+        GEOIP_NETSPEED_EDITION_REV1_V6 = 33,
+        GEOIP_COUNTRYCONF_EDITION      = 34,
+        GEOIP_CITYCONF_EDITION         = 35,
+        GEOIP_REGIONCONF_EDITION       = 36,
+        GEOIP_POSTALCONF_EDITION       = 37,
 } GeoIPDBTypes;
 
 typedef enum {
