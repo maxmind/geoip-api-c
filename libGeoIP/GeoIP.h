@@ -50,7 +50,7 @@ extern "C" {
 #define STANDARD_RECORD_LENGTH 3
 #define ORG_RECORD_LENGTH 4
 #define MAX_RECORD_LENGTH 4
-#define NUM_DB_TYPES (33+1)
+#define NUM_DB_TYPES (38+1)
 
 /* 128 bit address in network order */
 typedef struct in6_addr geoipv6_t;
