@@ -38,6 +38,12 @@ AC_CHECK_FUNC(gethostbyname_r, [
 		AC_DEFINE(GETHOSTBYNAME_R_RETURNS_INT)])
 	])
 
+AC_ARG_ENABLE([data-files],
+    AS_HELP_STRING([--disable-data-files], [Install library without installing data files]))
+
+AS_IF([test "x$enable_data_files" != xno],
+    AC_SUBST([GEOIP_DB_FILE],[GeoIP.dat]))
+
 AC_OUTPUT([
 Makefile
 GeoIP.spec

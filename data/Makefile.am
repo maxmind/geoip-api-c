@@ -1,6 +1,6 @@
 pkgdata_DATA =
 
-dist_pkgdata_DATA = GeoIP.dat
+dist_pkgdata_DATA = @GEOIP_DB_FILE@
 
 DEFAULT_DB_FILE = $(pkgdatadir)/GeoIP.dat
 
