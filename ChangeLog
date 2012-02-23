@@ -1,3 +1,7 @@
+	* Add a --disable-data-files option. This allows you to build and install
+	    the library without having a data/GeoIP.dat file. This is useful when
+	    building the library from a checkout of the source tree, rather than a
+	    tarball ( Dave Rolsky )
 	* Add GEOIP_ACCURACYRADIUS_EDITION and GEOIP_ACCURACYRADIUS_EDITION_V6
 	  ( Boris Zentner )
 	* Add more database types GEOIP_COUNTRYCONF_EDITION,
