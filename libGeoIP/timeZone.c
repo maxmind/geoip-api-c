@@ -28,6 +28,9 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   else if ( strcmp (country, "AM") == 0 ) {
     timezone = "Asia/Yerevan";
   }
+  else if ( strcmp (country, "AN") == 0 ) {
+    timezone = "America/Curacao";
+  }
   else if ( strcmp (country, "AO") == 0 ) {
     timezone = "Africa/Luanda";
   }
@@ -656,6 +659,9 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   else if ( strcmp (country, "FR") == 0 ) {
     timezone = "Europe/Paris";
   }
+  else if ( strcmp (country, "FX") == 0 ) {
+    timezone = "Europe/Paris";
+  }
   else if ( strcmp (country, "GA") == 0 ) {
     timezone = "Africa/Libreville";
   }
@@ -997,9 +1003,6 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   }
   else if ( strcmp (country, "MG") == 0 ) {
     timezone = "Indian/Antananarivo";
-  }
-  else if ( strcmp (country, "MH") == 0 ) {
-    timezone = "Pacific/Kwajalein";
   }
   else if ( strcmp (country, "MK") == 0 ) {
     timezone = "Europe/Skopje";

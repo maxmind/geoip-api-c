@@ -25,6 +25,7 @@ local $_ = <$fh>;    # skip first line
 while (<$fh>) {
   chomp;
   my ( $country, $region, $timezone ) = split /\t/;
+  die "$_ $.\n" unless $timezone;
   $tz->{$country}->{ $region || '' } = $timezone;
 }
 

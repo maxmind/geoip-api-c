@@ -239,7 +239,6 @@ RE		Indian/Reunion
 FJ		Pacific/Fiji
 TV		Pacific/Funafuti
 GU		Pacific/Guam
-MH		Pacific/Kwajalein
 NR		Pacific/Nauru
 NU		Pacific/Niue
 NF		Pacific/Norfolk
@@ -256,11 +255,10 @@ KH		Asia/Phnom_Penh
 CM		Africa/Lagos
 DO		America/Santo_Domingo
 ET		Africa/Addis_Ababa
+FX		Europe/Paris
 HT		America/Port-au-Prince
 CH		Europe/Zurich
-CW		America/Curacao
-SX		America/Curacao
-BQ		America/Curacao
+AN		America/Curacao
 BJ		Africa/Porto-Novo
 EH		Africa/El_Aaiun
 FK		Atlantic/Stanley
@@ -676,3 +674,6 @@ UZ	13	Asia/Tashkent
 UZ	14	Asia/Tashkent
 TL		Asia/Dili
 PF		Pacific/Marquesas
+SX		America/Curacao
+BQ		America/Curacao
+CW		America/Curacao
