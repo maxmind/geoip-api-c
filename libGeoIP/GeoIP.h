@@ -213,6 +213,7 @@ GEOIP_API char *GeoIP_org_by_addr (GeoIP* gi, const char *addr);
 GEOIP_API char *GeoIP_org_by_name (GeoIP* gi, const char *host);
 GEOIP_API char *GeoIP_org_by_ipnum (GeoIP* gi, unsigned long ipnum);
 
+GEOIP_API int GeoIP_country_id_by_addr_v6 (GeoIP* gi, const char *addr);
 GEOIP_API char *GeoIP_org_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum);
 GEOIP_API char *GeoIP_org_by_addr_v6 (GeoIP* gi, const char *addr);
 GEOIP_API char *GeoIP_org_by_name_v6 (GeoIP* gi, const char *name);
