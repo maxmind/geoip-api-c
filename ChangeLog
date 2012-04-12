@@ -5,6 +5,7 @@
 	* Update README.OSX for Lion ( Boris Zentner )
 	* Change Macedonia to Macedonia, The Former Yugoslav Republic of
 	  ( Boris Zentner )
+	* Add region_name to geoiplookup GEOIP_CITY_EDITION_REV0 ( Chris Johnson )
 	* Add a --disable-data-files option. This allows you to build and install
 	    the library without having a data/GeoIP.dat file. This is useful when
 	    building the library from a checkout of the source tree, rather than a
