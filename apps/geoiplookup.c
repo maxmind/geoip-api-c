@@ -313,7 +313,9 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 			}
 			else {
-				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
+				printf("%s: %s, %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region),
+                                       _mk_NA(GeoIP_region_name_by_code(gir->country_code, gir->region)),
+				       _mk_NA(gir->city), _mk_NA(gir->postal_code),
 				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
                                 _say_range_by_ip(gi, ipnum);
                                 GeoIPRecord_delete(gir);
