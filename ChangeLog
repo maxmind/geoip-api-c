@@ -2,6 +2,7 @@
 	* Update Region codes ( Boris Zentner )
 	* Update README.OSX for Lion ( Boris Zentner )
 	* bootstrap rebuilds ltmain.sh ( Boris Zentner )
+	* Update README.OSX for Lion ( Boris Zentner )
 	* Change Macedonia to Macedonia, The Former Yugoslav Republic of
 	  ( Boris Zentner )
 	* Add a --disable-data-files option. This allows you to build and install
