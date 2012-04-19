@@ -300,8 +300,9 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 			else {
 				printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
                                 _say_range_by_ip(gi, ipnum);
-				GeoIPRegion_delete(region);
 			}
+			if ( region )
+				GeoIPRegion_delete(region);
 		}
 		else if (GEOIP_CITY_EDITION_REV0 == i) {
 			gir = GeoIP_record_by_ipnum(gi, ipnum);

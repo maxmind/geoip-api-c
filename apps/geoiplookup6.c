@@ -203,6 +203,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 		}
 		else {
 			printf("%s: %s, %s\n", GeoIPDBDescription[i], region->country_code, region->region);
+			GeoIPRegion_delete(region);
 		}
 	}
 	else if (GEOIP_CITY_EDITION_REV0 == i) {
