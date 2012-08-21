@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef __linux__
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
 #endif
 #include <ctype.h>

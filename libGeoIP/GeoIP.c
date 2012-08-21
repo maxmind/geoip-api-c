@@ -67,6 +67,17 @@ static geoipv6_t IPV6_NULL;
 		} \
 }
 
+#ifndef HAVE_PREAD
+#define pread(fd, buf, count, offset) \
+        ( \
+        lseek(fd, offset, SEEK_SET) == offset ? \
+                read(fd, buf, count) : \
+                -1 \
+                )
+#endif /* HAVE_PREAD */
+
+
+
 const char GeoIP_country_code[254][3] = { "--","AP","EU","AD","AE","AF","AG","AI","AL","AM","CW",
 	"AO","AQ","AR","AS","AT","AU","AW","AZ","BA","BB",
 	"BD","BE","BF","BG","BH","BI","BJ","BM","BN","BO",

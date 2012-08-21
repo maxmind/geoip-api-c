@@ -35,6 +35,16 @@
 #include <stdint.h>	/* For uint32_t */
 #endif
 
+#ifndef HAVE_PREAD
+#define pread(fd, buf, count, offset) \
+        ( \
+        lseek(fd, offset, SEEK_SET) == offset ? \
+                read(fd, buf, count) : \
+                -1 \
+                )
+#endif /* HAVE_PREAD */
+
+
 static
 const int       FULL_RECORD_LENGTH = 50;
 

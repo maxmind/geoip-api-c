@@ -9,7 +9,7 @@ include_HEADERS = GeoIP.h GeoIPCity.h GeoIPUpdate.h
 
 libGeoIPUpdate_la_SOURCES = GeoIPUpdate.c md5.c
 
-libGeoIP_la_LDFLAGS = -version-info @GEOIP_VERSION_INFO@
+libGeoIP_la_LDFLAGS = -no-undefined -version-info @GEOIP_VERSION_INFO@
 
 libGeoIPUpdate_la_LIBADD = -lz libGeoIP.la
 
