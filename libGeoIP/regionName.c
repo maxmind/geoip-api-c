@@ -1033,6 +1033,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 12:
       name = "Vlaams-Brabant";
       break;
+      case 13:
+      name = "Flanders";
+      break;
+      case 14:
+      name = "Wallonia";
+      break;
     }
   }
   if (strcmp(country_code,"BF") == 0) {
@@ -2274,15 +2280,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 4:
       name = "Atlantico";
       break;
-      case 5:
-      name = "Bolivar Department";
-      break;
-      case 6:
-      name = "Boyaca Department";
-      break;
-      case 7:
-      name = "Caldas Department";
-      break;
       case 8:
       name = "Caqueta";
       break;
@@ -2309,9 +2306,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 17:
       name = "La Guajira";
-      break;
-      case 18:
-      name = "Magdalena Department";
       break;
       case 19:
       name = "Meta";
@@ -4130,6 +4124,21 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1910:
       name = "Wrexham";
       break;
+      case 1911:
+      name = "Bedfordshire";
+      break;
+      case 1912:
+      name = "Central Bedfordshire";
+      break;
+      case 1913:
+      name = "Cheshire East";
+      break;
+      case 1914:
+      name = "Cheshire West and Chester";
+      break;
+      case 1915:
+      name = "Isles of Scilly";
+      break;
     }
   }
   if (strcmp(country_code,"GD") == 0) {
@@ -5627,6 +5636,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 43:
       name = "Khorasan-e Shemali";
       break;
+      case 44:
+      name = "Alborz";
+      break;
     }
   }
   if (strcmp(country_code,"IS") == 0) {
@@ -5826,29 +5838,38 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 2:
       name = "Al Balqa'";
       break;
-      case 7:
-      name = "Ma";
-      break;
       case 9:
       name = "Al Karak";
-      break;
-      case 10:
-      name = "Al Mafraq";
-      break;
-      case 11:
-      name = "Amman Governorate";
       break;
       case 12:
       name = "At Tafilah";
       break;
-      case 13:
-      name = "Az Zarqa";
-      break;
-      case 14:
-      name = "Irbid";
+      case 15:
+      name = "Al Mafraq";
       break;
       case 16:
       name = "Amman";
+      break;
+      case 17:
+      name = "Az Zaraqa";
+      break;
+      case 18:
+      name = "Irbid";
+      break;
+      case 19:
+      name = "Ma'an";
+      break;
+      case 20:
+      name = "Ajlun";
+      break;
+      case 21:
+      name = "Al Aqabah";
+      break;
+      case 22:
+      name = "Jarash";
+      break;
+      case 23:
+      name = "Madaba";
       break;
     }
   }
@@ -7117,6 +7138,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 81:
       name = "Ocnita";
+      break;
+      case 82:
+      name = "Orhei";
       break;
       case 83:
       name = "Rezina";
@@ -9318,6 +9342,15 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1135:
       name = "Negros Occidental";
       break;
+      case 1353:
+      name = "San Juan";
+      break;
+      case 1355:
+      name = "Santiago";
+      break;
+      case 1356:
+      name = "Sarangani";
+      break;
     }
   }
   if (strcmp(country_code,"PK") == 0) {
@@ -9987,8 +10020,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 91:
       name = "Krasnoyarskiy Kray";
       break;
-      case 942:
-      name = "Chechnya Republic";
+      case 92:
+      name = "Kamchatskiy Kray";
+      break;
+      case 93:
+      name = "Zabaykal'skiy Kray";
       break;
     }
   }
@@ -10290,427 +10326,589 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   if (strcmp(country_code,"SI") == 0) {
     switch (region_code2) {
       case 1:
-      name = "Ajdovscina";
+      name = "Ajdovscina Commune";
       break;
       case 2:
-      name = "Beltinci";
+      name = "Beltinci Commune";
       break;
       case 3:
-      name = "Bled";
+      name = "Bled Commune";
       break;
       case 4:
-      name = "Bohinj";
+      name = "Bohinj Commune";
       break;
       case 5:
-      name = "Borovnica";
+      name = "Borovnica Commune";
       break;
       case 6:
-      name = "Bovec";
+      name = "Bovec Commune";
       break;
       case 7:
-      name = "Brda";
+      name = "Brda Commune";
       break;
       case 8:
-      name = "Brezice";
+      name = "Brezice Commune";
       break;
       case 9:
-      name = "Brezovica";
+      name = "Brezovica Commune";
       break;
       case 11:
-      name = "Celje";
+      name = "Celje Commune";
       break;
       case 12:
-      name = "Cerklje na Gorenjskem";
+      name = "Cerklje na Gorenjskem Commune";
       break;
       case 13:
-      name = "Cerknica";
+      name = "Cerknica Commune";
       break;
       case 14:
-      name = "Cerkno";
+      name = "Cerkno Commune";
       break;
       case 15:
-      name = "Crensovci";
+      name = "Crensovci Commune";
       break;
       case 16:
-      name = "Crna na Koroskem";
+      name = "Crna na Koroskem Commune";
       break;
       case 17:
-      name = "Crnomelj";
+      name = "Crnomelj Commune";
       break;
       case 19:
-      name = "Divaca";
+      name = "Divaca Commune";
       break;
       case 20:
-      name = "Dobrepolje";
+      name = "Dobrepolje Commune";
       break;
       case 22:
-      name = "Dol pri Ljubljani";
+      name = "Dol pri Ljubljani Commune";
       break;
       case 24:
-      name = "Dornava";
+      name = "Dornava Commune";
       break;
       case 25:
-      name = "Dravograd";
+      name = "Dravograd Commune";
       break;
       case 26:
-      name = "Duplek";
+      name = "Duplek Commune";
       break;
       case 27:
-      name = "Gorenja Vas-Poljane";
+      name = "Gorenja vas-Poljane Commune";
       break;
       case 28:
-      name = "Gorisnica";
+      name = "Gorisnica Commune";
       break;
       case 29:
-      name = "Gornja Radgona";
+      name = "Gornja Radgona Commune";
       break;
       case 30:
-      name = "Gornji Grad";
+      name = "Gornji Grad Commune";
       break;
       case 31:
-      name = "Gornji Petrovci";
+      name = "Gornji Petrovci Commune";
       break;
       case 32:
-      name = "Grosuplje";
+      name = "Grosuplje Commune";
       break;
       case 34:
-      name = "Hrastnik";
+      name = "Hrastnik Commune";
       break;
       case 35:
-      name = "Hrpelje-Kozina";
+      name = "Hrpelje-Kozina Commune";
       break;
       case 36:
-      name = "Idrija";
+      name = "Idrija Commune";
       break;
       case 37:
-      name = "Ig";
+      name = "Ig Commune";
       break;
       case 38:
-      name = "Ilirska Bistrica";
+      name = "Ilirska Bistrica Commune";
       break;
       case 39:
-      name = "Ivancna Gorica";
+      name = "Ivancna Gorica Commune";
       break;
       case 40:
-      name = "Izola-Isola";
+      name = "Izola-Isola Commune";
       break;
       case 42:
-      name = "Jursinci";
+      name = "Jursinci Commune";
       break;
       case 44:
-      name = "Kanal";
+      name = "Kanal Commune";
       break;
       case 45:
-      name = "Kidricevo";
+      name = "Kidricevo Commune";
       break;
       case 46:
-      name = "Kobarid";
+      name = "Kobarid Commune";
       break;
       case 47:
-      name = "Kobilje";
+      name = "Kobilje Commune";
       break;
       case 49:
-      name = "Komen";
+      name = "Komen Commune";
       break;
       case 50:
-      name = "Koper-Capodistria";
+      name = "Koper-Capodistria Urban Commune";
       break;
       case 51:
-      name = "Kozje";
+      name = "Kozje Commune";
       break;
       case 52:
-      name = "Kranj";
+      name = "Kranj Commune";
       break;
       case 53:
-      name = "Kranjska Gora";
+      name = "Kranjska Gora Commune";
       break;
       case 54:
-      name = "Krsko";
+      name = "Krsko Commune";
       break;
       case 55:
-      name = "Kungota";
+      name = "Kungota Commune";
       break;
       case 57:
-      name = "Lasko";
+      name = "Lasko Commune";
       break;
       case 61:
-      name = "Ljubljana";
+      name = "Ljubljana Urban Commune";
       break;
       case 62:
-      name = "Ljubno";
+      name = "Ljubno Commune";
       break;
       case 64:
-      name = "Logatec";
+      name = "Logatec Commune";
       break;
       case 66:
-      name = "Loski Potok";
+      name = "Loski Potok Commune";
       break;
       case 68:
-      name = "Lukovica";
+      name = "Lukovica Commune";
       break;
       case 71:
-      name = "Medvode";
+      name = "Medvode Commune";
       break;
       case 72:
-      name = "Menges";
+      name = "Menges Commune";
       break;
       case 73:
-      name = "Metlika";
+      name = "Metlika Commune";
       break;
       case 74:
-      name = "Mezica";
+      name = "Mezica Commune";
       break;
       case 76:
-      name = "Mislinja";
+      name = "Mislinja Commune";
       break;
       case 77:
-      name = "Moravce";
+      name = "Moravce Commune";
       break;
       case 78:
-      name = "Moravske Toplice";
+      name = "Moravske Toplice Commune";
       break;
       case 79:
-      name = "Mozirje";
+      name = "Mozirje Commune";
       break;
       case 80:
-      name = "Murska Sobota";
+      name = "Murska Sobota Urban Commune";
       break;
       case 81:
-      name = "Muta";
+      name = "Muta Commune";
       break;
       case 82:
-      name = "Naklo";
+      name = "Naklo Commune";
       break;
       case 83:
-      name = "Nazarje";
+      name = "Nazarje Commune";
       break;
       case 84:
-      name = "Nova Gorica";
+      name = "Nova Gorica Urban Commune";
       break;
       case 86:
-      name = "Odranci";
+      name = "Odranci Commune";
       break;
       case 87:
-      name = "Ormoz";
+      name = "Ormoz Commune";
       break;
       case 88:
-      name = "Osilnica";
+      name = "Osilnica Commune";
       break;
       case 89:
-      name = "Pesnica";
+      name = "Pesnica Commune";
       break;
       case 91:
-      name = "Pivka";
+      name = "Pivka Commune";
       break;
       case 92:
-      name = "Podcetrtek";
+      name = "Podcetrtek Commune";
       break;
       case 94:
-      name = "Postojna";
+      name = "Postojna Commune";
       break;
       case 97:
-      name = "Puconci";
+      name = "Puconci Commune";
       break;
       case 98:
-      name = "Racam";
+      name = "Race-Fram Commune";
       break;
       case 99:
-      name = "Radece";
+      name = "Radece Commune";
       break;
       case 832:
-      name = "Radenci";
+      name = "Radenci Commune";
       break;
       case 833:
-      name = "Radlje ob Dravi";
+      name = "Radlje ob Dravi Commune";
       break;
       case 834:
-      name = "Radovljica";
+      name = "Radovljica Commune";
       break;
       case 837:
-      name = "Rogasovci";
+      name = "Rogasovci Commune";
       break;
       case 838:
-      name = "Rogaska Slatina";
+      name = "Rogaska Slatina Commune";
       break;
       case 839:
-      name = "Rogatec";
+      name = "Rogatec Commune";
       break;
       case 875:
-      name = "Semic";
+      name = "Semic Commune";
       break;
       case 876:
-      name = "Sencur";
+      name = "Sencur Commune";
       break;
       case 877:
-      name = "Sentilj";
+      name = "Sentilj Commune";
       break;
       case 878:
-      name = "Sentjernej";
+      name = "Sentjernej Commune";
       break;
       case 880:
-      name = "Sevnica";
+      name = "Sevnica Commune";
       break;
       case 881:
-      name = "Sezana";
+      name = "Sezana Commune";
       break;
       case 882:
-      name = "Skocjan";
+      name = "Skocjan Commune";
       break;
       case 883:
-      name = "Skofja Loka";
+      name = "Skofja Loka Commune";
       break;
       case 918:
-      name = "Skofljica";
+      name = "Skofljica Commune";
       break;
       case 919:
-      name = "Slovenj Gradec";
+      name = "Slovenj Gradec Urban Commune";
       break;
       case 921:
-      name = "Slovenske Konjice";
+      name = "Slovenske Konjice Commune";
       break;
       case 922:
-      name = "Smarje pri Jelsah";
+      name = "Smarje pri Jelsah Commune";
       break;
       case 923:
-      name = "Smartno ob Paki";
+      name = "Smartno ob Paki Commune";
       break;
       case 924:
-      name = "Sostanj";
+      name = "Sostanj Commune";
       break;
       case 925:
-      name = "Starse";
+      name = "Starse Commune";
       break;
       case 926:
-      name = "Store";
+      name = "Store Commune";
       break;
       case 961:
-      name = "Sveti Jurij";
+      name = "Sveti Jurij Commune";
       break;
       case 962:
-      name = "Tolmin";
+      name = "Tolmin Commune";
       break;
       case 963:
-      name = "Trbovlje";
+      name = "Trbovlje Commune";
       break;
       case 964:
-      name = "Trebnje";
+      name = "Trebnje Commune";
       break;
       case 965:
-      name = "Trzic";
+      name = "Trzic Commune";
       break;
       case 966:
-      name = "Turnisce";
+      name = "Turnisce Commune";
       break;
       case 967:
-      name = "Velenje";
+      name = "Velenje Urban Commune";
       break;
       case 968:
-      name = "Velike Lasce";
+      name = "Velike Lasce Commune";
       break;
       case 1004:
-      name = "Vipava";
+      name = "Vipava Commune";
       break;
       case 1005:
-      name = "Vitanje";
+      name = "Vitanje Commune";
       break;
       case 1006:
-      name = "Vodice";
+      name = "Vodice Commune";
       break;
       case 1008:
-      name = "Vrhnika";
+      name = "Vrhnika Commune";
       break;
       case 1009:
-      name = "Vuzenica";
+      name = "Vuzenica Commune";
       break;
       case 1010:
-      name = "Zagorje ob Savi";
+      name = "Zagorje ob Savi Commune";
       break;
       case 1012:
-      name = "Zavrc";
+      name = "Zavrc Commune";
       break;
       case 1047:
-      name = "Zelezniki";
+      name = "Zelezniki Commune";
       break;
       case 1048:
-      name = "Ziri";
+      name = "Ziri Commune";
       break;
       case 1049:
-      name = "Zrece";
+      name = "Zrece Commune";
+      break;
+      case 1050:
+      name = "Benedikt Commune";
+      break;
+      case 1051:
+      name = "Bistrica ob Sotli Commune";
+      break;
+      case 1052:
+      name = "Bloke Commune";
+      break;
+      case 1053:
+      name = "Braslovce Commune";
+      break;
+      case 1054:
+      name = "Cankova Commune";
+      break;
+      case 1055:
+      name = "Cerkvenjak Commune";
+      break;
+      case 1090:
+      name = "Destrnik Commune";
+      break;
+      case 1091:
+      name = "Dobje Commune";
+      break;
+      case 1092:
+      name = "Dobrna Commune";
       break;
       case 1093:
-      name = "Dobrova-Horjul-Polhov Gradec";
+      name = "Dobrova-Horjul-Polhov Gradec Commune";
+      break;
+      case 1094:
+      name = "Dobrovnik-Dobronak Commune";
+      break;
+      case 1095:
+      name = "Dolenjske Toplice Commune";
       break;
       case 1096:
-      name = "Domzale";
+      name = "Domzale Commune";
+      break;
+      case 1097:
+      name = "Grad Commune";
+      break;
+      case 1098:
+      name = "Hajdina Commune";
+      break;
+      case 1133:
+      name = "Hoce-Slivnica Commune";
+      break;
+      case 1134:
+      name = "Hodos-Hodos Commune";
+      break;
+      case 1135:
+      name = "Horjul Commune";
       break;
       case 1136:
-      name = "Jesenice";
+      name = "Jesenice Commune";
+      break;
+      case 1137:
+      name = "Jezersko Commune";
       break;
       case 1138:
-      name = "Kamnik";
+      name = "Kamnik Commune";
       break;
       case 1139:
-      name = "Kocevje";
+      name = "Kocevje Commune";
+      break;
+      case 1140:
+      name = "Komenda Commune";
+      break;
+      case 1141:
+      name = "Kostel Commune";
+      break;
+      case 1176:
+      name = "Krizevci Commune";
       break;
       case 1177:
-      name = "Kuzma";
+      name = "Kuzma Commune";
       break;
       case 1178:
-      name = "Lenart";
+      name = "Lenart Commune";
+      break;
+      case 1179:
+      name = "Lendava-Lendva Commune";
       break;
       case 1180:
-      name = "Litija";
+      name = "Litija Commune";
       break;
       case 1181:
-      name = "Ljutomer";
+      name = "Ljutomer Commune";
       break;
       case 1182:
-      name = "Loska Dolina";
+      name = "Loska Dolina Commune";
+      break;
+      case 1183:
+      name = "Lovrenc na Pohorju Commune";
       break;
       case 1184:
-      name = "Luce";
+      name = "Luce Commune";
       break;
       case 1219:
-      name = "Majsperk";
+      name = "Majsperk Commune";
       break;
       case 1220:
-      name = "Maribor";
+      name = "Maribor Commune";
+      break;
+      case 1221:
+      name = "Markovci Commune";
+      break;
+      case 1222:
+      name = "Miklavz na Dravskem polju Commune";
       break;
       case 1223:
-      name = "Miren-Kostanjevica";
+      name = "Miren-Kostanjevica Commune";
+      break;
+      case 1224:
+      name = "Mirna Pec Commune";
       break;
       case 1225:
-      name = "Novo Mesto";
+      name = "Novo mesto Urban Commune";
+      break;
+      case 1226:
+      name = "Oplotnica Commune";
       break;
       case 1227:
-      name = "Piran";
+      name = "Piran-Pirano Commune";
+      break;
+      case 1262:
+      name = "Podlehnik Commune";
+      break;
+      case 1263:
+      name = "Podvelka Commune";
+      break;
+      case 1264:
+      name = "Polzela Commune";
+      break;
+      case 1265:
+      name = "Prebold Commune";
       break;
       case 1266:
-      name = "Preddvor";
+      name = "Preddvor Commune";
+      break;
+      case 1267:
+      name = "Prevalje Commune";
       break;
       case 1268:
-      name = "Ptuj";
+      name = "Ptuj Urban Commune";
+      break;
+      case 1269:
+      name = "Ravne na Koroskem Commune";
+      break;
+      case 1270:
+      name = "Razkrizje Commune";
       break;
       case 1305:
-      name = "Ribnica";
+      name = "Ribnica Commune";
+      break;
+      case 1306:
+      name = "Ribnica na Pohorju Commune";
       break;
       case 1307:
-      name = "Ruse";
+      name = "Ruse Commune";
+      break;
+      case 1308:
+      name = "Salovci Commune";
+      break;
+      case 1309:
+      name = "Selnica ob Dravi Commune";
+      break;
+      case 1310:
+      name = "Sempeter-Vrtojba Commune";
       break;
       case 1311:
-      name = "Sentjur pri Celju";
+      name = "Sentjur pri Celju Commune";
       break;
       case 1312:
-      name = "Slovenska Bistrica";
+      name = "Slovenska Bistrica Commune";
+      break;
+      case 1313:
+      name = "Smartno pri Litiji Commune";
+      break;
+      case 1348:
+      name = "Sodrazica Commune";
+      break;
+      case 1349:
+      name = "Solcava Commune";
+      break;
+      case 1350:
+      name = "Sveta Ana Commune";
+      break;
+      case 1351:
+      name = "Sveti Andraz v Slovenskih goricah Commune";
+      break;
+      case 1352:
+      name = "Tabor Commune";
+      break;
+      case 1353:
+      name = "Tisina Commune";
+      break;
+      case 1354:
+      name = "Trnovska vas Commune";
+      break;
+      case 1355:
+      name = "Trzin Commune";
+      break;
+      case 1356:
+      name = "Velika Polana Commune";
+      break;
+      case 1391:
+      name = "Verzej Commune";
       break;
       case 1392:
-      name = "Videm";
+      name = "Videm Commune";
       break;
       case 1393:
-      name = "Vojnik";
+      name = "Vojnik Commune";
+      break;
+      case 1394:
+      name = "Vransko Commune";
       break;
       case 1395:
-      name = "Zalec";
+      name = "Zalec Commune";
+      break;
+      case 1396:
+      name = "Zetale Commune";
+      break;
+      case 1397:
+      name = "Zirovnica Commune";
+      break;
+      case 1398:
+      name = "Zuzemberk Commune";
+      break;
+      case 1399:
+      name = "Apace Commune";
+      break;
+      case 1434:
+      name = "Cirkulane Commune";
       break;
     }
   }
@@ -11327,6 +11525,9 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 73:
       name = "Nakhon Phanom";
+      break;
+      case 74:
+      name = "Prachin Buri";
       break;
       case 75:
       name = "Ubon Ratchathani";
@@ -12367,100 +12568,97 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Lang Son";
       break;
       case 43:
-      name = "An Giang";
-      break;
-      case 44:
-      name = "Dac Lac";
-      break;
-      case 45:
       name = "Dong Nai";
       break;
-      case 46:
-      name = "Dong Thap";
-      break;
-      case 47:
-      name = "Kien Giang";
-      break;
-      case 49:
-      name = "Song Be";
-      break;
-      case 50:
-      name = "Vinh Phu";
-      break;
-      case 51:
+      case 44:
       name = "Ha Noi";
       break;
-      case 52:
-      name = "Ho Chi Minh";
-      break;
-      case 53:
+      case 45:
       name = "Ba Ria-Vung Tau";
       break;
-      case 54:
+      case 46:
       name = "Binh Dinh";
       break;
-      case 55:
+      case 47:
       name = "Binh Thuan";
       break;
-      case 58:
+      case 49:
+      name = "Gia Lai";
+      break;
+      case 50:
       name = "Ha Giang";
       break;
-      case 59:
-      name = "Ha Tay";
-      break;
-      case 60:
+      case 52:
       name = "Ha Tinh";
       break;
-      case 61:
+      case 53:
       name = "Hoa Binh";
       break;
-      case 62:
+      case 54:
       name = "Khanh Hoa";
       break;
-      case 63:
+      case 55:
       name = "Kon Tum";
+      break;
+      case 58:
+      name = "Nghe An";
+      break;
+      case 59:
+      name = "Ninh Binh";
+      break;
+      case 60:
+      name = "Ninh Thuan";
+      break;
+      case 61:
+      name = "Phu Yen";
+      break;
+      case 62:
+      name = "Quang Binh";
+      break;
+      case 63:
+      name = "Quang Ngai";
       break;
       case 64:
       name = "Quang Tri";
       break;
       case 65:
-      name = "Nam Ha";
-      break;
-      case 66:
-      name = "Nghe An";
-      break;
-      case 67:
-      name = "Ninh Binh";
-      break;
-      case 68:
-      name = "Ninh Thuan";
-      break;
-      case 69:
-      name = "Phu Yen";
-      break;
-      case 70:
-      name = "Quang Binh";
-      break;
-      case 71:
-      name = "Quang Ngai";
-      break;
-      case 72:
-      name = "Quang Tri";
-      break;
-      case 73:
       name = "Soc Trang";
       break;
-      case 74:
-      name = "Thua Thien";
+      case 66:
+      name = "Thua Thien-Hue";
       break;
-      case 75:
+      case 67:
       name = "Tra Vinh";
       break;
-      case 76:
+      case 68:
       name = "Tuyen Quang";
       break;
-      case 77:
+      case 69:
       name = "Vinh Long";
+      break;
+      case 70:
+      name = "Yen Bai";
+      break;
+      case 71:
+      name = "Bac Giang";
+      break;
+      case 72:
+      name = "Bac Kan";
+      break;
+      case 73:
+      name = "Bac Lieu";
+      break;
+      case 74:
+      name = "Bac Ninh";
+      break;
+      case 75:
+      name = "Binh Duong";
+      break;
+      case 76:
+      name = "Binh Phuoc";
+      break;
+      case 77:
+      name = "Ca Mau";
       break;
       case 78:
       name = "Da Nang";
@@ -12487,13 +12685,13 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       name = "Thai Nguyen";
       break;
       case 86:
-      name = "Vinh Puc Province";
+      name = "Vinh Phuc";
       break;
       case 87:
       name = "Can Tho";
       break;
       case 88:
-      name = "Dak Lak";
+      name = "Dac Lak";
       break;
       case 89:
       name = "Lai Chau";

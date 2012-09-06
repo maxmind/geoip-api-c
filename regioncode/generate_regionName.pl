@@ -3,6 +3,12 @@
 # Used to generate regionName.c
 # usage: ./generate_regionName.pl > ../libGeoIP/regionName.c
 
+# Usually run update-region-codes.pl before generate_regionName.pl like
+#
+# ./update-region-codes.pl
+# ./generate_regionName.pl > ../libGeoIP/regionName.c
+
+
 use strict;
 use warnings;
 
