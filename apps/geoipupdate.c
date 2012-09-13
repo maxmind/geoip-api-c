@@ -142,6 +142,9 @@ int main (int argc, char *argv[]) {
 			n += 20;
 			lineptr = realloc(lineptr, n);
 		}
+		if ( c == 13 ) {
+		  continue;
+		}
 		if (c == 10 || c == EOF) {
 			lineptr[line_index++] = '\0';
 			line_index = 0;

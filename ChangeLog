@@ -1,3 +1,5 @@
+	* geoipupdate skips \r otherwise it might be part of the last
+	  product_id ( Boris Zentner )
 	* Update time zones ( Boris Zentner )
 	* Update Region codes ( Boris Zentner )
 	* Remove the unused CITYCONFIDENCE* database types ( Boris Zentner )
