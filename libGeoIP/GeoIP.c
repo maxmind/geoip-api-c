@@ -1494,12 +1494,12 @@ GeoIPRegion * _get_region_v6(GeoIP* gi, geoipv6_t ipnum) {
 GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	if (addr == NULL) {
-		return 0;
+		return NULL;
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-		return 0;
+		return NULL;
 	}
 	ipnum = GeoIP_addr_to_num(addr);
 	return _get_region(gi, ipnum);
@@ -1508,12 +1508,12 @@ GeoIPRegion * GeoIP_region_by_addr (GeoIP* gi, const char *addr) {
 GeoIPRegion * GeoIP_region_by_addr_v6 (GeoIP* gi, const char *addr) {
        geoipv6_t ipnum;
        if (addr == NULL) {
-               return 0;
+               return NULL;
        }
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
                printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-               return 0;
+               return NULL;
        }
        ipnum = _GeoIP_addr_to_num_v6(addr);
        return _get_region_v6(gi, ipnum);
@@ -1522,32 +1522,32 @@ GeoIPRegion * GeoIP_region_by_addr_v6 (GeoIP* gi, const char *addr) {
 GeoIPRegion * GeoIP_region_by_name (GeoIP* gi, const char *name) {
 	unsigned long ipnum;
 	if (name == NULL) {
-		return 0;
+		return NULL;
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-		return 0;
+		return NULL;
 	}
 	if (!(ipnum = _GeoIP_lookupaddress(name)))
-		return 0;
+		return NULL;
 	return _get_region(gi, ipnum);
 }
 
 GeoIPRegion * GeoIP_region_by_name_v6 (GeoIP* gi, const char *name) {
        geoipv6_t ipnum;
        if (name == NULL) {
-               return 0;
+               return NULL;
        }
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
                printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-               return 0;
+               return NULL;
        }
         
         ipnum = _GeoIP_lookupaddress_v6(name);
        if (__GEOIP_V6_IS_NULL(ipnum))
-               return 0;
+               return NULL;
        return _get_region_v6(gi, ipnum);
 }
 
@@ -1555,7 +1555,7 @@ GeoIPRegion * GeoIP_region_by_ipnum (GeoIP* gi, unsigned long ipnum) {
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
 		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-		return 0;
+		return NULL;
 	}
 	return _get_region(gi, ipnum);
 }
@@ -1564,7 +1564,7 @@ GeoIPRegion * GeoIP_region_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum) {
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
                printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
-               return 0;
+               return NULL;
        }
        return _get_region_v6(gi, ipnum);
 }
@@ -1717,7 +1717,7 @@ char **GeoIP_range_by_ip (GeoIP* gi, const char *addr) {
 	char **ret;
 	
 	if (addr == NULL) {
-		return 0;
+		return NULL;
 	}
 
 	ret = malloc(sizeof(char *) * 2);
@@ -1774,7 +1774,7 @@ char *GeoIP_name_by_ipnum_v6 (GeoIP* gi, geoipv6_t ipnum) {
 char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 	unsigned long ipnum;
 	if (addr == NULL) {
-		return 0;
+		return NULL;
 	}
 	ipnum = GeoIP_addr_to_num(addr);
 	return _get_name(gi, ipnum);
@@ -1783,7 +1783,7 @@ char *GeoIP_name_by_addr (GeoIP* gi, const char *addr) {
 char *GeoIP_name_by_addr_v6 (GeoIP* gi, const char *addr) {
   geoipv6_t ipnum;
   if (addr == NULL) {
-    return 0;
+    return NULL;
   }
   ipnum = _GeoIP_addr_to_num_v6(addr);
   return _get_name_v6(gi, ipnum);
@@ -1792,21 +1792,21 @@ char *GeoIP_name_by_addr_v6 (GeoIP* gi, const char *addr) {
 char *GeoIP_name_by_name (GeoIP* gi, const char *name) {
 	unsigned long ipnum;
 	if (name == NULL) {
-		return 0;
+		return NULL;
 	}
 	if (!(ipnum = _GeoIP_lookupaddress(name)))
-		return 0;
+		return NULL;
 	return _get_name(gi, ipnum);
 }
 
 char *GeoIP_name_by_name_v6 (GeoIP* gi, const char *name) {
   geoipv6_t ipnum;
   if (name == NULL) {
-    return 0;
+    return NULL;
   }
         ipnum = _GeoIP_lookupaddress_v6(name);
   if (__GEOIP_V6_IS_NULL(ipnum))
-    return 0;
+    return NULL;
   return _get_name_v6(gi, ipnum);
 }
 
