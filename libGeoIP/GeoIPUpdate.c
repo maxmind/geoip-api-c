@@ -427,7 +427,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	gi = GeoIP_open(file_path_test, GEOIP_STANDARD);
 
 	if (verbose == 1)
-		GeoIP_printf(f,"Performing santity checks ... ");
+		GeoIP_printf(f,"Performing sanity checks ... ");
 
 	if (gi == NULL) {
 		GeoIP_printf(f,"Error opening sanity check database\n");
@@ -844,7 +844,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	gi = GeoIP_open(file_path_test, GEOIP_STANDARD);
 
 	if (verbose == 1)
-		GeoIP_printf(f,"Performing santity checks ... ");
+		GeoIP_printf(f,"Performing sanity checks ... ");
 
 	if (gi == NULL) {
 		GeoIP_printf(f,"Error opening sanity check database\n");
