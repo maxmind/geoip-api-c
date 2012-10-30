@@ -252,7 +252,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 
 	/* get MD5 of current GeoIP database file */
 	if ((cur_db_fh = fopen (GeoIPDBFileName[GEOIP_COUNTRY_EDITION], "rb")) == NULL) {
-    GeoIP_printf(f,"%s%s",  NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    GeoIP_printf(f, NoCurrentDB, GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
 	} else {
 		md5_init(&context);
 		while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
