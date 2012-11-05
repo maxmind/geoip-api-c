@@ -31,7 +31,7 @@ typedef unsigned int uint32_t;
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-d custom_dir] [-f custom_file] [-v] [-i] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-h] [-?] [-d custom_dir] [-f custom_file] [-v] [-i] <ipaddress|hostname>\n");
 }
 
 /* extra info used in _say_range_ip */
@@ -56,7 +56,11 @@ int main (int argc, char *argv[]) {
 			version_flag = 1;
 		} else if (strcmp(argv[i],"-i") == 0) {
 			info_flag = 1;
-                } else if (strcmp(argv[i],"-f") == 0) {
+                } else if (( strcmp(argv[i], "-?" ) == 0 )
+		  || ( strcmp(argv[i], "-h" ) == 0 )) {
+		    usage();
+		    exit(1);
+		} else if (strcmp(argv[i],"-f") == 0) {
 			if ((i+1) < argc){
 				i++;
 				custom_file = argv[i];
