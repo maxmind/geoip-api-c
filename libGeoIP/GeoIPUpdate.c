@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "base64.h"
+
 #include "GeoIPCity.h"
 #include "GeoIP.h"
 #include "GeoIPUpdate.h"
@@ -51,11 +53,12 @@ const char *GeoIPUpdateHost = "updates.maxmind.com";
 /* This is the direct, or proxy port number. */
 static int GeoIPHTTPPort = 80;
 /* License-only format (OLD) */
-const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
+const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
 /* General DB Types formats */
-const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\n\n";
-const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\nHost: %s\n\n";
-const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
+const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\r\n\r\n";
+const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\nHost: %s\r\n\r\n";
+const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
+const char *ProxyAuthorization = "Proxy-Authorization: Basic: %s\r\n";
 
 /* messages */
 const char *NoCurrentDB = "%s can't be opened, proceeding to download database\n";
@@ -165,13 +168,16 @@ void GeoIP_printf(void (*f)(char *), const char *str,...) {
  * Use typical OS support for the optional HTTP Proxy.
  *
  * Proxy adds http://{real-hostname} to URI format strings:
- * sprintf("GET %s%s/ HTTP/1.0\r\n",GeoIPProxyHTTP,GeoIPProxiedHost, ...);
+ * sprintf("GET %s%s/ HTTP/1.1\r\n",GeoIPProxyHTTP,GeoIPProxiedHost, ...);
  */
 
 /* The Protocol is usually "" OR "http://" with a proxy. */
 static char *GeoIPProxyHTTP = "";
 /* GeoIP Hostname where proxy forwards requests. */
 static char *GeoIPProxiedHost = "";
+
+/* base64-encoded username and password that may be required by the proxy */
+static char *GeoIPProxyCreds = NULL;
 
 /* Read http_proxy env. variable & parse it.
  * -----------------------------------------
@@ -182,9 +188,10 @@ static char *GeoIPProxiedHost = "";
  *
  * A "user:password@" part will break this.
  */
-short int parse_http_proxy(char **proxy_host, int *port) {
+short int parse_http_proxy(char **proxy_host, char **proxy_creds, int *port) {
 	char * http_proxy;
 	char * port_value;
+	char * at_sign;
 
 	if ((http_proxy = getenv("http_proxy"))) {
 
@@ -194,13 +201,22 @@ short int parse_http_proxy(char **proxy_host, int *port) {
 		if ( *proxy_host == NULL )
 			return 0; /* let the other functions deal with the memory error */
 
-		if ((port_value = strchr(*proxy_host, ':'))) {
+		if ((port_value = strrchr(*proxy_host, ':'))) {
 			*port_value++ = '\0';
 			*port = atoi(port_value);
 		}
 		else {
 			*port = 80;
 		}
+
+ 		if ((at_sign = strchr(*proxy_host,'@'))) {
+ 			*proxy_creds = *proxy_host;
+ 			*proxy_host = at_sign +1;
+ 			*at_sign = '\0';
+ 		} else {
+ 			*proxy_creds = NULL;
+ 		}		
+ 
 		return(1);
 	}
 	else {
@@ -209,21 +225,51 @@ short int parse_http_proxy(char **proxy_host, int *port) {
 }
 
 /* Get the GeoIP host or the current HTTP Proxy host. */
-struct hostent *GeoIP_get_host_or_proxy (void) {
+struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 	char * hostname = (char *) GeoIPUpdateHost;
 	char * proxy_host;
+ 	char * proxy_creds;
+ 	char * encoded_proxy_creds;
+ 	size_t encoded_proxy_creds_len;
 	int proxy_port;
 
 	/* Set Proxy from OS: Unix/Linux */
-	if (parse_http_proxy(&proxy_host,&proxy_port)) {
-		hostname = proxy_host;
+	if (parse_http_proxy(&proxy_host, &proxy_creds, &proxy_port)) {
+
 		GeoIPProxyHTTP = "http://";
-		GeoIPProxiedHost = (char *) GeoIPUpdateHost;
-		GeoIPHTTPPort = proxy_port;
+		hostname = proxy_host;
+
+ 		// The current code assumes there are no reserved/unsafe characters in the username or password.
+ 		// The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
+ 		encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
+ 		if (encoded_proxy_creds == NULL) {
+ 			if (encoded_proxy_creds_len == 0 && strlen(proxy_creds) != 0) {
+ 				GeoIP_printf(f,"Error processing proxy credentials: data too long: %d", strlen(proxy_creds));
+ 			} else {
+ 				GeoIP_printf(f,"Error processing proxy credentials: out of memory");
+ 			}
+ 		} else {
+ 			GeoIPProxyCreds = malloc(sizeof(char) * (strlen(ProxyAuthorization) + strlen(encoded_proxy_creds) + 1)); 
+ 			sprintf(GeoIPProxyCreds, ProxyAuthorization, encoded_proxy_creds);
+ 			GeoIPProxiedHost = (char *) GeoIPUpdateHost;
+ 			GeoIPHTTPPort = proxy_port;
+ 		}
+ 
+ 		free(encoded_proxy_creds);
+
 	}
 
 	/* Resolve DNS host entry. */
 	return(gethostbyname(hostname));
+}
+
+void GeoIP_send_request_uri(const int sock, const char *request_uri) {
+ 
+ 	send(sock, request_uri, strlen(request_uri),0);
+ 	if (GeoIPProxyCreds) {
+ 		send(sock,GeoIPProxyCreds,strlen(GeoIPProxyCreds),0);
+ 	}
+ 	send(sock, "\r\n", 2 ,0);
 }
 
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char * )) {
@@ -267,7 +313,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
     GeoIP_printf(f, MD5Info, hex_digest);
 	}
 
-	hostlist = GeoIP_get_host_or_proxy();
+	hostlist = GeoIP_get_host_or_proxy(f);
 
 	if (hostlist == NULL)
 		return GEOIP_DNS_ERR;
@@ -298,7 +344,8 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 	if (request_uri == NULL)
 		return GEOIP_OUT_OF_MEMORY_ERR;
 	sprintf(request_uri,GeoIPHTTPRequest,GeoIPProxyHTTP,GeoIPProxiedHost,license_key, hex_digest);
-	send(sock, request_uri, strlen(request_uri),0);
+
+	GeoIP_send_request_uri(sock, request_uri);
 	free(request_uri);
 
 	buf = malloc(sizeof(char) * block_size + 1);
@@ -514,7 +561,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	size_t request_uri_len;
 	size_t size;
 
-	hostlist = GeoIP_get_host_or_proxy();
+	hostlist = GeoIP_get_host_or_proxy(f);
 
 	if (hostlist == NULL)
 		return GEOIP_DNS_ERR;
@@ -548,7 +595,9 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (verbose == 1) {
 		GeoIP_printf(f, "sending request %s \n",request_uri);
 	}
-	send(sock, request_uri, strlen(request_uri),0); /* send the request */
+
+	GeoIP_send_request_uri(sock, request_uri);
+
 	free(request_uri);
 	buf = malloc(sizeof(char) * (block_size+4));
 	if (buf == NULL)
@@ -636,7 +685,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 
 		/* get client ip address from MaxMind web page */
 		sprintf(request_uri,GeoIPHTTPRequestClientIP,GeoIPProxyHTTP,GeoIPProxiedHost,GeoIPUpdateHost);
-		send(sock, request_uri, strlen(request_uri),0); /* send the request */
+		GeoIP_send_request_uri(sock, request_uri);
 		if (verbose == 1) {
 			GeoIP_printf(f, "sending request %s", request_uri);
 		}
@@ -705,7 +754,7 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	if (request_uri == NULL)
 	        return GEOIP_OUT_OF_MEMORY_ERR;
 	snprintf(request_uri, request_uri_len, GeoIPHTTPRequestMD5,GeoIPProxyHTTP,GeoIPProxiedHost,hex_digest,hex_digest2,user_id,data_base_type);
-	send(sock, request_uri, strlen(request_uri),0);
+	GeoIP_send_request_uri(sock, request_uri);
 	if (verbose == 1) {
 		GeoIP_printf(f, "sending request %s\n",request_uri);
 	}
