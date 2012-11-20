@@ -153,35 +153,57 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
 
 static
 GeoIPRecord    *
-_get_record(GeoIP * gi, unsigned long ipnum)
+_get_record_gl(GeoIP * gi, unsigned long ipnum, GeoIPLookup * gl)
 {
   unsigned int    seek_record;
+  GeoIPRecord * r;
   if (gi->databaseType != GEOIP_CITY_EDITION_REV0
       && gi->databaseType != GEOIP_CITY_EDITION_REV1) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
-    return 0;
+    return NULL;
   }
 
-  seek_record = _GeoIP_seek_record(gi, ipnum);
-  return _extract_record(gi, seek_record, NULL);
+  seek_record = _GeoIP_seek_record_gl(gi, ipnum, gl);
+  r = _extract_record(gi, seek_record, NULL);
+  if ( r )
+    r->netmask = gl->netmask;
+  return r;
+}
+
+static
+GeoIPRecord    *
+_get_record(GeoIP * gi, unsigned long ipnum)
+{
+  GeoIPLookup gl;
+  return _get_record_gl(gi, ipnum, &gl);
+}
+
+static
+GeoIPRecord    *
+_get_record_v6_gl(GeoIP * gi, geoipv6_t ipnum, GeoIPLookup * gl)
+{
+  GeoIPRecord * r;
+  unsigned int    seek_record;
+  if (gi->databaseType != GEOIP_CITY_EDITION_REV0_V6 &&
+      gi->databaseType != GEOIP_CITY_EDITION_REV1_V6) {
+    printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1_V6]);
+    return NULL;
+  }
+
+  seek_record = _GeoIP_seek_record_v6_gl(gi, ipnum, gl);
+  r = _extract_record(gi, seek_record, NULL);
+  if ( r )
+    r->netmask = gl->netmask;
+  return r;
 }
 
 static
 GeoIPRecord    *
 _get_record_v6(GeoIP * gi, geoipv6_t ipnum)
 {
-  unsigned int    seek_record;
-  if (gi->databaseType != GEOIP_CITY_EDITION_REV0_V6 &&
-      gi->databaseType != GEOIP_CITY_EDITION_REV1_V6) {
-    printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1_V6]);
-    return 0;
-  }
-
-  seek_record = _GeoIP_seek_record_v6(gi, ipnum);
-  return _extract_record(gi, seek_record, NULL);
+  GeoIPLookup gl;
+  return _get_record_v6_gl(gi, ipnum, &gl);
 }
-
-
 
 GeoIPRecord    *
 GeoIP_record_by_ipnum(GeoIP * gi, unsigned long ipnum)
@@ -199,11 +221,12 @@ GeoIPRecord    *
 GeoIP_record_by_addr(GeoIP * gi, const char *addr)
 {
   unsigned long   ipnum;
+  GeoIPLookup gl;
   if (addr == NULL) {
     return 0;
   }
   ipnum = GeoIP_addr_to_num(addr);
-  return _get_record(gi, ipnum);
+  return _get_record_gl(gi, ipnum, &gl);
 }
 
 GeoIPRecord    *

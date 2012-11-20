@@ -1,3 +1,4 @@
+	* Make API thread safe ( Boris Zentner )
 	* geoiplookup's default charset is UTF8
 	  -l change the charset back to iso8859-1 ( Boris Zentner )
 	* geoipupdate skips \r otherwise it might be part of the last
