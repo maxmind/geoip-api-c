@@ -45,6 +45,7 @@ typedef struct GeoIPRecordTag {
 	int area_code;
 	int charset;
 	char *continent_code;
+        int netmask;	
 } GeoIPRecord;
 
 GeoIPRecord * GeoIP_record_by_ipnum (GeoIP* gi, unsigned long ipnum);
