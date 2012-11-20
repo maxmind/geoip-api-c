@@ -31,7 +31,7 @@ typedef unsigned int uint32_t;
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-h] [-?] [-d custom_dir] [-f custom_file] [-v] [-i] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-h] [-?] [-d custom_dir] [-f custom_file] [-v] [-i] [-l] <ipaddress|hostname>\n");
 }
 
 /* extra info used in _say_range_ip */
@@ -45,6 +45,7 @@ int main (int argc, char *argv[]) {
 	char *custom_directory = NULL;
 	char *custom_file = NULL;
 	int version_flag = 0;
+	int charset = GEOIP_CHARSET_UTF8;
 
 	if (argc < 2) {
 		usage();
@@ -54,6 +55,8 @@ int main (int argc, char *argv[]) {
 	while (i < argc) {
 		if (strcmp(argv[i],"-v") == 0) {
 			version_flag = 1;
+		} else if (strcmp(argv[i],"-l") == 0) {
+		        charset = GEOIP_CHARSET_ISO_8859_1;
 		} else if (strcmp(argv[i],"-i") == 0) {
 			info_flag = 1;
                 } else if (( strcmp(argv[i], "-?" ) == 0 )
@@ -91,6 +94,7 @@ int main (int argc, char *argv[]) {
 		if (NULL == gi) {
 			printf("%s not available, skipping...\n", custom_file);
 		} else {
+                  gi->charset = charset;
 		  i = GeoIP_database_edition(gi);
 			if (version_flag == 1) {
 				db_info = GeoIP_database_info(gi);
@@ -109,6 +113,7 @@ int main (int argc, char *argv[]) {
 				if (NULL == gi) {
 					printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
 				} else {
+                                        gi->charset = charset;
 					if (version_flag == 1) {
 						db_info = GeoIP_database_info(gi);
 						printf("%s: %s\n",GeoIPDBDescription[i], db_info == NULL ? "" : db_info );
