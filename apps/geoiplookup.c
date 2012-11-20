@@ -325,50 +325,6 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
                                 GeoIPRecord_delete(gir);
 			}
 		}
-		else if (GEOIP_CITYCONFIDENCE_EDITION == i) {
-			gir = GeoIP_record_by_ipnum(gi, ipnum);
-			if (NULL == gir) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-                                char country_str[5], region_str[5], city_str[5], postal_str[5];
-                                _mk_conf_str(gir->country_conf, country_str, 5);
-                                _mk_conf_str(gir->region_conf,  region_str,  5);
-                                _mk_conf_str(gir->city_conf,    city_str,    5);
-                                _mk_conf_str(gir->postal_conf,  postal_str,  5);
-
-				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d, %s, %s, %s, %s\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
-				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code,
-                                       country_str, region_str, city_str, postal_str                       
-                                     );
-                                _say_range_by_ip(gi, ipnum);
-                                GeoIPRecord_delete(gir);                                
-			}
-		}
-		else if (GEOIP_CITYCONFIDENCEDIST_EDITION == i) {
-			gir = GeoIP_record_by_ipnum(gi, ipnum);
-			if (NULL == gir) {
-				printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-			}
-			else {
-                                char country_str[5], region_str[5], city_str[5], postal_str[5], accuracy_radius_str[5];
-                                _mk_conf_str(gir->country_conf, country_str, 5);
-                                _mk_conf_str(gir->region_conf,  region_str,  5);
-                                _mk_conf_str(gir->city_conf,    city_str,    5);
-                                _mk_conf_str(gir->postal_conf,  postal_str,  5);
-                                if (gir->accuracy_radius != 1023){
-                                  sprintf(accuracy_radius_str, "%d", gir->accuracy_radius );
-} else {
-                                strcpy(accuracy_radius_str,"N/A");}
-  
-				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d, %s, %s, %s, %s, %s\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
-				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code,
-                                       country_str, region_str, city_str, postal_str, accuracy_radius_str
-                                     );
-                                _say_range_by_ip(gi, ipnum);
-                                GeoIPRecord_delete(gir);                                
-			}
-		}
 		else if (GEOIP_ORG_EDITION == i || GEOIP_ISP_EDITION == i) {
 			org = GeoIP_org_by_ipnum(gi, ipnum);
 			if (org == NULL) {

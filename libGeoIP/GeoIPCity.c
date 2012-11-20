@@ -38,9 +38,6 @@
 static
 const int       FULL_RECORD_LENGTH = 50;
 
-static const int CITYCONFIDENCE_FIXED_RECORD = 4;
-static const int CITYCONFIDENCEDIST_FIXED_RECORD = 6;
-
 
 static
 GeoIPRecord    *
@@ -62,93 +59,6 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
   memset(record, 0, sizeof(GeoIPRecord));
   record->charset = gi->charset;
 
-  if (gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION
-      || gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION) {
-
-    int             fixed_rec_size = gi->record_length +
-    ((gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION)
-     ? CITYCONFIDENCE_FIXED_RECORD
-     : CITYCONFIDENCEDIST_FIXED_RECORD);
-
-    //allocate max rec size, even for CITYCONFIDENCE_FIXED_RECORD
-      //+4 is the max_record_length
-	unsigned char   tmp_fixed_record[CITYCONFIDENCEDIST_FIXED_RECORD + 4];
-    int             dseg = gi->databaseSegments[0] * gi->record_length * 2 + gi->record_length;
-//    int aligned_dseg = dseg ;
-
-    int             offset = seek_record - gi->databaseSegments[0] - 1;	/* -1 b/c zero is not
-									 * found. but the array
-									 * start with 0 */
-    record_pointer = offset * fixed_rec_size + dseg + gi->dyn_seg_size;
-    if (gi->cache == NULL) {
-
-	/* read from disk */
-      bytes_read = pread(fileno(gi->GeoIPDatabase), tmp_fixed_record, fixed_rec_size, record_pointer);
-
-      if (bytes_read != fixed_rec_size)
-	return NULL;
-
-      record->country_conf = tmp_fixed_record[0];
-      record->region_conf = tmp_fixed_record[1];
-      record->city_conf = tmp_fixed_record[2];
-      record->postal_conf = tmp_fixed_record[3];
-
-      record->accuracy_radius =
-	gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION
-	? ((tmp_fixed_record[4] + (tmp_fixed_record[5] << 8)) & 0x3ff) : 0x3ff;
-
-      int             t = fixed_rec_size - gi->record_length;
-      
-    record_pointer = dseg + tmp_fixed_record[t] +
-	(tmp_fixed_record[t + 1] << 8) + (tmp_fixed_record[t + 2] << 16) ;
-
-    if (gi->record_length == 4)
-	record_pointer += (tmp_fixed_record[t + 3] << 24);
-
-      begin_record_buf = record_buf = malloc(sizeof(char) * FULL_RECORD_LENGTH);
-
-      bytes_read = pread(fileno(gi->GeoIPDatabase), record_buf, FULL_RECORD_LENGTH, record_pointer);
-      
-      if (bytes_read == 0) {
-	/* eof or other error */
-	free(begin_record_buf);
-	free(record);
-	return NULL;
-      }
-
-    }
-    else {
-      record_buf = gi->cache + (long) record_pointer;
-
-      record->country_conf = record_buf[0];
-      record->region_conf = record_buf[1];
-      record->city_conf = record_buf[2];
-      record->postal_conf = record_buf[3];
-
-      record->accuracy_radius =
-	gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION
-	? ((record_buf[4] + (record_buf[5] << 8)) & 0x3ff) : 0x3ff;
-
-      int             t = fixed_rec_size - gi->record_length;
-
-        record_pointer = dseg + record_buf[t] +
-	(record_buf[t + 1] << 8) + (record_buf[t + 2] << 16) ;
-     
-     if (gi->record_length == 4)
-	record_pointer += (record_buf[t + 3] << 24);
-
-      record_buf = gi->cache + (long) record_pointer;
-    }
-
-  }			/* other city records */
-  else {
-
-    record->country_conf = GEOIP_UNKNOWN_CONF;
-    record->region_conf = GEOIP_UNKNOWN_CONF;
-    record->city_conf = GEOIP_UNKNOWN_CONF;
-    record->postal_conf = GEOIP_UNKNOWN_CONF;
-    record->accuracy_radius = GEOIP_UNKNOWN_ACCURACY_RADIUS;
-
     record_pointer = seek_record + (2 * gi->record_length - 1) * gi->databaseSegments[0];
 
     if (gi->cache == NULL) {
@@ -164,7 +74,6 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
     else {
       record_buf = gi->cache + (long) record_pointer;
     }
-  }
 
   /* get country */
   record->continent_code = (char *) GeoIP_country_continent[record_buf[0]];
@@ -222,8 +131,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
    * get area code and metro code for post April 2002 databases and for US
    * locations
    */
-  if (GEOIP_CITY_EDITION_REV1 == gi->databaseType
-      || GEOIP_CITYCONFIDENCE_EDITION == gi->databaseType) {
+  if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
     if (!strcmp(record->country_code, "US")) {
       record_buf += 3;
       for (j = 0; j < 3; ++j)
@@ -249,9 +157,7 @@ _get_record(GeoIP * gi, unsigned long ipnum)
 {
   unsigned int    seek_record;
   if (gi->databaseType != GEOIP_CITY_EDITION_REV0
-      && gi->databaseType != GEOIP_CITY_EDITION_REV1
-      && gi->databaseType != GEOIP_CITYCONFIDENCE_EDITION
-      && gi->databaseType != GEOIP_CITYCONFIDENCEDIST_EDITION) {
+      && gi->databaseType != GEOIP_CITY_EDITION_REV1) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int) gi->databaseType], GeoIPDBDescription[GEOIP_CITY_EDITION_REV1]);
     return 0;
   }

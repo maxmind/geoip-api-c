@@ -311,8 +311,8 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP Country V6 Edition", 
   "GeoIP LocationID ASCII Edition", 
   "GeoIP Accuracy Radius Edition",
-  "GeoIP City with Confidence Edition",
-  "GeoIP City with Confidence and Accuracy Edition",
+  NULL,
+  NULL,
   "GeoIP Large Country Edition", 
   "GeoIP Large Country V6 Edition",
   NULL,
@@ -399,8 +399,6 @@ void _GeoIP_setup_dbfilename() {
                 GeoIPDBFileName[GEOIP_COUNTRY_EDITION_V6]       = _GeoIP_full_path_to("GeoIPv6.dat");
                 GeoIPDBFileName[GEOIP_LOCATIONA_EDITION]        = _GeoIP_full_path_to("GeoIPLocA.dat");
                 GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION]   = _GeoIP_full_path_to("GeoIPDistance.dat");
-                GeoIPDBFileName[GEOIP_CITYCONFIDENCE_EDITION]   = _GeoIP_full_path_to("GeoIPCityConfidence.dat");
-                GeoIPDBFileName[GEOIP_CITYCONFIDENCEDIST_EDITION]     = _GeoIP_full_path_to("GeoIPCityConfidenceDist.dat");
                 GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION]    = _GeoIP_full_path_to("GeoIP.dat");
                 GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION_V6] = _GeoIP_full_path_to("GeoIPv6.dat");
 		GeoIPDBFileName[GEOIP_ASNUM_EDITION_V6]		= _GeoIP_full_path_to("GeoIPASNumv6.dat");
@@ -535,8 +533,6 @@ void _setup_segments(GeoIP * gi) {
 			  	   gi->databaseType == GEOIP_LOCATIONA_EDITION ||
 			  	   gi->databaseType == GEOIP_ACCURACYRADIUS_EDITION ||
                                    gi->databaseType == GEOIP_ACCURACYRADIUS_EDITION_V6 ||
-			  	   gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION ||
-                                   gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION ||
                                    gi->databaseType == GEOIP_CITY_EDITION_REV0_V6 ||
 				   gi->databaseType == GEOIP_CITY_EDITION_REV1_V6 ||
 				   gi->databaseType == GEOIP_CITYCONF_EDITION ||
@@ -548,7 +544,7 @@ void _setup_segments(GeoIP * gi) {
 				gi->databaseSegments = malloc(sizeof(int));
 				gi->databaseSegments[0] = 0;
 
-                                segment_record_length = gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION ? LARGE_SEGMENT_RECORD_LENGTH : SEGMENT_RECORD_LENGTH;
+                                segment_record_length = SEGMENT_RECORD_LENGTH;
 
 				silence = read(fno, buf, segment_record_length );
 				for (j = 0; j < segment_record_length; j++) {
@@ -561,21 +557,8 @@ void _setup_segments(GeoIP * gi) {
 		                    gi->databaseType == GEOIP_DOMAIN_EDITION ||                                  
 		                    gi->databaseType == GEOIP_DOMAIN_EDITION_V6 ||                                  
 			 	    gi->databaseType == GEOIP_ISP_EDITION    ||
-			 	    gi->databaseType == GEOIP_ISP_EDITION_V6 ||
-                                    gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION 
-                                    )
+				    gi->databaseType == GEOIP_ISP_EDITION_V6 )
 					gi->record_length = ORG_RECORD_LENGTH;
-
-                                if ( gi->databaseType == GEOIP_CITYCONFIDENCE_EDITION 
-                                   ||  gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION 
-                                  ) {
-                                  silence = pread(fileno(gi->GeoIPDatabase), buf, gi->record_length,  gi->databaseSegments[0] * 2 * gi->record_length);
-                                  gi->dyn_seg_size = 0;
- 	                          for (j = 0; j < gi->record_length; j++) {
-					gi->dyn_seg_size += (buf[j] << (j * 8));
-				  }
-                                }
-
 			}
 			break;
 		} else {
