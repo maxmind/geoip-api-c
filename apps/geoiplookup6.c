@@ -116,13 +116,9 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 {
 	const char     *country_code;
 	const char     *country_name;
-	const char     *domain_name;
         const char     *asnum_name;        
-	int             netspeed;
 	int             country_id;
-	GeoIPRegion    *region;
 	GeoIPRecord    *gir;
-	const char     *org;
 
 	geoipv6_t       ipnum;
 	ipnum = _GeoIP_lookupaddress_v6(hostname);
