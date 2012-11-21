@@ -1,5 +1,5 @@
 
-#include "GeoIP.h"
+#include "GeoIP_internal.h"
 
 char           *
 GeoIP_org_by_ipnum(GeoIP * gi, unsigned long ipnum)
@@ -222,7 +222,6 @@ GeoIP_country_id_by_name(GeoIP * gi, const char *host)
 int
 GeoIP_id_by_addr_v6(GeoIP * gi, const char *addr)
 {
-	geoipv6_t	ipnum;
 	GeoIPLookup	gl;
 	return GeoIP_id_by_addr_v6_gl(gi, addr, &gl);
 }
@@ -265,7 +264,7 @@ GeoIPRegion    *
 _get_region(GeoIP * gi, unsigned long ipnum)
 {
 	GeoIPLookup	gl;
-	return _get_region_gl(gi, ipnum, &gl);
+	return GeoIP_region_by_ipnum_gl(gi, ipnum, &gl);
 }
 
 static
@@ -273,7 +272,7 @@ GeoIPRegion    *
 _get_region_v6(GeoIP * gi, geoipv6_t ipnum)
 {
 	GeoIPLookup	gl;
-	return _get_region_v6_gl(gi, ipnum, &gl);
+	return GeoIP_region_by_ipnum_v6_gl(gi, ipnum, &gl);
 }
 
 GeoIPRegion    *
