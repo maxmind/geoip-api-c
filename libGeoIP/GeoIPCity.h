@@ -21,7 +21,7 @@
 #ifndef GEOIPCITY_H
 #define GEOIPCITY_H
 
-#include <GeoIP.h>
+#include "GeoIP.h"
 
 #ifdef __cplusplus
 extern "C" {

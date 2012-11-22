@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <GeoIP.h>
+#include "GeoIP.h"
 #include <sys/types.h> /* For uint32_t */
 #ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */

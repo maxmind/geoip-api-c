@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <GeoIP.h>
-#include <GeoIPCity.h>
+#include "GeoIP.h"
+#include "GeoIPCity.h"
 #if !defined(_WIN32)
 #include <sys/time.h>
 #endif /* !defined(_WIN32) */

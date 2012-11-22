@@ -19,9 +19,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <GeoIP.h>
-#include <GeoIP_internal.h>
-#include <GeoIPCity.h>
+#include "GeoIP.h"
+#include "GeoIP_internal.h"
+#include "GeoIPCity.h"
 #if !defined(_WIN32)
 #include <unistd.h>
 #include <netdb.h>

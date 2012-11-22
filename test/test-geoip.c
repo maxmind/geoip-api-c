@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <GeoIP.h>
+#include "GeoIP.h"
 
 int main () {
   FILE *f;

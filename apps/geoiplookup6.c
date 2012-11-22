@@ -18,9 +18,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <GeoIP.h>
-#include <GeoIPCity.h>
-#include <GeoIP_internal.h>
+#include "GeoIP.h"
+#include "GeoIPCity.h"
+#include "GeoIP_internal.h"
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
