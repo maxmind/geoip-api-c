@@ -209,14 +209,14 @@ short int parse_http_proxy(char **proxy_host, char **proxy_creds, int *port) {
 			*port = 80;
 		}
 
- 		if ((at_sign = strchr(*proxy_host,'@'))) {
- 			*proxy_creds = *proxy_host;
- 			*proxy_host = at_sign +1;
- 			*at_sign = '\0';
- 		} else {
- 			*proxy_creds = NULL;
- 		}		
- 
+		if ((at_sign = strchr(*proxy_host,'@'))) {
+			*proxy_creds = *proxy_host;
+			*proxy_host = at_sign +1;
+			*at_sign = '\0';
+		} else {
+			*proxy_creds = NULL;
+		}
+
 		return(1);
 	}
 	else {
@@ -228,9 +228,9 @@ short int parse_http_proxy(char **proxy_host, char **proxy_creds, int *port) {
 struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 	char * hostname = (char *) GeoIPUpdateHost;
 	char * proxy_host;
- 	char * proxy_creds;
- 	char * encoded_proxy_creds;
- 	size_t encoded_proxy_creds_len;
+	char * proxy_creds;
+	char * encoded_proxy_creds;
+	size_t encoded_proxy_creds_len;
 	int proxy_port;
 
 	/* Set Proxy from OS: Unix/Linux */
@@ -239,23 +239,23 @@ struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 		GeoIPProxyHTTP = "http://";
 		hostname = proxy_host;
 
- 		// The current code assumes there are no reserved/unsafe characters in the username or password.
- 		// The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
- 		encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
- 		if (encoded_proxy_creds == NULL) {
- 			if (encoded_proxy_creds_len == 0 && strlen(proxy_creds) != 0) {
- 				GeoIP_printf(f,"Error processing proxy credentials: data too long: %d", strlen(proxy_creds));
- 			} else {
- 				GeoIP_printf(f,"Error processing proxy credentials: out of memory");
- 			}
- 		} else {
- 			GeoIPProxyCreds = malloc(sizeof(char) * (strlen(ProxyAuthorization) + strlen(encoded_proxy_creds) + 1)); 
- 			sprintf(GeoIPProxyCreds, ProxyAuthorization, encoded_proxy_creds);
- 			GeoIPProxiedHost = (char *) GeoIPUpdateHost;
- 			GeoIPHTTPPort = proxy_port;
- 		}
- 
- 		free(encoded_proxy_creds);
+		// The current code assumes there are no reserved/unsafe characters in the username or password.
+		// The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
+		encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
+		if (encoded_proxy_creds == NULL) {
+			if (encoded_proxy_creds_len == 0 && strlen(proxy_creds) != 0) {
+				GeoIP_printf(f,"Error processing proxy credentials: data too long: %d", strlen(proxy_creds));
+			} else {
+				GeoIP_printf(f,"Error processing proxy credentials: out of memory");
+			}
+		} else {
+			GeoIPProxyCreds = malloc(sizeof(char) * (strlen(ProxyAuthorization) + strlen(encoded_proxy_creds) + 1)); 
+			sprintf(GeoIPProxyCreds, ProxyAuthorization, encoded_proxy_creds);
+			GeoIPProxiedHost = (char *) GeoIPUpdateHost;
+			GeoIPHTTPPort = proxy_port;
+		}
+
+		free(encoded_proxy_creds);
 
 	}
 
@@ -264,12 +264,12 @@ struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 }
 
 void GeoIP_send_request_uri(const int sock, const char *request_uri) {
- 
- 	send(sock, request_uri, strlen(request_uri),0);
- 	if (GeoIPProxyCreds) {
- 		send(sock,GeoIPProxyCreds,strlen(GeoIPProxyCreds),0);
- 	}
- 	send(sock, "\r\n", 2 ,0);
+
+	send(sock, request_uri, strlen(request_uri),0);
+	if (GeoIPProxyCreds) {
+		send(sock,GeoIPProxyCreds,strlen(GeoIPProxyCreds),0);
+	}
+	send(sock, "\r\n", 2 ,0);
 }
 
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char * )) {
