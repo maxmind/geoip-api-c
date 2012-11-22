@@ -25,7 +25,5 @@ md5.lo md5.o: md5.c
 
 base64.lo base64.o: base64.c
 
-bas64.lo base64.o: base64.c
-
 timeZone.lo timeZone.o: timeZone.c
 
