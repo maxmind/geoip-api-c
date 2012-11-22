@@ -56,5 +56,5 @@ used:
 
 Jude Nagurney 11/04/2012
 Proxy Authorization needs to decode reserved/unsafe characters
-which may be encoded in the proxy credentials before 
+which may be encoded in the proxy credentials before
 base64-encoding the Proxy-Authorization data.
