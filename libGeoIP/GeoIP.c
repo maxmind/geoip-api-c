@@ -1636,6 +1636,7 @@ char *_get_name_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 	return org_buf;
 }
 
+static
 char *_get_name_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
   int seek_org;
   char buf[MAX_ORG_RECORD_LENGTH];
