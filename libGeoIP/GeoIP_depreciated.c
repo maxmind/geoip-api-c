@@ -50,6 +50,13 @@ GeoIP_last_netmask(GeoIP * gi)
 }
 
 unsigned int
+_GeoIP_seek_record_v6(GeoIP * gi, geoipv6_t ipnum)
+{
+	GeoIPLookup	gl;
+	return _GeoIP_seek_record_v6_gl(gi, ipnum, &gl);
+}
+
+unsigned int
 _GeoIP_seek_record(GeoIP * gi, unsigned long ipnum)
 {
 	GeoIPLookup	gl;
