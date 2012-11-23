@@ -239,6 +239,9 @@ struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 		GeoIPProxyHTTP = "http://";
 		hostname = proxy_host;
 
+             if ( proxy_creds == NULL )
+                  proxy_creds = "";
+
 		// The current code assumes there are no reserved/unsafe characters in the username or password.
 		// The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
 		encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
