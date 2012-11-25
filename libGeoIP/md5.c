@@ -318,9 +318,3 @@ md5_final( MD5_CONTEXT *hd )
 #undef X
 
 }
-
-static byte *
-md5_read( MD5_CONTEXT *hd )
-{
-  return hd->buf;
-}

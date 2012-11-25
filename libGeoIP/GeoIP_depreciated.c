@@ -266,22 +266,6 @@ GeoIP_assign_region_by_inetaddr_v6(GeoIP * gi, geoipv6_t inetaddr, GeoIPRegion *
 }
 
 
-static
-GeoIPRegion    *
-_get_region(GeoIP * gi, unsigned long ipnum)
-{
-	GeoIPLookup	gl;
-	return GeoIP_region_by_ipnum_gl(gi, ipnum, &gl);
-}
-
-static
-GeoIPRegion    *
-_get_region_v6(GeoIP * gi, geoipv6_t ipnum)
-{
-	GeoIPLookup	gl;
-	return GeoIP_region_by_ipnum_v6_gl(gi, ipnum, &gl);
-}
-
 GeoIPRegion    *
 GeoIP_region_by_addr(GeoIP * gi, const char *addr)
 {
@@ -319,22 +303,6 @@ GeoIP_region_by_ipnum_v6(GeoIP * gi, geoipv6_t ipnum)
 {
 	GeoIPLookup	gl;
 	return GeoIP_region_by_ipnum_v6_gl(gi, ipnum, &gl);
-}
-
-static
-char           *
-_get_name(GeoIP * gi, unsigned long ipnum)
-{
-	GeoIPLookup	gl;
-	return GeoIP_name_by_ipnum_gl(gi, ipnum, &gl);
-}
-
-static
-char           *
-_get_name_v6(GeoIP * gi, geoipv6_t ipnum)
-{
-	GeoIPLookup	gl;
-	return GeoIP_name_by_ipnum_v6_gl(gi, ipnum, &gl);
 }
 
 char          **

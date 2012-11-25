@@ -133,15 +133,6 @@ static const char * _mk_NA( const char * p ){
  return p ? p : "N/A";
 }
 
-static void _mk_conf_str( unsigned char val , char * to, int size){
-  if ( ( val & 0x7f ) == 0x7f ){
-    snprintf(to, 5, "N/A");
-    return;
-  }
-  snprintf(to, 5, "%d", val);
-  return;
-}
-
 static unsigned long
 __addr_to_num(const char *addr)
 {
