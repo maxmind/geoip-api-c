@@ -1654,7 +1654,7 @@ char *_get_name_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
       gi->databaseType != GEOIP_NETSPEED_EDITION_REV1_V6 &&
       gi->databaseType != GEOIP_USERTYPE_EDITION_V6 &&
       gi->databaseType != GEOIP_REGISTRAR_EDITION_V6 &&
-      gi->databaseType != GEOIP_LOCATIONA_EDITION
+      gi->databaseType != GEOIP_LOCATIONA_EDITION_V6
       ) {
     printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
     return NULL;
