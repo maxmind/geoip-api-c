@@ -155,7 +155,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 		}
 	
         	else if (GEOIP_CITY_EDITION_REV0_V6 == i) {
-		        gir = GeoIP_record_by_name_v6(gi, hostname);
+		        gir = GeoIP_record_by_ipnum_v6(gi, ipnum);
       		        if (NULL == gir) {
 			        printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 		        }
@@ -165,7 +165,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
 		        }
 	        }
 	        else if (GEOIP_CITY_EDITION_REV1_V6 == i) {
-		        gir = GeoIP_record_by_name_v6(gi, hostname);
+		        gir = GeoIP_record_by_ipnum_v6(gi, ipnum);
 		        if (NULL == gir) {
 			        printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
 		        }
