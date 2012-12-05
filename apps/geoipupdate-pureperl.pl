@@ -39,7 +39,7 @@ https
 use strict;
 use warnings;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use 5.008;
 use Data::Dumper;
@@ -106,6 +106,20 @@ if ( $opts{v} ) {
     print "Product ids @product_ids\n";
 }
 
+my $err_cnt = 0;
+
+my $print_on_error = sub {
+    my $err = shift;
+    return unless $err;
+    if ( $err !~ /^No new updates available/i ) {
+        print STDERR $err, $/;
+        $err_cnt++;
+    }
+    else {
+        print $err;
+    }
+};
+
 if ($user_id) {
     for my $product_id (@product_ids) {
 
@@ -117,9 +131,7 @@ if ($user_id) {
                 $product_id, $opts{v}
             );
         };
-        my $err = $@;
-        die $err if $err and $err !~ /^No new updates available/i;
-        print $err;
+        $print_on_error->($@);
     }
 }
 else {
@@ -127,12 +139,10 @@ else {
     # Old format with just license key for MaxMind GeoIP Country database updates
     # here for backwards compatibility
     eval { GeoIP_update_database( $license_key, $opts{v} ); };
-    my $err = $@;
-    die $err if $err and $err !~ /^No new updates available/i;
-    print $err;
+    $print_on_error->($@);
 }
 
-exit 0;
+exit( $err_cnt > 0 ? 1 : 0 );
 
 sub GeoIP_update_database_general {
     my ( $user_id, $license_key, $product_id, $verbose, $client_ipaddr ) = @_;
