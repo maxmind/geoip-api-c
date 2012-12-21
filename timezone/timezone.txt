@@ -93,6 +93,7 @@ ZW		Africa/Harare
 ZA		Africa/Johannesburg
 UG		Africa/Kampala
 SD		Africa/Khartoum
+SS		Africa/Juba
 RW		Africa/Kigali
 NG		Africa/Lagos
 GA		Africa/Libreville

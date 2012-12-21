@@ -1695,6 +1695,9 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
   else if ( strcmp (country, "SR") == 0 ) {
     timezone = "America/Paramaribo";
   }
+  else if ( strcmp (country, "SS") == 0 ) {
+    timezone = "Africa/Juba";
+  }
   else if ( strcmp (country, "ST") == 0 ) {
     timezone = "Africa/Sao_Tome";
   }
