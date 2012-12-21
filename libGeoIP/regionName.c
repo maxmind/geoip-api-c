@@ -5703,6 +5703,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 37:
       name = "Vestur-Skaftafellssysla";
       break;
+      case 38:
+      name = "Austurland";
+      break;
+      case 39:
+      name = "Hofuoborgarsvaoio";
+      break;
       case 40:
       name = "Norourland Eystra";
       break;
@@ -6581,86 +6587,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
   }
   if (strcmp(country_code,"LK") == 0) {
     switch (region_code2) {
-      case 1:
-      name = "Amparai";
-      break;
-      case 2:
-      name = "Anuradhapura";
-      break;
-      case 3:
-      name = "Badulla";
-      break;
-      case 4:
-      name = "Batticaloa";
-      break;
-      case 6:
-      name = "Galle";
-      break;
-      case 7:
-      name = "Hambantota";
-      break;
-      case 9:
-      name = "Kalutara";
-      break;
-      case 10:
-      name = "Kandy";
-      break;
-      case 11:
-      name = "Kegalla";
-      break;
-      case 12:
-      name = "Kurunegala";
-      break;
-      case 14:
-      name = "Matale";
-      break;
-      case 15:
-      name = "Matara";
-      break;
-      case 16:
-      name = "Moneragala";
-      break;
-      case 17:
-      name = "Nuwara Eliya";
-      break;
-      case 18:
-      name = "Polonnaruwa";
-      break;
-      case 19:
-      name = "Puttalam";
-      break;
-      case 20:
-      name = "Ratnapura";
-      break;
-      case 21:
-      name = "Trincomalee";
-      break;
-      case 23:
-      name = "Colombo";
-      break;
-      case 24:
-      name = "Gampaha";
-      break;
-      case 25:
-      name = "Jaffna";
-      break;
-      case 26:
-      name = "Mannar";
-      break;
-      case 27:
-      name = "Mullaittivu";
-      break;
-      case 28:
-      name = "Vavuniya";
-      break;
       case 29:
       name = "Central";
       break;
       case 30:
       name = "North Central";
-      break;
-      case 31:
-      name = "Northern";
       break;
       case 32:
       name = "North Western";
@@ -6676,6 +6607,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 36:
       name = "Western";
+      break;
+      case 37:
+      name = "Eastern";
+      break;
+      case 38:
+      name = "Northern";
       break;
     }
   }
@@ -9342,6 +9279,24 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       case 1135:
       name = "Negros Occidental";
       break;
+      case 1181:
+      name = "Compostela Valley";
+      break;
+      case 1182:
+      name = "Davao del Norte";
+      break;
+      case 1225:
+      name = "Kalinga";
+      break;
+      case 1267:
+      name = "Malaybalay";
+      break;
+      case 1477:
+      name = "Zambales";
+      break;
+      case 1352:
+      name = "San Jose del Monte";
+      break;
       case 1353:
       name = "San Juan";
       break;
@@ -9350,6 +9305,15 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 1356:
       name = "Sarangani";
+      break;
+      case 1391:
+      name = "Sipalay";
+      break;
+      case 1393:
+      name = "Surigao del Norte";
+      break;
+      case 1478:
+      name = "Zamboanga";
       break;
     }
   }
@@ -11119,6 +11083,40 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       break;
       case 19:
       name = "Wanica";
+      break;
+    }
+  }
+  if (strcmp(country_code,"SS") == 0) {
+    switch (region_code2) {
+      case 1:
+      name = "Central Equatoria";
+      break;
+      case 2:
+      name = "Eastern Equatoria";
+      break;
+      case 3:
+      name = "Jonglei";
+      break;
+      case 4:
+      name = "Lakes";
+      break;
+      case 5:
+      name = "Northern Bahr el Ghazal";
+      break;
+      case 6:
+      name = "Unity";
+      break;
+      case 7:
+      name = "Upper Nile";
+      break;
+      case 8:
+      name = "Warrap";
+      break;
+      case 9:
+      name = "Western Bahr el Ghazal";
+      break;
+      case 10:
+      name = "Western Equatoria";
       break;
     }
   }
