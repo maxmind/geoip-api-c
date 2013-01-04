@@ -53,12 +53,12 @@ const char *GeoIPUpdateHost = "updates.maxmind.com";
 /* This is the direct, or proxy port number. */
 static int GeoIPHTTPPort = 80;
 /* License-only format (OLD) */
-const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
+const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\r\nHost: updates.maxmind.com\r\n\r\n";
 /* General DB Types formats */
-const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\r\n\r\n";
-const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\nHost: %s\r\n\r\n";
-const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
-const char *ProxyAuthorization = "Proxy-Authorization: Basic: %s\r\n";
+const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\r\nHost: %s\r\n\r\n";
+const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\r\nHost: %s\r\n\r\n";
+const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\r\nHost: updates.maxmind.com\r\n\r\n";
+const char *ProxyAuthorization = "Proxy-Authorization: Basic %s\r\n";
 
 /* messages */
 const char *NoCurrentDB = "%s can't be opened, proceeding to download database\n";
@@ -238,25 +238,26 @@ struct hostent *GeoIP_get_host_or_proxy ( void (*f)( char * ) ) {
 
 		GeoIPProxyHTTP = "http://";
 		hostname = proxy_host;
+		GeoIPProxiedHost = (char *) GeoIPUpdateHost;
+ 		GeoIPHTTPPort = proxy_port;
+		
+		if (proxy_creds != NULL) {
 
- 		// The current code assumes there are no reserved/unsafe characters in the username or password.
- 		// The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
- 		encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
- 		if (encoded_proxy_creds == NULL) {
- 			if (encoded_proxy_creds_len == 0 && strlen(proxy_creds) != 0) {
- 				GeoIP_printf(f,"Error processing proxy credentials: data too long: %d", strlen(proxy_creds));
- 			} else {
- 				GeoIP_printf(f,"Error processing proxy credentials: out of memory");
- 			}
- 		} else {
- 			GeoIPProxyCreds = malloc(sizeof(char) * (strlen(ProxyAuthorization) + strlen(encoded_proxy_creds) + 1)); 
- 			sprintf(GeoIPProxyCreds, ProxyAuthorization, encoded_proxy_creds);
- 			GeoIPProxiedHost = (char *) GeoIPUpdateHost;
- 			GeoIPHTTPPort = proxy_port;
- 		}
- 
- 		free(encoded_proxy_creds);
-
+ 		    // The current code assumes there are no reserved/unsafe characters in the username or password.
+ 		    // The username and password should be URL decoding before they are base64-encoded for the Proxy-Authorization
+ 		    encoded_proxy_creds_len = base64_encode_alloc(proxy_creds, strlen(proxy_creds), &encoded_proxy_creds);
+ 		    if (encoded_proxy_creds == NULL) {
+ 			    if (encoded_proxy_creds_len == 0 && strlen(proxy_creds) != 0) {
+ 			    	    GeoIP_printf(f,"Error processing proxy credentials: data too long: %d", strlen(proxy_creds));
+ 			    } else {
+ 				    GeoIP_printf(f,"Error processing proxy credentials: out of memory");
+ 			    }
+ 		    } else {
+ 			    GeoIPProxyCreds = malloc(sizeof(char) * (strlen(ProxyAuthorization) + strlen(encoded_proxy_creds) + 1)); 
+ 			    sprintf(GeoIPProxyCreds, ProxyAuthorization, encoded_proxy_creds);
+ 		    }
+ 		    free(encoded_proxy_creds);
+		}
 	}
 
 	/* Resolve DNS host entry. */
