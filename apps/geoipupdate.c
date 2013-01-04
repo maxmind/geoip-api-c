@@ -85,6 +85,7 @@ int main (int argc, char *argv[]) {
 	char * custom_directory = NULL;
 	int c;
 	int err = 0;
+	int loop_err = 0;
 	int i;
 
 	opterr = 0;
@@ -253,8 +254,11 @@ int main (int argc, char *argv[]) {
 		/* update the databases using the user id string, the license key string and the product id for each database */
 		client_ipaddr = NULL;
 		for (i = 0; i < num_product_ids; i++) {
-			err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
-			print_status(err, license_file);
+			loop_err = GeoIP_update_database_general(the_user_id_str, the_license_key_str, the_product_id_str[i], verbose,&client_ipaddr, &my_printf);
+			if (loop_err != 0) {
+				err = loop_err;
+			}
+			print_status(loop_err, license_file);
 		}
 	} else {
 		/* Old format with just license key for MaxMind GeoIP Country database updates 
