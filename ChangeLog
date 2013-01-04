@@ -1,5 +1,11 @@
+	* Make API thread safe ( Boris Zentner )
+	* geoiplookup's default charset is UTF8
+	  -l change the charset back to iso8859-1 ( Boris Zentner )
+	* geoipupdate skips \r otherwise it might be part of the last
+	  product_id ( Boris Zentner )
 	* Update time zones ( Boris Zentner )
 	* Update Region codes ( Boris Zentner )
+	* Remove the unused CITYCONFIDENCE* database types ( Boris Zentner )
 	* bootstrap rebuilds ltmain.sh ( Boris Zentner )
 	* Update README.OSX for Lion ( Boris Zentner )
 	* Change Macedonia to Macedonia, The Former Yugoslav Republic of

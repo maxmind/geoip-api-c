@@ -52,3 +52,9 @@ used:
 213,206, 219, 223, 222, 4, 77, 225, 224, 226,227,234, 230, 233,
  231,232, 235, 65, 237, 239, 242, 241, 243, 244, 245};
 
+--------------------------------
+
+Jude Nagurney 11/04/2012
+Proxy Authorization needs to decode reserved/unsafe characters
+which may be encoded in the proxy credentials before
+base64-encoding the Proxy-Authorization data.

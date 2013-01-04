@@ -118,7 +118,7 @@ endif
 vpath %.c ./apps ./libGeoIP
 
 LIBOBJS	= $(OBJLIB)/GeoIP.o $(OBJLIB)/GeoIPCity.o
-UPDOBJS	= $(OBJLIB)/GeoIPUpdate.o $(OBJLIB)/md5.o
+UPDOBJS	= $(OBJLIB)/GeoIPUpdate.o $(OBJLIB)/md5.o $(OBJLIB)/base64.o
 LIBOBJS += $(UPDOBJS)
 
 .PRECIOUS: $(OBJLIB)/%.o $(OBJDIR)/%.o $(OBJDIR)/%.rc
