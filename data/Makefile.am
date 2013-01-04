@@ -17,3 +17,5 @@ uninstall-hook:
 		rm "$(DESTDIR)$(DEFAULT_DB_FILE)"; \
 $(INSTALL_DATA) GeoIP.dat $(DESTDIR)$(DEFAULT_DB_FILE); \
 	fi
+
+.PHONY: GeoIP.dat
