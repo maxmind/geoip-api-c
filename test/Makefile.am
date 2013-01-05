@@ -1,7 +1,3 @@
-INCLUDES =	\
-	-I$(top_srcdir)/libGeoIP		\
-	-Wall
-
 check_PROGRAMS = test-geoip
 
 noinst_PROGRAMS = benchmark test-geoip-region test-geoip-city test-geoip-org test-geoip-domain test-geoip-asnum test-geoip-isp test-geoip-netspeed
@@ -16,7 +12,7 @@ EXTRA_PROGRAMS = benchmark \
 		 test-geoip-netspeed 
 
 LDADD = $(top_builddir)/libGeoIP/libGeoIP.la
-AM_CPPFLAGS = -DSRCDIR=\"$(top_srcdir)\"
+AM_CPPFLAGS = -I$(top_srcdir)/libGeoIP -DSRCDIR=\"$(top_srcdir)\" -Wall
 
 test_geoip_SOURCES = test-geoip.c
 

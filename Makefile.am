@@ -1,4 +1,4 @@
-INCLUDES = -Wall -ansi
+AM_CPPFLAGS = -Wall -ansi
 
 SUBDIRS =		\
 	libGeoIP	\

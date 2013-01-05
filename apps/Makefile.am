@@ -1,8 +1,4 @@
-INCLUDES = 	\
-	-I$(top_srcdir)/libGeoIP		\
-	-Wall
-
-AM_CPPFLAGS = -DSYSCONFDIR=\"$(sysconfdir)\" -Wall
+AM_CPPFLAGS = -I$(top_srcdir)/libGeoIP -DSYSCONFDIR=\"$(sysconfdir)\" -Wall
 
 DEPS = $(top_builddir)/libGeoIP/libGeoIP.la
 LDADDS = $(top_builddir)/libGeoIP/libGeoIP.la
