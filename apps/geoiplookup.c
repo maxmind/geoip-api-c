@@ -111,7 +111,11 @@ int main (int argc, char *argv[]) {
 			if (GeoIP_db_avail(i)) {
 				gi = GeoIP_open_type(i, GEOIP_STANDARD);
 				if (NULL == gi) {
-					printf("%s not available, skipping...\n", GeoIPDBDescription[i]);
+				        /* Ignore these errors. It's possible
+					 * to use the same database name for
+					 * different databases.
+					 */
+				        ;
 				} else {
                                         gi->charset = charset;
 					if (version_flag == 1) {
