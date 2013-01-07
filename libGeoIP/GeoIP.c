@@ -912,7 +912,18 @@ GeoIP* GeoIP_open_type (int type, int flags) {
 		return NULL;
 	}
 	gi = GeoIP_open (filePath, flags);
-	return gi;
+
+        if ( gi ){
+	        /* make sure this is the requested database type */
+		int database_type = gi->databaseType ;
+		if ( database_type > 105 )
+		        database_type -= 105;
+	        if ( database_type == type )
+	                return gi;
+	        GeoIP_delete(gi);
+	}
+
+	return NULL;
 }
 
 GeoIP* GeoIP_new (int flags) {
