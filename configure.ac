@@ -59,6 +59,7 @@ AS_IF([test "x$enable_data_files" != xno],
 AC_OUTPUT([
 Makefile
 GeoIP.spec
+geoip.pc
 libGeoIP/Makefile
 apps/Makefile
 conf/Makefile

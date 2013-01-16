@@ -5,6 +5,7 @@
 	  ( Boris Zentner )
 	* Use configure.ac instead of configure.in ( Boris Zentner )
 	* Region lookup is a bit faster ( Boris Zentner )
+	* Add pkg-config file ( Bastien Nocera )
 	* Updates required to build a Windows DLL under MinGW ( Gerald Combs )
 	* Make API thread safe ( Boris Zentner )
 	* geoiplookup's default charset is UTF8
