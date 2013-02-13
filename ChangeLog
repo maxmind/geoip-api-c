@@ -1,3 +1,4 @@
+	* Use configure.ac instead of configure.in ( Boris Zentner )
 	* Updates required to build a Windows DLL under MinGW ( Gerald Combs )
 	* Make API thread safe ( Boris Zentner )
 	* geoiplookup's default charset is UTF8
