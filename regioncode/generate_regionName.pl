@@ -59,13 +59,12 @@ while ( my $str = <FILE> ) {
   $last_country_code = $country_code;
 }
 close(FILE);
-print "    }\n";
-print "  }\n";
+#print "    }\n";
+#print "  }\n";
 
 # fips10_4.txt extracted from http://www.maxmind.com/app/fips10_4
 open( FILE, "fips10_4.txt" ) or die $!;
 <FILE>;
-$last_country_code = "";
 while ( my $str = <FILE> ) {
   chomp($str);
   my ( $country_code, $region_code, $name ) = split( /,/, $str, 3 );
@@ -105,9 +104,9 @@ sub readcode {
       print "    }\n";
       print "  }\n";
     }
-    print "  if (strcmp(country_code," . qq(")
-      . $country_code . qq(")
-      . ") == 0) {\n";
+
+    my $prefix = $last_country_code ? "  else " : "  ";
+    print "${prefix}if (strcmp(country_code," . qq(") . $country_code . qq(") . ") == 0) {\n";
     print "    switch (region_code2) {\n";
   }
 
@@ -115,6 +114,5 @@ sub readcode {
   $name =~ s!\"!!g;
   $name = qq(") . $name . qq(");
   print "      case " . $region_code2 . ":\n";
-  print "      name = " . $name . ";\n";
-  print "      break;\n";
+  print "      return " . $name . ";\n";
 }
