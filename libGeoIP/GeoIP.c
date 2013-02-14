@@ -918,7 +918,13 @@ GeoIP* GeoIP_open_type (int type, int flags) {
 		int database_type = gi->databaseType ;
 		if ( database_type > 105 )
 		        database_type -= 105;
-	        if ( database_type == type )
+		/*  type must match, but we accept org and asnum,
+		 *  since domain and *conf database have always the wrong type
+		 *  for historical reason. Maybe we fix it at some point.
+		 */
+	        if (    database_type == type
+		     || database_type == GEOIP_ASNUM_EDITION
+		     || database_type == GEOIP_ORG_EDITION )
 	                return gi;
 	        GeoIP_delete(gi);
 	}
