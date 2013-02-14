@@ -29,15 +29,15 @@ network information of an IP address.
 Included is a free GeoLite Country database
 that is updated at the beginning of every month.
 To download the latest free GeoLite Country database, go to:
-http://www.maxmind.com/app/geoip_country
+http://dev.maxmind.com/geoip/geolite
 
 There is also a free city-level geolocation database, GeoLite City,
 available from:
-http://www.maxmind.com/app/geolitecity
+http://dev.maxmind.com/geoip/geolite
 
 We also offer commercial GeoIP databases with greater accuracy and
 additional network information, for more details, see:
-http://www.maxmind.com/app/products
+https://www.maxmind.com/en/geolocation_landing
 
 As of version 1.4.5 geoipupdate can handle updates via  HTTP Proxy Server.
 If the environ variable http_proxy="http://proxy-host:port" is set.
@@ -54,7 +54,7 @@ visitors, for credit card fraud detection, and for software export controls.
 If you use GeoIP to block access from high risk countries in order
 to reduce fraud or abuse, you should also block access from known
 proxy servers.  For more details, see:
-http://www.maxmind.com/app/proxy
+https://www.maxmind.com/en/proxy
 
 To install, run:
 
@@ -112,14 +112,15 @@ test/
 for examples of how to use the API.  The test-geoip.c program works with both the GeoLite and
 GeoIP Country databases.  The test-geoip-city.c program works with both the GeoLite and
 GeoIP City databases.  The other example programs require the paid databases available
-from http://www.maxmind.com/app/products
+https://www.maxmind.com/en/geolocation_landing
+
 
 AUTOMATIC UPDATES
 
 MaxMind offers a service where you can have your database updated
 automically each week.  For more details see:
 
-http://www.maxmind.com/app/license_key
+http://www.maxmind.com/en/license_key
 
 RESOURCES Mailinglists
 
@@ -132,6 +133,12 @@ Preformance Patches.
 Patrick McManus provide a patch to enhance the lookupspeed in MEMORY_CACHE mode. If you feel, that the current MEMORY_CACHE mode is to slow try the patch:
 
 http://sourceforge.net/mailarchive/forum.php?forum_name=geoip-c-discuss&max_rows=25&style=nested&viewmonth=200803
+
+RESOURCES Development version
+
+Please find the latest version of the CPAI on github.
+
+https://github.com/maxmind/geoip-api-c
 
 TROUBLESHOOTING
 
