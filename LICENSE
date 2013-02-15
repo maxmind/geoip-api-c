@@ -1,17 +1,13 @@
 There are two licenses, one for the C library software, and one for
 the GeoLite Country database.
 
-Note that commercial licenses are available, if you don't want
-to use the LGPL, or don't want to include the advertising clause.
-For details, e-mail support@maxmind.com
+While the core libGeoIP library is licensed under the
+LGPL, the libGeoIPUpdate library depends on base64.c, md5.c and types.h
+files which are licensed under the GPL v3.
 
-Also note that while the core GeoIP library is licensed under the
-LGPL, the libGeoIPUpdate library depends on md5.c and types.h
-which are licensed under the GPL.
+SOFTWARE LICENSE (libGeoIP library only)
 
-SOFTWARE LICENSE (C library)
-
-Copyright (C) 2006 MaxMind LLC
+Copyright (C) 2013 MaxMind, Inc.
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -20,39 +16,17 @@ version 2.1 of the License, or (at your option) any later version.
 
 This library is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 Lesser General Public License for more details.
 
 For a copy of the LGPL License, see the COPYING file.
 
-DATA LICENSE (GeoLite Country Database)
+DATA LICENSE (GeoLite Country and City Databases)
 
-Copyright (c) 2006 MaxMind, LLC.  All Rights Reserved.
+The GeoLite databases are distributed under the Creative Commons
+Attribution-ShareAlike 3.0 Unported License. The attribution 
+requirement may be met by including the following in all advertising
+and documentation mentioning features of or use of this database:
 
-All advertising materials and documentation mentioning features or use of
-this database must display the following acknowledgement:
-"This product includes GeoLite data created by MaxMind, available from
-http://maxmind.com/"
-
-Redistribution and use with or without modification, are permitted provided
-that the following conditions are met:
-1. Redistributions must retain the above copyright notice, this list of
-conditions and the following disclaimer in the documentation and/or other
-materials provided with the distribution. 
-2. All advertising materials and documentation mentioning features or use of
-this database must display the following acknowledgement:
-"This product includes GeoIP data created by MaxMind, available from
-http://maxmind.com/"
-3. "MaxMind" may not be used to endorse or promote products derived from this
-database without specific prior written permission.
-
-THIS DATABASE IS PROVIDED BY MAXMIND LLC ``AS IS'' AND ANY 
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL MAXMIND LLC BE LIABLE FOR ANY 
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
-DATABASE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ This product includes GeoLite data created by MaxMind, available from
+  <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
