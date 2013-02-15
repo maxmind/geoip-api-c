@@ -21,7 +21,7 @@ pointer is NULL.
 
 IMPORTANT API Change for 1.1.x and above users - as of GeoIP 1.1.0 the
 GeoIP_country_xxx_by_xxx functions return NULL if a country can not
-be found (it used to return '--' or 'N/A'.  Be sure to check the
+be found (it used to return '--' or 'N/A'. Be sure to check the
 return value for NULL, to avoid segmentation faults!
 
 GeoIP is a C library that enables the user to find geographical and
@@ -47,13 +47,9 @@ Thanks to Andrew Droffner for the patch!
 As of version 1.3.6, the GeoIP C library is thread safe, as long as
 GEOIP_CHECK_CACHE is not used.
 
-This module can be used to automatically select the geographically closest
-mirror, to analyze your web server logs to determine the countries of your
-visitors, for credit card fraud detection, and for software export controls. 
-
 If you use GeoIP to block access from high risk countries in order
-to reduce fraud or abuse, you should also block access from known
-proxy servers.  For more details, see:
+to reduce fraud or abuse, you may want to also block access from known
+proxy servers. For more details on our proxy detection service, please visit:
 https://www.maxmind.com/en/proxy
 
 To install, run:
@@ -74,24 +70,24 @@ GEOIP_STANDARD - read database from filesystem, uses least memory.
 GEOIP_MEMORY_CACHE - load database into memory, faster performance
 	but uses more memory
 
-GEOIP_CHECK_CACHE - check for updated database.  If database has been updated,
+GEOIP_CHECK_CACHE - check for updated database. If database has been updated,
 	reload filehandle and/or memory cache.
 
 GEOIP_INDEX_CACHE - just cache
         the most frequently accessed index portion of the database, resulting
         in faster lookups than GEOIP_STANDARD, but less memory usage than
         GEOIP_MEMORY_CACHE - useful for larger databases such as
-	GeoIP Organization and GeoIP City.  Note, for GeoIP Country, Region
+	GeoIP Organization and GeoIP City. Note, for GeoIP Country, Region
 	and Netspeed databases, GEOIP_INDEX_CACHE is equivalent to GEOIP_MEMORY_CACHE
 
 GEOIP_MMAP_CACHE - load database into mmap shared memory ( MMAP is not avail for WIN32 )
 
-The options can be combined using bit operators.  For example you can
+The options can be combined using bit operators. For example you can
 use both GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE by calling:
 
     GeoIP_open("/path/to/GeoIP.dat", GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE);
 
-By default, the city name is returned in iso-8859-1 charset.  To obtain the
+By default, the city name is returned in iso-8859-1 charset. To obtain the
 city name in utf8 instead, run:
 
     GeoIP_set_charset(gi, GEOIP_CHARSET_UTF8);
@@ -109,16 +105,16 @@ test/
      test-geoip-org.c
      test-geoip-netspeed.c
 
-for examples of how to use the API.  The test-geoip.c program works with both the GeoLite and
-GeoIP Country databases.  The test-geoip-city.c program works with both the GeoLite and
-GeoIP City databases.  The other example programs require the paid databases available
+for examples of how to use the API. The test-geoip.c program works with both the GeoLite and
+GeoIP Country databases. The test-geoip-city.c program works with both the GeoLite and
+GeoIP City databases. The other example programs require the paid databases available
 https://www.maxmind.com/en/geolocation_landing
 
 
 AUTOMATIC UPDATES
 
 MaxMind offers a service where you can have your database updated
-automically each week.  For more details see:
+automically each week. For more details see:
 
 http://www.maxmind.com/en/license_key
 
@@ -147,7 +143,7 @@ thread-safe.
 
 If you run into trouble building your application with GeoIP support, try adding -fms-extensions to your CFLAGS. If you use Solaris and there C-Compiler use -features=extensions instead. These options enable unnamed union support and fix problems like: 'improper member use: dma_code' or 'GeoIPRecord' has no member named 'dma_code'.
 
-Note that it is recommended that you use GNU make.  Also, if you are using
+Note that it is recommended that you use GNU make. Also, if you are using
 OpenBSD, GeoIP requires OpenBSD 3.1 or greater.
 
 if you get "cannot load shared object file: No such file or directory"
@@ -163,7 +159,7 @@ error, try running
 # make
 
 If you get a "ar : command not found" error, make sure that ar is
-in your path.  On Solaris, ar is typically found in /usr/ccs/bin
+in your path. On Solaris, ar is typically found in /usr/ccs/bin
 
 If you get a "geoipupdate.c:24: getopt.h: No such file or directory"
 error, run
@@ -178,7 +174,7 @@ These are typically included in a "zlib-devel" package.
 
 If you get a "bad interpreter: No such file or directory" error
 when running ./configure, make sure that there are no DOS
-returns in the configure script.  To remove DOS returns,
+returns in the configure script. To remove DOS returns,
 run perl -pi -e 's!\r!!g' configure.
 
 If gcc fails while consuming a large amount of memory, try
@@ -187,13 +183,13 @@ It seems that some
 versions of gcc have a bug and consume 1 GB of memory when optimizing
 certain source files (the other source file where this was reported is
 from XORG X-Server). It happens at least with gcc 3.3.1 and with gcc
-4.2(.0).  Thanks to Kai Schätzl for the report.
+4.2(.0). Thanks to Kai Schätzl for the report.
 
 If GEOIP_MMAP_CACHE doesn't work on a 64bit machine, try adding
 the flag "MAP_32BIT" to the mmap call.
 
 If you get a "passing argument 3 of 'gethostbyname_r' from incompatible pointer type"
-error on AIX, download and/or untar a fresh copy of GeoIP.  ( To avoid cached
+error on AIX, download and/or untar a fresh copy of GeoIP. ( To avoid cached
 results from a previous ./configure run )
 
 cd ./GeoIP-1.4.6
