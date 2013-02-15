@@ -227,6 +227,14 @@ const char GeoIP_country_continent[255][3] = {
         "NA","NA","NA", "AF"
 };
 
+char * static get_db_description(int dbtype){
+    char * ptr;
+    if ( dbtype >= NUM_DB_TYPES || dbtype < 0 )
+        return "Unknown";
+    ptr = GeoIPDBDescription[dbtype];
+    return ptr == NULL ? "Unknown" : ptr;
+}
+
 geoipv6_t _GeoIP_lookupaddress_v6 (const char *host);
    
 #if defined(_WIN32)
@@ -1176,7 +1184,7 @@ int GeoIP_id_by_name_gl (GeoIP* gi, const char *name, GeoIPLookup *gl ) {
 		return 0;
 	}
 	if (gi->databaseType != GEOIP_LARGE_COUNTRY_EDITION && gi->databaseType != GEOIP_COUNTRY_EDITION && gi->databaseType != GEOIP_PROXY_EDITION && gi->databaseType != GEOIP_NETSPEED_EDITION) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
+		printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_COUNTRY_EDITION));
 		return 0;
 	}
 	if (!(ipnum = _GeoIP_lookupaddress(name)))
@@ -1192,7 +1200,7 @@ int GeoIP_id_by_name_v6_gl (GeoIP* gi, const char *name, GeoIPLookup * gl) {
                return 0;
        }
        if (gi->databaseType != GEOIP_LARGE_COUNTRY_EDITION_V6 && gi->databaseType != GEOIP_COUNTRY_EDITION_V6) {
-               printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
+               printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_COUNTRY_EDITION_V6));
                return 0;
        }
         ipnum = _GeoIP_lookupaddress_v6(name);
@@ -1301,8 +1309,8 @@ int GeoIP_id_by_addr_v6_gl (GeoIP* gi, const char *addr, GeoIPLookup * gl) {
        if  (gi->databaseType != GEOIP_COUNTRY_EDITION_V6 
          && gi->databaseType != GEOIP_LARGE_COUNTRY_EDITION_V6) {
                printf("Invalid database type %s, expected %s\n",
-                                        GeoIPDBDescription[(int)gi->databaseType],
-                                        GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
+                                        get_db_description(gi->databaseType),
+                                        get_db_description(GEOIP_COUNTRY_EDITION_V6));
                return 0;
        }
        ipnum = _GeoIP_addr_to_num_v6(addr);
@@ -1322,8 +1330,8 @@ int GeoIP_id_by_addr_gl (GeoIP* gi, const char *addr, GeoIPLookup * gl) {
 			gi->databaseType != GEOIP_PROXY_EDITION &&
 			gi->databaseType != GEOIP_NETSPEED_EDITION) {
 		printf("Invalid database type %s, expected %s\n",
-					 GeoIPDBDescription[(int)gi->databaseType],
-					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
+					 get_db_description(gi->databaseType),
+					 get_db_description(GEOIP_COUNTRY_EDITION));
 		return 0;
 	}
 	ipnum = GeoIP_addr_to_num(addr);
@@ -1336,8 +1344,8 @@ int GeoIP_id_by_ipnum_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
        if (gi->databaseType != GEOIP_COUNTRY_EDITION_V6
          && gi->databaseType != GEOIP_LARGE_COUNTRY_EDITION_V6) {
                printf("Invalid database type %s, expected %s\n",
-                                        GeoIPDBDescription[(int)gi->databaseType],
-                                        GeoIPDBDescription[GEOIP_COUNTRY_EDITION_V6]);
+                                        get_db_description(gi->databaseType),
+                                        get_db_description(GEOIP_COUNTRY_EDITION_V6));
                return 0;
        }
        ret = _GeoIP_seek_record_v6_gl(gi, ipnum, gl) - gi->databaseSegments[0];
@@ -1354,8 +1362,8 @@ int GeoIP_id_by_ipnum_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 			gi->databaseType != GEOIP_PROXY_EDITION &&
 			gi->databaseType != GEOIP_NETSPEED_EDITION) {
 		printf("Invalid database type %s, expected %s\n",
-					 GeoIPDBDescription[(int)gi->databaseType],
-					 GeoIPDBDescription[GEOIP_COUNTRY_EDITION]);
+					 get_db_description(gi->databaseType)),
+					 get_db_description(GEOIP_COUNTRY_EDITION));
 		return 0;
 	}
 	ret = _GeoIP_seek_record_gl(gi, ipnum, gl) - gi->databaseSegments[0];
@@ -1529,7 +1537,7 @@ GeoIPRegion * GeoIP_region_by_addr_gl (GeoIP* gi, const char *addr, GeoIPLookup 
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+		printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_REGION_EDITION_REV1));
 		return NULL;
 	}
 	ipnum = GeoIP_addr_to_num(addr);
@@ -1543,7 +1551,7 @@ GeoIPRegion * GeoIP_region_by_addr_v6_gl (GeoIP* gi, const char *addr, GeoIPLook
        }
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-               printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+               printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_REGION_EDITION_REV1));
                return NULL;
        }
        ipnum = _GeoIP_addr_to_num_v6(addr);
@@ -1557,7 +1565,7 @@ GeoIPRegion * GeoIP_region_by_name_gl (GeoIP* gi, const char *name, GeoIPLookup 
 	}
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+		printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_REGION_EDITION_REV1));
 		return NULL;
 	}
 	if (!(ipnum = _GeoIP_lookupaddress(name)))
@@ -1572,7 +1580,7 @@ GeoIPRegion * GeoIP_region_by_name_v6_gl (GeoIP* gi, const char *name, GeoIPLook
        }
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-               printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+               printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_REGION_EDITION_REV1));
                return NULL;
        }
         
@@ -1585,7 +1593,7 @@ GeoIPRegion * GeoIP_region_by_name_v6_gl (GeoIP* gi, const char *name, GeoIPLook
 GeoIPRegion * GeoIP_region_by_ipnum_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 	if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
 			gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+		printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_REGION_EDITION_REV1));
 		return NULL;
 	}
 	return _get_region_gl(gi, ipnum, gl);
@@ -1594,7 +1602,7 @@ GeoIPRegion * GeoIP_region_by_ipnum_gl (GeoIP* gi, unsigned long ipnum, GeoIPLoo
 GeoIPRegion * GeoIP_region_by_ipnum_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
        if (gi->databaseType != GEOIP_REGION_EDITION_REV0 &&
                        gi->databaseType != GEOIP_REGION_EDITION_REV1) {
-               printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_REGION_EDITION_REV1]);
+               printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType),get_db_description(GEOIP_REGION_EDITION_REV1));
                return NULL;
        }
        return _get_region_v6_gl(gi, ipnum, gl);
@@ -1628,7 +1636,7 @@ char *_get_name_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 			gi->databaseType != GEOIP_REGIONCONF_EDITION &&
 			gi->databaseType != GEOIP_POSTALCONF_EDITION
                         ) {
-		printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
+		printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_ORG_EDITION));
 		return NULL;
 	}
 
@@ -1680,7 +1688,7 @@ char *_get_name_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
       gi->databaseType != GEOIP_REGISTRAR_EDITION_V6 &&
       gi->databaseType != GEOIP_LOCATIONA_EDITION_V6
       ) {
-    printf("Invalid database type %s, expected %s\n", GeoIPDBDescription[(int)gi->databaseType], GeoIPDBDescription[GEOIP_ORG_EDITION]);
+    printf("Invalid database type %s, expected %s\n", get_db_description(gi->databaseType), get_db_description(GEOIP_ORG_EDITION));
     return NULL;
   }
 
