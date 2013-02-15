@@ -42,6 +42,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#ifdef _UNUSED
+#elif defined(__GNUC__)
+#define _UNUSED __attribute__ ((unused))
+#else
+#define _UNUSED
+#endif
 
 #define BLOCK_SIZE 1024
 
@@ -114,7 +120,7 @@ int GeoIP_fprintf(int (*f)(FILE *, char *),FILE *fp, const char *str, ...) {
   va_list ap;
   int rc;
   char * f_str;
-  int silence;
+  int silence _UNUSED;
 
   if ( f == NULL )
     return 0;
@@ -141,7 +147,7 @@ int GeoIP_fprintf(int (*f)(FILE *, char *),FILE *fp, const char *str, ...) {
 void GeoIP_printf(void (*f)(char *), const char *str,...) {
   va_list params;
   char * f_str;
-  int silence;
+  int silence _UNUSED;
   if (f == NULL)
     return;
   va_start(params, str);
