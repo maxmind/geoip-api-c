@@ -44,6 +44,13 @@ static geoipv6_t IPV6_NULL;
 #include <stdint.h>     /* For uint32_t */
 #endif
 
+#ifdef _UNUSED
+#elif defined(__GNUC__)
+#define _UNUSED __attribute__ ((unused))
+#else
+#define _UNUSED
+#endif
+
 #ifndef        INADDR_NONE
 #define        INADDR_NONE     -1
 #endif
@@ -499,7 +506,7 @@ void _setup_segments(GeoIP * gi) {
 	int i, j, segment_record_length;
 	unsigned char delim[3];
 	unsigned char buf[LARGE_SEGMENT_RECORD_LENGTH];
-	ssize_t silence;
+	ssize_t silence _UNUSED;
         int fno = fileno(gi->GeoIPDatabase);
 
 	gi->databaseSegments = NULL;
@@ -716,7 +723,7 @@ unsigned int _GeoIP_seek_record_v6_gl (GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *
 
        const unsigned char * p;
        int j;
-       ssize_t silence;
+       ssize_t silence _UNUSED;
        int fno = fileno(gi->GeoIPDatabase);
        _check_mtime(gi);
        if ( GeoIP_teredo(gi) )
@@ -799,7 +806,7 @@ unsigned int _GeoIP_seek_record_gl (GeoIP *gi, unsigned long ipnum, GeoIPLookup 
 	unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
 	const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
 	unsigned int offset = 0;
-	ssize_t silence;
+	ssize_t silence _UNUSED;
 
 	const unsigned char * p;
 	int j;
@@ -1360,7 +1367,7 @@ char *GeoIP_database_info (GeoIP* gi) {
 	unsigned char buf[3];
 	char *retval;
 	int hasStructureInfo = 0;
-	ssize_t silence;
+	ssize_t silence _UNUSED;
         int fno = fileno(gi->GeoIPDatabase);
 
 	if(gi == NULL)
@@ -1605,7 +1612,7 @@ char *_get_name_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 	char * org_buf, * buf_pointer;
 	int record_pointer;
 	size_t len; 
-        ssize_t silence;
+        ssize_t silence _UNUSED;
 
 	if (gi->databaseType != GEOIP_ORG_EDITION &&
 			gi->databaseType != GEOIP_ISP_EDITION &&
@@ -1660,7 +1667,7 @@ char *_get_name_v6_gl (GeoIP* gi, geoipv6_t ipnum, GeoIPLookup * gl) {
   char * org_buf, * buf_pointer;
   int record_pointer;
   size_t len;
-  ssize_t silence;
+  ssize_t silence _UNUSED;
 
   if (
       gi->databaseType != GEOIP_ORG_EDITION_V6 &&
