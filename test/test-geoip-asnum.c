@@ -20,44 +20,46 @@
 
 #include "GeoIP.h"
 
-static const char * _mk_NA( const char * p ){
- return p ? p : "N/A";
+static const char *_mk_NA(const char *p)
+{
+    return p ? p : "N/A";
 }
 
-int main (int argc, char* argv[]) {
-	FILE *f;
-	GeoIP * gi;
-        char * org;
-	int generate = 0;
-	char host[50];
+int main(int argc, char *argv[])
+{
+    FILE *f;
+    GeoIP *gi;
+    char *org;
+    int generate = 0;
+    char host[50];
 
-	if (argc == 2)
-		if (!strcmp(argv[1],"gen"))
-			generate = 1;
+    if (argc == 2)
+        if (!strcmp(argv[1], "gen"))
+            generate = 1;
 
-	gi = GeoIP_open("../data/GeoIPASNum.dat", GEOIP_STANDARD);
+    gi = GeoIP_open("../data/GeoIPASNum.dat", GEOIP_STANDARD);
 
-	if (gi == NULL) {
-		fprintf(stderr, "Error opening database\n");
-		exit(1);
-	}
+    if (gi == NULL) {
+        fprintf(stderr, "Error opening database\n");
+        exit(1);
+    }
 
-	f = fopen("asnum_test.txt","r");
+    f = fopen("asnum_test.txt", "r");
 
-	if (f == NULL) {
-		fprintf(stderr, "Error opening asnum_test.txt\n");
-		exit(1);
-	}
+    if (f == NULL) {
+        fprintf(stderr, "Error opening asnum_test.txt\n");
+        exit(1);
+    }
 
-	while (fscanf(f, "%s", host) != EOF) {
-		org = GeoIP_org_by_name (gi, (const char *)host);
+    while (fscanf(f, "%s", host) != EOF) {
+        org = GeoIP_org_by_name(gi, (const char *)host);
 
-		if (org != NULL) {
-                  printf("%s\t%s\n", host, _mk_NA(org));
-		}
-	}
+        if (org != NULL) {
+            printf("%s\t%s\n", host, _mk_NA(org));
+        }
+    }
 
-	GeoIP_delete(gi);
-	fclose(f);
-	return 0;
+    GeoIP_delete(gi);
+    fclose(f);
+    return 0;
 }
