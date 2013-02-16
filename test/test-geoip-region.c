@@ -110,5 +110,6 @@ int main () {
 	}
 
 	GeoIP_delete(gi);
+	fclose(f);
 	return 0;
 }
