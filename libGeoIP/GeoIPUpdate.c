@@ -284,7 +284,7 @@ void GeoIP_send_request_uri(const int sock, const char *request_uri) {
 short int GeoIP_update_database (char * license_key, int verbose, void (*f)( char * )) {
 	struct hostent *hostlist;
 	int sock;
-	char * buf;
+	char * buf, *tmp;
 	struct sockaddr_in sa;
 	int offset = 0, err;
 	char * request_uri;
@@ -374,9 +374,12 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 			return GEOIP_SOCKET_READ_ERR;
 		}
 		offset += amt;
+		tmp = buf;
 		buf = realloc(buf, offset+block_size + 1);
-		if (buf == NULL)
+		if (buf == NULL){
+		        free(tmp);
 			return GEOIP_OUT_OF_MEMORY_ERR;
+		}
 	}
 
         buf[offset]=0;
@@ -541,7 +544,7 @@ short int GeoIP_update_database (char * license_key, int verbose, void (*f)( cha
 short int GeoIP_update_database_general (char * user_id,char * license_key,char *data_base_type, int verbose,char ** client_ipaddr, void (*f)( char *)) {
 	struct hostent *hostlist;
 	int sock;
-	char * buf;
+	char * buf, * tmp;
 	struct sockaddr_in sa;
 	int offset = 0, err;
 	char * request_uri;
@@ -622,7 +625,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			return GEOIP_SOCKET_READ_ERR;
 		}
 		offset += amt;
+		tmp = buf;
 		buf = realloc(buf, offset + block_size + 4);
+		if ( buf == NULL ){
+		    free(tmp);
+		    return GEOIP_OUT_OF_MEMORY_ERR;
+		}
 	}
 	buf[offset] = 0;
 	offset = 0;
@@ -716,7 +724,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 				return GEOIP_SOCKET_READ_ERR;
 			}
 			offset += amt;
+			tmp = buf;
 			buf = realloc(buf, offset+block_size+1);
+			if ( buf == NULL){
+			    free(tmp);
+			    return GEOIP_OUT_OF_MEMORY_ERR;
+			}
 		}
 
 		buf[offset] = 0;
@@ -789,9 +802,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 			return GEOIP_SOCKET_READ_ERR;
 		}
 		offset += amt;
+		tmp = buf;
 		buf = realloc(buf, offset+block_size);
-		if (buf == NULL)
+		if (buf == NULL){
+		        free(tmp);
 			return GEOIP_OUT_OF_MEMORY_ERR;
+		}
 	}
 
 	compr = strstr(buf, "\r\n\r\n") + 4;
