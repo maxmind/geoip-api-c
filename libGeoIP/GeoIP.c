@@ -1376,10 +1376,12 @@ char *GeoIP_database_info (GeoIP* gi) {
 	char *retval;
 	int hasStructureInfo = 0;
 	ssize_t silence _UNUSED;
-        int fno = fileno(gi->GeoIPDatabase);
+        int fno;
 
 	if(gi == NULL)
 		return NULL;
+
+        fno = fileno(gi->GeoIPDatabase); 
 
 	_check_mtime(gi);
 	lseek(fno, -3l, SEEK_END);
