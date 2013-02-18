@@ -227,7 +227,7 @@ const char GeoIP_country_continent[255][3] = {
         "NA","NA","NA", "AF"
 };
 
-char * static get_db_description(int dbtype){
+static char * get_db_description(int dbtype){
     char * ptr;
     if ( dbtype >= NUM_DB_TYPES || dbtype < 0 )
         return "Unknown";
@@ -1362,7 +1362,7 @@ int GeoIP_id_by_ipnum_gl (GeoIP* gi, unsigned long ipnum, GeoIPLookup * gl) {
 			gi->databaseType != GEOIP_PROXY_EDITION &&
 			gi->databaseType != GEOIP_NETSPEED_EDITION) {
 		printf("Invalid database type %s, expected %s\n",
-					 get_db_description(gi->databaseType)),
+					 get_db_description(gi->databaseType),
 					 get_db_description(GEOIP_COUNTRY_EDITION));
 		return 0;
 	}
