@@ -35,6 +35,16 @@
 
 const char *GeoIPConfFile = "GeoIP.conf";
 
+static void * realloc_or_die( void * ptr, size_t size ){
+    void * new = realloc( ptr, size );
+    if ( !new ) {
+        free(ptr);
+        fprintf(stderr, "Out of memory\n");
+        exit(1);
+    }
+    return new;
+}
+
 void usage() {
   fprintf(stderr,"Usage: geoipupdate [-hv] [-f license_file] [-d custom directory]\n");
 }
@@ -140,7 +150,7 @@ int main (int argc, char *argv[]) {
 		c = fgetc(license_fh);
 		if (line_index >= n) {
 			n += 20;
-			lineptr = realloc(lineptr, n);
+			lineptr = realloc_or_die(lineptr, n);
 		}
 		if ( c == 13 ) {
 		  continue;
@@ -175,7 +185,7 @@ int main (int argc, char *argv[]) {
 							 * alloc length of the string then realloc the string and
 							 * increase the alloc length by 20 */
 							the_product_id_stral[num_product_ids] = the_product_id_stral[num_product_ids] + 20;
-							the_product_id_str[num_product_ids] = (char *) realloc(the_product_id_str[num_product_ids],the_product_id_stral[num_product_ids]+4);
+							the_product_id_str[num_product_ids] = (char *) realloc_or_die(the_product_id_str[num_product_ids],the_product_id_stral[num_product_ids]+4);
 						}
 						/* read the product id from the line in the config file */
 						the_product_id_str[num_product_ids][the_product_id_strl[num_product_ids]] = a_ptr[0];
@@ -189,11 +199,11 @@ int main (int argc, char *argv[]) {
 					/* new product id add, realloc the arrays */
 					num_product_ids = num_product_ids + 1;
 					/* array of string */
-					the_product_id_str = (char **) realloc(the_product_id_str,(num_product_ids+1) * sizeof(char*));
+					the_product_id_str = (char **) realloc_or_die(the_product_id_str,(num_product_ids+1) * sizeof(char*));
 					/* array of string lengths */
-					the_product_id_strl = (int *) realloc(the_product_id_strl,(num_product_ids+1) * sizeof(char*));
+					the_product_id_strl = (int *) realloc_or_die(the_product_id_strl,(num_product_ids+1) * sizeof(char*));
 					/* array of string alloc lengths */
-					the_product_id_stral = (int *) realloc(the_product_id_stral,(num_product_ids+1) * sizeof(char*));
+					the_product_id_stral = (int *) realloc_or_die(the_product_id_stral,(num_product_ids+1) * sizeof(char*));
 				}
 			}
 
@@ -219,7 +229,7 @@ int main (int argc, char *argv[]) {
 						 * the alloc length of user id string then
 						 * add 20 to the alloc length and realloc the user id string */
 						the_user_id_stral += 20;
-						the_user_id_str = realloc(the_user_id_str,the_user_id_stral);
+						the_user_id_str = realloc_or_die(the_user_id_str,the_user_id_stral);
 					}
 				}
 				the_user_id_str[the_user_id_strl] = 0; /* add NUL char */
