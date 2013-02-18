@@ -227,8 +227,8 @@ const char GeoIP_country_continent[255][3] = {
         "NA","NA","NA", "AF"
 };
 
-static char * get_db_description(int dbtype){
-    char * ptr;
+static const char * get_db_description(int dbtype){
+    const char * ptr;
     if ( dbtype >= NUM_DB_TYPES || dbtype < 0 )
         return "Unknown";
     ptr = GeoIPDBDescription[dbtype];
