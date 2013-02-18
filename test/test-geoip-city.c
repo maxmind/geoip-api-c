@@ -73,6 +73,6 @@ int main(int argc, char *argv[])
         }
     }
     GeoIP_delete(gi);
+    fclose(f);
     return 0;
-
 }
