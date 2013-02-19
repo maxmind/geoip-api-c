@@ -59,11 +59,11 @@ const char *GeoIPUpdateHost = "updates.maxmind.com";
 /* This is the direct, or proxy port number. */
 static int GeoIPHTTPPort = 80;
 /* License-only format (OLD) */
-const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
+const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\r\nHost: updates.maxmind.com\r\n";
 /* General DB Types formats */
-const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\nHost: %s\r\n\r\n";
-const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\nHost: %s\r\n\r\n";
-const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\nHost: updates.maxmind.com\r\n\r\n";
+const char *GeoIPHTTPRequestFilename = "GET %s%s/app/update_getfilename?product_id=%s HTTP/1.0\r\nHost: %s\r\n";
+const char *GeoIPHTTPRequestClientIP = "GET %s%s/app/update_getipaddr HTTP/1.0\r\nHost: %s\r\n";
+const char *GeoIPHTTPRequestMD5 = "GET %s%s/app/update_secure?db_md5=%s&challenge_md5=%s&user_id=%s&edition_id=%s HTTP/1.0\r\nHost: updates.maxmind.com\r\n";
 const char *ProxyAuthorization = "Proxy-Authorization: Basic %s\r\n";
 
 /* messages */
