@@ -363,7 +363,7 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP Accuracy Radius Edition V6"
 };
 
-char * custom_directory = NULL;
+static char * custom_directory = NULL;
 
 void GeoIP_setup_custom_directory (char * dir) {
 	custom_directory = dir;
