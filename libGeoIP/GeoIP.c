@@ -363,17 +363,17 @@ const char * GeoIPDBDescription[NUM_DB_TYPES] = {
   "GeoIP Accuracy Radius Edition V6"
 };
 
-static char * custom_directory = NULL;
+char * GeoIP_custom_directory = NULL;
 
 void GeoIP_setup_custom_directory (char * dir) {
-	custom_directory = dir;
+	GeoIP_custom_directory = dir;
 }
 
 char *_GeoIP_full_path_to(const char *file_name) {
 	int len;
 	char *path = malloc(sizeof(char) * 1024);
 
-	if (custom_directory == NULL){
+	if (GeoIP_custom_directory == NULL){
 #if !defined(_WIN32)
 		memset(path, 0, sizeof(char) * 1024);
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GEOIPDATADIR, file_name);
@@ -394,11 +394,11 @@ char *_GeoIP_full_path_to(const char *file_name) {
 		snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", buf, file_name);
 #endif
 	} else {
-		len = strlen(custom_directory);
-		if (custom_directory[len-1] != '/') {
-			snprintf(path, sizeof(char) * 1024 - 1, "%s/%s",custom_directory, file_name);
+		len = strlen(GeoIP_custom_directory);
+		if (GeoIP_custom_directory[len-1] != '/') {
+			snprintf(path, sizeof(char) * 1024 - 1, "%s/%s", GeoIP_custom_directory, file_name);
 		} else {
-			snprintf(path, sizeof(char) * 1024 - 1, "%s%s", custom_directory, file_name);
+			snprintf(path, sizeof(char) * 1024 - 1, "%s%s", GeoIP_custom_directory, file_name);
 		}
 	}
 	return path;

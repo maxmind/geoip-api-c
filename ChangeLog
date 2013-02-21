@@ -1,3 +1,4 @@
+	* Rename custom_directory to GeoIP_custom_directory. ( Boris Zentner )
 	* Make sure the database match the requested type. This is helpful for
 	  Databases with the same default name and the general geoiplookup form
 	  ( geoiplookup without a specific database ) ( Boris Zentner )

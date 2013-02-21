@@ -164,6 +164,7 @@ extern const char *GeoIPISPDBFileName;
 extern const char *GeoIPLocationADBFileName;
 extern const char *GeoIPAccuracyRadiusFileName;
 extern const char *GeoIPCityConfidenceFileName;
+extern char * GeoIP_custom_directory;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */
