@@ -168,11 +168,11 @@ extern char * GeoIP_custom_directory;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */
-extern const char GeoIP_country_code[255][3];
-extern const char GeoIP_country_code3[255][4];
-extern const char * GeoIP_country_name[255];
-extern const char * GeoIP_utf8_country_name[255];
-extern const char GeoIP_country_continent[255][3];
+extern const char GeoIP_country_code[256][3];
+extern const char GeoIP_country_code3[256][4];
+extern const char * GeoIP_country_name[256];
+extern const char * GeoIP_utf8_country_name[256];
+extern const char GeoIP_country_continent[256][3];
 
 #ifdef DLL
 #define GEOIP_API __declspec(dllexport)

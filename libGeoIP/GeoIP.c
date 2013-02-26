@@ -85,7 +85,7 @@ static geoipv6_t IPV6_NULL;
 
 
 
-const char GeoIP_country_code[255][3] = { "--","AP","EU","AD","AE","AF","AG","AI","AL","AM","CW",
+const char GeoIP_country_code[256][3] = { "--","AP","EU","AD","AE","AF","AG","AI","AL","AM","CW",
 	"AO","AQ","AR","AS","AT","AU","AW","AZ","BA","BB",
 	"BD","BE","BF","BG","BH","BI","BJ","BM","BN","BO",
 	"BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD",
@@ -110,11 +110,11 @@ const char GeoIP_country_code[255][3] = { "--","AP","EU","AD","AE","AF","AG","AI
 	"TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE",
 	"VG","VI","VN","VU","WF","WS","YE","YT","RS","ZA",
 	"ZM","ME","ZW","A1","A2","O1","AX","GG","IM","JE",
-  "BL","MF", "BQ", "SS" };
+  "BL","MF", "BQ", "SS", "O1" };
 
 static const unsigned num_GeoIP_countries = (unsigned)(sizeof(GeoIP_country_code)/sizeof(GeoIP_country_code[0]));
 
-const char GeoIP_country_code3[255][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","CUW",
+const char GeoIP_country_code3[256][4] = { "--","AP","EU","AND","ARE","AFG","ATG","AIA","ALB","ARM","CUW",
 	"AGO","ATA","ARG","ASM","AUT","AUS","ABW","AZE","BIH","BRB",
 	"BGD","BEL","BFA","BGR","BHR","BDI","BEN","BMU","BRN","BOL",
 	"BRA","BHS","BTN","BVT","BWA","BLR","BLZ","CAN","CCK","COD",
@@ -139,9 +139,9 @@ const char GeoIP_country_code3[255][4] = { "--","AP","EU","AND","ARE","AFG","ATG
 	"TZA","UKR","UGA","UMI","USA","URY","UZB","VAT","VCT","VEN",
 	"VGB","VIR","VNM","VUT","WLF","WSM","YEM","MYT","SRB","ZAF",
 	"ZMB","MNE","ZWE","A1","A2","O1","ALA","GGY","IMN","JEY",
-  "BLM","MAF", "BES", "SSD" };
+  "BLM","MAF", "BES", "SSD", "O1" };
 
-const char * GeoIP_utf8_country_name[255] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Cura" "\xc3\xa7" "ao",
+const char * GeoIP_utf8_country_name[256] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Cura" "\xc3\xa7" "ao",
 	"Angola","Antarctica","Argentina","American Samoa","Austria","Australia","Aruba","Azerbaijan","Bosnia and Herzegovina","Barbados",
 	"Bangladesh","Belgium","Burkina Faso","Bulgaria","Bahrain","Burundi","Benin","Bermuda","Brunei Darussalam","Bolivia",
 	"Brazil","Bahamas","Bhutan","Bouvet Island","Botswana","Belarus","Belize","Canada","Cocos (Keeling) Islands","Congo, The Democratic Republic of the",
@@ -166,9 +166,9 @@ const char * GeoIP_utf8_country_name[255] = {"N/A","Asia/Pacific Region","Europe
 	"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
 	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
 	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey",
-  "Saint Barthelemy","Saint Martin", "Bonaire, Saint Eustatius and Saba", "South Sudan"};
+  "Saint Barthelemy","Saint Martin", "Bonaire, Saint Eustatius and Saba", "South Sudan", "Other" };
 
-const char * GeoIP_country_name[255] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Curacao",
+const char * GeoIP_country_name[256] = {"N/A","Asia/Pacific Region","Europe","Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Curacao",
 	"Angola","Antarctica","Argentina","American Samoa","Austria","Australia","Aruba","Azerbaijan","Bosnia and Herzegovina","Barbados",
 	"Bangladesh","Belgium","Burkina Faso","Bulgaria","Bahrain","Burundi","Benin","Bermuda","Brunei Darussalam","Bolivia",
 	"Brazil","Bahamas","Bhutan","Bouvet Island","Botswana","Belarus","Belize","Canada","Cocos (Keeling) Islands","Congo, The Democratic Republic of the",
@@ -193,12 +193,12 @@ const char * GeoIP_country_name[255] = {"N/A","Asia/Pacific Region","Europe","An
 	"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
 	"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
 	"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey",
-  "Saint Barthelemy","Saint Martin", "Bonaire, Saint Eustatius and Saba", "South Sudan"};
+  "Saint Barthelemy","Saint Martin", "Bonaire, Saint Eustatius and Saba", "South Sudan", "Other"};
 
 /* Possible continent codes are AF, AS, EU, NA, OC, SA for Africa, Asia, Europe, North America, Oceania
 and South America. */
 
-const char GeoIP_country_continent[255][3] = {
+const char GeoIP_country_continent[256][3] = {
   "--", "AS","EU","EU","AS","AS","NA","NA","EU","AS","NA",
         "AF","AN","SA","OC","EU","OC","NA","AS","EU","NA",
         "AS","EU","AF","EU","AS","AF","AF","NA","AS","SA",
@@ -224,7 +224,7 @@ const char GeoIP_country_continent[255][3] = {
         "AF","EU","AF","OC","NA","SA","AS","EU","NA","SA",
         "NA","NA","AS","OC","OC","OC","AS","AF","EU","AF",
         "AF","EU","AF","--","--","--","EU","EU","EU","EU",
-        "NA","NA","NA", "AF"
+        "NA","NA","NA","AF","--"
 };
 
 static const char * get_db_description(int dbtype){
