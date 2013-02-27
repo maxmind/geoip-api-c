@@ -2,15 +2,22 @@
 # then you will obtain a license key which you can
 # use to automatically obtain updates.
 # for more details, please go to
-# http://www.maxmind.com/app/products
+# http://www.maxmind.com/en/geolocation_landing
 
-# see https://www.maxmind.com/app/license_key_login to obtain License Key,
+# HowTo configure geoipupdate
+# http://www.maxmind.com/en/license_key
+
+# customer find the user_id and license key here:
+# https://www.maxmind.com/en/my_license_key
+#
 # UserId, and available ProductIds
 
 # Enter your license key here
+# customers should insert their license key and user_id
+# free GeoLite users should use 000000000000 as license key
 LicenseKey YOUR_LICENSE_KEY_HERE
 
-# Enter your User ID here
+# Enter your User ID here ( GeoLite only users should use 999999 as user_id )
 UserId YOUR_USER_ID_HERE
 
 # Enter the Product ID(s) of the database(s) you would like to update

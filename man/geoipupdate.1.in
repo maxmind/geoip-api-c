@@ -62,7 +62,7 @@ This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY
 or FITNESS FOR A PARTICULAR PURPOSE.
 .SH "SEE ALSO"
-Visit <http://www.maxmind.com/app/products> to
+Visit <http://www.maxmind.com/en/products> to
 sign up for a GeoIP subscription.
 .PP
 geoiplookup(1), crontab(5)
