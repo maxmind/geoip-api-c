@@ -509,6 +509,17 @@ int GeoIP_db_avail(int type) {
 	return _file_exists(filePath);
 }
 
+static int _database_has_content( int database_type ){
+	return ((database_type != GEOIP_COUNTRY_EDITION
+	        && database_type != GEOIP_PROXY_EDITION
+		&& database_type != GEOIP_NETSPEED_EDITION
+		&& database_type != GEOIP_COUNTRY_EDITION_V6
+		&& database_type != GEOIP_LARGE_COUNTRY_EDITION
+		&& database_type != GEOIP_LARGE_COUNTRY_EDITION_V6
+		&& database_type != GEOIP_REGION_EDITION_REV0
+		&& database_type != GEOIP_REGION_EDITION_REV1) ? 0 : 1 );
+}
+
 static
 void _setup_segments(GeoIP * gi) {
 	int i, j, segment_record_length;
@@ -704,11 +715,12 @@ int _check_mtime(GeoIP *gi) {
 					fprintf(stderr, "Error reading file %s -- corrupt\n", gi->file_path);
 					return -1;
 				}
-				if (gi->flags & GEOIP_INDEX_CACHE) {                        
-					gi->index_cache = (unsigned char *) realloc(gi->index_cache, sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
+				if (gi->flags & GEOIP_INDEX_CACHE) {
+				        int idx_size = _database_has_content(gi->databaseType) ? gi->databaseSegments[0] * (long)gi->record_length * 2 :  buf.st_size;
+					gi->index_cache = (unsigned char *) realloc(gi->index_cache, sizeof(unsigned char) * idx_size );
 					if (gi->index_cache != NULL) {
 						if (pread(fileno(gi->GeoIPDatabase), gi->index_cache,
-                                                  gi->databaseSegments[0] * (long)gi->record_length * 2, 0 ) != (ssize_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
+                                                  idx_size, 0 ) != (ssize_t) idx_size) {
 							fprintf(stderr,"Error reading file %s where reloading\n",gi->file_path);
 							return -1;
 						}
@@ -976,13 +988,13 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		free(gi);
 		return NULL;
 	} else {
+		if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+			fprintf(stderr,"Error stating file %s\n",filename);
+			free(gi->file_path);
+			free(gi);
+			return NULL;
+		}
 		if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
-			if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
-				fprintf(stderr,"Error stating file %s\n",filename);
-				free(gi->file_path);
-				free(gi);
-				return NULL;
-			}
 			gi->mtime = buf.st_mtime;
 			gi->size = buf.st_size;
 
@@ -1029,7 +1041,8 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		if (flags & GEOIP_INDEX_CACHE) {                        
 			gi->index_cache = (unsigned char *) malloc(sizeof(unsigned char) * ((gi->databaseSegments[0] * (long)gi->record_length * 2)));
 			if (gi->index_cache != NULL) {
-				if (pread(fileno(gi->GeoIPDatabase),gi->index_cache, gi->databaseSegments[0] * (long)gi->record_length * 2, 0) != (size_t) (gi->databaseSegments[0]*(long)gi->record_length * 2)) {
+				int idx_size = _database_has_content(gi->databaseType) ? gi->databaseSegments[0] * (long)gi->record_length * 2 :  buf.st_size;			  
+				if (pread(fileno(gi->GeoIPDatabase),gi->index_cache, idx_size, 0) != idx_size ) {
 					fprintf(stderr,"Error reading file %s\n",filename);
 					free(gi->databaseSegments);
 					free(gi->index_cache);
