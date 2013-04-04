@@ -517,7 +517,7 @@ static int _database_has_content( int database_type ){
 		&& database_type != GEOIP_LARGE_COUNTRY_EDITION
 		&& database_type != GEOIP_LARGE_COUNTRY_EDITION_V6
 		&& database_type != GEOIP_REGION_EDITION_REV0
-		&& database_type != GEOIP_REGION_EDITION_REV1) ? 0 : 1 );
+		&& database_type != GEOIP_REGION_EDITION_REV1) ? 1 : 0 );
 }
 
 static
