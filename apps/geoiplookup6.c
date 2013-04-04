@@ -24,7 +24,7 @@
 void geoiplookup(GeoIP* gi,char *hostname,int i);
 
 void usage() {
-	fprintf(stderr,"Usage: geoiplookup [-d custom_dir] [-f custom_file] [-v] <ipaddress|hostname>\n");
+	fprintf(stderr,"Usage: geoiplookup [-h] [-d custom_dir] [-f custom_file] [-v] <ipaddress|hostname>\n");
 }
 
 int main (int argc, char *argv[]) {
@@ -44,6 +44,10 @@ int main (int argc, char *argv[]) {
 	while (i < argc) {
 		if (strcmp(argv[i],"-v") == 0) {
 			version_flag = 1;
+		} else if (strcmp(argv[i], "-h") == 0 
+				|| strcmp(argv[i], "-?") == 0) {
+			usage();
+			exit(0);
 		} else if (strcmp(argv[i],"-f") == 0) {
 			if ((i+1) < argc){
 				i++;
