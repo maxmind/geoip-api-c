@@ -62,7 +62,7 @@ int main (int argc, char *argv[]) {
                 } else if (( strcmp(argv[i], "-?" ) == 0 )
 		  || ( strcmp(argv[i], "-h" ) == 0 )) {
 		    usage();
-		    exit(1);
+		    exit(0);
 		} else if (strcmp(argv[i],"-f") == 0) {
 			if ((i+1) < argc){
 				i++;
