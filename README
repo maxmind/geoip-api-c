@@ -132,11 +132,15 @@ http://sourceforge.net/mailarchive/forum.php?forum_name=geoip-c-discuss&max_rows
 
 RESOURCES Development version
 
-Please find the latest version of the CPAI on github.
+Please find the latest version of the CAPI on github.
 
 https://github.com/maxmind/geoip-api-c
 
 TROUBLESHOOTING
+
+In case of trouble building from source with libtool or autotools, run
+./bootstrap or autoreconf -vfi or aclocal && autoconf && automake --add-missing
+to update the generated configuration files.
 
 The Windows build is not thread-safe in STANDARD mode b/c the pread is not
 thread-safe.
