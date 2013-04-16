@@ -78,6 +78,29 @@ void testgeoipcountry(int flags, const char *msg, int numlookups)
     GeoIP_delete(i);
 }
 
+void testgeoiporg(int flags, const char *msg, int numlookups)
+{
+    GeoIP *i = NULL;
+    GeoIPRegion *i3 = NULL;
+    int i4 = 0;
+    int i2 = 0;
+    double t = 0;
+    i = GeoIP_open("/usr/local/share/GeoIP/GeoIPOrg.dat", flags);
+    if (i == NULL) {
+        printf("error: GeoIPOrg.dat does not exist\n");
+        return;
+    }
+    timerstart();
+    for (i2 = 0; i2 < numlookups; i2++) {
+        i3 = GeoIP_name_by_addr(i, ipstring[i4]);
+        i4 = (i4 + 1) % numipstrings;
+    }
+    t = timerstop();
+    printf("%s\n", msg);
+    printf("%d lookups made in %f seconds \n", numlookups, t);
+    GeoIP_delete(i);
+}
+
 void testgeoipregion(int flags, const char *msg, int numlookups)
 {
     GeoIP *i = NULL;
@@ -146,6 +169,15 @@ int main()
     testgeoipregion(GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE,
                     "GeoIP Region with GEOIP_MEMORY_CACHE and GEOIP_CHECK_CACHE",
                     1000 * time);
+
+    testgeoiporg(0, "GeoIP Org", 50 * time);
+    testgeoiporg(GEOIP_INDEX_CACHE, "GeoIP Org with GEOIP_INDEX_CACHE",
+                  200 * time);
+    testgeoiporg(GEOIP_INDEX_CACHE | GEOIP_CHECK_CACHE,
+                  "GeoIP Org with GEOIP_INDEX_CACHE and GEOIP_CHECK_CACHE",
+                  200 * time);
+    testgeoiporg(GEOIP_MEMORY_CACHE, "GeoIP Org with GEOIP_MEMORY_CACHE",
+                  500 * time);
 
     testgeoipcity(0, "GeoIP City", 50 * time);
     testgeoipcity(GEOIP_INDEX_CACHE, "GeoIP City with GEOIP_INDEX_CACHE",
