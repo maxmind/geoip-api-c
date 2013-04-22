@@ -3245,6 +3245,34 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       return "Khios";
       case 51:
       return "Lesvos";
+      case 52:
+      return "Agion Oros";
+      case 53:
+      return "Anatoliki Makedonia kai Thraki";
+      case 54:
+      return "Attiki";
+      case 55:
+      return "Dytiki Ellada";
+      case 56:
+      return "Dytiki Makedonia";
+      case 57:
+      return "Ionia Nisia";
+      case 58:
+      return "Ipeiros";
+      case 59:
+      return "Kentriki Makedonia";
+      case 60:
+      return "Kriti";
+      case 61:
+      return "Notiou Aigaiou";
+      case 62:
+      return "Peloponnisos";
+      case 63:
+      return "Sterea Ellada";
+      case 64:
+      return "Thessalia";
+      case 65:
+      return "Voreio Aigaio";
     }
   }
   else if (strcmp(country_code,"GT") == 0) {
