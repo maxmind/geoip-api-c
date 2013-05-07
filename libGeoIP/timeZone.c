@@ -315,7 +315,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
       timezone = "America/Rankin_Inlet";
     }
     else if ( strcmp (region, "ON") == 0 ) {
-      timezone = "America/Rainy_River";
+      timezone = "America/Toronto";
     }
     else if ( strcmp (region, "PE") == 0 ) {
       timezone = "America/Halifax";

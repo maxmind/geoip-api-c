@@ -58,7 +58,7 @@ CA	NL	America/St_Johns
 CA	NT	America/Yellowknife
 CA	NS	America/Halifax
 CA	NU	America/Rankin_Inlet
-CA	ON	America/Rainy_River
+CA	ON	America/Toronto
 CA	PE	America/Halifax
 CA	QC	America/Montreal
 CA	SK	America/Regina
