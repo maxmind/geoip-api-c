@@ -1,14 +1,14 @@
 1.5.1
-	* Update time_zone for CA ON ( Boris Zentner )
+	* Update time_zone for Ontario, Canada ( Boris Zentner )
 	* geoiplookup and geoiplookup6 exit code is 0 when user asked for help
 	  ( Jan Safranek )
 	* Added -h option to geoiplookup6 ( Jan Safranek )
 	* Do not load the database file if nodes and file size do not make
 	  sense. ( Boris Zentner )
 	* Keep README and man pages in pure ascii. ( Boris Zentner )
-	* It doesn't make sense to use GEOIP_INDEX_MODE with small databases like
-	  GEOIP_COUNTRY_EDITION. Instead of undefined behaviour we handle it
-	  silently as GEOIP_MEMORY_MODE ( Boris Zentner )
+	* It doesn't make sense to use GEOIP_INDEX_MODE with small databases
+	  like GEOIP_COUNTRY_EDITION. Instead of undefined behaviour we handle
+	  it silently as GEOIP_MEMORY_MODE ( Boris Zentner )
 	* Update FIPS codes for Greece ( Boris Zentner )
 1.5.0
 	* Rename custom_directory to GeoIP_custom_directory. ( Boris Zentner )
