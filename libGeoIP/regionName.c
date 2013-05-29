@@ -7963,6 +7963,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
       return "Nong Bua Lamphu";
       case 80:
       return "Sa Kaeo";
+      case 81:
+      return "Bueng Kan";
     }
   }
   else if (strcmp(country_code,"TJ") == 0) {
