@@ -198,8 +198,7 @@ int main(int argc, char *argv[])
                              * increase the alloc length by 20 */
                             the_product_id_stral[num_product_ids] =
                                 the_product_id_stral[num_product_ids] + 20;
-                            the_product_id_str[num_product_ids] =
-                                (char *)
+                            the_product_id_str[num_product_ids] = (char *)
                                 realloc_or_die(the_product_id_str
                                                [num_product_ids],
                                                the_product_id_stral
@@ -328,5 +327,5 @@ int main(int argc, char *argv[])
     if (client_ipaddr) {
         free(client_ipaddr);
     }
-    exit(err);
+    exit(err != 0 ? 1 : 0);
 }
