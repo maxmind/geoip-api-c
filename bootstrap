@@ -1,5 +1,11 @@
 #! /bin/sh
 
+# dl the dat file if needed
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+if [ ! -f $DIR/data/GeoIP.dat ]; then
+  curl http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz | gzip -d > $DIR/data/GeoIP.dat
+fi
+
 # make sure  to use the installed libtool
 rm ltmain.sh
 autoreconf -fiv
