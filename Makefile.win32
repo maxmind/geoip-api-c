@@ -130,7 +130,7 @@ prebuild: $(OBJLIB) $(OBJDIR) $(OBJDIR)/version.inc
 dist: $(DISTDIR) all $(DISTDIR)/readme_bin.txt
 	@$(CP) *.exe $(DISTDIR)
 	@$(CP) Changelog $(DISTDIR)
-	@$(CP) README $(DISTDIR)
+	@$(CP) README.md $(DISTDIR)
 	@$(CP) conf/GeoIP.conf.default $(DISTDIR)
 	@$(CP) data/GeoIP.dat $(DISTDIR)
 	@echo Creating $(ARCHIVE)
