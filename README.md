@@ -98,18 +98,14 @@ These options can be combined using bit operators. For example you can
 use both `GEOIP_MEMORY_CACHE` and `GEOIP_CHECK_CACHE by calling`:
 
 ```c
-
 GeoIP_open("/path/to/GeoIP.dat", GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE);
-
 ```
 
 By default, the city name is returned in iso-8859-1 charset. To obtain the
 city name in utf8 instead, run:
 
 ```c
-
 GeoIP_set_charset(gi, GEOIP_CHARSET_UTF8);
-
 ```
 
 To get the netmask of the netblock of the last lookup, use
@@ -175,7 +171,6 @@ autoreconf -vfi
 or
 ```
 aclocal && autoconf && automake --add-missing
-
 ```
 
 ### Thread Safety on Windows ###
@@ -251,7 +246,6 @@ then edit the file `./configure` and delete these two lines:
 #define HAVE_GETHOSTBYNAME_R 1
 
 #define GETHOSTBYNAME_R_RETURNS_INT 1
-``
 
 then save the configure script and build it as usual:
 
