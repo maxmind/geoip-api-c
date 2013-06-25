@@ -36,7 +36,7 @@ is `NULL`.
 
 As of GeoIP 1.1.0 the GeoIP_country_xxx_by_xxx functions return NULL if a
 country can not be found. It previously returned `--` or `N/A`. To avoid
-segmentation faults, check the return value for `NULL``.
+segmentation faults, check the return value for `NULL`.
 
 ## Description ##
 
@@ -111,7 +111,7 @@ GeoIP_set_charset(gi, GEOIP_CHARSET_UTF8);
 To get the netmask of the netblock of the last lookup, use
 `GeoIP_last_netblock(gi)`.
 
-## EXAMPLES ##
+## Examples ##
 
 See the following files for examples of how to use the API:
 
@@ -131,14 +131,14 @@ GeoIP City databases. The other example programs require the paid databases
 available (https://www.maxmind.com/en/geolocation_landing).
 
 
-## AUTOMATIC UPDATES ##
+## Automatic Updates ##
 
 MaxMind offers a service where you can have your database updated
 automically each week. For more details see:
 
 http://www.maxmind.com/en/license_key
 
-## RESOURCES ##
+## Resources ##
 
 ### Performance Patches ###
 
@@ -154,7 +154,7 @@ Please find the latest version of the C API on GitHub:
 
 https://github.com/maxmind/geoip-api-c
 
-## TROUBLESHOOTING ##
+## Troubleshooting ##
 
 ### Autotool Issues ###
 In case of trouble building from source with libtool or autotools, update
@@ -246,6 +246,7 @@ then edit the file `./configure` and delete these two lines:
 #define HAVE_GETHOSTBYNAME_R 1
 
 #define GETHOSTBYNAME_R_RETURNS_INT 1
+```
 
 then save the configure script and build it as usual:
 
