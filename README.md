@@ -14,6 +14,31 @@ The script is also able to handle proxy requests even with authentication.
 
 ## Important Changes ##
 
+### 1.5.0 ###
+
+Geoipupdate may be used to download our free databases.
+
+Put this into the config file /usr/local/etc/GeoIP.conf
+to download the free GeoLite databases GeoLiteCountry, GeoLiteCity and GeoLiteASNum
+
+```
+LicenseKey 000000000000
+UserId 999999
+ProductIds 506 533 517
+```
+
+Free users should create symlinks for the GeoIP databases.
+For example:
+
+```
+cd /usr/local/share/GeoIP
+ln -s GeoLiteCity.dat GeoIPCity.dat
+ln -s GeoLiteCountry.dat GeoIPCountry.dat
+ln -s GeoLiteASNum.dat GeoIPASNum.dat
+```
+
+The lookup functions are thread safe.
+
 ### 1.4.5 ###
 
 As of version 1.4.5 geoipupdate can handle updates via HTTP Proxy Server.
