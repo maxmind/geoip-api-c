@@ -13,7 +13,7 @@ US	GA	America/New_York
 US	HI	Pacific/Honolulu
 US	ID	America/Denver
 US	IL	America/Chicago
-US	IN	America/Indianapolis
+US	IN	America/Indiana/Indianapolis
 US	IA	America/Chicago
 US	KS	America/Chicago
 US	KY	America/New_York
@@ -63,19 +63,19 @@ CA	PE	America/Halifax
 CA	QC	America/Montreal
 CA	SK	America/Regina
 CA	YT	America/Whitehorse
-AU	01	Australia/Canberra
-AU	02	Australia/NSW
-AU	03	Australia/North
-AU	04	Australia/Queensland
-AU	05	Australia/South
-AU	06	Australia/Tasmania
-AU	07	Australia/Victoria
-AU	08	Australia/West
-AS		US/Samoa
+AU	01	Australia/Sydney
+AU	02	Australia/Sydney
+AU	03	Australia/Darwin
+AU	04	Australia/Brisbane
+AU	05	Australia/Adelaide
+AU	06	Australia/Hobart
+AU	07	Australia/Melbourne
+AU	08	Australia/Perth
+AS		Pacific/Pago_Pago
 CI		Africa/Abidjan
 GH		Africa/Accra
 DZ		Africa/Algiers
-ER		Africa/Asmera
+ER		Africa/Asmara
 ML		Africa/Bamako
 CF		Africa/Bangui
 GM		Africa/Banjul
@@ -156,7 +156,7 @@ TH		Asia/Bangkok
 LB		Asia/Beirut
 KG		Asia/Bishkek
 BN		Asia/Brunei
-IN		Asia/Calcutta
+IN		Asia/Kolkata
 MN		Asia/Choibalsan
 LK		Asia/Colombo
 BD		Asia/Dhaka
@@ -167,9 +167,9 @@ TR		Asia/Istanbul
 IL		Asia/Jerusalem
 AF		Asia/Kabul
 PK		Asia/Karachi
-NP		Asia/Katmandu
+NP		Asia/Kathmandu
 KW		Asia/Kuwait
-MO		Asia/Macao
+MO		Asia/Macau
 PH		Asia/Manila
 OM		Asia/Muscat
 CY		Asia/Nicosia
@@ -187,11 +187,11 @@ LA		Asia/Vientiane
 AM		Asia/Yerevan
 BM		Atlantic/Bermuda
 CV		Atlantic/Cape_Verde
-FO		Atlantic/Faeroe
+FO		Atlantic/Faroe
 IS		Atlantic/Reykjavik
 GS		Atlantic/South_Georgia
 SH		Atlantic/St_Helena
-CL		Chile/Continental
+CL		America/Santiago
 NL		Europe/Amsterdam
 AD		Europe/Andorra
 GR		Europe/Athens
@@ -246,7 +246,7 @@ NF		Pacific/Norfolk
 PW		Pacific/Palau
 PN		Pacific/Pitcairn
 CK		Pacific/Rarotonga
-WS		Pacific/Samoa
+WS		Pacific/Pago_Pago
 KI		Pacific/Tarawa
 TO		Pacific/Tongatapu
 WF		Pacific/Wallis

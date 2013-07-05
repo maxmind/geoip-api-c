@@ -109,35 +109,35 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     }
   }
   else if ( strcmp (country, "AS") == 0 ) {
-    timezone = "US/Samoa";
+    timezone = "Pacific/Pago_Pago";
   }
   else if ( strcmp (country, "AT") == 0 ) {
     timezone = "Europe/Vienna";
   }
   else if ( strcmp (country, "AU") == 0 ) {
     if ( strcmp (region, "01") == 0 ) {
-      timezone = "Australia/Canberra";
+      timezone = "Australia/Sydney";
     }
     else if ( strcmp (region, "02") == 0 ) {
-      timezone = "Australia/NSW";
+      timezone = "Australia/Sydney";
     }
     else if ( strcmp (region, "03") == 0 ) {
-      timezone = "Australia/North";
+      timezone = "Australia/Darwin";
     }
     else if ( strcmp (region, "04") == 0 ) {
-      timezone = "Australia/Queensland";
+      timezone = "Australia/Brisbane";
     }
     else if ( strcmp (region, "05") == 0 ) {
-      timezone = "Australia/South";
+      timezone = "Australia/Adelaide";
     }
     else if ( strcmp (region, "06") == 0 ) {
-      timezone = "Australia/Tasmania";
+      timezone = "Australia/Hobart";
     }
     else if ( strcmp (region, "07") == 0 ) {
-      timezone = "Australia/Victoria";
+      timezone = "Australia/Melbourne";
     }
     else if ( strcmp (region, "08") == 0 ) {
-      timezone = "Australia/West";
+      timezone = "Australia/Perth";
     }
   }
   else if ( strcmp (country, "AW") == 0 ) {
@@ -372,7 +372,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Pacific/Rarotonga";
   }
   else if ( strcmp (country, "CL") == 0 ) {
-    timezone = "Chile/Continental";
+    timezone = "America/Santiago";
   }
   else if ( strcmp (country, "CM") == 0 ) {
     timezone = "Africa/Lagos";
@@ -586,7 +586,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Africa/El_Aaiun";
   }
   else if ( strcmp (country, "ER") == 0 ) {
-    timezone = "Africa/Asmera";
+    timezone = "Africa/Asmara";
   }
   else if ( strcmp (country, "ES") == 0 ) {
     if ( strcmp (region, "07") == 0 ) {
@@ -654,7 +654,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Atlantic/Stanley";
   }
   else if ( strcmp (country, "FO") == 0 ) {
-    timezone = "Atlantic/Faeroe";
+    timezone = "Atlantic/Faroe";
   }
   else if ( strcmp (country, "FR") == 0 ) {
     timezone = "Europe/Paris";
@@ -841,7 +841,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Isle_of_Man";
   }
   else if ( strcmp (country, "IN") == 0 ) {
-    timezone = "Asia/Calcutta";
+    timezone = "Asia/Kolkata";
   }
   else if ( strcmp (country, "IO") == 0 ) {
     timezone = "Indian/Chagos";
@@ -1017,7 +1017,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Asia/Choibalsan";
   }
   else if ( strcmp (country, "MO") == 0 ) {
-    timezone = "Asia/Macao";
+    timezone = "Asia/Macau";
   }
   else if ( strcmp (country, "MP") == 0 ) {
     timezone = "Pacific/Saipan";
@@ -1216,7 +1216,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Europe/Oslo";
   }
   else if ( strcmp (country, "NP") == 0 ) {
-    timezone = "Asia/Katmandu";
+    timezone = "Asia/Kathmandu";
   }
   else if ( strcmp (country, "NR") == 0 ) {
     timezone = "Pacific/Nauru";
@@ -1891,7 +1891,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
       timezone = "America/Chicago";
     }
     else if ( strcmp (region, "IN") == 0 ) {
-      timezone = "America/Indianapolis";
+      timezone = "America/Indiana/Indianapolis";
     }
     else if ( strcmp (region, "KS") == 0 ) {
       timezone = "America/Chicago";
@@ -2062,7 +2062,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
     timezone = "Pacific/Wallis";
   }
   else if ( strcmp (country, "WS") == 0 ) {
-    timezone = "Pacific/Samoa";
+    timezone = "Pacific/Pago_Pago";
   }
   else if ( strcmp (country, "YE") == 0 ) {
     timezone = "Asia/Aden";
