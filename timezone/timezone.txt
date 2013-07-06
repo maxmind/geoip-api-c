@@ -157,7 +157,6 @@ LB		Asia/Beirut
 KG		Asia/Bishkek
 BN		Asia/Brunei
 IN		Asia/Kolkata
-MN		Asia/Choibalsan
 LK		Asia/Colombo
 BD		Asia/Dhaka
 AE		Asia/Dubai
@@ -293,6 +292,8 @@ IM		Europe/Isle_of_Man
 JE		Europe/Jersey
 BL		America/St_Barthelemy
 MF		America/Marigot
+MH		Pacific/Kwajalein
+UM		Pacific/Wake
 AR	01	America/Argentina/Buenos_Aires
 AR	02	America/Argentina/Catamarca
 AR	03	America/Argentina/Tucuman
@@ -344,10 +345,15 @@ BR	28	America/Maceio
 BR	29	America/Sao_Paulo
 BR	30	America/Recife
 BR	31	America/Araguaina
+CD	01	Africa/Kinshasa
 CD	02	Africa/Kinshasa
+CD	03	Africa/Kinshasa
+CD	04	Africa/Lubumbashi
 CD	05	Africa/Lubumbashi
 CD	06	Africa/Kinshasa
+CD	07	Africa/Lubumbashi
 CD	08	Africa/Kinshasa
+CD	09	Africa/Lubumbashi
 CD	10	Africa/Lubumbashi
 CD	11	Africa/Lubumbashi
 CD	12	Africa/Lubumbashi
@@ -402,6 +408,7 @@ EC	18	America/Guayaquil
 EC	19	America/Guayaquil
 EC	20	America/Guayaquil
 EC	22	America/Guayaquil
+EC	24	America/Guayaquil
 ES	07	Europe/Madrid
 ES	27	Europe/Madrid
 ES	29	Europe/Madrid
@@ -448,9 +455,20 @@ ID	23	Asia/Makassar
 ID	24	Asia/Jakarta
 ID	25	Asia/Pontianak
 ID	26	Asia/Pontianak
+ID	28	Asia/Jayapura
+ID	29	Asia/Makassar
 ID	30	Asia/Jakarta
 ID	31	Asia/Makassar
+ID	32	Asia/Jakarta
 ID	33	Asia/Jakarta
+ID	34	Asia/Makassar
+ID	35	Asia/Pontianak
+ID	36	Asia/Jayapura
+ID	37	Asia/Pontianak
+ID	38	Asia/Makassar
+ID	39	Asia/Jayapura
+ID	40	Asia/Pontianak
+ID	41	Asia/Makassar
 KZ	01	Asia/Almaty
 KZ	02	Asia/Almaty
 KZ	03	Asia/Qyzylorda
@@ -468,6 +486,13 @@ KZ	14	Asia/Qyzylorda
 KZ	15	Asia/Almaty
 KZ	16	Asia/Aqtobe
 KZ	17	Asia/Almaty
+MN	06	Asia/Choibalsan
+MN	11	Asia/Ulaanbaatar
+MN	17	Asia/Choibalsan
+MN	19	Asia/Hovd
+MN	20	Asia/Ulaanbaatar
+MN	21	Asia/Ulaanbaatar
+MN	25	Asia/Ulaanbaatar
 MX	01	America/Mexico_City
 MX	02	America/Tijuana
 MX	03	America/Hermosillo
@@ -524,6 +549,7 @@ NZ	F2	Pacific/Auckland
 NZ	F3	Pacific/Auckland
 NZ	F4	Pacific/Auckland
 NZ	F5	Pacific/Auckland
+NZ	F6	Pacific/Auckland
 NZ	F7	Pacific/Chatham
 NZ	F8	Pacific/Auckland
 NZ	F9	Pacific/Auckland
@@ -549,6 +575,7 @@ PT	19	Europe/Lisbon
 PT	20	Europe/Lisbon
 PT	21	Europe/Lisbon
 PT	22	Europe/Lisbon
+PT	23	Atlantic/Azores
 RU	01	Europe/Volgograd
 RU	02	Asia/Irkutsk
 RU	03	Asia/Novokuznetsk
@@ -560,6 +587,7 @@ RU	08	Europe/Samara
 RU	09	Europe/Moscow
 RU	10	Europe/Moscow
 RU	11	Asia/Irkutsk
+RU	12	Europe/Volgograd
 RU	13	Asia/Yekaterinburg
 RU	14	Asia/Irkutsk
 RU	15	Asia/Anadyr
@@ -636,6 +664,10 @@ RU	86	Europe/Moscow
 RU	87	Asia/Novosibirsk
 RU	88	Europe/Moscow
 RU	89	Asia/Vladivostok
+RU	90	Asia/Yekaterinburg
+RU	91	Asia/Krasnoyarsk
+RU	92	Asia/Anadyr
+RU	93	Asia/Irkutsk
 UA	01	Europe/Kiev
 UA	02	Europe/Kiev
 UA	03	Europe/Uzhgorod
@@ -647,6 +679,7 @@ UA	08	Europe/Simferopol
 UA	09	Europe/Kiev
 UA	10	Europe/Zaporozhye
 UA	11	Europe/Simferopol
+UA	12	Europe/Kiev
 UA	13	Europe/Kiev
 UA	14	Europe/Zaporozhye
 UA	15	Europe/Uzhgorod
@@ -665,6 +698,7 @@ UA	27	Europe/Kiev
 UZ	01	Asia/Tashkent
 UZ	02	Asia/Samarkand
 UZ	03	Asia/Tashkent
+UZ	05	Asia/Samarkand
 UZ	06	Asia/Tashkent
 UZ	07	Asia/Samarkand
 UZ	08	Asia/Samarkand
@@ -678,3 +712,6 @@ PF		Pacific/Marquesas
 SX		America/Curacao
 BQ		America/Curacao
 CW		America/Curacao
+AQ		Antarctica/South_Pole
+BV		Antarctica/Syowa
+FM		Pacific/Pohnpei
