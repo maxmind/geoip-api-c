@@ -14,11 +14,13 @@ config.status
 config.sub
 configure
 depcomp
+data/GeoIP.dat
 geoip.pc
 install-sh
 *.o
 *.lo
 *.la
+*~
 libtool
 missing
 test/benchmark
