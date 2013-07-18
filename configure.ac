@@ -21,10 +21,15 @@ AC_TYPE_OFF_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 AC_TYPE_UINT32_T
+AC_TYPE_UINT64_T
 
 AC_C_BIGENDIAN([AC_DEFINE(BIG_ENDIAN_HOST,1)],[AC_DEFINE(LITTLE_ENDIAN_HOST,1)])
 
-AC_CHECK_HEADERS(stdint.h)
+AC_C_INLINE
+AC_C_RESTRICT
+
+AC_CHECK_HEADER_STDBOOL
+AC_CHECK_HEADERS([arpa/inet.h limits.h netdb.h stdint.h sys/socket.h stddef.h netinet/in.h sys/time.h ])
 AC_CHECK_HEADERS(zlib.h, , AC_MSG_ERROR(Zlib header (zlib.h) not found. You may need to install a zlib development package.))
 
 AC_CHECK_FUNC(getopt, AC_DEFINE(HAVE_GETOPT))
@@ -46,10 +51,11 @@ AC_CHECK_FUNC(gethostbyname_r, [
 		AC_DEFINE(GETHOSTBYNAME_R_RETURNS_INT)])
 	])
 
-AC_CHECK_FUNCS([memset socket strchr strdup strstr ])
+AC_CHECK_FUNCS([ memset memchr munmap strrchr socket strchr strdup strstr ])
 
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
+AC_FUNC_MMAP
 
 AC_ARG_ENABLE([data-files],
     AS_HELP_STRING([--disable-data-files], [Install library without installing data files]))
