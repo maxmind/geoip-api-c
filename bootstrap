@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # dl the dat file if needed
 DIR="$( cd "$( dirname "$0" )" && pwd )"
@@ -7,7 +7,7 @@ if [ ! -f $DIR/data/GeoIP.dat ]; then
 fi
 
 # make sure  to use the installed libtool
-rm ltmain.sh
+rm -f ltmain.sh
 autoreconf -fiv
 
 ###################################################
