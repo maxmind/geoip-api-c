@@ -62,7 +62,6 @@ GeoIP.spec
 geoip.pc
 libGeoIP/Makefile
 apps/Makefile
-conf/Makefile
 data/Makefile
 man/Makefile
 test/Makefile
