@@ -175,8 +175,8 @@ aclocal && autoconf && automake --add-missing
 
 ### Thread Safety on Windows ###
 
-The Windows build is not thread-safe in STANDARD mode because the `pread`
-is not thread-safe.
+The Windows build is not thread-safe in STANDARD mode because the `pread` is
+not thread-safe.
 
 ### Other Build Issues ###
 
@@ -219,28 +219,21 @@ that the zlib development libraries are installed on your server.
 These are typically included in a `zlib-devel` package.
 
 If you get a `bad interpreter: No such file or directory` error when running
-`./configure`, make sure that there are no DOS returns in the configure script.
-To remove DOS returns, run `perl -pi -e 's/\r//g' configure`.
+`./configure`, make sure that there are no DOS returns in the configure
+script. To remove DOS returns, run `perl -pi -e 's/\r//g' configure`.
 
 If gcc fails while consuming a large amount of memory, try compiling with
 `CFLAGS=-O1` (or `-O0`) instead of the default `-O2`. It seems that some
-versions of gcc have a bug and consume 1 GB of memory when optimizing
-certain source files. It has been reported on gcc 3.3.1 and with gcc
-4.2(.0). Thanks to Kai Schaetzl for the report.
+versions of gcc have a bug and consume 1 GB of memory when optimizing certain
+source files. It has been reported on gcc 3.3.1 and with gcc 4.2(.0). Thanks
+to Kai Schaetzl for the report.
 
 If `GEOIP_MMAP_CACHE` doesn't work on a 64bit machine, try adding the flag
 `MAP_32BIT` to the mmap call.
 
 If you get a `passing argument 3 of 'gethostbyname_r' from incompatible
-pointer type` error on AIX, download and/or untar a fresh copy of GeoIP.
-( To avoid cached results from a previous `./configure` run )
-
-```
-cd ./GeoIP-1.4.6
-
-```
-
-then edit the file `./configure` and delete these two lines:
+pointer type` error on AIX, untar a fresh copy of GeoIP and delete the
+following two lines from `./configure`:
 
 ```
 #define HAVE_GETHOSTBYNAME_R 1
