@@ -1,3 +1,7 @@
+# GeoIP 1.5.2 #
+
+`geoipupdate` is removed from the GeoIP C library.
+
 # GeoIP 1.5.1 #
 
 ## Experimental IPv6 Notice ##
@@ -5,21 +9,9 @@
 The IPv6 code in libGeoIP is experimental and may change in the future.
 For instance, we may merge geoiplookup and geoiplookup6.
 
-## Alternative to geoipupdate  ##
-
-The Perl script geoipupdate-pureperl.pl is a drop in replacement for
-geoipupdate. This may be useful to to customize or process databases, to
-archive the databases, or to signal Apache that the database has changed.
-The script is also able to handle proxy requests even with authentication.
-
 ## Important Changes ##
 
 ### 1.4.5 ###
-
-As of version 1.4.5 geoipupdate can handle updates via HTTP Proxy Server.
-If the environment variable `http_proxy` is set to `http://proxy-host:port`.
-We do not support HTTP Basic authentication. Andrew Droffer supplied the
-patch for proxy support.
 
 ### 1.3.6 ###
 
@@ -204,19 +196,6 @@ make
 
 If you get a `ar : command not found` error, make sure that `ar` is in your
 path. On Solaris, `ar` is typically found in `/usr/ccs/bin`
-
-If you get a `geoipupdate.c:24: getopt.h: No such file or directory`, run:
-
-```
-export CPPFLAGS="-I/usr/local/include"
-```
-
-If `getopt.h` is installed to a directory other than `/usr/local/include`,
-use that in the above command.
-
-If you get a `zlib.h: No such file or directory` error, make sure that the
-zlib development libraries are installed on your server. These are typically
-included in a `zlib-devel` package.
 
 If you get a `bad interpreter: No such file or directory` error when running
 `./configure`, make sure that there are no DOS returns in the configure
