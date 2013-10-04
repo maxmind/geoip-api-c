@@ -25,13 +25,6 @@ AC_TYPE_UINT64_T
 
 AC_C_BIGENDIAN([AC_DEFINE(BIG_ENDIAN_HOST,1)],[AC_DEFINE(LITTLE_ENDIAN_HOST,1)])
 
-AC_C_INLINE
-AC_C_RESTRICT
-
-AC_CHECK_HEADER_STDBOOL
-AC_CHECK_HEADERS([arpa/inet.h limits.h netdb.h stdint.h sys/socket.h stddef.h netinet/in.h sys/time.h ])
-AC_CHECK_HEADERS(zlib.h, , AC_MSG_ERROR(Zlib header (zlib.h) not found. You may need to install a zlib development package.))
-
 AC_CHECK_FUNC(getopt, AC_DEFINE(HAVE_GETOPT))
 AC_CHECK_FUNC(gettimeofday, AC_DEFINE(HAVE_GETTIMEOFDAY))
 AC_CHECK_FUNC(pread, AC_DEFINE(HAVE_PREAD))
