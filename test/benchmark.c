@@ -172,12 +172,12 @@ int main()
 
     testgeoiporg(0, "GeoIP Org", 50 * time);
     testgeoiporg(GEOIP_INDEX_CACHE, "GeoIP Org with GEOIP_INDEX_CACHE",
-                  200 * time);
+                 200 * time);
     testgeoiporg(GEOIP_INDEX_CACHE | GEOIP_CHECK_CACHE,
-                  "GeoIP Org with GEOIP_INDEX_CACHE and GEOIP_CHECK_CACHE",
-                  200 * time);
+                 "GeoIP Org with GEOIP_INDEX_CACHE and GEOIP_CHECK_CACHE",
+                 200 * time);
     testgeoiporg(GEOIP_MEMORY_CACHE, "GeoIP Org with GEOIP_MEMORY_CACHE",
-                  500 * time);
+                 500 * time);
 
     testgeoipcity(0, "GeoIP City", 50 * time);
     testgeoipcity(GEOIP_INDEX_CACHE, "GeoIP City with GEOIP_INDEX_CACHE",
