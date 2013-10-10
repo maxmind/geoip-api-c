@@ -81,7 +81,7 @@ void testgeoipcountry(int flags, const char *msg, int numlookups)
 void testgeoiporg(int flags, const char *msg, int numlookups)
 {
     GeoIP *i = NULL;
-    GeoIPRegion *i3 = NULL;
+    char *i3 = NULL;
     int i4 = 0;
     int i2 = 0;
     double t = 0;
