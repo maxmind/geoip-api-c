@@ -321,7 +321,7 @@ const char* GeoIP_time_zone_by_country_and_region(const char * country,const cha
       timezone = "America/Halifax";
     }
     else if ( strcmp (region, "QC") == 0 ) {
-      timezone = "America/Montreal";
+      timezone = "America/Toronto";
     }
     else if ( strcmp (region, "SK") == 0 ) {
       timezone = "America/Regina";

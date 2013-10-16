@@ -60,7 +60,7 @@ CA	NS	America/Halifax
 CA	NU	America/Rankin_Inlet
 CA	ON	America/Toronto
 CA	PE	America/Halifax
-CA	QC	America/Montreal
+CA	QC	America/Toronto
 CA	SK	America/Regina
 CA	YT	America/Whitehorse
 AU	01	Australia/Canberra
