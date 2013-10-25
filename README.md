@@ -1,4 +1,4 @@
-# GeoIP 1.5.2 #
+# GeoIP 1.6.0 #
 
 `geoipupdate` is removed from the GeoIP C library.
 
