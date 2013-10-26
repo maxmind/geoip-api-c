@@ -5,8 +5,6 @@ AUTOMAKE_OPTIONS = foreign
 SUBDIRS =		\
 	libGeoIP	\
 	apps		\
-	conf		\
-	data		\
 	test		\
 	man
 
