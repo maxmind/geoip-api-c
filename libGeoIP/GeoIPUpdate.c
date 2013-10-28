@@ -635,12 +635,12 @@ short int GeoIP_update_database_general (char * user_id,char * license_key,char 
 	buf[offset] = 0;
 	offset = 0;
 
-        tmpstr = strchr(buf, "\n");
+        tmpstr = strchr(buf, '\n');
         if ( tmpstr == NULL ) {
 	  free(buf);
 	  return GEOIP_INVALID_SERVER_RESPONSE;
         }
-        tmpstr = strnstr(buf, " 200 OK", tmpstr - buf);
+        tmpstr = strstr(buf, " 200 OK");
         if ( tmpstr == NULL ) {
           free(buf);
 	  return GEOIP_INVALID_SERVER_RESPONSE;
