@@ -2,11 +2,14 @@
 
 use strict;
 use warnings;
-use LWP::Simple 'get';
+use LWP::Simple qw(get $ua);
+# WPEngine does not allow LWP::Simple clients
+$ua->agent("Mozilla/0.1");
 
 our $VERSION = '0.01';
 
-my $content = get('http://dev.maxmind.com/static/maxmind-region-codes.csv');
+#my $content = get('http://dev.maxmind.com/static/maxmind-region-codes.csv');
+my $content = get('http://dev.maxmind.com/static/csv/codes/maxmind/region.csv');
 exit 5 unless $content;
 print "Update fips10_4.txt\n";
 open my $fips,       '>', 'fips10_4.txt' or die $!;
