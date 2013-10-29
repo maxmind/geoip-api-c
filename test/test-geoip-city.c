@@ -35,9 +35,11 @@ int main(int argc, char *argv[])
     char host[50];
     const char *time_zone = NULL;
     char **ret;
-    if (argc == 2)
-        if (!strcmp(argv[1], "gen"))
+    if (argc == 2) {
+        if (!strcmp(argv[1], "gen")) {
             generate = 1;
+        }
+    }
 
     gi = GeoIP_open("../data/GeoIPCity.dat", GEOIP_INDEX_CACHE);
 
@@ -64,7 +66,8 @@ int main(int argc, char *argv[])
             printf("%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\t%d\t%s\t%s\t%s\n", host,
                    _mk_NA(gir->country_code), _mk_NA(gir->region),
                    _mk_NA(GeoIP_region_name_by_code
-                          (gir->country_code, gir->region)), _mk_NA(gir->city),
+                              (gir->country_code,
+                              gir->region)), _mk_NA(gir->city),
                    _mk_NA(gir->postal_code), gir->latitude, gir->longitude,
                    gir->metro_code, gir->area_code, _mk_NA(time_zone), ret[0],
                    ret[1]);

@@ -39,7 +39,7 @@ unsigned long inetaddr(const char *name)
 
     host = gethostbyname(name);
     assert(host);
-    inaddr.s_addr = *((uint32_t *) host->h_addr_list[0]);
+    inaddr.s_addr = *((uint32_t *)host->h_addr_list[0]);
     return inaddr.s_addr;
 }
 
@@ -87,12 +87,13 @@ int main()
         if (gir != NULL) {
             time_zone =
                 GeoIP_time_zone_by_country_and_region(gir->country_code,
-                                                  gir->region);
+                                                      gir->region);
             printf("%s, %s, %s, %s\n",
                    gir->country_code,
                    (!gir->region[0]) ? "N/A" : gir->region,
                    _mk_NA(GeoIP_region_name_by_code
-                          (gir->country_code, gir->region)), _mk_NA(time_zone));
+                              (gir->country_code,
+                              gir->region)), _mk_NA(time_zone));
         } else {
             printf("NULL!\n");
         }
