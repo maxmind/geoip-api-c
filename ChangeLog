@@ -1,5 +1,5 @@
 1.6.0
-	* Remove geoiipupdate ( Boris Zentner )
+	* Remove geoipupdate ( Boris Zentner )
 1.5.2
 	* Update region and time zones ( Bors Zentner )
 	* Fix benchmark script ( Boris Zentner )
