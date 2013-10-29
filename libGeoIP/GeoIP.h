@@ -360,7 +360,7 @@ GEOIP_API int GeoIP_cleanup(void);
 GEOIP_API const char * GeoIP_lib_version(void);
 
 
-/* depricated */
+/* deprecated */
 GEOIP_API const char *GeoIP_country_code_by_addr(GeoIP * gi, const char *addr);
 GEOIP_API const char *GeoIP_country_code_by_name(GeoIP * gi, const char *host);
 GEOIP_API const char *GeoIP_country_code3_by_addr(GeoIP * gi, const char *addr);
