@@ -2,6 +2,9 @@
 
 `geoipupdate` is removed from the GeoIP C library.
 
+Please use the seperate tool [geoipupdate](https://github.com/maxmind/geoipupdate) to download your subscriptions or our
+free databases.
+
 # GeoIP 1.5.1 #
 
 ## Experimental IPv6 Notice ##
