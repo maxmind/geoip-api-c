@@ -1,18 +1,13 @@
 # GeoIP 1.6.0 #
 
+## Important Changes ##
+
+### 1.6.0 ###
+
 `geoipupdate` is removed from the GeoIP C library.
 
 Please use the seperate tool [geoipupdate](https://github.com/maxmind/geoipupdate) to download your subscriptions or our
 free databases.
-
-# GeoIP 1.5.1 #
-
-## Experimental IPv6 Notice ##
-
-The IPv6 code in libGeoIP is experimental and may change in the future.
-For instance, we may merge geoiplookup and geoiplookup6.
-
-## Important Changes ##
 
 ### 1.5.0 ###
 
@@ -38,8 +33,6 @@ ln -s GeoLiteASNum.dat GeoIPASNum.dat
 ```
 
 The lookup functions are thread safe.
-
-### 1.4.5 ###
 
 ### 1.3.6 ###
 
