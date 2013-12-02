@@ -17,8 +17,10 @@ const char * GeoIP_region_name_by_code(const char * country_code,
         /* only numbers, that shorten the large switch statements */
         region_code2 = (region_code[0] - 48) * 10 + region_code[1] - 48;
     }else if (    (    ((region_code[0] >= 65) && (region_code[0] < (65 + 26)))
-                       || ((region_code[0] >= 48) && (region_code[0] < (48 + 10))))
-                  && (    ((region_code[1] >= 65) && (region_code[1] < (65 + 26)))
+                       || ((region_code[0] >= 48) &&
+                           (region_code[0] < (48 + 10))))
+                  && (    ((region_code[1] >= 65) &&
+                           (region_code[1] < (65 + 26)))
                           || ((region_code[1] >= 48) &&
                               (region_code[1] < (48 + 10))))
                   ) {
@@ -642,6 +644,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
         switch (region_code2) {
         case 1:
             return "Federation of Bosnia and Herzegovina";
+        case 3:
+            return "Brcko District";
         case 2:
             return "Republika Srpska";
         }
@@ -3181,34 +3185,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Khios";
         case 51:
             return "Lesvos";
-        case 52:
-            return "Agion Oros";
-        case 53:
-            return "Anatoliki Makedonia kai Thraki";
-        case 54:
-            return "Attiki";
-        case 55:
-            return "Dytiki Ellada";
-        case 56:
-            return "Dytiki Makedonia";
-        case 57:
-            return "Ionia Nisia";
-        case 58:
-            return "Ipeiros";
-        case 59:
-            return "Kentriki Makedonia";
-        case 60:
-            return "Kriti";
-        case 61:
-            return "Notiou Aigaiou";
-        case 62:
-            return "Peloponnisos";
-        case 63:
-            return "Sterea Ellada";
-        case 64:
-            return "Thessalia";
-        case 65:
-            return "Voreio Aigaio";
         }
     }else if (strcmp(country_code, "GT") == 0) {
         switch (region_code2) {
@@ -6280,10 +6256,14 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Compostela Valley";
         case 1182:
             return "Davao del Norte";
+        case 1222:
+            return "Himamaylan";
         case 1225:
             return "Kalinga";
         case 1267:
             return "Malaybalay";
+        case 1313:
+            return "Passi";
         case 1477:
             return "Zambales";
         case 1352:
@@ -6445,6 +6425,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Nueva Asuncion";
         case 23:
             return "Alto Paraguay";
+        case 24:
+            return "Boqueron";
         }
     }else if (strcmp(country_code, "QA") == 0) {
         switch (region_code2) {
@@ -6635,8 +6617,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Kirov";
         case 34:
             return "Komi";
-        case 35:
-            return "Komi-Permyak";
         case 36:
             return "Koryak";
         case 37:
@@ -6729,8 +6709,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Udmurt";
         case 81:
             return "Ul'yanovsk";
-        case 82:
-            return "Ust-Orda Buryat";
         case 83:
             return "Vladimir";
         case 84:
@@ -6898,6 +6876,14 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Al Wahadah State";
         case 44:
             return "Central Equatoria State";
+        case 49:
+            return "Southern Darfur";
+        case 50:
+            return "Southern Kordofan";
+        case 52:
+            return "Kassala";
+        case 55:
+            return "Northern Darfur";
         }
     }else if (strcmp(country_code, "SE") == 0) {
         switch (region_code2) {
@@ -7808,6 +7794,11 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Khatlon";
         case 3:
             return "Sughd";
+        }
+    }else if (strcmp(country_code, "TL") == 0) {
+        switch (region_code2) {
+        case 6:
+            return "Dili";
         }
     }else if (strcmp(country_code, "TM") == 0) {
         switch (region_code2) {
