@@ -188,6 +188,14 @@ GEOIP_API void GeoIP_setup_custom_directory(char *dir);
 GEOIP_API GeoIP * GeoIP_open_type(int type, int flags);
 GEOIP_API GeoIP * GeoIP_new(int flags);
 GEOIP_API GeoIP * GeoIP_open(const char * filename, int flags);
+/*
+ * WARNING: GeoIP_db_avail() checks for the existence of a database
+ * file but does not check that it has the requested database revision.
+ * For database types which have more than one revision (including Region,
+ * City, and Cityv6), this can lead to unexpected results. Check the
+ * return value of GeoIP_open_type() to find out whether a particular
+ * database type is really available.
+ */
 GEOIP_API int GeoIP_db_avail(int type);
 GEOIP_API void GeoIP_delete(GeoIP * gi);
 
