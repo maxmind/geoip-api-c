@@ -19,6 +19,7 @@
  */
 
 #include "GeoIP.h"
+#include "GeoIP_internal.h"
 
 static geoipv6_t IPV6_NULL;
 
@@ -42,6 +43,10 @@ static geoipv6_t IPV6_NULL;
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>     /* For uint32_t */
+#endif
+
+#if defined(_WIN32)
+#include "pread.h"
 #endif
 
 #ifdef _UNUSED

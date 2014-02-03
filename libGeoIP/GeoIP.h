@@ -158,31 +158,39 @@ typedef enum {
     GEOIP_CORPORATE_SPEED = 3,
 } GeoIPNetspeedValues;
 
+
+#if defined(_WIN32)
+#ifdef GEOIP_EXPORTS
+#define GEOIP_API __declspec(dllexport)
+#define GEOIP_DATA __declspec(dllexport)
+#else
+#define GEOIP_DATA __declspec(dllimport)
+#define GEOIP_API
+#endif  /* GEOIP_EXPORTS */
+#else
+#define GEOIP_API
+#define GEOIP_DATA
+#endif
+
 extern char **GeoIPDBFileName;
-extern const char * GeoIPDBDescription[NUM_DB_TYPES];
-extern const char *GeoIPCountryDBFileName;
-extern const char *GeoIPRegionDBFileName;
-extern const char *GeoIPCityDBFileName;
-extern const char *GeoIPOrgDBFileName;
-extern const char *GeoIPISPDBFileName;
-extern const char *GeoIPLocationADBFileName;
-extern const char *GeoIPAccuracyRadiusFileName;
-extern const char *GeoIPCityConfidenceFileName;
+extern GEOIP_DATA const char * GeoIPDBDescription[NUM_DB_TYPES];
+extern GEOIP_DATA const char *GeoIPCountryDBFileName;
+extern GEOIP_DATA const char *GeoIPRegionDBFileName;
+extern GEOIP_DATA const char *GeoIPCityDBFileName;
+extern GEOIP_DATA const char *GeoIPOrgDBFileName;
+extern GEOIP_DATA const char *GeoIPISPDBFileName;
+extern GEOIP_DATA const char *GeoIPLocationADBFileName;
+extern GEOIP_DATA const char *GeoIPAccuracyRadiusFileName;
+extern GEOIP_DATA const char *GeoIPCityConfidenceFileName;
 extern char * GeoIP_custom_directory;
 
 /* Warning: do not use those arrays as doing so may break your
  * program with newer GeoIP versions */
-extern const char GeoIP_country_code[256][3];
-extern const char GeoIP_country_code3[256][4];
-extern const char * GeoIP_country_name[256];
-extern const char * GeoIP_utf8_country_name[256];
-extern const char GeoIP_country_continent[256][3];
-
-#ifdef DLL
-#define GEOIP_API __declspec(dllexport)
-#else
-#define GEOIP_API
-#endif  /* DLL */
+extern GEOIP_DATA const char GeoIP_country_code[256][3];
+extern GEOIP_DATA const char GeoIP_country_code3[256][4];
+extern GEOIP_DATA const char * GeoIP_country_name[256];
+extern GEOIP_DATA const char * GeoIP_utf8_country_name[256];
+extern GEOIP_DATA const char GeoIP_country_continent[256][3];
 
 GEOIP_API void GeoIP_setup_custom_directory(char *dir);
 GEOIP_API GeoIP * GeoIP_open_type(int type, int flags);

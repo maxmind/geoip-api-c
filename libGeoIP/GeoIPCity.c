@@ -35,6 +35,10 @@
 #include <stdint.h>     /* For uint32_t */
 #endif
 
+#if defined(_WIN32)
+#include "pread.h"
+#endif
+
 #ifndef HAVE_PREAD
 #define pread(fd, buf, count, offset)           \
     (                                           \
