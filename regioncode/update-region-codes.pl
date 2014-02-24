@@ -8,8 +8,7 @@ $ua->agent("Mozilla/0.1");
 
 our $VERSION = '0.01';
 
-#my $content = get('http://dev.maxmind.com/static/maxmind-region-codes.csv');
-my $content = get('http://dev.maxmind.com/static/csv/codes/maxmind/region.csv');
+my $content = get('http://www.maxmind.com/download/geoip/misc/region_codes.csv');
 exit 5 unless $content;
 print "Update fips10_4.txt\n";
 open my $fips,       '>', 'fips10_4.txt' or die $!;
