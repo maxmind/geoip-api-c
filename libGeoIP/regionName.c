@@ -690,6 +690,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Barisal";
         case 86:
             return "Sylhet";
+        case 87:
+            return "Rangpur";
         }
     }else if (strcmp(country_code, "BE") == 0) {
         switch (region_code2) {
@@ -2146,6 +2148,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Janub Sina'";
         case 27:
             return "Shamal Sina'";
+        case 28:
+            return "Al Uqsur";
         }
     }else if (strcmp(country_code, "ER") == 0) {
         switch (region_code2) {
@@ -4146,8 +4150,12 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Svay Rieng";
         case 19:
             return "Takeo";
+        case 22:
+            return "Phnum Penh";
         case 25:
             return "Banteay Meanchey";
+        case 28:
+            return "Preah Seihanu";
         case 29:
             return "Batdambang";
         case 30:
@@ -5062,6 +5070,40 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Zletovo";
         case 923:
             return "Zrnovci";
+        case 925:
+            return "Cair";
+        case 926:
+            return "Caska";
+        case 962:
+            return "Debar";
+        case 963:
+            return "Demir Hisar";
+        case 964:
+            return "Gostivar";
+        case 966:
+            return "Kavadarci";
+        case 967:
+            return "Kumanovo";
+        case 968:
+            return "Makedonski Brod";
+        case 1005:
+            return "Ohrid";
+        case 1006:
+            return "Prilep";
+        case 1008:
+            return "Dojran";
+        case 1009:
+            return "Struga";
+        case 1010:
+            return "Strumica";
+        case 1011:
+            return "Tetovo";
+        case 1012:
+            return "Valandovo";
+        case 1047:
+            return "Veles";
+        case 1048:
+            return "Aerodrom";
         }
     }else if (strcmp(country_code, "ML") == 0) {
         switch (region_code2) {
@@ -6254,16 +6296,30 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Quezon";
         case 1135:
             return "Negros Occidental";
+        case 1141:
+            return "Biliran";
         case 1181:
             return "Compostela Valley";
         case 1182:
             return "Davao del Norte";
+        case 1221:
+            return "Guimaras";
         case 1222:
             return "Himamaylan";
         case 1225:
             return "Kalinga";
+        case 1262:
+            return "Las Pinas";
+        case 1266:
+            return "Malabon";
         case 1267:
             return "Malaybalay";
+        case 1308:
+            return "Muntinlupa";
+        case 1309:
+            return "Navotas";
+        case 1311:
+            return "Paranaque";
         case 1313:
             return "Passi";
         case 1477:
@@ -6393,8 +6449,6 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Alto Parana";
         case 2:
             return "Amambay";
-        case 3:
-            return "Boqueron";
         case 4:
             return "Caaguazu";
         case 5:
@@ -6421,10 +6475,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "San Pedro";
         case 19:
             return "Canindeyu";
-        case 20:
-            return "Chaco";
-        case 21:
-            return "Nueva Asuncion";
+        case 22:
+            return "Asuncion";
         case 23:
             return "Alto Paraguay";
         case 24:
@@ -6884,6 +6936,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Southern Kordofan";
         case 52:
             return "Kassala";
+        case 53:
+            return "River Nile";
         case 55:
             return "Northern Darfur";
         }
@@ -7333,6 +7387,34 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Apace Commune";
         case 1434:
             return "Cirkulane Commune";
+        case 1435:
+            return "Gorje";
+        case 1436:
+            return "Kostanjevica na Krki";
+        case 1437:
+            return "Log-Dragomer";
+        case 1438:
+            return "Makole";
+        case 1439:
+            return "Mirna";
+        case 1440:
+            return "Mokronog-Trebelno";
+        case 1441:
+            return "Poljcane";
+        case 1442:
+            return "Recica ob Savinji";
+        case 1477:
+            return "Rence-Vogrsko";
+        case 1478:
+            return "Sentrupert";
+        case 1479:
+            return "Smarjesk Toplice";
+        case 1480:
+            return "Sredisce ob Dravi";
+        case 1481:
+            return "Straza";
+        case 1483:
+            return "Sveti Jurij v Slovenskih Goricah";
         }
     }else if (strcmp(country_code, "SK") == 0) {
         switch (region_code2) {
@@ -7796,6 +7878,10 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Khatlon";
         case 3:
             return "Sughd";
+        case 4:
+            return "Dushanbe";
+        case 5:
+            return "Nohiyahoi Tobei Jumhuri";
         }
     }else if (strcmp(country_code, "TL") == 0) {
         switch (region_code2) {
@@ -8374,6 +8460,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Toshkent";
         case 14:
             return "Toshkent";
+        case 15:
+            return "Jizzax";
         }
     }else if (strcmp(country_code, "VC") == 0) {
         switch (region_code2) {
