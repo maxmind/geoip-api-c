@@ -1,3 +1,5 @@
+1.6.1
+	* Improve Win32 support ( Evan Hunt )
 	* Update FIPS codes ( Boris Zentner )
 1.6.0
 	* Remove geoipupdate ( Boris Zentner )
