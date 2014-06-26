@@ -1,4 +1,4 @@
-# GeoIP 1.6.0 #
+# GeoIP Legacy C API #
 
 ## Important Changes ##
 
@@ -249,4 +249,16 @@ make
 sudo make install
 ```
 
-To submit a patch, please contact support@maxmind.com
+## Bug Tracker ##
+
+Please report all issues with this code using the [GitHub issue tracker]
+(https://github.com/maxmind/geoip-api-c/issues).
+
+If you are having an issue with a MaxMind database that is not specific to
+this API, please [contact MaxMind support]
+(http://www.maxmind.com/en/support).
+
+## Contributing ##
+
+To contribute, please submit a pull request on
+[GitHub](https://github.com/maxmind/geoip-api-c/).
