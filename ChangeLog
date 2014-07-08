@@ -1,3 +1,7 @@
+1.6.2
+	* Two files required for building on Win32 were missing from the 1.6.1
+	  release. These files were added. There are no changes affecting other
+	  platforms. ( Boris Zentner )
 1.6.1
 	* Improve Win32 support ( Evan Hunt )
 	* Update FIPS codes ( Boris Zentner )
