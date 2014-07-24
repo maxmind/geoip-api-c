@@ -6,7 +6,7 @@ Group:	    System Environment/Libraries
 URL:	    http://dev.maxmind.com/geoip/downloadable
 Vendor:	    MaxMind, Inc.
 Source0:    http://www.maxmind.com/download/geoip/api/c/GeoIP-latest.tar.gz
-License:    GPL
+License:    LGPLv2.1+
 BuildRoot:  %{_tmppath}/%{name}-%{version}-root
 
 %description
