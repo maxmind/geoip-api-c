@@ -172,7 +172,7 @@ typedef enum {
 #define GEOIP_DATA
 #endif
 
-extern char **GeoIPDBFileName;
+extern volatile char **GeoIPDBFileName;
 extern GEOIP_DATA const char * GeoIPDBDescription[NUM_DB_TYPES];
 extern GEOIP_DATA const char *GeoIPCountryDBFileName;
 extern GEOIP_DATA const char *GeoIPRegionDBFileName;
