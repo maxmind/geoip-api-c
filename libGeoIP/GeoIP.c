@@ -2602,9 +2602,9 @@ int GeoIP_cleanup(void)
     int i, result = 0;
     char **tmpGeoIPDBFileName = GeoIPDBFileName;
 
-    if (GeoIPDBFileName) {
-        GeoIPDBFileName = NULL;
+    GeoIPDBFileName = NULL;
 
+    if (tmpGeoIPDBFileName) {
         for (i = 0; i < NUM_DB_TYPES; i++) {
             if (tmpGeoIPDBFileName[i]) {
                 free(tmpGeoIPDBFileName[i]);
