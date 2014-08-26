@@ -760,7 +760,7 @@ char *_GeoIP_full_path_to(const char *file_name)
     return path;
 }
 
-char ** GeoIPDBFileName = NULL;
+volatile char ** GeoIPDBFileName = NULL;
 
 void _GeoIP_setup_dbfilename()
 {
@@ -2600,16 +2600,18 @@ const char * GeoIP_lib_version(void)
 int GeoIP_cleanup(void)
 {
     int i, result = 0;
-    if (GeoIPDBFileName) {
+    char **tmpGeoIPDBFileName = GeoIPDBFileName;
 
+    GeoIPDBFileName = NULL;
+
+    if (tmpGeoIPDBFileName) {
         for (i = 0; i < NUM_DB_TYPES; i++) {
-            if (GeoIPDBFileName[i]) {
-                free(GeoIPDBFileName[i]);
+            if (tmpGeoIPDBFileName[i]) {
+                free(tmpGeoIPDBFileName[i]);
             }
         }
 
-        free(GeoIPDBFileName);
-        GeoIPDBFileName = NULL;
+        free(tmpGeoIPDBFileName);
         result = 1;
     }
 
