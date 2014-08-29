@@ -760,7 +760,7 @@ char *_GeoIP_full_path_to(const char *file_name)
     return path;
 }
 
-volatile char ** GeoIPDBFileName = NULL;
+char ** GeoIPDBFileName = NULL;
 
 void _GeoIP_setup_dbfilename()
 {
