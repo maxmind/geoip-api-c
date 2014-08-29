@@ -1,21 +1,27 @@
-# GeoIP Legacy C API #
+# GeoIP Legacy C Library #
+
+## Important Note ##
+
+This library is for the GeoIP Legacy format (dat). To read the MaxMind DB
+format (mmdb) used by GeoIP2, please see
+[libmaxminddb](https://github.com/maxmind/libmaxminddb).
 
 ## Description ##
 
-GeoIP is a C library that enables the user to find geographical and network
+The GeoIP Legacy C library enables the user to find geographical and network
 information of an IP address. To use this library, you may download our free
-GeoLite Country or City databases. These are updated at the beginning of
-every month. The latest versions are available at:
+GeoLite Legacy Country or City databases. These are updated at the beginning
+of every month. The latest versions are available at:
 
-http://dev.maxmind.com/geoip/geolite
+http://dev.maxmind.com/geoip/legacy/geolite
 
-We also offer commercial GeoIP databases with greater accuracy and additional
-network information. For more details, see:
+We also offer commercial GeoIP Legacy databases with greater accuracy and
+additional network information. For more details, see:
 
 https://www.maxmind.com/en/geolocation_landing
 
-If you use GeoIP to block access from high risk countries, you may wish to
-use our proxy detection service to block access from known proxy servers to
+If you use GeoIP Legacy to block access from high risk countries, you may wish
+to use our proxy detection service to block access from known proxy servers to
 reduce fraud and abuse. For more details, see:
 
 https://www.maxmind.com/en/proxy
@@ -35,7 +41,7 @@ make install
 If you are using a GitHub checkout, please run the `bootstrap` script first
 to set up the build environment.
 
-The GeoIP C library relies on GNU make, not on BSD make
+The GeoIP Legacy C library relies on GNU make, not on BSD make
 
 ## Memory Caching and Other Options ##
 
@@ -50,9 +56,9 @@ There are four options available:
 * `GEOIP_INDEX_CACHE` - Cache only the the most frequently accessed index
   portion of the database, resulting in faster lookups than `GEOIP_STANDARD`,
   but less memory usage than `GEOIP_MEMORY_CACHE`. This is useful for larger
-  databases such as GeoIP Organization and GeoIP City. Note: for GeoIP
-  Country, Region and Netspeed databases, `GEOIP_INDEX_CACHE` is equivalent
-  to `GEOIP_MEMORY_CACHE`.
+  databases such as GeoIP Legacy Organization and GeoIP Legacy City. Note: for
+  GeoIP Legacy Country, Region and Netspeed databases, `GEOIP_INDEX_CACHE` is
+  equivalent to `GEOIP_MEMORY_CACHE`.
 * `GEOIP_MMAP_CACHE` - Load database into mmap shared memory. MMAP is not
   available for 32bit Windows.
 
@@ -87,10 +93,10 @@ test/
      test-geoip-netspeed.c
 ```
 
-The test-geoip.c program works with both the GeoLite and GeoIP Country
-databases. The test-geoip-city.c program works with both the GeoLite and
-GeoIP City databases. The other example programs require the paid databases
-available (https://www.maxmind.com/en/geolocation_landing).
+The test-geoip.c program works with both the GeoLite Legacy and GeoIP Legacy
+Country databases. The test-geoip-city.c program works with both the GeoLite
+Legacy and GeoIP Legacy City databases. The other example programs require the
+paid databases available (https://www.maxmind.com/en/geolocation_landing).
 
 
 ## Automatic Updates ##
@@ -142,14 +148,14 @@ not thread-safe.
 
 ### Other Build Issues ###
 
-If you run into trouble building your application with GeoIP support, try
-adding `-fms-extensions` to your `CFLAGS`. If you use Solaris and the default
-C compiler, use `-features=extensions` instead. These options enable unnamed
-union support to fix problems like: `improper member use: dma_code` or
+If you run into trouble building your application with GeoIP Legacy support,
+try adding `-fms-extensions` to your `CFLAGS`. If you use Solaris and the
+default C compiler, use `-features=extensions` instead. These options enable
+unnamed union support to fix problems like: `improper member use: dma_code` or
 `'GeoIPRecord' has no member named 'dma_code'`.
 
 Note that it is recommended that you use GNU make. Also, if you are using
-OpenBSD, GeoIP requires OpenBSD 3.1 or greater.
+OpenBSD, this library requires OpenBSD 3.1 or greater.
 
 If you get a "cannot load shared object file: No such file or directory"
 error, add the directory `libGeoIP.so` was installed to the `/etc/ld.so.conf`
@@ -181,7 +187,7 @@ If `GEOIP_MMAP_CACHE` doesn't work on a 64bit machine, try adding the flag
 `MAP_32BIT` to the mmap call.
 
 If you get a `passing argument 3 of 'gethostbyname_r' from incompatible
-pointer type` error on AIX, untar a fresh copy of GeoIP and delete the
+pointer type` error on AIX, untar a fresh copy of thie library and delete the
 following two lines from `./configure`:
 
 ```
