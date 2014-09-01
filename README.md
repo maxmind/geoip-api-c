@@ -141,6 +141,19 @@ or
 aclocal && autoconf && automake --add-missing
 ```
 
+### Threads
+
+geoip lookups are thread safe, but libgeoip does not guard any functions.
+The recommended pattern is
+
+```
+open database with GEOIP_MEMORY_CACHE
+create_threads(your_thread_entry_function)
+...
+join_threads
+close db
+```
+
 ### Thread Safety on Windows ###
 
 The Windows build is not thread-safe in STANDARD mode because the `pread` is
