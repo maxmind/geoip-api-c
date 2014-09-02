@@ -102,6 +102,7 @@ typedef enum {
     GEOIP_CHECK_CACHE = 2,
     GEOIP_INDEX_CACHE = 4,
     GEOIP_MMAP_CACHE = 8,
+    GEOIP_SILENCE = 16,
 } GeoIPOptions;
 
 typedef enum {

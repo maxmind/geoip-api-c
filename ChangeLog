@@ -1,3 +1,6 @@
+1.6.3
+	* Add GEOIP_SILENCE to squelch messages to being written to
+	  stderr from library. ( Boris Zentner )
 1.6.2
 	* Two files required for building on Win32 were missing from the 1.6.1
 	  release. These files were added. There are no changes affecting other

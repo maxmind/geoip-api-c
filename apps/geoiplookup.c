@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     _GeoIP_setup_dbfilename();
 
     if (custom_file != NULL) {
-        gi = GeoIP_open(custom_file, GEOIP_STANDARD);
+        gi = GeoIP_open(custom_file, GEOIP_STANDARD | GEOIP_SILENCE);
 
         if (NULL == gi) {
             printf("%s not available, skipping...\n", custom_file);
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
         /* iterate through different database types */
         for (i = 0; i < NUM_DB_TYPES; ++i) {
             if (GeoIP_db_avail(i)) {
-                gi = GeoIP_open_type(i, GEOIP_STANDARD);
+                gi = GeoIP_open_type(i, GEOIP_STANDARD | GEOIP_SILENCE);
                 if (NULL == gi) {
                     /* Ignore these errors. It's possible
                      * to use the same database name for
