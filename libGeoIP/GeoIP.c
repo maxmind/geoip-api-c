@@ -72,11 +72,12 @@ static geoipv6_t IPV6_NULL;
 #define WORLD_OFFSET 1353
 #define FIPS_RANGE 360
 
-int GeoIP_chatty = 1;
+/* need a global flag since we don't always have access to gi->flags */
+static int GeoIP_silent = 0;
 
 #define DEBUG_MSGF(fmt, ...)				\
     {							\
-	if (GeoIP_chatty)				\
+	if (!GeoIP_silent)				\
 	    fprintf(stderr, fmt, ##__VA_ARGS__);	\
     }
 
@@ -1422,6 +1423,9 @@ GeoIP * GeoIP_open(const char * filename, int flags)
     unsigned int idx_size;
     GeoIP * gi;
     size_t len;
+
+    /* needs to be set very early on, before gi->flags gets set */
+    GeoIP_silent = (flags & GEOIP_SILENCE) != 0;
 
     gi = (GeoIP *)malloc(sizeof(GeoIP));
     if (gi == NULL) {

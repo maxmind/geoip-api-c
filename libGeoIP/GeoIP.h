@@ -102,6 +102,7 @@ typedef enum {
     GEOIP_CHECK_CACHE = 2,
     GEOIP_INDEX_CACHE = 4,
     GEOIP_MMAP_CACHE = 8,
+    GEOIP_SILENCE = 16,
 } GeoIPOptions;
 
 typedef enum {
@@ -191,9 +192,6 @@ extern GEOIP_DATA const char GeoIP_country_code3[256][4];
 extern GEOIP_DATA const char * GeoIP_country_name[256];
 extern GEOIP_DATA const char * GeoIP_utf8_country_name[256];
 extern GEOIP_DATA const char GeoIP_country_continent[256][3];
-
-/* Control whether the library generates diagnostics to stderr or not */
-extern int GeoIP_chatty;
 
 GEOIP_API void GeoIP_setup_custom_directory(char *dir);
 GEOIP_API GeoIP * GeoIP_open_type(int type, int flags);
