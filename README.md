@@ -143,7 +143,9 @@ aclocal && autoconf && automake --add-missing
 
 ### Threads
 
-geoip lookups are thread safe, but libgeoip does not guard any functions.
+geoip lookups are thread safe, but libgeoip does not guard the functions. Do not
+drop or change the GeoIP database if other threads might use the database.
+
 The recommended pattern is
 
 ```
