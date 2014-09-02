@@ -72,12 +72,12 @@ static geoipv6_t IPV6_NULL;
 #define WORLD_OFFSET 1353
 #define FIPS_RANGE 360
 
-#define CHECK_ERR(err, msg)                              \
-    {                                                    \
-        if (err != Z_OK) {                               \
-            fprintf(stderr, "%s error: %d\n", msg, err); \
-            exit(1);                                     \
-        }                                                \
+int GeoIP_chatty = 1;
+
+#define DEBUG_MSGF(fmt, ...)				\
+    {							\
+	if (GeoIP_chatty)				\
+	    fprintf(stderr, fmt, ##__VA_ARGS__);	\
     }
 
 #ifndef HAVE_PREAD
@@ -606,7 +606,7 @@ static int _GeoIP_inet_pton(int af, const char *src, void *dst)
     hints.ai_family = af;
 
     if (getaddrinfo(src, NULL, &hints, &res) != 0) {
-        fprintf(stderr, "Couldn't resolve host %s\n", src);
+        DEBUG_MSGF("Couldn't resolve host %s\n", src);
         return -1;
     }
 
@@ -1073,7 +1073,7 @@ int _check_mtime(GeoIP *gi)
                                  (unsigned char *)realloc(gi->cache,
                                                           buf.st_size)) ==
                             NULL) {
-                            fprintf(stderr, "Out of memory when reloading %s\n",
+                            DEBUG_MSGF("Out of memory when reloading %s\n",
                                     gi->file_path);
                             return -1;
                         }
@@ -1083,7 +1083,7 @@ int _check_mtime(GeoIP *gi)
                 fclose(gi->GeoIPDatabase);
                 gi->GeoIPDatabase = fopen(gi->file_path, "rb");
                 if (gi->GeoIPDatabase == NULL) {
-                    fprintf(stderr, "Error Opening file %s when reloading\n",
+                    DEBUG_MSGF("Error Opening file %s when reloading\n",
                             gi->file_path);
                     return -1;
                 }
@@ -1092,7 +1092,7 @@ int _check_mtime(GeoIP *gi)
 
                 if (gi->flags & GEOIP_MMAP_CACHE) {
 #if defined(_WIN32)
-                    fprintf(stderr,
+                    DEBUG_MSGF(
                             "GEOIP_MMAP_CACHE is not supported on WIN32\n");
                     gi->cache = 0;
                     return -1;
@@ -1102,7 +1102,7 @@ int _check_mtime(GeoIP *gi)
                                  gi->GeoIPDatabase), 0);
                     if (gi->cache == MAP_FAILED) {
 
-                        fprintf(stderr,
+                        DEBUG_MSGF(
                                 "Error remapping file %s when reloading\n",
                                 gi->file_path);
 
@@ -1113,7 +1113,7 @@ int _check_mtime(GeoIP *gi)
                 } else if (gi->flags & GEOIP_MEMORY_CACHE) {
                     if (pread(fileno(gi->GeoIPDatabase), gi->cache, buf.st_size,
                               0) != (ssize_t)buf.st_size) {
-                        fprintf(stderr,
+                        DEBUG_MSGF(
                                 "Error reading file %s when reloading\n",
                                 gi->file_path);
                         return -1;
@@ -1126,7 +1126,7 @@ int _check_mtime(GeoIP *gi)
                 }
                 _setup_segments(gi);
                 if (gi->databaseSegments == NULL) {
-                    fprintf(stderr, "Error reading file %s -- corrupt\n",
+                    DEBUG_MSGF("Error reading file %s -- corrupt\n",
                             gi->file_path);
                     return -1;
                 }
@@ -1140,7 +1140,7 @@ int _check_mtime(GeoIP *gi)
                     databaseSegments[0
                     ] * (long)gi->record_length * 2 :  buf.st_size;
                 if (idx_size > buf.st_size) {
-                    fprintf(stderr, "Error file %s -- corrupt\n", gi->file_path);
+                    DEBUG_MSGF("Error file %s -- corrupt\n", gi->file_path);
                     return -1;
                 }
 
@@ -1150,7 +1150,7 @@ int _check_mtime(GeoIP *gi)
                     if (gi->index_cache != NULL) {
                         if (pread(fileno(gi->GeoIPDatabase), gi->index_cache,
                                   idx_size, 0 ) != (ssize_t)idx_size) {
-                            fprintf(stderr,
+                            DEBUG_MSGF(
                                     "Error reading file %s where reloading\n",
                                     gi->file_path);
                             return -1;
@@ -1241,8 +1241,7 @@ unsigned int _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum,
 
     /* shouldn't reach here */
     _GeoIP_inet_ntop(AF_INET6, &ipnum.s6_addr[0], paddr, ADDR_STR_LEN);
-    fprintf(
-        stderr,
+    DEBUG_MSGF(
         "Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n",
         paddr);
     return 0;
@@ -1330,8 +1329,7 @@ unsigned int _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum,
         offset = x;
     }
     /* shouldn't reach here */
-    fprintf(
-        stderr,
+    DEBUG_MSGF(
         "Error Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",
         ipnum);
     return 0;
@@ -1438,13 +1436,13 @@ GeoIP * GeoIP_open(const char * filename, int flags)
     strncpy(gi->file_path, filename, len);
     gi->GeoIPDatabase = fopen(filename, "rb");
     if (gi->GeoIPDatabase == NULL) {
-        fprintf(stderr, "Error Opening file %s\n", filename);
+        DEBUG_MSGF("Error Opening file %s\n", filename);
         free(gi->file_path);
         free(gi);
         return NULL;
     } else {
         if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
-            fprintf(stderr, "Error stating file %s\n", filename);
+            DEBUG_MSGF("Error stating file %s\n", filename);
             free(gi->file_path);
             free(gi);
             return NULL;
@@ -1460,7 +1458,7 @@ GeoIP * GeoIP_open(const char * filename, int flags)
                     mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(
                              gi->GeoIPDatabase), 0);
                 if (gi->cache == MAP_FAILED) {
-                    fprintf(stderr, "Error mmaping file %s\n", filename);
+                    DEBUG_MSGF("Error mmaping file %s\n", filename);
                     free(gi->file_path);
                     free(gi);
                     return NULL;
@@ -1473,7 +1471,7 @@ GeoIP * GeoIP_open(const char * filename, int flags)
                 if (gi->cache != NULL) {
                     if (pread(fileno(gi->GeoIPDatabase), gi->cache, buf.st_size,
                               0) != (ssize_t)buf.st_size) {
-                        fprintf(stderr, "Error reading file %s\n", filename);
+                        DEBUG_MSGF("Error reading file %s\n", filename);
                         free(gi->cache);
                         free(gi->file_path);
                         free(gi);
@@ -1484,7 +1482,7 @@ GeoIP * GeoIP_open(const char * filename, int flags)
         } else {
             if (flags & GEOIP_CHECK_CACHE) {
                 if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
-                    fprintf(stderr, "Error stating file %s\n", filename);
+                    DEBUG_MSGF("Error stating file %s\n", filename);
                     free(gi->file_path);
                     free(gi);
                     return NULL;
@@ -1504,7 +1502,7 @@ GeoIP * GeoIP_open(const char * filename, int flags)
 
         /* make sure the index is <= file size */
         if (idx_size > buf.st_size) {
-            fprintf(stderr, "Error file %s -- corrupt\n", gi->file_path);
+            DEBUG_MSGF("Error file %s -- corrupt\n", gi->file_path);
             if (flags & GEOIP_MEMORY_CACHE) {
                 free(gi->cache);
             }
@@ -1526,7 +1524,7 @@ GeoIP * GeoIP_open(const char * filename, int flags)
             if (gi->index_cache != NULL) {
                 if (pread(fileno(gi->GeoIPDatabase), gi->index_cache, idx_size,
                           0) != idx_size) {
-                    fprintf(stderr, "Error reading file %s\n", filename);
+                    DEBUG_MSGF("Error reading file %s\n", filename);
                     free(gi->databaseSegments);
                     free(gi->index_cache);
                     free(gi);
@@ -1684,7 +1682,7 @@ _GeoIP_lookupaddress_v6(const char *host)
     hints.ai_socktype = SOCK_STREAM;
 
     if ((gaierr = getaddrinfo(host, NULL, &hints, &aifirst)) != 0) {
-        /* fprintf(stderr, "Err: %s (%d %s)\n", host, gaierr, gai_strerror(gaierr)); */
+        /* DEBUG_MSGF("Err: %s (%d %s)\n", host, gaierr, gai_strerror(gaierr)); */
         return IPV6_NULL;
     }
     memcpy(ipnum.s6_addr,
