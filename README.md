@@ -45,7 +45,7 @@ The GeoIP Legacy C library relies on GNU make, not on BSD make
 
 ## Memory Caching and Other Options ##
 
-There are four options available:
+There are five options available:
 
 * `GEOIP_STANDARD` - Read database from file system. This uses the least
   memory.
@@ -61,6 +61,8 @@ There are four options available:
   equivalent to `GEOIP_MEMORY_CACHE`.
 * `GEOIP_MMAP_CACHE` - Load database into mmap shared memory. MMAP is not
   available for 32bit Windows.
+* `GEOIP_SILENCE` - Disables diagnostic messages to stderr in the library;
+  error conditions are detectable via the return values.
 
 These options can be combined using bit operators. For example you can
 use both `GEOIP_MEMORY_CACHE` and `GEOIP_CHECK_CACHE by calling`:
