@@ -1440,102 +1440,102 @@ GeoIP * GeoIP_open(const char * filename, int flags)
         free(gi->file_path);
         free(gi);
         return NULL;
-    } else {
-        if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
-            DEBUG_MSGF("Error stating file %s\n", filename);
-            free(gi->file_path);
-            free(gi);
-            return NULL;
-        }
-        if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
-            gi->mtime = buf.st_mtime;
-            gi->size = buf.st_size;
+    }
 
-            /* MMAP added my Peter Shipley */
-            if (flags & GEOIP_MMAP_CACHE) {
+    if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+        DEBUG_MSGF("Error stating file %s\n", filename);
+        free(gi->file_path);
+        free(gi);
+        return NULL;
+    }
+    if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
+        gi->mtime = buf.st_mtime;
+        gi->size = buf.st_size;
+
+        /* MMAP added my Peter Shipley */
+        if (flags & GEOIP_MMAP_CACHE) {
 #if !defined(_WIN32)
-                gi->cache =
-                    mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(
-                             gi->GeoIPDatabase), 0);
-                if (gi->cache == MAP_FAILED) {
-                    DEBUG_MSGF("Error mmaping file %s\n", filename);
-                    free(gi->file_path);
-                    free(gi);
-                    return NULL;
-                }
+            gi->cache =
+                mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fileno(
+                         gi->GeoIPDatabase), 0);
+            if (gi->cache == MAP_FAILED) {
+                DEBUG_MSGF("Error mmaping file %s\n", filename);
+                free(gi->file_path);
+                free(gi);
+                return NULL;
+            }
 #endif
-            } else {
-                gi->cache = (unsigned char *)malloc(
-                    sizeof(unsigned char) * buf.st_size);
-
-                if (gi->cache != NULL) {
-                    if (pread(fileno(gi->GeoIPDatabase), gi->cache, buf.st_size,
-                              0) != (ssize_t)buf.st_size) {
-                        DEBUG_MSGF("Error reading file %s\n", filename);
-                        free(gi->cache);
-                        free(gi->file_path);
-                        free(gi);
-                        return NULL;
-                    }
-                }
-            }
         } else {
-            if (flags & GEOIP_CHECK_CACHE) {
-                if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
-                    DEBUG_MSGF("Error stating file %s\n", filename);
+            gi->cache = (unsigned char *)malloc(
+                sizeof(unsigned char) * buf.st_size);
+
+            if (gi->cache != NULL) {
+                if (pread(fileno(gi->GeoIPDatabase), gi->cache, buf.st_size,
+                          0) != (ssize_t)buf.st_size) {
+                    DEBUG_MSGF("Error reading file %s\n", filename);
+                    free(gi->cache);
                     free(gi->file_path);
                     free(gi);
                     return NULL;
                 }
-                gi->mtime = buf.st_mtime;
             }
+        }
+    } else {
+        if (flags & GEOIP_CHECK_CACHE) {
+            if (fstat(fileno(gi->GeoIPDatabase), &buf) == -1) {
+                DEBUG_MSGF("Error stating file %s\n", filename);
+                free(gi->file_path);
+                free(gi);
+                return NULL;
+            }
+            gi->mtime = buf.st_mtime;
+        }
+        gi->cache = NULL;
+    }
+    gi->flags = flags;
+    gi->charset = GEOIP_CHARSET_ISO_8859_1;
+    gi->ext_flags = 1U << GEOIP_TEREDO_BIT;
+    _setup_segments(gi);
+
+    idx_size =
+        _database_has_content(gi->databaseType) ? gi->databaseSegments[0] *
+        (long)gi->record_length * 2 :  buf.st_size;
+
+    /* make sure the index is <= file size */
+    if (idx_size > buf.st_size) {
+        DEBUG_MSGF("Error file %s -- corrupt\n", gi->file_path);
+        if (flags & GEOIP_MEMORY_CACHE) {
+            free(gi->cache);
+        }
+#if !defined(_WIN32)
+        else if (flags & GEOIP_MMAP_CACHE) {
+            /* MMAP is only avail on UNIX */
+            munmap(gi->cache, gi->size);
             gi->cache = NULL;
         }
-        gi->flags = flags;
-        gi->charset = GEOIP_CHARSET_ISO_8859_1;
-        gi->ext_flags = 1U << GEOIP_TEREDO_BIT;
-        _setup_segments(gi);
-
-        idx_size =
-            _database_has_content(gi->databaseType) ? gi->databaseSegments[0] *
-            (long)gi->record_length * 2 :  buf.st_size;
-
-        /* make sure the index is <= file size */
-        if (idx_size > buf.st_size) {
-            DEBUG_MSGF("Error file %s -- corrupt\n", gi->file_path);
-            if (flags & GEOIP_MEMORY_CACHE) {
-                free(gi->cache);
-            }
-#if !defined(_WIN32)
-            else if (flags & GEOIP_MMAP_CACHE) {
-                /* MMAP is only avail on UNIX */
-                munmap(gi->cache, gi->size);
-                gi->cache = NULL;
-            }
 #endif
-            free(gi->file_path);
-            free(gi);
-            return NULL;
-        }
-
-        if (flags & GEOIP_INDEX_CACHE) {
-            gi->index_cache = (unsigned char *)malloc(
-                sizeof(unsigned char) * idx_size);
-            if (gi->index_cache != NULL) {
-                if (pread(fileno(gi->GeoIPDatabase), gi->index_cache, idx_size,
-                          0) != idx_size) {
-                    DEBUG_MSGF("Error reading file %s\n", filename);
-                    free(gi->databaseSegments);
-                    free(gi->index_cache);
-                    free(gi);
-                    return NULL;
-                }
-            }
-        } else {
-            gi->index_cache = NULL;
-        }
-        return gi;
+        free(gi->file_path);
+        free(gi);
+        return NULL;
     }
+
+    if (flags & GEOIP_INDEX_CACHE) {
+        gi->index_cache = (unsigned char *)malloc(
+            sizeof(unsigned char) * idx_size);
+        if (gi->index_cache != NULL) {
+            if (pread(fileno(gi->GeoIPDatabase), gi->index_cache, idx_size,
+                      0) != idx_size) {
+                DEBUG_MSGF("Error reading file %s\n", filename);
+                free(gi->databaseSegments);
+                free(gi->index_cache);
+                free(gi);
+                return NULL;
+            }
+        }
+    } else {
+        gi->index_cache = NULL;
+    }
+    return gi;
 }
 
 void GeoIP_delete(GeoIP *gi)
