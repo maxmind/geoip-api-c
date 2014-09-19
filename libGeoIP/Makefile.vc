@@ -16,7 +16,7 @@ LDFLAGS=/DLL /nologo /subsystem:console
 
 LD1 = $(LINKER) $(LDFLAGS)
 
-OBJS=GeoIP.obj GeoIPCity.obj GeoIP_depreciated.obj regionName.obj timeZone.obj pread.obj
+OBJS=GeoIP.obj GeoIPCity.obj GeoIP_deprecated.obj regionName.obj timeZone.obj pread.obj
  
 EXTRA_LIBS= ws2_32.lib
  
@@ -34,8 +34,8 @@ GeoIP.obj: GeoIP.c
 GeoIPCity.obj: GeoIPCity.c 
    $(CC1) -c GeoIPCity.c $(GEOIPINC)
 
-GeoIP_depreciated.obj: GeoIP_depreciated.c 
-   $(CC1) -c GeoIP_depreciated.c $(GEOIPINC)
+GeoIP_deprecated.obj: GeoIP_deprecated.c 
+   $(CC1) -c GeoIP_deprecated.c $(GEOIPINC)
 
 regionName.obj: regionName.c 
    $(CC1) -c regionName.c $(GEOIPINC)
