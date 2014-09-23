@@ -2283,7 +2283,7 @@ static
 char *_get_name_v6_gl(GeoIP * gi, geoipv6_t ipnum, GeoIPLookup * gl)
 {
     int seek_org;
-    char buf[MAX_ORG_RECORD_LENGTH];
+    char buf[MAX_ORG_RECORD_LENGTH + 1];
     char * org_buf, * buf_pointer;
     int record_pointer;
     size_t len;
@@ -2318,6 +2318,7 @@ char *_get_name_v6_gl(GeoIP * gi, geoipv6_t ipnum, GeoIPLookup * gl)
         silence = pread(fileno(
                             gi->GeoIPDatabase), buf, MAX_ORG_RECORD_LENGTH,
                         record_pointer);
+        buf[MAX_ORG_RECORD_LENGTH] = 0;
         if (gi->charset == GEOIP_CHARSET_UTF8) {
             org_buf = _GeoIP_iso_8859_1__utf8( (const char * )buf );
         } else {
