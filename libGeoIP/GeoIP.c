@@ -928,7 +928,9 @@ void _setup_segments(GeoIP * gi)
     /* default to GeoIP Country Edition */
     gi->databaseType = GEOIP_COUNTRY_EDITION;
     gi->record_length = STANDARD_RECORD_LENGTH;
-    lseek(fno, -3l, SEEK_END);
+    if ( -1 == lseek(fno, -3l, SEEK_END)){
+        return;
+    }
     for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
         silence = read(fno, delim, 3);
         if (delim[0] == 255 && delim[1] == 255 && delim[2] == 255) {
@@ -941,10 +943,16 @@ void _setup_segments(GeoIP * gi)
             if (gi->databaseType == GEOIP_REGION_EDITION_REV0) {
                 /* Region Edition, pre June 2003 */
                 gi->databaseSegments = malloc(sizeof(int));
+                if (gi->databaseSegments == NULL){
+                    return;
+                }
                 gi->databaseSegments[0] = STATE_BEGIN_REV0;
             } else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
                 /* Region Edition, post June 2003 */
                 gi->databaseSegments = malloc(sizeof(int));
+                if (gi->databaseSegments == NULL){
+                    return;
+                }
                 gi->databaseSegments[0] = STATE_BEGIN_REV1;
             } else if (gi->databaseType == GEOIP_CITY_EDITION_REV0 ||
                        gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
@@ -974,8 +982,10 @@ void _setup_segments(GeoIP * gi)
                        ) {
                 /* City/Org Editions have two segments, read offset of second segment */
                 gi->databaseSegments = malloc(sizeof(int));
+                if (gi->databaseSegments == NULL){
+                    return;
+                }
                 gi->databaseSegments[0] = 0;
-
                 segment_record_length = SEGMENT_RECORD_LENGTH;
 
                 silence = read(fno, buf, segment_record_length );
@@ -995,7 +1005,10 @@ void _setup_segments(GeoIP * gi)
             }
             break;
         } else {
-            lseek(fno, -4l, SEEK_CUR);
+            if (-1 == lseek(fno, -4l, SEEK_CUR)){
+                gi->databaseSegments = NULL;
+                return;
+            }
         }
     }
     if (gi->databaseType == GEOIP_COUNTRY_EDITION ||
@@ -1003,10 +1016,16 @@ void _setup_segments(GeoIP * gi)
         gi->databaseType == GEOIP_NETSPEED_EDITION ||
         gi->databaseType == GEOIP_COUNTRY_EDITION_V6) {
         gi->databaseSegments = malloc(sizeof(int));
+                if (gi->databaseSegments == NULL){
+                    return;
+                }
         gi->databaseSegments[0] = COUNTRY_BEGIN;
     }else if (gi->databaseType == GEOIP_LARGE_COUNTRY_EDITION ||
               gi->databaseType == GEOIP_LARGE_COUNTRY_EDITION_V6) {
         gi->databaseSegments = malloc(sizeof(int));
+                if (gi->databaseSegments == NULL){
+                    return;
+                }
         gi->databaseSegments[0] = LARGE_COUNTRY_BEGIN;
     }
 
@@ -1945,7 +1964,9 @@ char *GeoIP_database_info(GeoIP * gi)
     fno = fileno(gi->GeoIPDatabase);
 
     _check_mtime(gi);
-    lseek(fno, -3l, SEEK_END);
+    if ( -1 == lseek(fno, -3l, SEEK_END)){
+        return NULL;
+    }
 
     /* first get past the database structure information */
     for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
@@ -1954,13 +1975,19 @@ char *GeoIP_database_info(GeoIP * gi)
             hasStructureInfo = 1;
             break;
         }
-        lseek(fno, -4l, SEEK_CUR);
+        if (-1 == lseek(fno, -4l, SEEK_CUR)){
+            return NULL;
+        }
     }
     if (hasStructureInfo == 1) {
-        lseek(fno, -6l, SEEK_CUR);
+        if ( -1 == lseek(fno, -6l, SEEK_CUR)){
+            return NULL;
+        }
     } else {
         /* no structure info, must be pre Sep 2002 database, go back to end */
-        lseek(fno, -3l, SEEK_END);
+        if (-1 == lseek(fno, -3l, SEEK_END)){
+            return NULL;
+        }
     }
 
     for (i = 0; i < DATABASE_INFO_MAX_SIZE; i++) {
@@ -1974,7 +2001,9 @@ char *GeoIP_database_info(GeoIP * gi)
             retval[i] = '\0';
             return retval;
         }
-        lseek(fno, -4l, SEEK_CUR);
+        if (-1 == lseek(fno, -4l, SEEK_CUR)){
+            return NULL;
+        }
     }
     return NULL;
 }
