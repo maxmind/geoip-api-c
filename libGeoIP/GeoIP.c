@@ -1526,8 +1526,10 @@ GeoIP * GeoIP_open(const char * filename, int flags)
 #if !defined(_WIN32)
         else if (flags & GEOIP_MMAP_CACHE) {
             /* MMAP is only avail on UNIX */
-            munmap(gi->cache, gi->size);
-            gi->cache = NULL;
+            if (gi->cache) {
+                munmap(gi->cache, gi->size);
+                gi->cache = NULL;
+            }
         }
 #endif
         free(gi->file_path);
@@ -1565,7 +1567,9 @@ void GeoIP_delete(GeoIP *gi)
     if (gi->cache != NULL) {
         if (gi->flags & GEOIP_MMAP_CACHE) {
 #if !defined(_WIN32)
-            munmap(gi->cache, gi->size);
+            if (gi->cache) {
+                munmap(gi->cache, gi->size);
+            }
 #endif
         } else {
             free(gi->cache);
