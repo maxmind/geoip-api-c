@@ -2056,7 +2056,8 @@ void GeoIP_assign_region_by_inetaddr_gl(GeoIP * gi, unsigned long inetaddr,
             region->region[0] = (char)((seek_region - CANADA_OFFSET) / 26 + 65);
             region->region[1] = (char)((seek_region - CANADA_OFFSET) % 26 + 65);
         } else {
-            /* Not US or Canada */
+            /* Not US or Canada ( world countries country code is always cc_id * 360 ) */
+            /* coverity[dont_call] */
             memcpy(
                 region->country_code,
                 GeoIP_country_code[(seek_region -
