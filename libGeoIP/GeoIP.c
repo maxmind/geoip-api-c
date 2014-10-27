@@ -2087,6 +2087,7 @@ void GeoIP_assign_region_by_inetaddr_v6_gl(GeoIP * gi, geoipv6_t inetaddr,
             region->region[0] = (char)((seek_region - 1000) / 26 + 65);
             region->region[1] = (char)((seek_region - 1000) % 26 + 65);
         } else {
+            /* coverity[dont_call] */
             memcpy(region->country_code, GeoIP_country_code[seek_region], 2);
         }
     } else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
@@ -2108,7 +2109,8 @@ void GeoIP_assign_region_by_inetaddr_v6_gl(GeoIP * gi, geoipv6_t inetaddr,
             region->region[0] = (char)((seek_region - CANADA_OFFSET) / 26 + 65);
             region->region[1] = (char)((seek_region - CANADA_OFFSET) % 26 + 65);
         } else {
-            /* Not US or Canada */
+            /* Not US or Canada ( cc_id is always cc_id * FIPS_RANGE ) */
+            /* coverity[dont_call] */
             memcpy(
                 region->country_code,
                 GeoIP_country_code[(seek_region -
