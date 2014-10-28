@@ -1077,7 +1077,7 @@ int _check_mtime(GeoIP *gi)
                 ( buf.st_mtime + 60 < gi->last_mtime_check  ) ) {
                 /* GeoIP Database file updated */
                 if (gi->flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE)) {
-                    if (gi->flags & GEOIP_MMAP_CACHE) {
+                    if (gi->cache && (gi->flags & GEOIP_MMAP_CACHE)) {
 #if !defined(_WIN32)
                         /* MMAP is only avail on UNIX */
                         munmap(gi->cache, gi->size);
@@ -1524,12 +1524,10 @@ GeoIP * GeoIP_open(const char * filename, int flags)
             free(gi->cache);
         }
 #if !defined(_WIN32)
-        else if (flags & GEOIP_MMAP_CACHE) {
+        else if (gi->cache && (flags & GEOIP_MMAP_CACHE)) {
             /* MMAP is only avail on UNIX */
-            if (gi->cache) {
                 munmap(gi->cache, gi->size);
                 gi->cache = NULL;
-            }
         }
 #endif
         free(gi->file_path);
