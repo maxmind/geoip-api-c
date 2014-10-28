@@ -91,7 +91,7 @@ void testgeoiporg(int flags, const char *msg, int numlookups)
     }
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
-        i3 = GeoIP_name_by_addr(i, ipstring[i4]);
+        free(GeoIP_name_by_addr(i, ipstring[i4]));
         i4 = (i4 + 1) % numipstrings;
     }
     t = timerstop();
