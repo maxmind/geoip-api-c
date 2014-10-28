@@ -24,50 +24,57 @@ CRITICAL_SECTION preadsc;
 #ifdef _WIN64
 int pread(int fd, void *buf, unsigned int nbyte, __int64 offset)
 {
-	int cc = -1;
-	__int64 prev = (__int64)-1L;
+    int cc = -1;
+    __int64 prev = (__int64) - 1L;
 
-	EnterCriticalSection(&preadsc);
-	prev = _lseeki64(fd, 0L, SEEK_CUR);
-	if (prev == (__int64)-1L)
-		goto done;
-	if (_lseeki64(fd, offset, SEEK_SET) != offset)
-		goto done;
-	cc = _read(fd, buf, nbyte);
+    EnterCriticalSection(&preadsc);
+    prev = _lseeki64(fd, 0L, SEEK_CUR);
+    if (prev == (__int64) - 1L) {
+        goto done;
+    }
+    if (_lseeki64(fd, offset, SEEK_SET) != offset) {
+        goto done;
+    }
+    cc = _read(fd, buf, nbyte);
 
-done:
-	if (prev != (__int64)-1L)
-		(void)_lseeki64(fd, prev, SEEK_SET);
-	LeaveCriticalSection(&preadsc);
+ done:
+    if (prev != (__int64) - 1L) {
+        (void)_lseeki64(fd, prev, SEEK_SET);
+    }
+    LeaveCriticalSection(&preadsc);
 
-	return cc;
+    return cc;
 }
 #else
 int pread(int fd, void *buf, unsigned int nbyte, long offset)
 {
-	int cc = -1;
-	long prev = -1L;
+    int cc = -1;
+    long prev = -1L;
 
-	EnterCriticalSection(&preadsc);
-	prev = _lseek(fd, 0L, SEEK_CUR);
-	if (prev == -1L)
-		goto done;
-	if (_lseek(fd, offset, SEEK_SET) != offset)
-		goto done;
-	cc = _read(fd, buf, nbyte);
+    EnterCriticalSection(&preadsc);
+    prev = _lseek(fd, 0L, SEEK_CUR);
+    if (prev == -1L) {
+        goto done;
+    }
+    if (_lseek(fd, offset, SEEK_SET) != offset) {
+        goto done;
+    }
+    cc = _read(fd, buf, nbyte);
 
-done:
-	if (prev != -1L)
-		(void)_lseek(fd, prev, SEEK_SET);
-	LeaveCriticalSection(&preadsc);
+ done:
+    if (prev != -1L) {
+        (void)_lseek(fd, prev, SEEK_SET);
+    }
+    LeaveCriticalSection(&preadsc);
 
-	return cc;
+    return cc;
 }
 #endif
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved )
 {
-	if (fdwReason == DLL_PROCESS_ATTACH)
-		InitializeCriticalSection(&preadsc);
-	return TRUE;
+    if (fdwReason == DLL_PROCESS_ATTACH) {
+        InitializeCriticalSection(&preadsc);
+    }
+    return TRUE;
 }

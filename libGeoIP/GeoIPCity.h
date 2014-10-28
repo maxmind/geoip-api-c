@@ -61,7 +61,8 @@ GEOIP_API int GeoIP_record_id_by_addr_v6(GeoIP * gi, const char *addr);
 
 GEOIP_API int GeoIP_init_record_iter(GeoIP * gi);
 /* returns 0 on success, 1 on failure */
-GEOIP_API int GeoIP_next_record(GeoIP * gi, GeoIPRecord **gir, int *record_iter);
+GEOIP_API int GeoIP_next_record(GeoIP * gi, GeoIPRecord **gir,
+                                int *record_iter);
 
 GEOIP_API void GeoIPRecord_delete(GeoIPRecord *gir);
 

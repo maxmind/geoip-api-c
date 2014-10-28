@@ -72,10 +72,10 @@ static geoipv6_t IPV6_NULL;
 #define WORLD_OFFSET 1353
 #define FIPS_RANGE 360
 
-#define DEBUG_MSGF(flags, fmt, ...)	    		\
-    {							\
-	if (((flags) & GEOIP_SILENCE) == 0 )		    	\
-	    fprintf(stderr, fmt, ##__VA_ARGS__);	\
+#define DEBUG_MSGF(flags, fmt, ...)                 \
+    {                                               \
+        if (((flags) & GEOIP_SILENCE) == 0) {       \
+            fprintf(stderr, fmt, ## __VA_ARGS__); } \
     }
 
 #ifndef HAVE_PREAD
@@ -775,8 +775,10 @@ void _GeoIP_setup_dbfilename()
             "GeoIPCity.dat");
         GeoIPDBFileName[GEOIP_CITY_EDITION_REV1] = _GeoIP_full_path_to(
             "GeoIPCity.dat");
-        GeoIPDBFileName[GEOIP_ISP_EDITION] = _GeoIP_full_path_to("GeoIPISP.dat");
-        GeoIPDBFileName[GEOIP_ORG_EDITION] = _GeoIP_full_path_to("GeoIPOrg.dat");
+        GeoIPDBFileName[GEOIP_ISP_EDITION] =
+            _GeoIP_full_path_to("GeoIPISP.dat");
+        GeoIPDBFileName[GEOIP_ORG_EDITION] =
+            _GeoIP_full_path_to("GeoIPOrg.dat");
         GeoIPDBFileName[GEOIP_PROXY_EDITION] = _GeoIP_full_path_to(
             "GeoIPProxy.dat");
         GeoIPDBFileName[GEOIP_ASNUM_EDITION] = _GeoIP_full_path_to(
@@ -928,7 +930,7 @@ void _setup_segments(GeoIP * gi)
     /* default to GeoIP Country Edition */
     gi->databaseType = GEOIP_COUNTRY_EDITION;
     gi->record_length = STANDARD_RECORD_LENGTH;
-    if ( -1 == lseek(fno, -3l, SEEK_END)){
+    if (-1 == lseek(fno, -3l, SEEK_END)) {
         return;
     }
     for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
@@ -943,14 +945,14 @@ void _setup_segments(GeoIP * gi)
             if (gi->databaseType == GEOIP_REGION_EDITION_REV0) {
                 /* Region Edition, pre June 2003 */
                 gi->databaseSegments = malloc(sizeof(int));
-                if (gi->databaseSegments == NULL){
+                if (gi->databaseSegments == NULL) {
                     return;
                 }
                 gi->databaseSegments[0] = STATE_BEGIN_REV0;
             } else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
                 /* Region Edition, post June 2003 */
                 gi->databaseSegments = malloc(sizeof(int));
-                if (gi->databaseSegments == NULL){
+                if (gi->databaseSegments == NULL) {
                     return;
                 }
                 gi->databaseSegments[0] = STATE_BEGIN_REV1;
@@ -982,7 +984,7 @@ void _setup_segments(GeoIP * gi)
                        ) {
                 /* City/Org Editions have two segments, read offset of second segment */
                 gi->databaseSegments = malloc(sizeof(int));
-                if (gi->databaseSegments == NULL){
+                if (gi->databaseSegments == NULL) {
                     return;
                 }
                 gi->databaseSegments[0] = 0;
@@ -1005,7 +1007,7 @@ void _setup_segments(GeoIP * gi)
             }
             break;
         } else {
-            if (-1 == lseek(fno, -4l, SEEK_CUR)){
+            if (-1 == lseek(fno, -4l, SEEK_CUR)) {
                 gi->databaseSegments = NULL;
                 return;
             }
@@ -1016,16 +1018,16 @@ void _setup_segments(GeoIP * gi)
         gi->databaseType == GEOIP_NETSPEED_EDITION ||
         gi->databaseType == GEOIP_COUNTRY_EDITION_V6) {
         gi->databaseSegments = malloc(sizeof(int));
-                if (gi->databaseSegments == NULL){
-                    return;
-                }
+        if (gi->databaseSegments == NULL) {
+            return;
+        }
         gi->databaseSegments[0] = COUNTRY_BEGIN;
     }else if (gi->databaseType == GEOIP_LARGE_COUNTRY_EDITION ||
               gi->databaseType == GEOIP_LARGE_COUNTRY_EDITION_V6) {
         gi->databaseSegments = malloc(sizeof(int));
-                if (gi->databaseSegments == NULL){
-                    return;
-                }
+        if (gi->databaseSegments == NULL) {
+            return;
+        }
         gi->databaseSegments[0] = LARGE_COUNTRY_BEGIN;
     }
 
@@ -1089,8 +1091,9 @@ int _check_mtime(GeoIP *gi)
                                  (unsigned char *)realloc(gi->cache,
                                                           buf.st_size)) ==
                             NULL) {
-                            DEBUG_MSGF(gi->flags, "Out of memory when reloading %s\n",
-                                    gi->file_path);
+                            DEBUG_MSGF(gi->flags,
+                                       "Out of memory when reloading %s\n",
+                                       gi->file_path);
                             return -1;
                         }
                     }
@@ -1099,8 +1102,9 @@ int _check_mtime(GeoIP *gi)
                 fclose(gi->GeoIPDatabase);
                 gi->GeoIPDatabase = fopen(gi->file_path, "rb");
                 if (gi->GeoIPDatabase == NULL) {
-                    DEBUG_MSGF(gi->flags, "Error Opening file %s when reloading\n",
-                            gi->file_path);
+                    DEBUG_MSGF(gi->flags,
+                               "Error Opening file %s when reloading\n",
+                               gi->file_path);
                     return -1;
                 }
                 gi->mtime = buf.st_mtime;
@@ -1109,7 +1113,7 @@ int _check_mtime(GeoIP *gi)
                 if (gi->flags & GEOIP_MMAP_CACHE) {
 #if defined(_WIN32)
                     DEBUG_MSGF(gi->flags,
-                            "GEOIP_MMAP_CACHE is not supported on WIN32\n");
+                               "GEOIP_MMAP_CACHE is not supported on WIN32\n");
                     gi->cache = 0;
                     return -1;
 #else
@@ -1119,8 +1123,8 @@ int _check_mtime(GeoIP *gi)
                     if (gi->cache == MAP_FAILED) {
 
                         DEBUG_MSGF(gi->flags,
-                                "Error remapping file %s when reloading\n",
-                                gi->file_path);
+                                   "Error remapping file %s when reloading\n",
+                                   gi->file_path);
 
                         gi->cache = NULL;
                         return -1;
@@ -1129,9 +1133,9 @@ int _check_mtime(GeoIP *gi)
                 } else if (gi->flags & GEOIP_MEMORY_CACHE) {
                     if (pread(fileno(gi->GeoIPDatabase), gi->cache, buf.st_size,
                               0) != (ssize_t)buf.st_size) {
-                                DEBUG_MSGF(gi->flags,
-                                "Error reading file %s when reloading\n",
-                                gi->file_path);
+                        DEBUG_MSGF(gi->flags,
+                                   "Error reading file %s when reloading\n",
+                                   gi->file_path);
                         return -1;
                     }
                 }
@@ -1143,7 +1147,7 @@ int _check_mtime(GeoIP *gi)
                 _setup_segments(gi);
                 if (gi->databaseSegments == NULL) {
                     DEBUG_MSGF(gi->flags, "Error reading file %s -- corrupt\n",
-                            gi->file_path);
+                               gi->file_path);
                     return -1;
                 }
 
@@ -1156,7 +1160,8 @@ int _check_mtime(GeoIP *gi)
                     databaseSegments[0
                     ] * (long)gi->record_length * 2 :  buf.st_size;
                 if (idx_size > buf.st_size) {
-                    DEBUG_MSGF(gi->flags, "Error file %s -- corrupt\n", gi->file_path);
+                    DEBUG_MSGF(gi->flags, "Error file %s -- corrupt\n",
+                               gi->file_path);
                     return -1;
                 }
 
@@ -1167,8 +1172,8 @@ int _check_mtime(GeoIP *gi)
                         if (pread(fileno(gi->GeoIPDatabase), gi->index_cache,
                                   idx_size, 0 ) != (ssize_t)idx_size) {
                             DEBUG_MSGF(gi->flags,
-                                    "Error reading file %s where reloading\n",
-                                    gi->file_path);
+                                       "Error reading file %s where reloading\n",
+                                       gi->file_path);
                             return -1;
                         }
                     }
@@ -1258,8 +1263,8 @@ unsigned int _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum,
     /* shouldn't reach here */
     _GeoIP_inet_ntop(AF_INET6, &ipnum.s6_addr[0], paddr, ADDR_STR_LEN);
     DEBUG_MSGF(gi->flags,
-        "Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n",
-        paddr);
+               "Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n",
+               paddr);
     return 0;
 }
 
@@ -1346,8 +1351,8 @@ unsigned int _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum,
     }
     /* shouldn't reach here */
     DEBUG_MSGF(gi->flags,
-        "Error Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",
-        ipnum);
+               "Error Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",
+               ipnum);
     return 0;
 }
 
@@ -1526,8 +1531,8 @@ GeoIP * GeoIP_open(const char * filename, int flags)
 #if !defined(_WIN32)
         else if (gi->cache && (flags & GEOIP_MMAP_CACHE)) {
             /* MMAP is only avail on UNIX */
-                munmap(gi->cache, gi->size);
-                gi->cache = NULL;
+            munmap(gi->cache, gi->size);
+            gi->cache = NULL;
         }
 #endif
         free(gi->file_path);
@@ -1966,7 +1971,7 @@ char *GeoIP_database_info(GeoIP * gi)
     fno = fileno(gi->GeoIPDatabase);
 
     _check_mtime(gi);
-    if ( -1 == lseek(fno, -3l, SEEK_END)){
+    if (-1 == lseek(fno, -3l, SEEK_END)) {
         return NULL;
     }
 
@@ -1977,17 +1982,17 @@ char *GeoIP_database_info(GeoIP * gi)
             hasStructureInfo = 1;
             break;
         }
-        if (-1 == lseek(fno, -4l, SEEK_CUR)){
+        if (-1 == lseek(fno, -4l, SEEK_CUR)) {
             return NULL;
         }
     }
     if (hasStructureInfo == 1) {
-        if ( -1 == lseek(fno, -6l, SEEK_CUR)){
+        if (-1 == lseek(fno, -6l, SEEK_CUR)) {
             return NULL;
         }
     } else {
         /* no structure info, must be pre Sep 2002 database, go back to end */
-        if (-1 == lseek(fno, -3l, SEEK_END)){
+        if (-1 == lseek(fno, -3l, SEEK_END)) {
             return NULL;
         }
     }
@@ -2003,7 +2008,7 @@ char *GeoIP_database_info(GeoIP * gi)
             retval[i] = '\0';
             return retval;
         }
-        if (-1 == lseek(fno, -4l, SEEK_CUR)){
+        if (-1 == lseek(fno, -4l, SEEK_CUR)) {
             return NULL;
         }
     }
