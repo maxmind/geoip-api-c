@@ -273,7 +273,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
             }else {
                 printf("%s: %s\n", GeoIPDBDescription[i], domain_name);
                 _say_range_by_ip(gi, ipnum);
-                free(domain_name);
+                free((void *)domain_name);
             }
         }else if (GEOIP_LOCATIONA_EDITION == i ||
                   GEOIP_ACCURACYRADIUS_EDITION == i
@@ -290,7 +290,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
             }else {
                 printf("%s: %s\n", GeoIPDBDescription[i], asnum_name);
                 _say_range_by_ip(gi, ipnum);
-                free(asnum_name);
+                free((void *)asnum_name);
             }
         }else if (GEOIP_COUNTRY_EDITION == i) {
             country_id = GeoIP_id_by_ipnum(gi, ipnum);
@@ -356,7 +356,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
             }else {
                 printf("%s: %s\n", GeoIPDBDescription[i], org);
                 _say_range_by_ip(gi, ipnum);
-                free(org);
+                free((void *)org);
             }
         }else if (GEOIP_NETSPEED_EDITION == i) {
             netspeed = GeoIP_id_by_ipnum(gi, ipnum);
