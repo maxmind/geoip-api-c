@@ -14,5 +14,5 @@
 * `git tag v{X.Y.Z}`
 * `git push --tags`
 * Make a new release on GitHub at https://github.com/maxmind/geoip-api-c/releases
-** Upload the tarball you just made
-** Edit said release to include the changes for this release on GitHub
+    * Upload the tarball you just made
+    * Edit said release to include the changes for this release on GitHub
