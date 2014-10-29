@@ -3,10 +3,10 @@
 * Make sure the `ChangeLog` is up to date.
 * Run the following:
 
-    ./bootstrap
-    ./configure
-    make check -j 4
-    sudo make install
+        ./bootstrap
+        ./configure
+        make check -j 4
+        sudo make install
 
 * Edit `configure.ac` and bump the version
 * `make dist`
