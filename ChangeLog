@@ -1,6 +1,14 @@
 1.6.3
-	* Add GEOIP_SILENCE to squelch messages to being written to
-	  stderr from library. ( Boris Zentner )
+	* Added a GEOIP_SILENCE flag. Include this flag when calling GeoIP_open to
+  	  prevent any messages from being written to stderr. ( Philip Prindeville
+  	  and Boris Zentner )
+	* Mitigate a possible race condition when running nuder threads in the
+      GeoIP_cleanup function. ( Anthon Pang )
+	* Added some recommendations to the docs on using this library in a
+      threaded application. ( Boriz Zentner )
+	* Fixed some bugs discovered by coverity, including failure to check some
+      system call return values and making sure all strings are
+      null-terminated. ( Boris Zentner )
 1.6.2
 	* Two files required for building on Win32 were missing from the 1.6.1
 	  release. These files were added. There are no changes affecting other
