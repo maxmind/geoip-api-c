@@ -208,7 +208,7 @@
 	* Sync regionName.c with http://www.maxmind.com/app/fips10_4 from Dec 17th, 2008 ( Boris Zentner )
 	* Fix _GeoIP_lookupaddress for 64bit big endian systems like ppc64 ( Peter Volkov )
 	* Add proper WIN32/64 support ( Gerald Combs )
-	* Escape - in all manpages ( Patrick Matthaei )
+	* Escape - in all manpages ( Patrick MatthÃ¤i )
 	* Add manpage for geoiplookup6 ( Boris Zentner )
 	* Fix -d command line option ( Klaus Heinz )
 	* GeoIPUpdate.c use vasprintf if avail, otherwise try vsnprintf and sprintf ( Boris Zentner )
@@ -222,8 +222,8 @@
 		GeoIP_range_by_ip_delete(r); ( Boris Zentner )
 	* Fix small memoryleak and wrap around in GeoIP_range_by_ip ( Boris Zentner )
 	* CHECK_CACHE stat the database file not faster than once a second anymore ( Patrick McManus )
-	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick Matthäi)
-	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick Matthäi)
+	* Fixed a typo in the geoipupdate(1) manpage and also an non-existent path on Debian (Patrick MatthÃ¤i)
+	* Fixes two little format errors (hyphen used as minus sign) in both manpages (Patrick MatthÃ¤i)
 	* Sync regionName.c with a recent fips code list ( Boris Zentner )
 	* Fix segfault when open failed for a custom file (-f) ( Boris Zentner )
 	* Fix sync geoiplookup's man page with the code ( Klaus Heinz )
@@ -338,7 +338,7 @@
 	* Added GeoIP_region_name_by_code, to lookup region name from region code (Frank Mather)
 	* added -f and -d flags to enable custom paths for geoiplookup utility program (Frank Mather)
 	* Added benchmarks for GeoIP Region and City in test/benchmark.c (Frank Mather)
-	* Fixed build issue when using --as-needed flag (Diego 'Flameeyes' Pettenò)
+	* Fixed build issue when using --as-needed flag (Diego 'Flameeyes' PettenÃ²)
 	* Add sanity checking for filename returned by MaxMind.com server for geoipupdate filename
 		(Dean Gaudet, arctic.org)
 	* Fixed memory leaks under error conditions, buffer overflow using sprintf,
@@ -504,13 +504,14 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Fixed includes to compile on Windows (Fabrice Colin)
 	* Removed the _addr_to_num() calls from GeoIP_*_by_name()
 	* _seek_record() optimizations (Maurice Cinquini)
-		 1) Use a single buf ptr inside the loops.
-		    Set to the stack buffer or the cached memory the start of the function.
-		 2) Unroll the i=0,1 loop to allow constant folding.
-		 3) Unroll the j loop for the common case of j = STANDARD_RECORD_LENGTH
-		    (I've already done the above changes see attached function.)
-		    With gcc -O2 calculating x[0] and x[1] for STANDARD_RECORD_LENGTH now
-		    only takes 15 (was > 100) i80x86 instructions with 6 byte accesses of RAM.                 4) only calculate x[0], x[1] when needed, may be a bigger win
+		 1) Use a single buf ptr inside the loops.
+		    Set to the stack buffer or the cached memory the start of the function.
+		 2) Unroll the i=0,1 loop to allow constant folding.
+		 3) Unroll the j loop for the common case of j = STANDARD_RECORD_LENGTH
+		    (I've already done the above changes see attached function.)
+		    With gcc -O2 calculating x[0] and x[1] for STANDARD_RECORD_LENGTH now
+		    only takes 15 (was > 100) i80x86 instructions with 6 byte accesses of RAM.
+		 4) only calculate x[0], x[1] when needed, may be a bigger win
 		    than the above since all the other optimizations above only reduced
                     CPU instructions operating on CPU cached RAM.
 	! IMPORTANT API Change: Changed GeoIPRegion to have region in structure. Saves space and a malloc.
