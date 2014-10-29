@@ -9,15 +9,19 @@
 	* Fixed some bugs discovered by coverity, including failure to check some
       system call return values and making sure all strings are
       null-terminated. ( Boris Zentner )
-1.6.2
+
+1.6.2 
 	* Two files required for building on Win32 were missing from the 1.6.1
 	  release. These files were added. There are no changes affecting other
 	  platforms. ( Boris Zentner )
+
 1.6.1
 	* Improve Win32 support ( Evan Hunt )
 	* Update FIPS codes ( Boris Zentner )
+
 1.6.0
 	* Remove geoipupdate ( Boris Zentner )
+
 1.5.2
 	* Update region and time zones ( Bors Zentner )
 	* Fix benchmark script ( Boris Zentner )
@@ -28,6 +32,7 @@
 	  ( Boris Zentner )
 	* README is replaced by README.md ( Gregory Oschwald )
 	* Add support for OS X Mavericks ( Boris Zentner )
+
 1.5.1
 	* Update time_zone for Ontario, Canada ( Boris Zentner )
 	* geoiplookup and geoiplookup6 exit code is 0 when user asked for help
@@ -40,6 +45,7 @@
 	  like GEOIP_COUNTRY_EDITION. Instead of undefined behaviour we handle
 	  it silently as GEOIP_MEMORY_MODE ( Boris Zentner )
 	* Update FIPS codes for Greece ( Boris Zentner )
+
 1.5.0
 	* Rename custom_directory to GeoIP_custom_directory. ( Boris Zentner )
 	* Make sure the database match the requested type. This is helpful for
@@ -76,6 +82,7 @@
 	    GEOIP_POSTALCONF_EDITION ( Boris Zentner )
 	* Fix default filenames for GEOIP_NETSPEED_EDITION_REV1 and
 	    GEOIP_NETSPEED_EDITION_REV1_V6 ( Boris Zentner )
+
 1.4.8
 	* Fix GEOIP_DOMAIN_EDITION_V6 ( Boris Zentner )
 	* Add new Datatypes GEOIP_NETSPEED_EDITION_REV1_V6 and
@@ -83,6 +90,7 @@
 	* Fix possible directory traversal weakness in geoipupdate-pureperl.pl with
 	    malicious update server ( Boris Zentner )
 	* Fix GEOIP_ORG_EDITION_V6 and GEOIP_ISP_EDITION_V6 ( Boris Zentner )
+
 1.4.7
 	* Upd timezone.c Add SX, BQ and CW remove AN and FX ( Boris Zentner )
 	* Add support for the new types in geoiplookup6 ( Boris Zentner )
@@ -169,6 +177,7 @@
 	* Add -i flag for more information on netmask, range_by_ip and the current network range ( Boris Zentner )
 	* Add support for DOMAIN_EDITION database type ( Boris Zentner )
 	* Fix apps/geoipupdate-pureperl.pl output layer on W32 ( Boris Zentner )
+
 1.4.6	2009-02-25
 	* Fix geoipupdate's my_printf function ( Boris Zentner )
 	* Fix typo in apps/geoipupdate-pureperl.pl replace PerlIO::Gzip with PerlIO::gzip ( Boris Zentner )
@@ -204,6 +213,7 @@
 	* Fix -d command line option ( Klaus Heinz )
 	* GeoIPUpdate.c use vasprintf if avail, otherwise try vsnprintf and sprintf ( Boris Zentner )
 	* avoid pre/postincrement and assignment on the same variable ( Boris Zentner )
+
 1.4.5	2008-09-16
 	* metro_code replace the depreciated dma_code field ( Boris Zentner )
 	* Add new function GeoIP_range_by_ip_delete
@@ -292,6 +302,7 @@
 		arrays directly which whould break binary compatability (Ludwig Nussel at SUSE)
 	* Updated README to state API is only thread-safe if GEOIP_CHECK_CACHE is not used
 
+
 1.4.4	2008-1-21
 	* Updated original geoipupdate to return "Invalid product ID or subscription expired"
 	* Added BL/Saint Barthelemy, MF/Saint Martin (ISO-3166-1 additions)
@@ -300,6 +311,7 @@
 	* speedup the conversion from ipstring to ipnum in _GeoIP_addr_to_num. Doubles the speed of GEOIP_MEMORY_CACHE and GEOIP_MMAP_CACHE
 	* Added new mmap shared memory caching option, GEOIP_MMAP_CACHE (Peter Shipley, LookSmart)
 		- mmaps: our maps are shared, but we need only private readonly pages
+
 
 1.4.3	2007-8-30
 	! CHANGE with geoiplookup facility: -v flag now returns database info for all databases, not just GeoIP Country
@@ -311,11 +323,13 @@
 	* Fixed segfault issue if calling GeoIP_db_avail before opening a database
 	* Added continent_code to GeoIP City's record struct (Frank Mather)
 
+
 1.4.2	2007-2-8
 	* Added -d flag to enable custom path for geoipupdate utility program (Frank Mather)
 	* Replaced _WIN32 with WIN32 since WIN32 is already set by compilers
 	* Moved var definitions to top of code, defined size_t (Guenter Knauf)
 	* Added Makefile.win32, Makefile.netware, get_ver.awk, geoip.ico to EXTRA_DIST in Makefile.am (Guenter Knauf)
+
 
 1.4.1	2007-1-2
 	* Replaced CS/Serbia and Montenegro with RS/Serbia, removed ZR/Zaire, added ME/Montenegro
@@ -330,6 +344,7 @@
 	* Fixed memory leaks under error conditions, buffer overflow using sprintf,
 		and issue where a corrupted cache file could core dump the file
 		(Nick Galbreath, Right Media Inc)
+
 
 1.4.0	2006-8-7
 	* Changed license from GPL to LGPL, so that PHP Extension can be included in PECL (Olivier Hill)
@@ -347,14 +362,17 @@
 	* Fixed NetWare compiler issue with char block[block_size] declaration (Guenter Knauf)
 	* Updated geoipupdate example to run weekly
 
+
 1.3.17	2006-5-14
 	* Fixed headers for Windows/Netware compilation (Guenter Knauf)
 	* Fixed Received Error -21 (Sanity check database_info string failed)
 		when running geoipupdate with GeoIP Country when UserId and
 		productIds were not specified.  Bug was introduced in 1.3.15.
 
+
 1.3.16	2006-4-17
 	* Fixed compliation error in GeoIPUpdate.c
+
 
 1.3.15  2006-4-14
 	* Updated README documentation
@@ -364,6 +382,7 @@
 		(Frank Mather)
 	* Updated geoipupdate so that it reports whether databases are updated
 		in non-verbose mode (Frank Mather)
+
 
 1.3.14	2005-9-7
 	* Check if byte, ushort, ulong, u16, u32 are defined in configure
@@ -379,13 +398,16 @@
 	* Replaced Yugoslavia with Serbia and Montenegro
 	* Updated geoiplookup to only perform country lookup once instead of twice by using GeoIP_id_by_name
 
+
 1.3.13	2005-8-1
 	* Fixed autoconf weirdness that resulted in libraries being
 		installed without .so suffix
 
+
 1.3.12	2005-7-19
 	* Removed -lGeoIP from libGeoIPUpdate_la_LIBADD - fixes compilation error
 		if GeoIP isn't already installed (Thomas Steudten)
+
 
 1.3.11	2005-7-7
 	* Fixed gcc warnings and bug.  Use int
@@ -398,8 +420,10 @@
 	* Added more verbose error messages for geoipupdate (Frank Mather)
 	* Added check for zlib.h to configure.in
 
+
 1.3.10	2005-4-17
 	* Added types.h to Makefile.am - fixes compilation error
+
 
 1.3.9	2005-4-14
 	* fixed bug with GEOIP_INDEX_CACHE (Frank Mather)
@@ -408,6 +432,7 @@
 		on 64bit machines (Frank Mather)
 	* Fixed memory leak in test-geoip-isp.c and test-geoip-org.c
 	* Added support for GeoIP Domain Names in geoipupdate
+
 
 1.3.8	2004-11-7
 	* Updated geoipupdate to report invalid userID and productID errors
@@ -420,8 +445,10 @@
 	in faster lookups than GEOIP_STANDARD, but less memory usage than
 	GEOIP_MEMORY_CACHE (Frank Mather)
 
+
 1.3.7	2004-10-5
 	* Updated test case, removed www.bundesregierung.de added www.asahi.com
+
 
 1.3.6	2004-8-8
 	* Check for gethostbyname_r support in configure (Mac OS X doesn't support gethostbyname_r)
@@ -433,6 +460,7 @@
 		(Ludwig Nussel/SUSE)
 	* Add return values to test programs (Ludwig Nussel/SUSE)
 
+
 1.3.5	2004-7-5
 	* Added more documentation to README file
 	* Made GEOIP_CHECK_CACHE work with GEOIP_STANDARD mode - reloads filehandle
@@ -442,8 +470,10 @@
 	convert it to string (Boris Hajduk)
 	* Made code thread safe by replacing gethostbyname with gethostbyname_r
 
+
 1.3.4	2004-6-4
 	* Fixed bug where *.gz file(s) didn't get removed after geoipupdate
+
 
 1.3.3	2004-6-2
 	* Added support for NetSpeed lookup to geoiplookup
@@ -451,20 +481,24 @@
 	* Added Support for automated downloads of GeoIP Region, City, ISP and Organization databases (Frank Mather)
 	* INADDR_NONE Patch for Solaris 9 (John Young)
 
+
 1.3.2	2004-4-20
 	* Added support for Maxmind NetSpeed
 
 MinGW patch from Stanislaw Pusep
 
 I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly needed to put up-to-date Win32 compatibility of libGeoIP itself. Fortunately MinGW plataform evolved a lot since last time I used it to compile libGeoIP. I'm sending you the patch with changes required for libGeoIP to work on both Win32 and UN*X. UN*X behavior is unaffected. Now, detailed explanation of what I did at all:
+
 1) Made correct header imports for both Win32 and UN*X. UN*X imports netdb.h & netinet/in.h and Win32 imports windows.h & winsock.h
 2) Win32 gethostbyname() is only able to resolve hostnames, it can't convert "127.0.0.1" string to 32-bit IP address. Thus I added lookupaddress() function that safely resolves any string to IP address and replaced all gethostbyname() calls by it.
 3) Database files were referenced by pre-compiled static strings. I malloc()ed buffers for file names so they can be changed "on fly". Thus, on Win32 version GeoIP.dat & other files are being seeked in the same directory as executable file or library.
 4) Added README.MinGW file with brief explanation on how to get GeoIP working under MinGW system.
 
+
 1.3.1	2003-11-11
 	* Check for stdint.h in autoconf (Sean Chittenden)
 	* prevent the geoipupdate man page from trying to install itself directly in the system directory (Gyepi Sam)
+
 
 1.3.0	2003-09-29
 	* Fixed includes to compile on Windows (Fabrice Colin)
@@ -488,6 +522,7 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Fixed bug when IP address not found in region rev1 database (Jason Linhart)
 	* Added added extern "C" to GeoIPCity.h fixes problems when included in C++ library
 
+
 1.2.2	2003-08-10
 	* Added support for GeoIP ISP Edition identifier
 	* Fixed bug in GeoIP_database_info (Jason Linhart)
@@ -498,9 +533,11 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Added support for GeoIP Proxy Edition
 	! renamed GeoIP_country_id_by_* functions to GeoIP_id_by_*
 
+
 1.2.1	2003-07-12
 	* Added GeoIP_record_id_by_addr and GeoIP_next_record functions
 	* Added support for new GeoIP Region format, including Canadian Provinces
+
 
 1.2.0	2003-04-26
 	* Added support for GeoIP City format revision 1, including dma code and area code
@@ -511,24 +548,30 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Updated update code to check for first 12 characters of license key
 	* Added GeoIP_country_continent array to lookup continent by country ID
 
+
 1.1.9	2003-03-10
 	* merged windows patch into main code base (Kenneth R. Robinette)
 	* Changed const int to #define for windows compatibility
 
+
 1.1.8	2003-03-04
 	* Fixed bug with city database introduced in 1.1.6
+
 
 1.1.7	2003-03-04
 	* Fixed bug introduced in 1.1.6 when run in GEOIP_STANDARD mode
 	* Added test to test GEOIP_STANDARD
+
 
 1.1.6	2003-03-03
 	* Added spec for building RPMs (Ryan Weaver)
 	* Added support for 4byte records for Organization database
 	* Changed Taiwan, Province of China to Taiwan
 
+
 1.1.5	2003-02-10
 	* Added support for GeoIP Organization database
+
 
 1.1.4	2002-12-30
 	* Cast number to int in _num_to_addr in geoipexport (Ralf S. Engelschall)
@@ -536,10 +579,12 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* correct library build ordering (Ralf S. Engelschall)
 	* ulong -> unsigned long (Sean Chittenden)
 
+
 1.1.3	2002-12-24
 	* Added GeoIPUpdate.h to EXTRA_DISTS
 	* Compile fixes for Solaris, FreeBSD (Michael McClennen, Corris Randall)
 	* Handle NULL in printf in test-geoip-region
+
 
 1.1.2	2002-12-16
 	* Added support for postal codes
@@ -552,9 +597,11 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Added GeoIP_database_edition method
 	* Changed DATADIR to GEOIPDATADIR
 
+
 1.1.1	2002-11-07
 	* Fixed segfault issue with GeoIPRegion_delete
 	* Handle test failures where lookup returns NULL more gracefully
+
 
 1.1.0	2002-11-06
 	* Perform sanity checking before installing datebase using geoipupdate
@@ -565,6 +612,7 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* fixed multi-line string literals warning in test-geoip.c
 	* Use enum constants for GeoIP_update_database values
 	* Added GEOIP_CHECK_CACHE option (not working yet)
+
 
 1.0.10  2002-10-28
 	* IMPORTANT API Change - Return NULL instead of '--' and 'N/A'
@@ -577,15 +625,19 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Change short int to int (Chris Gibbs)
 	* Added write/read file locking for GeoIPUpdate.c/GeoIP.c
 
+
 1.0.9	2002-10-16
 	* removed -ansi from Makefile.am to avoid compile error on Solaris 8
 	* Compile fix for FreeBSD Stable (Kimura Fuyuki)
 
+
 1.0.8	2002-10-05
 	* Included header required for *BSD (Akinori Musha)
 
+
 1.0.7	2002-10-05
 	* Fixed compilation error with GeoIPUpdate.c
+
 
 1.0.6	2002-10-04
 	* Moved update code into separate file
@@ -595,6 +647,7 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	(Randy Kobes)
 	* Cleaned up GeoIP_new code
 
+
 1.0.5	2002-09-23
 	* Supports GeoIP Regional Edition
 	* Macau is now "Macao" per ISO 3166-1 change
@@ -602,26 +655,31 @@ I was re-compiling Geolizer (http://sysd.org/log.php#glzr) on Win32 so I firstly
 	* Added #define for memcpy -> BSD's bcopy (Chris Gibbs)
 	* Removed "private" functions from GeoIP.h
 
+
 1.0.4	2002-08-27
 	* rewrote _seek_country to use loop instead of recursion for faster performance
 	* Removed "orphan" nodes from demo database resulting in smaller size (Jason Linhart)
 	* Moved changes for building windows DLL into separate patch
 	* Fixed segfaults when passed malformed IP addresses
 
+
 1.0.3	2002-08-26
 	* Added more changes for windows compatibility
 	  (Stanislaw Pusep)
 	* Added benchmark program
+
 
 1.0.2	2002-08-21
 	* Open database using "rb" for windows compatibility
 	  (Stanislaw Pusep)
 	* Removed superfluous inet_ntop command (Stanislaw Pusep)
 
+
 1.0.1	2002-08-20
 	* Fixed bug with resolving hostnames
 	* More fixes for compiler warnings (Chris Gibbs)
 	* Changed int to unsigned int in _is_ipaddr (Chris Gibbs)
+
 
 1.0.0	2002-08-12
 	* Changed license to GPL
