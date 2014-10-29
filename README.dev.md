@@ -10,6 +10,7 @@
 
 * Edit `configure.ac` and bump the version
 * `git tag v{X.Y.Z}`
+* `git push --tags`
 * `make dist`
 * Make a new release on GitHub at https://github.com/maxmind/geoip-api-c/releases
 ** Upload the tarball you just made
