@@ -9,12 +9,12 @@ Maurice Cinquini
 
 *** ifndef WIN32 on netdb.h ? ***
 In GeoIPCity.c you don't "#ifndef WIN32" the netdb.h include,
-but in GeoIP.c you do.  Which one is right?
+but in GeoIP.c you do.  Which one is right?
 
 *** Warnings in GeoIP-1.2.1 before I made changes ***
 GeoIPUpdate.c:73: warning: implicit declaration of function `_setup_dbfilename'
-    I suggest a GeoIP_private.h file to include prototypes for
-    _setup_dbfilename and other private functions also used by GeoIPCity.c
+    I suggest a GeoIP_private.h file to include prototypes for
+    _setup_dbfilename and other private functions also used by GeoIPCity.c
 
 *** Drop the GeoIP_*_by_addr API calls ***
 And now that I think of it, why do you need a seperate
