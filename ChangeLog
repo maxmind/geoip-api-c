@@ -1,3 +1,4 @@
+	* Update Fips codes ( Boris Zentner )
 1.6.3
 	* Added a GEOIP_SILENCE flag. Include this flag when calling GeoIP_open to
   	  prevent any messages from being written to stderr. ( Philip Prindeville
