@@ -1,5 +1,3 @@
-#include "GeoIP.h"
-
 #include <string.h>
 #include <stdio.h>
 
@@ -4152,6 +4150,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Takeo";
         case 22:
             return "Phnum Penh";
+        case 23:
+            return "Ratanakiri";
         case 25:
             return "Banteay Meanchey";
         case 28:
@@ -5080,6 +5080,8 @@ const char * GeoIP_region_name_by_code(const char * country_code,
             return "Demir Hisar";
         case 964:
             return "Gostivar";
+        case 965:
+            return "Jegunovce";
         case 966:
             return "Kavadarci";
         case 967:
