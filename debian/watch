@@ -1,0 +1,3 @@
+version=3
+https://github.com/maxmind/geoip-api-c/releases \
+/maxmind/geoip-api-c/archive/v(.+)\.tar\.gz

@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_OPTIONS+=nocheck
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_UPSTREAM_VERSION := $(shell dpkg-parsechangelog|grep "^Version:"|cut -d" " -f2|rev|cut -d- -f2-|rev|cut -d':' -f2)
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+
+override_dh_strip:
+	dh_strip --dbg-package=geoip-dbg

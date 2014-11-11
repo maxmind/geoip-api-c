@@ -1,0 +1,38 @@
+This package was debianized by Marek Habersack <grendel@debian.org> on
+Mon, 11 Nov 2002 19:25:35 +0100.
+This file has been changed on Wed, 19 Dec 2007 20:55:00 +0100 from
+Patrick Matthäi <pmatthaei@debian.org>.
+
+It was further modified for MaxMind's PPA by Greg Oschwald
+<goschwald@maxmind.com>.
+
+It was downloaded from https://github.com/maxmind/geoip-api-c
+
+Here you can get the databases: http://www.maxmind.com/
+
+Upstream Author: T.J. Mather <tjmather@maxmind.com>
+
+Copyright: (C) 2007 MaxMind LLC
+
+License:
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+    02110-1301 USA
+
+On Debian GNU/Linux systems, the complete text of the GNU Lesser General
+Public License can be found in `/usr/share/common-licenses/LGPL-2'.
+
+The Debian packaging is © 2009-2010, Patrick Matthäi <pmatthaei@debian.org>
+and is licensed under the LGPL-2, see above.

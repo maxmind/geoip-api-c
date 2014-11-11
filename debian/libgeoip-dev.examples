@@ -1,0 +1,3 @@
+test/Makefile*
+test/*.txt
+test/*.c
