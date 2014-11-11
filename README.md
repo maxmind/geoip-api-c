@@ -29,6 +29,20 @@ https://www.maxmind.com/en/proxy
 
 ## Installation ##
 
+### On Ubuntu Using PPA ###
+
+MaxMind provides a PPA for recent version of Ubuntu. To add the PPA to your
+APT sources, run:
+
+    $ sudo add-apt-repository ppa:maxmind/ppa
+
+Then install the packages by running:
+
+    $ sudo aptitude update
+    $ sudo aptitude install libgeoip1 libgeoip-dev geoip-bin
+
+### From Source ###
+
 To install, run:
 
 ```
