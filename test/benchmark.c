@@ -56,7 +56,6 @@ double timerstop()
 
 void testgeoipcountry(int flags, const char *msg, int numlookups)
 {
-    const char *str = NULL;
     double t = 0;
     int i4 = 0;
     int i2 = 0;
@@ -68,7 +67,7 @@ void testgeoipcountry(int flags, const char *msg, int numlookups)
     }
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
-        str = GeoIP_country_name_by_addr(i, ipstring[i4]);
+        GeoIP_country_name_by_addr(i, ipstring[i4]);
         i4 = (i4 + 1) % numipstrings;
     }
     t = timerstop();
@@ -80,7 +79,6 @@ void testgeoipcountry(int flags, const char *msg, int numlookups)
 void testgeoiporg(int flags, const char *msg, int numlookups)
 {
     GeoIP *i = NULL;
-    char *i3 = NULL;
     int i4 = 0;
     int i2 = 0;
     double t = 0;
