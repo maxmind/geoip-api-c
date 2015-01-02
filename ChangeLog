@@ -1,6 +1,8 @@
 * Update Fips codes (Boris Zentner)
 * Several issues with the MinGW build were fixed. (Thomas Pöchtrager. Github
   #46.)
+* Use a constructor in pread.c to ensure the critical section is always
+  initialized. (Thomas Pöchtrager. Github #47.)
 
 1.6.3 2014-10-29
 
