@@ -3,6 +3,9 @@
   #46.)
 * Use a constructor in pread.c to ensure the critical section is always
   initialized. (Thomas Pöchtrager. Github #47.)
+* Added missing include of `io.h` on Windows. (Thomas Pöchtrager. Github #48.)
+* Fixed `configure` warning that `'missing' script is too old or missing`.
+  (Reported by Floren Munteanu. Github #33.)
 
 1.6.3 2014-10-29
 
