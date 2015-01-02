@@ -1,4 +1,5 @@
 AM_CPPFLAGS = -Wall -ansi
+ACLOCAL_AMFLAGS = -I m4
 
 AUTOMAKE_OPTIONS = foreign
 
