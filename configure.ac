@@ -56,6 +56,13 @@ AC_ARG_ENABLE([data-files],
 AS_IF([test "x$enable_data_files" != xno],
     AC_SUBST([GEOIP_DB_FILE],[GeoIP.dat]))
 
+case $host_os in
+    mingw* )
+        LDFLAGS="$LDFLAGS -lwsock32 -lws2_32"
+        ;;
+esac
+
+
 AC_OUTPUT([
 Makefile
 GeoIP.spec
