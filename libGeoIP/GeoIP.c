@@ -23,11 +23,13 @@
 
 static geoipv6_t IPV6_NULL;
 
-#if !defined(_WIN32)
+#if defined(_WIN32)
+#include <io.h>
+#else
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/mman.h>
-#endif /* !defined(_WIN32) */
+#endif /* defined(_WIN32) */
 
 #include <errno.h>
 #include <stdio.h>
