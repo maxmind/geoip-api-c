@@ -25,5 +25,3 @@ int pread(int fd, void *buf, unsigned int nbyte, long offset);
 #endif
 
 #define HAVE_PREAD
-
-extern CRITICAL_SECTION preadsc;
