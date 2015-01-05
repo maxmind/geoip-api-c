@@ -5,8 +5,9 @@
 .DS_Store
 .deps
 .libs
-GeoIP.spec
+/m4
 GeoIP-*.tar.gz
+GeoIP.spec
 Makefile
 Makefile.in
 aclocal.m4
