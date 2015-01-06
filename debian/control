@@ -1,0 +1,79 @@
+Source: geoip
+Section: net
+Priority: optional
+Homepage: http://www.maxmind.com/
+Maintainer: Greg Oschwald <goschwald@maxmind.com>
+Build-Depends: debhelper (>= 9),
+ chrpath,
+ zlib1g-dev,
+ autotools-dev,
+ dh-autoreconf,
+ libtool
+Standards-Version: 3.9.6
+
+Package: libgeoip1
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+ ${shlibs:Depends}
+Recommends: geoip-database
+Suggests: geoip-bin
+Multi-Arch: same
+Description: non-DNS IP-to-country resolver library
+ GeoIP is a C library that enables the user to find the country that any
+ IP address or hostname originates from. It uses a file based database.
+ .
+ This database simply contains IP blocks as keys, and countries as values and
+ it should be more complete and accurate than using reverse DNS lookups.
+ .
+ This package contains the shared library.
+
+Package: libgeoip-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends},
+ libgeoip1 (= ${binary:Version}),
+ geoip-bin (= ${binary:Version})
+Description: Development files for the GeoIP library
+ GeoIP is a C library that enables the user to find the country that any
+ IP address or hostname originates from. It uses a file based database.
+ .
+ This database simply contains IP blocks as keys, and countries as values and
+ it should be more complete and accurate than using reverse DNS lookups.
+ .
+ This package contains the development files.
+
+Package: geoip-bin
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+ ${shlibs:Depends}
+Replaces: libgeoip1 (<= 1.4.4.dfsg-2)
+Multi-Arch: foreign
+Description: IP lookup command line tools that use the GeoIP library
+ GeoIP is a C library that enables the user to find the country that any
+ IP address or hostname originates from. It uses a file based database.
+ .
+ This database simply contains IP blocks as keys, and countries as values and
+ it should be more complete and accurate than using reverse DNS lookups.
+ .
+ This package contains the command line utilities to resolve the IP numbers
+ using the GeoIP library.
+
+Package: geoip-dbg
+Section: debug
+Architecture: any
+Priority: extra
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+ geoip-bin (= ${binary:Version}) | libgeoip1 (= ${binary:Version})
+Description: debugging symbols for the GeoIP packages
+ GeoIP is a C library that enables the user to find the country that any
+ IP address or hostname originates from. It uses a file based database.
+ .
+ This database simply contains IP blocks as keys, and countries as values and
+ it should be more complete and accurate than using reverse DNS lookups.
+ .
+ This package contains the debugging symbols for the libgeoip1 and geoip-bin
+ package.
