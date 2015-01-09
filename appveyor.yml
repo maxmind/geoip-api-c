@@ -1,4 +1,4 @@
-test_script:
+build_script:
   - nmake /f Makefile.vc
 
 notifications:
