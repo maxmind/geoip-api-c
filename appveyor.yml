@@ -1,0 +1,8 @@
+test_script:
+  - nmake /f Makefile.vc
+
+notifications:
+  - provider: HipChat
+    auth_token:
+      secure: NtKXu/kGk8Td4YqCH95camAcNQtB3rMll+5DALAmbDY=
+    room: dev
