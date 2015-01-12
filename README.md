@@ -41,7 +41,7 @@ Then install the packages by running:
     $ sudo aptitude update
     $ sudo aptitude install libgeoip1 libgeoip-dev geoip-bin
 
-### From Source ###
+### From Source on Unix/Linux ###
 
 To install, run:
 
@@ -56,6 +56,32 @@ If you are using a GitHub checkout, please run the `bootstrap` script first
 to set up the build environment.
 
 The GeoIP Legacy C library relies on GNU make, not on BSD make
+
+### From Source with Visual Studio (nmake) ###
+
+To make a static GeoIP.lib, edit the top level Makefile.vc to reflect where
+the GeoIP.dat database file should be placed, as well as the locations of the
+lib, include, and bin directories for installation.
+
+To build and install, issue the following commands from a developer console:
+
+```
+nmake /f Makefile.vc
+nmake /f Makefile.vc test
+nmake /f Makefile.vc install
+```
+
+### From Source with MinGW ###
+
+```
+./configure
+make
+cp data/GeoIP.dat test/
+make check
+```
+
+Note that GeoIP.dat file should be placed in the same place as GeoIP-enabled
+executable modules.
 
 ## Memory Caching and Other Options ##
 
@@ -114,30 +140,6 @@ Country databases. The test-geoip-city.c program works with both the GeoLite
 Legacy and GeoIP Legacy City databases. The other example programs require the
 paid databases available (https://www.maxmind.com/en/geolocation_landing).
 
-
-## Automatic Updates ##
-
-MaxMind offers a service where you can have your database updated
-automically each week. For more details see:
-
-http://www.maxmind.com/en/license_key
-
-## Resources ##
-
-### Performance Patches ###
-
-Patrick McManus provide a patch to enhance the lookup speed in `MEMORY_CACHE`
-mode. If you feel, that the current `MEMORY_CACHE` mode is to slow try the
-patch:
-
-http://sourceforge.net/mailarchive/forum.php?forum_name=geoip-c-discuss&max_rows=25&style=nested&viewmonth=200803
-
-### Development Version ###
-
-Please find the latest version of the C API on GitHub:
-
-https://github.com/maxmind/geoip-api-c
-
 ## Troubleshooting ##
 
 ### Autotool Issues ###
@@ -191,6 +193,8 @@ If you get a "cannot load shared object file: No such file or directory"
 error, add the directory `libGeoIP.so` was installed to the `/etc/ld.so.conf`
 file and run `ldconfig`.
 
+#### Solaris ####
+
 On Solaris, if you get a `ld: fatal: relocations remain against allocatable
 but non-writable sections`, try runnign:
 
@@ -203,18 +207,8 @@ make
 If you get a `ar : command not found` error, make sure that `ar` is in your
 path. On Solaris, `ar` is typically found in `/usr/ccs/bin`
 
-If you get a `bad interpreter: No such file or directory` error when running
-`./configure`, make sure that there are no DOS returns in the configure
-script. To remove DOS returns, run `perl -pi -e 's/\r//g' configure`.
 
-If gcc fails while consuming a large amount of memory, try compiling with
-`CFLAGS=-O1` (or `-O0`) instead of the default `-O2`. It seems that some
-versions of gcc have a bug and consume 1 GB of memory when optimizing certain
-source files. It has been reported on gcc 3.3.1 and with gcc 4.2(.0). Thanks
-to Kai Schaetzl for the report.
-
-If `GEOIP_MMAP_CACHE` doesn't work on a 64bit machine, try adding the flag
-`MAP_32BIT` to the mmap call.
+#### AIX ####
 
 If you get a `passing argument 3 of 'gethostbyname_r' from incompatible
 pointer type` error on AIX, untar a fresh copy of thie library and delete the
