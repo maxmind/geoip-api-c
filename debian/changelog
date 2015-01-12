@@ -1,3 +1,9 @@
+geoip (1.6.4-0+maxmind1) utopic; urgency=medium
+
+  * New release.
+
+ -- Gregory J. Oschwald (MaxMind, Inc.) <goschwald@maxmind.com>  Mon, 12 Jan 2015 13:54:35 -0800
+
 geoip (1.6.3-1+maxmind1) utopic; urgency=low
 
   * First MaxMind PPA release.
