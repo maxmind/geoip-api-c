@@ -35,7 +35,7 @@
 #include <stdint.h>     /* For uint32_t */
 #endif
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 #include "pread.h"
 #endif
 

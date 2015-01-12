@@ -1,10 +1,12 @@
 dnl AM_CONFIG_HEADER(config.h)
 
 AC_PREREQ([2.65])
-AC_INIT([GeoIP], [1.6.3],[support@maxmind.com],[GeoIP])
-AC_GNU_SOURCE
-AM_INIT_AUTOMAKE(1.11.0)
+AC_INIT([GeoIP], [1.6.4],[support@maxmind.com],[GeoIP])
+AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_SRCDIR([libGeoIP/GeoIP.c])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE(1.11.0)
+AC_GNU_SOURCE
 GEOIP_VERSION_INFO=`echo $VERSION | awk -F. '{ printf "%d:%d:%d", $1+$2, $3, $2 }'`
 AC_SUBST(GEOIP_VERSION_INFO)
 
@@ -55,6 +57,13 @@ AC_ARG_ENABLE([data-files],
 
 AS_IF([test "x$enable_data_files" != xno],
     AC_SUBST([GEOIP_DB_FILE],[GeoIP.dat]))
+
+case $host_os in
+    mingw* )
+        LDFLAGS="$LDFLAGS -lwsock32 -lws2_32"
+        ;;
+esac
+
 
 AC_OUTPUT([
 Makefile

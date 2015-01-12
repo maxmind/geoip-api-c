@@ -31,15 +31,9 @@ int main(int argc, char *argv[])
     FILE *f;
     GeoIP *gi;
     GeoIPRecord *gir;
-    int generate = 0;
     char host[50];
     const char *time_zone = NULL;
     char **ret;
-    if (argc == 2) {
-        if (!strcmp(argv[1], "gen")) {
-            generate = 1;
-        }
-    }
 
     gi = GeoIP_open("../data/GeoIPCity.dat", GEOIP_INDEX_CACHE);
 

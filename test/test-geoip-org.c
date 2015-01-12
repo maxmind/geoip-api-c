@@ -30,14 +30,8 @@ int main(int argc, char *argv[])
     FILE *f;
     GeoIP *gi;
     char *org;
-    int generate = 0;
     char host[50];
     char **ret;
-    if (argc == 2) {
-        if (!strcmp(argv[1], "gen")) {
-            generate = 1;
-        }
-    }
 
     gi = GeoIP_open("../data/GeoIPOrg.dat", GEOIP_INDEX_CACHE);
 

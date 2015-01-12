@@ -15,11 +15,32 @@
  */
 
 #include <windows.h>
+#include <stdio.h>
 #include <io.h>
 
 #include "pread.h"
 
-CRITICAL_SECTION preadsc;
+static CRITICAL_SECTION preadsc;
+
+/* http://stackoverflow.com/a/2390626/1392778 */
+
+#ifdef _MSC_VER
+
+#pragma section(".CRT$XCU",read)
+
+#define INITIALIZER(f)                                                         \
+    static void __cdecl f(void);                                               \
+    __declspec(allocate(".CRT$XCU")) void (__cdecl*f##_)(void) = f;            \
+    static void __cdecl f(void)
+
+#elif defined(__GNUC__)
+
+#define INITIALIZER(f)                                                         \
+    static void f(void) __attribute__((constructor));                          \
+    static void f(void)
+
+#endif
+
 
 #ifdef _WIN64
 int pread(int fd, void *buf, unsigned int nbyte, __int64 offset)
@@ -71,10 +92,13 @@ int pread(int fd, void *buf, unsigned int nbyte, long offset)
 }
 #endif
 
-BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved )
+static void deinitialize(void)
 {
-    if (fdwReason == DLL_PROCESS_ATTACH) {
-        InitializeCriticalSection(&preadsc);
-    }
-    return TRUE;
+    DeleteCriticalSection(&preadsc);
+}
+
+INITIALIZER(initialize)
+{
+    InitializeCriticalSection(&preadsc);
+    atexit(deinitialize);
 }

@@ -159,8 +159,7 @@ typedef enum {
     GEOIP_CORPORATE_SPEED = 3,
 } GeoIPNetspeedValues;
 
-
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 #ifdef GEOIP_EXPORTS
 #define GEOIP_API __declspec(dllexport)
 #define GEOIP_DATA __declspec(dllexport)
