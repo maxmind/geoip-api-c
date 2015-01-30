@@ -177,7 +177,10 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
             }
         }else if (GEOIP_COUNTRY_EDITION_V6 == i) {
             country_id = GeoIP_id_by_ipnum_v6(gi, ipnum);
-
+            if (country_id < 0 || country_id >= (int) GeoIP_num_countries()) {
+                printf("%s: Invalid database\n", GeoIPDBDescription[i]);
+                return;
+            }
             country_code = GeoIP_country_code[country_id];
             country_name = GeoIP_country_name[country_id];
             if (country_id == 0) {
