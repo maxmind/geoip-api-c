@@ -918,8 +918,7 @@ static int _database_has_content( int database_type )
             && database_type != GEOIP_REGION_EDITION_REV1) ? 1 : 0;
 }
 
-static
-void _setup_segments(GeoIP * gi)
+static void _setup_segments(GeoIP * gi)
 {
     int i, j, segment_record_length;
     unsigned char delim[3];
@@ -1173,9 +1172,10 @@ int _check_mtime(GeoIP *gi)
                     if (gi->index_cache != NULL) {
                         if (pread(fileno(gi->GeoIPDatabase), gi->index_cache,
                                   idx_size, 0 ) != (ssize_t)idx_size) {
-                            DEBUG_MSGF(gi->flags,
-                                       "Error reading file %s where reloading\n",
-                                       gi->file_path);
+                            DEBUG_MSGF(
+                                gi->flags,
+                                "Error reading file %s where reloading\n",
+                                gi->file_path);
                             return -1;
                         }
                     }
@@ -1264,9 +1264,10 @@ unsigned int _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum,
 
     /* shouldn't reach here */
     _GeoIP_inet_ntop(AF_INET6, &ipnum.s6_addr[0], paddr, ADDR_STR_LEN);
-    DEBUG_MSGF(gi->flags,
-               "Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n",
-               paddr);
+    DEBUG_MSGF(
+        gi->flags,
+        "Error Traversing Database for ipnum = %s - Perhaps database is corrupt?\n",
+        paddr);
     return 0;
 }
 
@@ -1352,9 +1353,10 @@ unsigned int _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum,
         offset = x;
     }
     /* shouldn't reach here */
-    DEBUG_MSGF(gi->flags,
-               "Error Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",
-               ipnum);
+    DEBUG_MSGF(
+        gi->flags,
+        "Error Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",
+        ipnum);
     return 0;
 }
 

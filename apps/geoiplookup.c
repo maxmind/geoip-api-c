@@ -144,8 +144,7 @@ static const char * _mk_NA( const char * p )
     return p ? p : "N/A";
 }
 
-static unsigned long
-__addr_to_num(const char *addr)
+static unsigned long __addr_to_num(const char *addr)
 {
     unsigned int c, octet, t;
     unsigned long ipnum;
@@ -245,8 +244,7 @@ void _say_range_by_ip(GeoIP * gi, uint32_t ipnum )
     GeoIP_range_by_ip_delete(range);
 }
 
-void
-geoiplookup(GeoIP * gi, char *hostname, int i)
+void geoiplookup(GeoIP * gi, char *hostname, int i)
 {
     const char *country_code;
     const char *country_name;
@@ -263,9 +261,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
     if (ipnum == 0) {
         printf("%s: can't resolve hostname ( %s )\n", GeoIPDBDescription[i],
                hostname);
-
     }else {
-
         if (GEOIP_DOMAIN_EDITION == i) {
             domain_name = GeoIP_name_by_ipnum(gi, ipnum);
             if (domain_name == NULL) {
@@ -370,18 +366,6 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
                 printf("%s: Corporate\n", GeoIPDBDescription[i]);
             }
             _say_range_by_ip(gi, ipnum);
-        }else {
-
-            /*
-             * Silent ignore IPv6 databases. Otherwise we get annoying
-             * messages whenever we have a mixed environment IPv4 and
-             *  IPv6
-             */
-
-            /*
-             * printf("Can not handle database type -- try geoiplookup6\n");
-             */
-            ;
         }
     }
 }
