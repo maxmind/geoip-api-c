@@ -1,3 +1,9 @@
+* A segmentation fault in `geoiplookup` was fixed when the utility was passed
+  an invalid database. This was reported in Red Hat bug #1180874.
+* Additional validation was added for validation of the size used in the
+  creation of the index cache. Based on discussion in Red Hat bug #832913.
+
+
 1.6.4 2015-01-12
 
 * Update Fips codes (Boris Zentner)
