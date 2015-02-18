@@ -1615,7 +1615,7 @@ const char *GeoIP_country_code_by_name_v6_gl(GeoIP * gi, const char *name,
 {
     int country_id;
     country_id = GeoIP_id_by_name_v6_gl(gi, name, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code_by_name_gl(GeoIP * gi, const char *name,
@@ -1623,7 +1623,7 @@ const char *GeoIP_country_code_by_name_gl(GeoIP * gi, const char *name,
 {
     int country_id;
     country_id = GeoIP_id_by_name_gl(gi, name, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code3_by_name_v6_gl(GeoIP * gi, const char *name,
@@ -1631,7 +1631,7 @@ const char *GeoIP_country_code3_by_name_v6_gl(GeoIP * gi, const char *name,
 {
     int country_id;
     country_id = GeoIP_id_by_name_v6_gl(gi, name, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code3_by_name_gl(GeoIP * gi, const char *name,
@@ -1639,7 +1639,7 @@ const char *GeoIP_country_code3_by_name_gl(GeoIP * gi, const char *name,
 {
     int country_id;
     country_id = GeoIP_id_by_name_gl(gi, name, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_name_by_name_v6_gl(GeoIP * gi, const char *name,
@@ -1786,7 +1786,7 @@ const char *GeoIP_country_code_by_addr_v6_gl(GeoIP * gi, const char *addr,
 {
     int country_id;
     country_id = GeoIP_id_by_addr_v6_gl(gi, addr, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 
 
@@ -1795,14 +1795,14 @@ const char *GeoIP_country_code_by_addr_gl(GeoIP * gi, const char *addr,
 {
     int country_id;
     country_id = GeoIP_id_by_addr_gl(gi, addr, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 const char *GeoIP_country_code3_by_addr_v6_gl(GeoIP * gi, const char *addr,
                                               GeoIPLookup * gl)
 {
     int country_id;
     country_id = GeoIP_id_by_addr_v6_gl(gi, addr, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code3_by_addr_gl(GeoIP * gi, const char *addr,
@@ -1810,7 +1810,7 @@ const char *GeoIP_country_code3_by_addr_gl(GeoIP * gi, const char *addr,
 {
     int country_id;
     country_id = GeoIP_id_by_addr_gl(gi, addr, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_name_by_addr_v6_gl(GeoIP * gi, const char *addr,
@@ -1850,7 +1850,7 @@ const char *GeoIP_country_code_by_ipnum_gl(GeoIP * gi, unsigned long ipnum,
 {
     int country_id;
     country_id = GeoIP_id_by_ipnum_gl(gi, ipnum, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code_by_ipnum_v6_gl(GeoIP * gi, geoipv6_t ipnum,
@@ -1858,7 +1858,7 @@ const char *GeoIP_country_code_by_ipnum_v6_gl(GeoIP * gi, geoipv6_t ipnum,
 {
     int country_id;
     country_id = GeoIP_id_by_ipnum_v6_gl(gi, ipnum, gl);
-    return (country_id > 0) ? GeoIP_country_code[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code3_by_ipnum_gl(GeoIP * gi, unsigned long ipnum,
@@ -1866,7 +1866,7 @@ const char *GeoIP_country_code3_by_ipnum_gl(GeoIP * gi, unsigned long ipnum,
 {
     int country_id;
     country_id = GeoIP_id_by_ipnum_gl(gi, ipnum, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 const char *GeoIP_country_code3_by_ipnum_v6_gl(GeoIP * gi, geoipv6_t ipnum,
@@ -1874,7 +1874,7 @@ const char *GeoIP_country_code3_by_ipnum_v6_gl(GeoIP * gi, geoipv6_t ipnum,
 {
     int country_id;
     country_id = GeoIP_id_by_ipnum_v6_gl(gi, ipnum, gl);
-    return (country_id > 0) ? GeoIP_country_code3[country_id] : NULL;
+    return (country_id > 0) ? GeoIP_code3_by_id(country_id) : NULL;
 }
 
 int GeoIP_country_id_by_addr_v6_gl(GeoIP * gi, const char *addr,
@@ -2056,7 +2056,10 @@ void GeoIP_assign_region_by_inetaddr_gl(GeoIP * gi, unsigned long inetaddr,
             region->region[0] = (char)((seek_region - 1000) / 26 + 65);
             region->region[1] = (char)((seek_region - 1000) % 26 + 65);
         } else {
-            memcpy(region->country_code, GeoIP_country_code[seek_region], 2);
+            const char *code = GeoIP_code_by_id(seek_region);
+            if (code != NULL) {
+                memcpy(region->country_code, code, 2);
+            }
         }
     } else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
         /* Region Edition, post June 2003 */
@@ -2077,12 +2080,13 @@ void GeoIP_assign_region_by_inetaddr_gl(GeoIP * gi, unsigned long inetaddr,
             region->region[0] = (char)((seek_region - CANADA_OFFSET) / 26 + 65);
             region->region[1] = (char)((seek_region - CANADA_OFFSET) % 26 + 65);
         } else {
-            /* Not US or Canada ( world countries country code is always cc_id * 360 ) */
-            /* coverity[dont_call] */
-            memcpy(
-                region->country_code,
-                GeoIP_country_code[(seek_region -
-                                    WORLD_OFFSET) / FIPS_RANGE], 2);
+            /* Not US or Canada ( cc_id is always cc_id * FIPS_RANGE ) */
+            const char *code = GeoIP_code_by_id(
+                (seek_region - WORLD_OFFSET) / FIPS_RANGE);
+            if (code != NULL) {
+                /* coverity[dont_call] */
+                memcpy(region->country_code, code, 2);
+            }
         }
     }
 }
@@ -2108,8 +2112,11 @@ void GeoIP_assign_region_by_inetaddr_v6_gl(GeoIP * gi, geoipv6_t inetaddr,
             region->region[0] = (char)((seek_region - 1000) / 26 + 65);
             region->region[1] = (char)((seek_region - 1000) % 26 + 65);
         } else {
-            /* coverity[dont_call] */
-            memcpy(region->country_code, GeoIP_country_code[seek_region], 2);
+            const char *code = GeoIP_code_by_id(seek_region);
+            if (code != NULL) {
+                /* coverity[dont_call] */
+                memcpy(region->country_code, code, 2);
+            }
         }
     } else if (gi->databaseType == GEOIP_REGION_EDITION_REV1) {
         /* Region Edition, post June 2003 */
@@ -2131,11 +2138,12 @@ void GeoIP_assign_region_by_inetaddr_v6_gl(GeoIP * gi, geoipv6_t inetaddr,
             region->region[1] = (char)((seek_region - CANADA_OFFSET) % 26 + 65);
         } else {
             /* Not US or Canada ( cc_id is always cc_id * FIPS_RANGE ) */
-            /* coverity[dont_call] */
-            memcpy(
-                region->country_code,
-                GeoIP_country_code[(seek_region -
-                                    WORLD_OFFSET) / FIPS_RANGE], 2);
+            const char *code = GeoIP_code_by_id(
+                (seek_region - WORLD_OFFSET) / FIPS_RANGE);
+            if (code != NULL) {
+                /* coverity[dont_call] */
+                memcpy(region->country_code, code, 2);
+            }
         }
     }
 }
