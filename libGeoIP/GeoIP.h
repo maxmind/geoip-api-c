@@ -33,7 +33,15 @@ extern "C" {
 #else /* !defined(_WIN32) */
 #include <winsock2.h>
 #include <ws2tcpip.h>
+
+#if defined(_MSC_VER)
+#pragma warning (disable:4996)
+
+#if _MSC_VER < 1900
 #define snprintf _snprintf
+#endif
+#endif
+
 #define FILETIME_TO_USEC(ft)                      \
     (((unsigned __int64)ft.dwHighDateTime << 32 | \
       ft.dwLowDateTime) / 10)
