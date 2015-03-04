@@ -27,8 +27,14 @@ static geoipv6_t IPV6_NULL;
 #include <io.h>
 
 #ifdef _MSC_VER
-#  pragma warning (push)
-#  pragma warning (disable : 4996) // suppresses error for fileno on Windows VS builds
+#  if _MSC_VER < 1900 // VS 2015 supports snprintf
+#    define snprintf _snprintf
+#  endif
+#  if _MSC_VER >= 1400 // VS 2005+ deprecates fileno, lseek and read
+#    define fileno _fileno
+#    define read _read
+#    define lseek _lseek
+#  endif
 #endif
 #else
 #include <unistd.h>
@@ -2683,7 +2689,3 @@ int GeoIP_cleanup(void)
 
     return result;
 }
-
-#ifdef _MSC_VER
-#  pragma warning (pop) // restores
-#endif

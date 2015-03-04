@@ -30,9 +30,10 @@
 #include <windows.h>
 #include <winsock.h>
 
-#ifdef _MSC_VER
-#  pragma warning (push)
-#  pragma warning (disable : 4996) // suppresses error for fileno on Windows VS builds
+#if defined(_MSC_VER) && _MSC_VER >= 1400 // VS 2005+ deprecates fileno, lseek and read
+#  define fileno _fileno
+#  define read _read
+#  define lseek _lseek
 #endif
 #endif
 #include <sys/types.h>  /* For uint32_t */
@@ -359,7 +360,3 @@ GeoIPRecord_delete(GeoIPRecord * gir)
     free(gir->postal_code);
     free(gir);
 }
-
-#ifdef _MSC_VER
-#  pragma warning (pop) // restores
-#endif
