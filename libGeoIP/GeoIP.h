@@ -34,12 +34,8 @@ extern "C" {
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
-#if defined(_MSC_VER)
-#pragma warning (disable:4996)
-
-#if _MSC_VER < 1900
-#define snprintf _snprintf
-#endif
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#  define snprintf _snprintf
 #endif
 
 #define FILETIME_TO_USEC(ft)                      \

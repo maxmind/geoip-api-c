@@ -25,6 +25,11 @@ static geoipv6_t IPV6_NULL;
 
 #if defined(_WIN32)
 #include <io.h>
+
+#ifdef _MSC_VER
+#  pragma warning (push)
+#  pragma warning (disable : 4996) // suppresses error for fileno on Windows VS builds
+#endif
 #else
 #include <unistd.h>
 #include <netdb.h>
@@ -2679,3 +2684,6 @@ int GeoIP_cleanup(void)
     return result;
 }
 
+#ifdef _MSC_VER
+#  pragma warning (pop) // restores
+#endif

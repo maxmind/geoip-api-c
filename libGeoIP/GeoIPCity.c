@@ -29,6 +29,11 @@
 #else
 #include <windows.h>
 #include <winsock.h>
+
+#ifdef _MSC_VER
+#  pragma warning (push)
+#  pragma warning (disable : 4996) // suppresses error for fileno on Windows VS builds
+#endif
 #endif
 #include <sys/types.h>  /* For uint32_t */
 #ifdef HAVE_STDINT_H
@@ -354,3 +359,7 @@ GeoIPRecord_delete(GeoIPRecord * gir)
     free(gir->postal_code);
     free(gir);
 }
+
+#ifdef _MSC_VER
+#  pragma warning (pop) // restores
+#endif
