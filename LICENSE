@@ -1,13 +1,9 @@
 There are two licenses, one for the C library software, and one for
 the GeoLite Country database.
 
-While the core libGeoIP library is licensed under the
-LGPL, the libGeoIPUpdate library depends on base64.c, md5.c and types.h
-files which are licensed under the GPL v3.
+SOFTWARE LICENSE
 
-SOFTWARE LICENSE (libGeoIP library only)
-
-Copyright (C) 2013 MaxMind, Inc.
+Copyright (C) 2015 MaxMind, Inc.
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -24,7 +20,7 @@ For a copy of the LGPL License, see the COPYING file.
 DATA LICENSE (GeoLite Country and City Databases)
 
 The GeoLite databases are distributed under the Creative Commons
-Attribution-ShareAlike 3.0 Unported License. The attribution 
+Attribution-ShareAlike 3.0 Unported License. The attribution
 requirement may be met by including the following in all advertising
 and documentation mentioning features of or use of this database:
 
