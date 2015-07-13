@@ -4,7 +4,8 @@
   with their ISO C++ conformant replacements. (Fix by ClaudiuHKS. GitHub #55.)
 * A warning about using a double as a float was fixed. (Fix by ClaudiuHKS.
   GitHub #56.)
-
+* Fixed segfault when doing a lookup on an empty database. (Fix by NesoK.
+  GitHub #62.)
 
 1.6.5 2015-02-25
 
