@@ -1592,6 +1592,9 @@ GeoIP * GeoIP_open(const char * filename, int flags)
     } else {
         gi->index_cache = NULL;
     }
+
+    gi->last_mtime_check = 0;
+
     return gi;
 }
 
