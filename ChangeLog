@@ -6,6 +6,11 @@
   GitHub #56.)
 * Fixed segfault when doing a lookup on an empty database. (Fix by NesoK.
   GitHub #62.)
+* Fixed a memcheck error from valgrind in the `_check_mtime`
+  function. (Reported by yurivct. GitHub #60.)
+* Fixed `_check_mtime` to check the return value of `gettimeofday` rather than
+  just assuming it worked.
+
 
 1.6.5 2015-02-25
 
