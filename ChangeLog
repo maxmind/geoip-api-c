@@ -1,4 +1,4 @@
-1.6.6 2015-XX-XX
+1.6.6 2015-07-28
 
 * Replaced usage of deprecated fileno, read, and lseek on Visual Studio 2005+
   with their ISO C++ conformant replacements. (Fix by ClaudiuHKS. GitHub #55.)
