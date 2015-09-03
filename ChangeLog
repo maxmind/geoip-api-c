@@ -1,3 +1,10 @@
+1.6.7 2015-XX-XX
+
+* Fixed a MSVC parser stack overflow when parsing `regionName.c` and
+ `timeZone.c`. Fix by elliotlo. GitHub #64.
+* Updated region codes and timezones.
+
+
 1.6.6 2015-07-28
 
 * Replaced usage of deprecated fileno, read, and lseek on Visual Studio 2005+
