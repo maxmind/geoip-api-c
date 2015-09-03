@@ -168,6 +168,7 @@ __C_CODE__
 
 parse_file();
 init_variables();
+print qq{#include "GeoIP.h"\n};
 print "#include <string.h>\n";
 print "#include <stdio.h>\n\n";
 generate_region_name_functions();
