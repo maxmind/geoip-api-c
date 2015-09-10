@@ -60,7 +60,8 @@ AS_IF([test "x$enable_data_files" != xno],
 
 case $host_os in
     mingw* )
-        LDFLAGS="$LDFLAGS -lwsock32 -lws2_32"
+        # To do: Check for and add -Wl,--high-entropy-va if it's supported.
+        LDFLAGS="$LDFLAGS -lwsock32 -lws2_32 -Wl,--dynamicbase -Wl,--nxcompat"
         ;;
 esac
 
