@@ -1241,15 +1241,20 @@ unsigned int _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum,
         __GEOIP_PREPARE_TEREDO(&ipnum);
     }
     for (depth = 127; depth >= 0; depth--) {
+        unsigned int byte_offset = gi->record_length * 2 * offset;
+        if (byte_offset > gi->size - gi->record_length * 2) {
+            // The pointer is invalid
+            break;
+        }
         if (gi->cache == NULL && gi->index_cache == NULL) {
             /* read from disk */
             silence = pread(fno, stack_buffer, gi->record_length * 2,
-                            (long)gi->record_length * 2 * offset );
+                            (long)byte_offset );
         } else if (gi->index_cache == NULL) {
             /* simply point to record in memory */
-            buf = gi->cache + (long)gi->record_length * 2 * offset;
+            buf = gi->cache + (long)byte_offset;
         } else {
-            buf = gi->index_cache + (long)gi->record_length * 2 * offset;
+            buf = gi->index_cache + (long)byte_offset;
         }
 
         if (GEOIP_CHKBIT_V6(depth, ipnum.s6_addr )) {
@@ -1332,15 +1337,20 @@ unsigned int _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum,
     int fno = fileno(gi->GeoIPDatabase);
     _check_mtime(gi);
     for (depth = 31; depth >= 0; depth--) {
+        unsigned int byte_offset = gi->record_length * 2 * offset;
+        if (byte_offset > gi->size - gi->record_length * 2) {
+            // The pointer is invalid
+            break;
+        }
         if (gi->cache == NULL && gi->index_cache == NULL) {
             /* read from disk */
             silence = pread(fno, stack_buffer, gi->record_length * 2,
-                            gi->record_length * 2 * offset);
+                            byte_offset);
         } else if (gi->index_cache == NULL) {
             /* simply point to record in memory */
-            buf = gi->cache + (long)gi->record_length * 2 * offset;
+            buf = gi->cache + (long)byte_offset;
         } else {
-            buf = gi->index_cache + (long)gi->record_length * 2 * offset;
+            buf = gi->index_cache + (long)byte_offset;
         }
 
         if (ipnum & (1 << depth)) {
@@ -1508,9 +1518,10 @@ GeoIP * GeoIP_open(const char * filename, int flags)
         free(gi);
         return NULL;
     }
+
+    gi->size = buf.st_size;
     if (flags & (GEOIP_MEMORY_CACHE | GEOIP_MMAP_CACHE) ) {
         gi->mtime = buf.st_mtime;
-        gi->size = buf.st_size;
 
         /* MMAP added my Peter Shipley */
         if (flags & GEOIP_MMAP_CACHE) {
