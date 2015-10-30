@@ -1,3 +1,9 @@
+geoip (1.6.7-0+maxmind) wily; urgency=medium
+
+  * New release.
+
+ -- Gregory J. Oschwald (MaxMind, Inc.) <goschwald@maxmind.com>  Fri, 30 Oct 2015 10:02:35 -0700
+
 geoip (1.6.6-0+maxmind1) vivid; urgency=medium
 
   * New release.
