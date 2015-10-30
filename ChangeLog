@@ -1,4 +1,4 @@
-1.6.7 2015-XX-XX
+1.6.7 2015-10-30
 
 * Fixed a MSVC parser stack overflow when parsing `regionName.c` and
  `timeZone.c`. Fix by elliotlo. GitHub #64.

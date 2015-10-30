@@ -9785,7 +9785,7 @@ const char * GeoIP_region_name_by_code(const char * country_code,const char * re
         && ((region_code[1] >= 48) && (region_code[1] < (48 + 10)))
     ) {
 
-        /* only numbers, that shorten the large switch statements */
+        /* only numbers, that shortens the large switch statements */
         region_code2 = (region_code[0] - 48) * 10 + region_code[1] - 48;
     }
 
