@@ -4,7 +4,7 @@ int main()
 {
     GeoIP *gi = GeoIP_open(SRCDIR "/README.md", GEOIP_MEMORY_CACHE);
 
-    // We don't detect invalid files at load, unfortunately.
+    /* We don't detect invalid files at load, unfortunately. */
     if (gi == NULL) {
         fprintf(stderr, "Error opening database\n");
         return 1;
