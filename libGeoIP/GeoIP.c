@@ -959,7 +959,7 @@ static void _setup_segments(GeoIP * gi)
     int i, j, segment_record_length;
     unsigned char delim[3];
     unsigned char buf[LARGE_SEGMENT_RECORD_LENGTH];
-
+    off_t offset = gi->size - 3;
     int fno = fileno(gi->GeoIPDatabase);
 
     gi->databaseSegments = NULL;
@@ -967,17 +967,17 @@ static void _setup_segments(GeoIP * gi)
     /* default to GeoIP Country Edition */
     gi->databaseType = GEOIP_COUNTRY_EDITION;
     gi->record_length = STANDARD_RECORD_LENGTH;
-    if (-1 == lseek(fno, -3l, SEEK_END)) {
-        return;
-    }
+
     for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
-        if (read(fno, delim, 3) != 3) {
+        if (pread(fno, delim, 3, offset) != 3) {
             return;
         }
+        offset += 3;
         if (delim[0] == 255 && delim[1] == 255 && delim[2] == 255) {
-            if (read(fno, &gi->databaseType, 1) != 1) {
+            if (pread(fno, &gi->databaseType, 1, offset) != 1) {
                 return;
             }
+            offset++;
             if (gi->databaseType >= 106) {
                 /* backwards compatibility with databases from April 2003 and earlier */
                 gi->databaseType -= 105;
@@ -1031,12 +1031,13 @@ static void _setup_segments(GeoIP * gi)
                 gi->databaseSegments[0] = 0;
                 segment_record_length = SEGMENT_RECORD_LENGTH;
 
-                if (read(fno, buf,
-                         segment_record_length) != segment_record_length) {
+                if (pread(fno, buf, segment_record_length, offset)
+                       != segment_record_length) {
                     free(gi->databaseSegments);
                     gi->databaseSegments = NULL;
                     return;
                 }
+                offset += segment_record_length;
                 for (j = 0; j < segment_record_length; j++) {
                     gi->databaseSegments[0] += (buf[j] << (j * 8));
                 }
@@ -1053,7 +1054,8 @@ static void _setup_segments(GeoIP * gi)
             }
             break;
         } else {
-            if (-1 == lseek(fno, -4l, SEEK_CUR)) {
+            offset -= 4;
+            if (offset < 0) {
                 gi->databaseSegments = NULL;
                 return;
             }
@@ -1076,7 +1078,6 @@ static void _setup_segments(GeoIP * gi)
         }
         gi->databaseSegments[0] = LARGE_COUNTRY_BEGIN;
     }
-
 }
 
 static
@@ -2027,7 +2028,7 @@ char *GeoIP_database_info(GeoIP * gi)
     unsigned char buf[3];
     char *retval;
     int hasStructureInfo = 0;
-
+    off_t offset = gi->size - 3;
     int fno;
 
     if (gi == NULL) {
@@ -2037,50 +2038,54 @@ char *GeoIP_database_info(GeoIP * gi)
     fno = fileno(gi->GeoIPDatabase);
 
     _check_mtime(gi);
-    if (-1 == lseek(fno, -3l, SEEK_END)) {
-        return NULL;
-    }
 
     /* first get past the database structure information */
     for (i = 0; i < STRUCTURE_INFO_MAX_SIZE; i++) {
-        if (read(fno, buf, 3 ) != 3) {
+        if (pread(fno, buf, 3, offset) != 3) {
             return NULL;
         }
+        offset += 3;
         if (buf[0] == 255 && buf[1] == 255 && buf[2] == 255) {
             hasStructureInfo = 1;
             break;
         }
-        if (-1 == lseek(fno, -4l, SEEK_CUR)) {
+        offset -= 1;
+        if (offset < 0) {
             return NULL;
         }
     }
     if (hasStructureInfo == 1) {
-        if (-1 == lseek(fno, -6l, SEEK_CUR)) {
+        offset -= 6;
+        if (offset < 0) {
             return NULL;
         }
     } else {
         /* no structure info, must be pre Sep 2002 database, go back to end */
-        if (-1 == lseek(fno, -3l, SEEK_END)) {
+        offset -= 3;
+        if (offset < 0) {
             return NULL;
         }
     }
 
     for (i = 0; i < DATABASE_INFO_MAX_SIZE; i++) {
-        if (read(fno, buf, 3 ) != 3) {
+        if (pread(fno, buf, 3, offset) != 3) {
             return NULL;
         }
+        offset += 3;
         if (buf[0] == 0 && buf[1] == 0 && buf[2] == 0) {
             retval = malloc(sizeof(char) * (i + 1));
             if (retval == NULL) {
                 return NULL;
             }
-            if (read(fno, retval, i) != i) {
+            if (pread(fno, retval, i, offset) != i) {
                 return NULL;
             }
+            offset += i;
             retval[i] = '\0';
             return retval;
         }
-        if (-1 == lseek(fno, -4l, SEEK_CUR)) {
+        offset -= 4;
+        if (offset < 0) {
             return NULL;
         }
     }
