@@ -1,3 +1,9 @@
+geoip (1.6.9-1+maxmind1) wily; urgency=low
+
+  * New upstream release.
+
+ -- Florian Ragwitz <rafl@debian.org>  Mon, 11 Jan 2016 13:34:57 -0800
+
 geoip (1.6.8-1+maxmind1) wily; urgency=low
 
   * New upstream release.
