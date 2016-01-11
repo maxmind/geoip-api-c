@@ -23,6 +23,7 @@
 int main()
 {
     FILE *f;
+    char *db_info;
     char ipAddress[30];
     char expectedCountry[3];
     char expectedCountry3[4];
@@ -45,6 +46,13 @@ int main()
         if (gi == NULL) {
             fprintf(stderr, "Error opening database\n");
             exit(1);
+        }
+
+        db_info = GeoIP_database_info(gi);
+        if (!db_info || !strstr(db_info, " Copyright")) {
+            fprintf(stderr, "Error reading database info (got %s).\n", db_info);
+            free(db_info);
+            failed = 1;
         }
 
         /* make sure GeoIP deals with invalid query gracefully */
