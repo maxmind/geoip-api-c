@@ -22,6 +22,7 @@
 
 We can probably script most of this but this is the current process:
 
+0. Switch to the `ubuntu-ppa` branch and merge the release tag from above.
 1. Type `dch -i` and add the appropriate `debian/changelog` entry.
 2. Move tarball created above to a temp directory and
    name it `geoip_1.?.?.orig.tar.gz`.

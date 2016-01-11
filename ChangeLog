@@ -1,3 +1,11 @@
+1.6.8 2016-01-11
+
+* Allow compilation on older systems by relaxing the autoconf and automake
+  minimum versions. Thank you, Jose Rubio!
+* Avoid potential problems in multi-threaded environments by consistently using
+  pread() rather than read().
+* Fix various small issues reported by clang's static analyser.
+
 1.6.7 2015-10-30
 
 * Fixed a MSVC parser stack overflow when parsing `regionName.c` and

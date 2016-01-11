@@ -1,11 +1,11 @@
 dnl AM_CONFIG_HEADER(config.h)
 
-AC_PREREQ([2.65])
-AC_INIT([GeoIP], [1.6.7],[support@maxmind.com],[GeoIP])
+AC_PREREQ([2.63])
+AC_INIT([GeoIP], [1.6.8],[support@maxmind.com],[GeoIP])
 AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_SRCDIR([libGeoIP/GeoIP.c])
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE(1.11.0)
+AM_INIT_AUTOMAKE(1.10.0)
 AC_GNU_SOURCE
 GEOIP_VERSION_INFO=`echo $VERSION | awk -F. '{ printf "%d:%d:%d", $1+$2, $3, $2 }'`
 AC_SUBST(GEOIP_VERSION_INFO)

@@ -2,7 +2,7 @@
 /*
  * GeoIPCity.c
  *
- * Copyright (C) 2006 MaxMind LLC
+ * Copyright (C) 2016 MaxMind, Inc.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -85,7 +85,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
 
     if (gi->cache == NULL) {
         begin_record_buf = record_buf = malloc(
-                               sizeof(char) * FULL_RECORD_LENGTH);
+                               sizeof(unsigned char) * FULL_RECORD_LENGTH);
         bytes_read = pread(fileno(
                                gi->GeoIPDatabase), record_buf,
                            FULL_RECORD_LENGTH, record_pointer);
@@ -98,6 +98,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
     }else {
         if (gi->size <= record_pointer) {
             /* such record does not exists in the cache */
+            free(record);
             return NULL;
         }
         record_buf = gi->cache + (long)record_pointer;
@@ -174,7 +175,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
         }
     }
 
-    if (gi->cache == NULL) {
+    if (begin_record_buf != NULL) {
         free(begin_record_buf);
     }
 
