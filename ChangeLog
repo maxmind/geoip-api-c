@@ -1,3 +1,8 @@
+1.6.9 2016-01-11
+
+* Fix a regression introduced in version 1.6.8, which caused
+  GeoIP_database_info to erroneously return NULL.
+
 1.6.8 2016-01-11
 
 * Allow compilation on older systems by relaxing the autoconf and automake

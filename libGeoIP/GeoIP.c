@@ -2044,7 +2044,6 @@ char *GeoIP_database_info(GeoIP * gi)
         if (pread(fno, buf, 3, offset) != 3) {
             return NULL;
         }
-        offset += 3;
         if (buf[0] == 255 && buf[1] == 255 && buf[2] == 255) {
             hasStructureInfo = 1;
             break;
