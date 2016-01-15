@@ -5,7 +5,7 @@ build_script:
   - nmake /f Makefile.vc
 
 notifications:
-  - provider: HipChat
+  - provider: Slack
     auth_token:
-      secure: NtKXu/kGk8Td4YqCH95camAcNQtB3rMll+5DALAmbDY=
-    room: dev
+      secure: X+ymndzchVeC2LYsehzOt6CXEE+3wWDMYHJuOnFXIOHm8ByI2sHXCWRYQaDeSQs+iawQR9QvuRla/BSmtZBfow==
+    channel: ci
