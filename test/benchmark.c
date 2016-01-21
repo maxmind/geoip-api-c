@@ -1,14 +1,32 @@
 #include <stdio.h>
 #include "GeoIP.h"
 #include "GeoIPCity.h"
-#if !defined(_WIN32)
+#if !defined(_MSC_VER)
 #include <sys/time.h>
-#endif                          /* !defined(_WIN32) */
+#endif
 
 char *ipstring[4] = { "24.24.24.24",  "80.24.24.80",
                       "200.24.24.40", "68.24.24.46" };
 
 int numipstrings = 4;
+
+#if defined(_WIN32)
+  #define DATADIR  SRCDIR "/data/"
+#else
+  #define DATADIR  "/usr/local/share/GeoIP/"
+#endif
+
+#define GEOIP_OPEN(basename,flg)                   \
+        do {                                       \
+          i = GeoIP_open (DATADIR  basename,       \
+                          flg | GEOIP_SILENCE);    \
+          if (i == NULL) {                         \
+            printf("error: %s%s does not exist\n", \
+                   DATADIR, basename);             \
+            return;                                \
+            /* or a 'longjmp(geo_jmp,1)'? */       \
+          }                                        \
+        } while (0)
 
 #if !defined(_WIN32)
 struct timeval timer_t1;
@@ -49,8 +67,8 @@ double timerstop()
 {
     __int64 delta;              /* VC6 can't convert an unsigned int64 to to double */
     GetSystemTimeAsFileTime(&timer_t2);
-    delta = FILETIME_TO_USEC(timer_t2) - FILETIME_TO_USEC(timer_t2);
-    return delta;
+    delta = FILETIME_TO_USEC(timer_t2) - FILETIME_TO_USEC(timer_t1);
+    return ((double) delta) / 1E6;
 }
 #endif                          /* !defined(_WIN32) */
 
@@ -60,11 +78,8 @@ void testgeoipcountry(int flags, const char *msg, int numlookups)
     int i4 = 0;
     int i2 = 0;
     GeoIP *i = NULL;
-    i = GeoIP_open("/usr/local/share/GeoIP/GeoIP.dat", flags);
-    if (i == NULL) {
-        printf("error: GeoIP.dat does not exist\n");
-        return;
-    }
+
+    GEOIP_OPEN("GeoIP.dat", flags);
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
         GeoIP_country_name_by_addr(i, ipstring[i4]);
@@ -82,11 +97,8 @@ void testgeoiporg(int flags, const char *msg, int numlookups)
     int i4 = 0;
     int i2 = 0;
     double t = 0;
-    i = GeoIP_open("/usr/local/share/GeoIP/GeoIPOrg.dat", flags);
-    if (i == NULL) {
-        printf("error: GeoIPOrg.dat does not exist\n");
-        return;
-    }
+
+    GEOIP_OPEN("GeoIPOrg.dat", flags);
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
         free(GeoIP_name_by_addr(i, ipstring[i4]));
@@ -105,11 +117,8 @@ void testgeoipregion(int flags, const char *msg, int numlookups)
     int i4 = 0;
     int i2 = 0;
     double t = 0;
-    i = GeoIP_open("/usr/local/share/GeoIP/GeoIPRegion.dat", flags);
-    if (i == NULL) {
-        printf("error: GeoIPRegion.dat does not exist\n");
-        return;
-    }
+
+    GEOIP_OPEN("GeoIPRegion.dat", flags);
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
         i3 = GeoIP_region_by_addr(i, ipstring[i4]);
@@ -129,11 +138,8 @@ void testgeoipcity(int flags, const char *msg, int numlookups)
     int i4 = 0;
     int i2 = 0;
     double t = 0;
-    i = GeoIP_open("/usr/local/share/GeoIP/GeoIPCity.dat", flags);
-    if (i == NULL) {
-        printf("error: GeoLiteCity.dat does not exist\n");
-        return;
-    }
+
+    GEOIP_OPEN("GeoLiteCity.dat", flags);
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
         i3 = GeoIP_record_by_addr(i, ipstring[i4]);
