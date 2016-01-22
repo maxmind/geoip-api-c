@@ -19,7 +19,7 @@ int numipstrings = 4;
 #define GEOIP_OPEN(basename,flg)                   \
         do {                                       \
           i = GeoIP_open (DATADIR  basename,       \
-                          flg | GEOIP_SILENCE);    \
+                          (flg) | GEOIP_SILENCE);  \
           if (i == NULL) {                         \
             printf("error: %s%s does not exist\n", \
                    DATADIR, basename);             \
