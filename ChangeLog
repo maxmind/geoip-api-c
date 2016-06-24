@@ -1,3 +1,10 @@
+1.6.10 2016-XX-XX
+
+* GeoIP_database_info now returns the full version string rather than
+  incorrectly truncating it. GitHub #79.
+* This API is now distributed with a small test copy of GeoIP.dat rather than
+  a full copy.
+
 1.6.9 2016-01-11
 
 * Fix a regression introduced in version 1.6.8, which caused

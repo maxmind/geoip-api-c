@@ -21,7 +21,6 @@ config.log
 config.status
 config.sub
 configure
-data/GeoIP.dat
 depcomp
 geoip.pc
 install-sh

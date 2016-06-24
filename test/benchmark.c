@@ -16,17 +16,17 @@ int numipstrings = 4;
   #define DATADIR  "/usr/local/share/GeoIP/"
 #endif
 
-#define GEOIP_OPEN(basename,flg)                   \
-        do {                                       \
-          i = GeoIP_open (DATADIR  basename,       \
-                          (flg) | GEOIP_SILENCE);  \
-          if (i == NULL) {                         \
+#define GEOIP_OPEN(basename, flg)                  \
+    do {                                           \
+        i = GeoIP_open(DATADIR basename,           \
+                       (flg) | GEOIP_SILENCE);     \
+        if (i == NULL) {                           \
             printf("error: %s%s does not exist\n", \
                    DATADIR, basename);             \
             return;                                \
             /* or a 'longjmp(geo_jmp,1)'? */       \
-          }                                        \
-        } while (0)
+        }                                          \
+    } while (0)
 
 #if !defined(_WIN32)
 struct timeval timer_t1;
@@ -68,7 +68,7 @@ double timerstop()
     __int64 delta;              /* VC6 can't convert an unsigned int64 to to double */
     GetSystemTimeAsFileTime(&timer_t2);
     delta = FILETIME_TO_USEC(timer_t2) - FILETIME_TO_USEC(timer_t1);
-    return ((double) delta) / 1E6;
+    return ((double)delta) / 1E6;
 }
 #endif                          /* !defined(_WIN32) */
 
