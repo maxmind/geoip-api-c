@@ -78,7 +78,7 @@
 * Added a GEOIP_SILENCE flag. Include this flag when calling GeoIP_open to
   prevent any messages from being written to stderr. (Philip Prindeville
   and Boris Zentner)
-* Mitigate a possible race condition when running nuder threads in the
+* Mitigate a possible race condition when running under threads in the
   GeoIP_cleanup function. (Anthon Pang)
 * Added some recommendations to the docs on using this library in a
   threaded application. (Boriz Zentner)
