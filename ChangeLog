@@ -4,6 +4,8 @@
   incorrectly truncating it. GitHub #79.
 * This API is now distributed with a small test copy of GeoIP.dat rather than
   a full copy.
+* Fixed issue where Visual Studio 2015 was optimizing out initialization code.
+  Reported and fixed by Scott Godin. GitHub #81.
 
 1.6.9 2016-01-11
 
