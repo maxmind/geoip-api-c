@@ -46,4 +46,4 @@ Manual process:
 
 ## Homebrew
 
-* Update the [Homebrew formula](https://github.com/Homebrew/homebrew/blob/master/Library/Formula/geoip.rb).
+* Update the [Homebrew formula](https://github.com/Homebrew/homebrew-core/blob/master/Formula/geoip.rb).
