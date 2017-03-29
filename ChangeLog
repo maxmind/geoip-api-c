@@ -1,11 +1,12 @@
-1.6.10 2016-XX-XX
+1.6.10 2017-03-29
 
 * GeoIP_database_info now returns the full version string rather than
   incorrectly truncating it. GitHub #79.
 * This API is now distributed with a small test copy of GeoIP.dat rather than
   a full copy.
-* Fixed issue where Visual Studio 2015 was optimizing out initialization code.
+* Fix issue where Visual Studio 2015 was optimizing out initialization code.
   Reported and fixed by Scott Godin. GitHub #81.
+* Fix test/benchmark on Windows. Gisle Vanem. GitHub #75.
 
 1.6.9 2016-01-11
 
