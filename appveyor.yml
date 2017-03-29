@@ -1,11 +1,20 @@
+---
 install:
   - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
-
 build_script:
   - nmake /f Makefile.vc
-
 notifications:
-  - provider: HipChat
-    auth_token:
-      secure: NtKXu/kGk8Td4YqCH95camAcNQtB3rMll+5DALAmbDY=
-    room: dev
+  - incoming_webhook:
+      secure: 8FZP/RE3nS77Yi5UWOB/DQKCRSJxh/BYrLjVPEAkBG6mRojCz3r2mnla4O/5GwzDr7V6XCpxCP0xo1buCcZRIzRN0ZUWJ5hzEQqW5u7R+vM=
+    channel: ci
+    on_build_failure: true
+    on_build_status_changed: true
+    on_build_success: true
+    provider: Slack
+  - on_build_failure: true
+    on_build_status_changed: true
+    on_build_success: false
+    provider: Email
+    subject: 'AppVeyor build {{status}}'
+    to:
+      - dev-ci@maxmind.com

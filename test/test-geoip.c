@@ -49,7 +49,9 @@ int main()
         }
 
         db_info = GeoIP_database_info(gi);
-        if (!db_info || !strstr(db_info, " Copyright")) {
+        if (!db_info || strcmp(db_info,
+                               "GEO-106 20160621 Build 1 Copyright (c) 2016 MaxMind Inc All Rights Reserved"))
+        {
             fprintf(stderr, "Error reading database info (got %s).\n", db_info);
             free(db_info);
             failed = 1;
@@ -121,20 +123,6 @@ int main()
             }
             test_num++;
         }
-        fclose(f);
-
-        f = fopen(SRCDIR "/test/country_test_name.txt", "r");
-        while (fscanf(f, "%s%s", ipAddress, expectedCountry) != EOF) {
-            returnedCountry = GeoIP_country_code_by_name(gi, ipAddress);
-            if (returnedCountry == NULL
-                || strcmp(returnedCountry, expectedCountry) != 0) {
-                fprintf(stderr, "Test addr %d %s failed, got %s, expected %s\n",
-                        test_num, ipAddress, returnedCountry, expectedCountry);
-                failed = 1;
-            }
-            test_num++;
-        }
-
         fclose(f);
         GeoIP_delete(gi);
     }

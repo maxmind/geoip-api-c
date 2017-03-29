@@ -2027,7 +2027,7 @@ char *GeoIP_database_info(GeoIP * gi)
     int i;
     unsigned char buf[3];
     char *retval;
-    int hasStructureInfo = 0;
+    int has_structure_info = 0;
     off_t offset = gi->size - 3;
     int fno;
 
@@ -2044,23 +2044,24 @@ char *GeoIP_database_info(GeoIP * gi)
         if (pread(fno, buf, 3, offset) != 3) {
             return NULL;
         }
+        offset += 3;
         if (buf[0] == 255 && buf[1] == 255 && buf[2] == 255) {
-            hasStructureInfo = 1;
+            has_structure_info = 1;
             break;
         }
-        offset -= 1;
+        offset -= 4;
         if (offset < 0) {
             return NULL;
         }
     }
-    if (hasStructureInfo == 1) {
+    if (has_structure_info) {
         offset -= 6;
         if (offset < 0) {
             return NULL;
         }
     } else {
         /* no structure info, must be pre Sep 2002 database, go back to end */
-        offset -= 3;
+        offset = gi->size - 3;
         if (offset < 0) {
             return NULL;
         }

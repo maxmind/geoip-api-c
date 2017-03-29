@@ -1,3 +1,13 @@
+1.6.10 2017-03-29
+
+* GeoIP_database_info now returns the full version string rather than
+  incorrectly truncating it. GitHub #79.
+* This API is now distributed with a small test copy of GeoIP.dat rather than
+  a full copy.
+* Fix issue where Visual Studio 2015 was optimizing out initialization code.
+  Reported and fixed by Scott Godin. GitHub #81.
+* Fix test/benchmark on Windows. Gisle Vanem. GitHub #75.
+
 1.6.9 2016-01-11
 
 * Fix a regression introduced in version 1.6.8, which caused
@@ -71,7 +81,7 @@
 * Added a GEOIP_SILENCE flag. Include this flag when calling GeoIP_open to
   prevent any messages from being written to stderr. (Philip Prindeville
   and Boris Zentner)
-* Mitigate a possible race condition when running nuder threads in the
+* Mitigate a possible race condition when running under threads in the
   GeoIP_cleanup function. (Anthon Pang)
 * Added some recommendations to the docs on using this library in a
   threaded application. (Boriz Zentner)
