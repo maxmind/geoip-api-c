@@ -1,3 +1,8 @@
+1.6.11
+
+* Fix use of a NULL pointer when opening a corrupt database with
+  `GeoIP_open`. Reported by Stephan Zeisberg. GitHub #87.
+
 1.6.10 2017-03-29
 
 * GeoIP_database_info now returns the full version string rather than
