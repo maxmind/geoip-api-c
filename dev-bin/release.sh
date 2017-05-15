@@ -28,7 +28,7 @@ fi
 
 if [ -n "$(git status --porcelain)" ]; then
     echo ". is not clean." >&2
-#    exit 1
+    exit 1
 fi
 
 perl -pi -e "s/(?<=AC_INIT\(\[GeoIP\], \[)(\d+\.\d+\.\d+)(?=])/$version/gsm" configure.ac
@@ -51,10 +51,6 @@ if [ "$should_push" != "y" ]; then
     echo "Aborting"
     exit 1
 fi
-
-git push
-
-popd
 
 git push
 
