@@ -1,22 +1,7 @@
 ## Releasing
 
 * Make sure the `ChangeLog` is up to date.
-* Edit `configure.ac` and bump the version
-* Run the following:
-
-        ./bootstrap
-        ./configure
-        make check -j 4
-        sudo make install
-
-* `make dist`
-* Check that you can untar this release and install it
-* `git tag v{X.Y.Z}`
-* `git push --tags`
-* Make a new release on GitHub at https://github.com/maxmind/geoip-api-c/releases
-    * Upload the tarball you just made
-    * Edit said release to include the changes for this release on GitHub
-
+* Run `dev-bin/release.sh`
 
 ## Ubuntu PPA packages
 
@@ -26,7 +11,7 @@ Release script:
 
 1. run `dev-bin/ppa-release.sh`
 
-Manual process:
+Manual PPA process:
 
 1. Type `dch -i` and add the appropriate `debian/changelog` entry.
 2. Move tarball created above to a temp directory and
