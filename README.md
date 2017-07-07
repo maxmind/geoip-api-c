@@ -235,12 +235,12 @@ sudo make install
 
 ## Bug Tracker ##
 
-Please report all issues with this code using the [GitHub issue tracker]
-(https://github.com/maxmind/geoip-api-c/issues).
+Please report all issues with this code using the 
+[GitHub issue tracker](https://github.com/maxmind/geoip-api-c/issues).
 
 If you are having an issue with a MaxMind database that is not specific to
-this API, please [contact MaxMind support]
-(http://www.maxmind.com/en/support).
+this API, please 
+[contact MaxMind support](http://www.maxmind.com/en/support).
 
 ## Contributing ##
 
