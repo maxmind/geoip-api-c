@@ -768,82 +768,81 @@ char *_GeoIP_full_path_to(const char *file_name)
     return path;
 }
 
-char ** GeoIPDBFileName = NULL;
-
-void _GeoIP_setup_dbfilename()
+const char * _GeoIP_get_dbfilename(int type)
 {
-    if (NULL == GeoIPDBFileName) {
-        GeoIPDBFileName = malloc(sizeof(char *) * NUM_DB_TYPES);
-        memset(GeoIPDBFileName, 0, sizeof(char *) * NUM_DB_TYPES);
+    switch (type) {
+    case GEOIP_COUNTRY_EDITION:
+    case GEOIP_LARGE_COUNTRY_EDITION:
+        return _GeoIP_full_path_to("GeoIP.dat");
 
-        GeoIPDBFileName[GEOIP_COUNTRY_EDITION] = _GeoIP_full_path_to(
-            "GeoIP.dat");
-        GeoIPDBFileName[GEOIP_REGION_EDITION_REV0] = _GeoIP_full_path_to(
-            "GeoIPRegion.dat");
-        GeoIPDBFileName[GEOIP_REGION_EDITION_REV1] = _GeoIP_full_path_to(
-            "GeoIPRegion.dat");
-        GeoIPDBFileName[GEOIP_CITY_EDITION_REV0] = _GeoIP_full_path_to(
-            "GeoIPCity.dat");
-        GeoIPDBFileName[GEOIP_CITY_EDITION_REV1] = _GeoIP_full_path_to(
-            "GeoIPCity.dat");
-        GeoIPDBFileName[GEOIP_ISP_EDITION] =
-            _GeoIP_full_path_to("GeoIPISP.dat");
-        GeoIPDBFileName[GEOIP_ORG_EDITION] =
-            _GeoIP_full_path_to("GeoIPOrg.dat");
-        GeoIPDBFileName[GEOIP_PROXY_EDITION] = _GeoIP_full_path_to(
-            "GeoIPProxy.dat");
-        GeoIPDBFileName[GEOIP_ASNUM_EDITION] = _GeoIP_full_path_to(
-            "GeoIPASNum.dat");
-        GeoIPDBFileName[GEOIP_NETSPEED_EDITION] = _GeoIP_full_path_to(
-            "GeoIPNetSpeed.dat");
-        GeoIPDBFileName[GEOIP_DOMAIN_EDITION] = _GeoIP_full_path_to(
-            "GeoIPDomain.dat");
-        GeoIPDBFileName[GEOIP_COUNTRY_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPv6.dat");
-        GeoIPDBFileName[GEOIP_LOCATIONA_EDITION] = _GeoIP_full_path_to(
-            "GeoIPLocA.dat");
-        GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION] = _GeoIP_full_path_to(
-            "GeoIPDistance.dat");
-        GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION] = _GeoIP_full_path_to(
-            "GeoIP.dat");
-        GeoIPDBFileName[GEOIP_LARGE_COUNTRY_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPv6.dat");
-        GeoIPDBFileName[GEOIP_ASNUM_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPASNumv6.dat");
-        GeoIPDBFileName[GEOIP_ISP_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPISPv6.dat");
-        GeoIPDBFileName[GEOIP_ORG_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPOrgv6.dat");
-        GeoIPDBFileName[GEOIP_DOMAIN_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPDomainv6.dat");
-        GeoIPDBFileName[GEOIP_LOCATIONA_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPLocAv6.dat");
-        GeoIPDBFileName[GEOIP_REGISTRAR_EDITION] = _GeoIP_full_path_to(
-            "GeoIPRegistrar.dat");
-        GeoIPDBFileName[GEOIP_REGISTRAR_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPRegistrarv6.dat");
-        GeoIPDBFileName[GEOIP_USERTYPE_EDITION] = _GeoIP_full_path_to(
-            "GeoIPUserType.dat");
-        GeoIPDBFileName[GEOIP_USERTYPE_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPUserTypev6.dat");
-        GeoIPDBFileName[GEOIP_CITY_EDITION_REV0_V6] = _GeoIP_full_path_to(
-            "GeoIPCityv6.dat");
-        GeoIPDBFileName[GEOIP_CITY_EDITION_REV1_V6] = _GeoIP_full_path_to(
-            "GeoIPCityv6.dat");
-        GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1] = _GeoIP_full_path_to(
-            "GeoIPNetSpeedCell.dat");
-        GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1_V6] = _GeoIP_full_path_to(
-            "GeoIPNetSpeedCellv6.dat");
-        GeoIPDBFileName[GEOIP_COUNTRYCONF_EDITION] = _GeoIP_full_path_to(
-            "GeoIPCountryConf.dat");
-        GeoIPDBFileName[GEOIP_CITYCONF_EDITION] = _GeoIP_full_path_to(
-            "GeoIPCityConf.dat");
-        GeoIPDBFileName[GEOIP_REGIONCONF_EDITION] = _GeoIP_full_path_to(
-            "GeoIPRegionConf.dat");
-        GeoIPDBFileName[GEOIP_POSTALCONF_EDITION] = _GeoIP_full_path_to(
-            "GeoIPPostalConf.dat");
-        GeoIPDBFileName[GEOIP_ACCURACYRADIUS_EDITION_V6] = _GeoIP_full_path_to(
-            "GeoIPDistancev6.dat");
+    case GEOIP_REGION_EDITION_REV0:
+    case GEOIP_REGION_EDITION_REV1:
+        return _GeoIP_full_path_to("GeoIPRegion.dat");
+
+    case GEOIP_CITY_EDITION_REV0:
+    case GEOIP_CITY_EDITION_REV1:
+        return _GeoIP_full_path_to("GeoIPCity.dat");
+
+    case GEOIP_ISP_EDITION:
+        return _GeoIP_full_path_to("GeoIPISP.dat");
+    case GEOIP_ORG_EDITION:
+        return _GeoIP_full_path_to("GeoIPOrg.dat");
+    case GEOIP_PROXY_EDITION:
+        return _GeoIP_full_path_to("GeoIPProxy.dat");
+    case GEOIP_ASNUM_EDITION:
+        return _GeoIP_full_path_to("GeoIPASNum.dat");
+    case GEOIP_NETSPEED_EDITION:
+        return _GeoIP_full_path_to("GeoIPNetSpeed.dat");
+    case GEOIP_DOMAIN_EDITION:
+        return _GeoIP_full_path_to("GeoIPDomain.dat");
+
+    case GEOIP_COUNTRY_EDITION_V6:
+    case GEOIP_LARGE_COUNTRY_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPv6.dat");
+
+    case GEOIP_LOCATIONA_EDITION:
+        return _GeoIP_full_path_to("GeoIPLocA.dat");
+    case GEOIP_ACCURACYRADIUS_EDITION:
+        return _GeoIP_full_path_to("GeoIPDistance.dat");
+    case GEOIP_ASNUM_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPASNumv6.dat");
+    case GEOIP_ISP_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPISPv6.dat");
+    case GEOIP_ORG_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPOrgv6.dat");
+    case GEOIP_DOMAIN_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPDomainv6.dat");
+    case GEOIP_LOCATIONA_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPLocAv6.dat");
+    case GEOIP_REGISTRAR_EDITION:
+        return _GeoIP_full_path_to("GeoIPRegistrar.dat");
+    case GEOIP_REGISTRAR_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPRegistrarv6.dat");
+    case GEOIP_USERTYPE_EDITION:
+        return _GeoIP_full_path_to("GeoIPUserType.dat");
+    case GEOIP_USERTYPE_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPUserTypev6.dat");
+
+    case GEOIP_CITY_EDITION_REV0_V6:
+    case GEOIP_CITY_EDITION_REV1_V6:
+        return _GeoIP_full_path_to("GeoIPCityv6.dat");
+
+    case GEOIP_NETSPEED_EDITION_REV1:
+        return _GeoIP_full_path_to("GeoIPNetSpeedCell.dat");
+    case GEOIP_NETSPEED_EDITION_REV1_V6:
+        return _GeoIP_full_path_to("GeoIPNetSpeedCellv6.dat");
+    case GEOIP_COUNTRYCONF_EDITION:
+        return _GeoIP_full_path_to("GeoIPCountryConf.dat");
+    case GEOIP_CITYCONF_EDITION:
+        return _GeoIP_full_path_to("GeoIPCityConf.dat");
+    case GEOIP_REGIONCONF_EDITION:
+        return _GeoIP_full_path_to("GeoIPRegionConf.dat");
+    case GEOIP_POSTALCONF_EDITION:
+        return _GeoIP_full_path_to("GeoIPPostalConf.dat");
+    case GEOIP_ACCURACYRADIUS_EDITION_V6:
+        return _GeoIP_full_path_to("GeoIPDistancev6.dat");
+    default:
+        return NULL;
     }
 }
 
@@ -904,15 +903,17 @@ int GeoIP_is_private_v4( const char * addr )
 int GeoIP_db_avail(int type)
 {
     const char * filePath;
+    int ret;
     if (type < 0 || type >= NUM_DB_TYPES) {
         return 0;
     }
-    _GeoIP_setup_dbfilename();
-    filePath = GeoIPDBFileName[type];
+    filePath = _GeoIP_get_dbfilename(type);
     if (NULL == filePath) {
         return 0;
     }
-    return _file_exists(filePath);
+    ret = _file_exists(filePath);
+    free((void *)filePath);
+    return ret;
 }
 
 static int _database_has_content( int database_type )
@@ -1462,19 +1463,11 @@ GeoIP_addr_to_num(const char *addr)
 GeoIP * GeoIP_open_type(int type, int flags)
 {
     GeoIP * gi;
-    const char * filePath;
     if (type < 0 || type >= NUM_DB_TYPES) {
         printf("Invalid database type %d\n", type);
         return NULL;
     }
-    _GeoIP_setup_dbfilename();
-    filePath = GeoIPDBFileName[type];
-    if (filePath == NULL) {
-        printf("Invalid database type %d\n", type);
-        return NULL;
-    }
-    gi = GeoIP_open(filePath, flags);
-
+    gi = GeoIP_open(_GeoIP_get_dbfilename(type), flags);
     if (gi) {
         /* make sure this is the requested database type */
         int database_type = gi->databaseType;
@@ -1499,29 +1492,27 @@ GeoIP * GeoIP_open_type(int type, int flags)
 GeoIP * GeoIP_new(int flags)
 {
     GeoIP * gi;
-    _GeoIP_setup_dbfilename();
-    gi = GeoIP_open(GeoIPDBFileName[GEOIP_COUNTRY_EDITION], flags);
+    gi = GeoIP_open(_GeoIP_get_dbfilename(GEOIP_COUNTRY_EDITION), flags);
     return gi;
 }
 
 GeoIP * GeoIP_open(const char * filename, int flags)
 {
+/*
+        Ownership of filename is transferred to the GeoIP object
+ */
     struct stat buf;
     ssize_t idx_size;
     GeoIP * gi;
-    size_t len;
+    if (!filename) {
+        return NULL;
+    }
 
     gi = (GeoIP *)calloc(1, sizeof(GeoIP));
     if (gi == NULL) {
         return NULL;
     }
-    len = sizeof(char) * (strlen(filename) + 1);
-    gi->file_path = malloc(len);
-    if (gi->file_path == NULL) {
-        free(gi);
-        return NULL;
-    }
-    strncpy(gi->file_path, filename, len);
+    gi->file_path = filename;
     gi->GeoIPDatabase = fopen(filename, "rb");
     if (gi->GeoIPDatabase == NULL) {
         DEBUG_MSGF(flags, "Error Opening file %s\n", filename);
@@ -2700,21 +2691,5 @@ const char * GeoIP_lib_version(void)
 
 int GeoIP_cleanup(void)
 {
-    int i, result = 0;
-    char **tmpGeoIPDBFileName = GeoIPDBFileName;
-
-    GeoIPDBFileName = NULL;
-
-    if (tmpGeoIPDBFileName) {
-        for (i = 0; i < NUM_DB_TYPES; i++) {
-            if (tmpGeoIPDBFileName[i]) {
-                free(tmpGeoIPDBFileName[i]);
-            }
-        }
-
-        free(tmpGeoIPDBFileName);
-        result = 1;
-    }
-
-    return result;
+    return 0;
 }
