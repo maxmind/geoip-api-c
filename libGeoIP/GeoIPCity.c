@@ -360,6 +360,9 @@ GeoIP_next_record(GeoIP * gi, GeoIPRecord ** gir, int *record_iter)
 void
 GeoIPRecord_delete(GeoIPRecord * gir)
 {
+    if (gir == NULL) {
+        return;
+    }
     free(gir->region);
     free(gir->city);
     free(gir->postal_code);
