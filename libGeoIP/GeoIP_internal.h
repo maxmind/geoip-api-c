@@ -13,7 +13,7 @@ GEOIP_API unsigned long _GeoIP_lookupaddress(const char *host);
 GEOIP_API geoipv6_t _GeoIP_lookupaddress_v6(const char *host);
 GEOIP_API int __GEOIP_V6_IS_NULL(geoipv6_t v6);
 
-GEOIP_API void _GeoIP_setup_dbfilename();
+GEOIP_API void _GeoIP_setup_dbfilename(void);
 GEOIP_API char *_GeoIP_full_path_to(const char *file_name);
 
 /* deprecated */

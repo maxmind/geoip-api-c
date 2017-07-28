@@ -1,6 +1,6 @@
 #include "GeoIP.h"
 
-int main()
+int main(void)
 {
     GeoIP *gi = GeoIP_open(SRCDIR "/README.md", GEOIP_MEMORY_CACHE);
 

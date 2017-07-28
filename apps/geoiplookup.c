@@ -30,7 +30,7 @@ typedef unsigned int uint32_t;
 
 void geoiplookup(GeoIP * gi, char *hostname, int i);
 
-void usage()
+void usage(void)
 {
     fprintf(
         stderr,

@@ -20,7 +20,7 @@
 
 #include "GeoIP.h"
 
-int main()
+int main(void)
 {
     FILE *f;
     char *db_info;

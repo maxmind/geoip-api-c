@@ -48,7 +48,7 @@ static const char *_mk_NA(const char *p)
     return p ? p : "N/A";
 }
 
-int main()
+int main(void)
 {
     GeoIP *gi;
     GeoIPRegion *gir, giRegion;

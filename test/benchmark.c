@@ -37,12 +37,12 @@ FILETIME timer_t2;
 #endif                          /* !defined(_WIN32) */
 
 #if !defined(_WIN32)
-void timerstart()
+void timerstart(void)
 {
     gettimeofday(&timer_t1, NULL);
 }
 
-double timerstop()
+double timerstop(void)
 {
     int a1 = 0;
     int a2 = 0;
@@ -58,12 +58,12 @@ double timerstop()
     return r;
 }
 #else                           /* !defined(_WIN32) */
-void timerstart()
+void timerstart(void)
 {
     GetSystemTimeAsFileTime(&timer_t1);
 }
 
-double timerstop()
+double timerstop(void)
 {
     __int64 delta;              /* VC6 can't convert an unsigned int64 to to double */
     GetSystemTimeAsFileTime(&timer_t2);
@@ -152,7 +152,7 @@ void testgeoipcity(int flags, const char *msg, int numlookups)
     GeoIP_delete(i);
 }
 
-int main()
+int main(void)
 {
     int time = 300 * numipstrings;
     testgeoipcountry(0, "GeoIP Country", 100 * time);
