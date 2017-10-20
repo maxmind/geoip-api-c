@@ -23,7 +23,7 @@
 #include "GeoIP_internal.h"
 void geoiplookup(GeoIP * gi, char *hostname, int i);
 
-void usage()
+void usage(void)
 {
     fprintf(
         stderr,

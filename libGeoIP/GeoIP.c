@@ -770,7 +770,7 @@ char *_GeoIP_full_path_to(const char *file_name)
 
 char ** GeoIPDBFileName = NULL;
 
-void _GeoIP_setup_dbfilename()
+void _GeoIP_setup_dbfilename(void)
 {
     if (NULL == GeoIPDBFileName) {
         GeoIPDBFileName = malloc(sizeof(char *) * NUM_DB_TYPES);
