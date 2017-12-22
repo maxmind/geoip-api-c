@@ -66,9 +66,6 @@ GEOIP_API int GeoIP_next_record(GeoIP * gi, GeoIPRecord **gir,
 
 GEOIP_API void GeoIPRecord_delete(GeoIPRecord *gir);
 
-/* NULL on failure otherwise a malloced string in utf8 */
-/* char * GeoIP_iso_8859_1__utf8(const char *); */
-
 #ifdef __cplusplus
 }
 #endif
