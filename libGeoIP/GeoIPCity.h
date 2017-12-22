@@ -39,7 +39,7 @@ typedef struct GeoIPRecordTag {
     float latitude;
     float longitude;
     union {
-        int metro_code;   /* metro_code is a alias for dma_code */
+        int metro_code;   /* metro_code is an alias for dma_code */
         int dma_code;
     };
     int area_code;

@@ -97,7 +97,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
         }
     }else {
         if (gi->size <= record_pointer) {
-            /* such record does not exists in the cache */
+            /* record does not exist in the cache */
             free(record);
             return NULL;
         }
