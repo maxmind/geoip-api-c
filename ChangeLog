@@ -1,3 +1,6 @@
+* Populate metro and area code when performing lookups in IPv6 City databases.
+  Previously this was only done when using IPv4 City databases.
+
 1.6.11 2017-05-15
 
 * Fix use of a NULL pointer when opening a corrupt database with
