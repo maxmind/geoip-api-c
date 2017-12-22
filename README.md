@@ -201,7 +201,7 @@ file and run `ldconfig`.
 #### Solaris ####
 
 On Solaris, if you get a `ld: fatal: relocations remain against allocatable
-but non-writable sections`, try runnign:
+but non-writable sections`, try running:
 
 ```
 make clean
@@ -216,7 +216,7 @@ path. On Solaris, `ar` is typically found in `/usr/ccs/bin`
 #### AIX ####
 
 If you get a `passing argument 3 of 'gethostbyname_r' from incompatible
-pointer type` error on AIX, untar a fresh copy of thie library and delete the
+pointer type` error on AIX, untar a fresh copy of this library and delete the
 following two lines from `./configure`:
 
 ```
