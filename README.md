@@ -13,7 +13,7 @@ information of an IP address. To use this library, you may download our free
 GeoLite Legacy Country or City databases. These are updated at the beginning
 of every month. The latest versions are available at:
 
-http://dev.maxmind.com/geoip/legacy/geolite
+https://dev.maxmind.com/geoip/legacy/geolite
 
 We also offer commercial GeoIP Legacy databases with greater accuracy and
 additional network information. For more details, see:
@@ -240,7 +240,7 @@ Please report all issues with this code using the
 
 If you are having an issue with a MaxMind database that is not specific to
 this API, please 
-[contact MaxMind support](http://www.maxmind.com/en/support).
+[contact MaxMind support](https://www.maxmind.com/en/support).
 
 ## Contributing ##
 
