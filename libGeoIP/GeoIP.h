@@ -123,8 +123,8 @@ typedef enum {
     GEOIP_CITYCONFIDENCEDIST_EDITION = 16,       /* unsupported */
     GEOIP_LARGE_COUNTRY_EDITION = 17,
     GEOIP_LARGE_COUNTRY_EDITION_V6 = 18,
-    GEOIP_CITYCONFIDENCEDIST_ISP_ORG_EDITION = 19, /* unsued, but gaps are not allowed */
-    GEOIP_CCM_COUNTRY_EDITION = 20,                /* unsued, but gaps are not allowed */
+    GEOIP_CITYCONFIDENCEDIST_ISP_ORG_EDITION = 19, /* unused, but gaps are not allowed */
+    GEOIP_CCM_COUNTRY_EDITION = 20,                /* unused, but gaps are not allowed */
     GEOIP_ASNUM_EDITION_V6 = 21,
     GEOIP_ISP_EDITION_V6 = 22,
     GEOIP_ORG_EDITION_V6 = 23,
@@ -371,7 +371,7 @@ char * _GeoIP_iso_8859_1__utf8(const char * iso);
  * */
 GEOIP_API int GeoIP_cleanup(void);
 
-/* Returns the library version in use. Helpful if your loading dynamically. */
+/* Returns the library version in use. Helpful if you're loading dynamically. */
 GEOIP_API const char * GeoIP_lib_version(void);
 
 

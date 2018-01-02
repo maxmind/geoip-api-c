@@ -13,7 +13,7 @@ information of an IP address. To use this library, you may download our free
 GeoLite Legacy Country or City databases. These are updated at the beginning
 of every month. The latest versions are available at:
 
-http://dev.maxmind.com/geoip/legacy/geolite
+https://dev.maxmind.com/geoip/legacy/geolite
 
 We also offer commercial GeoIP Legacy databases with greater accuracy and
 additional network information. For more details, see:
@@ -201,7 +201,7 @@ file and run `ldconfig`.
 #### Solaris ####
 
 On Solaris, if you get a `ld: fatal: relocations remain against allocatable
-but non-writable sections`, try runnign:
+but non-writable sections`, try running:
 
 ```
 make clean
@@ -216,7 +216,7 @@ path. On Solaris, `ar` is typically found in `/usr/ccs/bin`
 #### AIX ####
 
 If you get a `passing argument 3 of 'gethostbyname_r' from incompatible
-pointer type` error on AIX, untar a fresh copy of thie library and delete the
+pointer type` error on AIX, untar a fresh copy of this library and delete the
 following two lines from `./configure`:
 
 ```
@@ -240,7 +240,7 @@ Please report all issues with this code using the
 
 If you are having an issue with a MaxMind database that is not specific to
 this API, please 
-[contact MaxMind support](http://www.maxmind.com/en/support).
+[contact MaxMind support](https://www.maxmind.com/en/support).
 
 ## Contributing ##
 

@@ -1,6 +1,7 @@
 *.la
 *.lo
 *.o
+*.swp
 *~
 .DS_Store
 .deps
@@ -36,6 +37,9 @@ test/test-geoip
 test/test-geoip-asnum
 test/test-geoip-city
 test/test-geoip-domain
+test/test-geoip-invalid-file
+test/test-geoip-invalid-file.log
+test/test-geoip-invalid-file.trs
 test/test-geoip-isp
 test/test-geoip-netspeed
 test/test-geoip-org

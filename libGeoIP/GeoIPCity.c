@@ -97,7 +97,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
         }
     }else {
         if (gi->size <= record_pointer) {
-            /* such record does not exists in the cache */
+            /* record does not exist in the cache */
             free(record);
             return NULL;
         }
@@ -164,7 +164,8 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
      * get area code and metro code for post April 2002 databases and for US
      * locations
      */
-    if (GEOIP_CITY_EDITION_REV1 == gi->databaseType) {
+    if (gi->databaseType == GEOIP_CITY_EDITION_REV1 ||
+        gi->databaseType == GEOIP_CITY_EDITION_REV1_V6) {
         if (!strcmp(record->country_code, "US")) {
             record_buf += 3;
             for (j = 0; j < 3; ++j) {

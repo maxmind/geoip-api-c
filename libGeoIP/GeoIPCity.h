@@ -39,7 +39,7 @@ typedef struct GeoIPRecordTag {
     float latitude;
     float longitude;
     union {
-        int metro_code;   /* metro_code is a alias for dma_code */
+        int metro_code;   /* metro_code is an alias for dma_code */
         int dma_code;
     };
     int area_code;
@@ -65,9 +65,6 @@ GEOIP_API int GeoIP_next_record(GeoIP * gi, GeoIPRecord **gir,
                                 int *record_iter);
 
 GEOIP_API void GeoIPRecord_delete(GeoIPRecord *gir);
-
-/* NULL on failure otherwise a malloced string in utf8 */
-/* char * GeoIP_iso_8859_1__utf8(const char *); */
 
 #ifdef __cplusplus
 }
