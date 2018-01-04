@@ -116,15 +116,15 @@ use both `GEOIP_MEMORY_CACHE` and `GEOIP_CHECK_CACHE by calling`:
 GeoIP_open("/path/to/GeoIP.dat", GEOIP_MEMORY_CACHE | GEOIP_CHECK_CACHE);
 ```
 
-By default, the city name is returned in iso-8859-1 charset. To obtain the
-city name in utf8 instead, run:
+By default, the city name is returned in the ISO-8859-1 charset. To obtain
+the city name in UTF-8 instead, run:
 
 ```c
 GeoIP_set_charset(gi, GEOIP_CHARSET_UTF8);
 ```
 
 To get the netmask of the netblock of the last lookup, use
-`GeoIP_last_netblock(gi)`.
+`GeoIP_last_netmask(gi)`.
 
 ## Examples ##
 
