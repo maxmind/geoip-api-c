@@ -43,8 +43,8 @@ APT sources, run:
 
 Then install the packages by running:
 
-    $ sudo aptitude update
-    $ sudo aptitude install libgeoip1 libgeoip-dev geoip-bin
+    $ sudo apt update
+    $ sudo apt install libgeoip1 libgeoip-dev geoip-bin
 
 ### From Source on Unix/Linux ###
 
