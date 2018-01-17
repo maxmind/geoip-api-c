@@ -1,7 +1,6 @@
 #include "GeoIP.h"
 
-int main()
-{
+int main(void) {
     GeoIP *gi = GeoIP_open(SRCDIR "/README.md", GEOIP_MEMORY_CACHE);
 
     /* We don't detect invalid files at load, unfortunately. */
@@ -12,17 +11,17 @@ int main()
 
     const char *country = GeoIP_country_code_by_addr(gi, "24.24.24.24");
     if (country != NULL) {
-        fprintf(
-            stderr,
-            "Received a non-NULL value on an invalid database from GeoIP_country_code_by_addr\n");
+        fprintf(stderr,
+                "Received a non-NULL value on an invalid database from "
+                "GeoIP_country_code_by_addr\n");
         return 1;
     }
 
     country = GeoIP_country_code_by_addr_v6(gi, "24.24.24.24");
     if (country != NULL) {
-        fprintf(
-            stderr,
-            "Received a non-NULL value on an invalid database from GeoIP_country_code_by_addr_v6\n");
+        fprintf(stderr,
+                "Received a non-NULL value on an invalid database from "
+                "GeoIP_country_code_by_addr_v6\n");
         return 1;
     }
 

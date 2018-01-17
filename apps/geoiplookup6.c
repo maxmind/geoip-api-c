@@ -15,26 +15,24 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
 #include "GeoIP.h"
 #include "GeoIPCity.h"
 #include "GeoIP_internal.h"
-void geoiplookup(GeoIP * gi, char *hostname, int i);
+void geoiplookup(GeoIP *gi, char *hostname, int i);
 
-void usage()
-{
-    fprintf(
-        stderr,
-        "Usage: geoiplookup [-h] [-d custom_dir] [-f custom_file] [-v] <ipaddress|hostname>\n");
+void usage(void) {
+    fprintf(stderr,
+            "Usage: geoiplookup [-h] [-d custom_dir] [-f custom_file] "
+            "[-v] <ipaddress|hostname>\n");
 }
 
-int main(int argc, char *argv[])
-{
-    char * hostname = NULL;
-    char * db_info;
-    GeoIP * gi;
+int main(int argc, char *argv[]) {
+    char *hostname = NULL;
+    char *db_info;
+    GeoIP *gi;
     int i;
     char *custom_directory = NULL;
     char *custom_file = NULL;
@@ -48,8 +46,7 @@ int main(int argc, char *argv[])
     while (i < argc) {
         if (strcmp(argv[i], "-v") == 0) {
             version_flag = 1;
-        } else if (strcmp(argv[i], "-h") == 0
-                   || strcmp(argv[i], "-?") == 0) {
+        } else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-?") == 0) {
             usage();
             exit(0);
         } else if (strcmp(argv[i], "-f") == 0) {
@@ -85,8 +82,9 @@ int main(int argc, char *argv[])
             i = GeoIP_database_edition(gi);
             if (version_flag == 1) {
                 db_info = GeoIP_database_info(gi);
-                printf("%s: %s\n", GeoIPDBDescription[i],
-                       db_info == NULL ? "" : db_info );
+                printf("%s: %s\n",
+                       GeoIPDBDescription[i],
+                       db_info == NULL ? "" : db_info);
                 free(db_info);
             } else {
                 geoiplookup(gi, hostname, i);
@@ -120,14 +118,9 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-static const char * _mk_NA( const char * p )
-{
-    return p ? p : "N/A";
-}
+static const char *_mk_NA(const char *p) { return p ? p : "N/A"; }
 
-void
-geoiplookup(GeoIP * gi, char *hostname, int i)
-{
+void geoiplookup(GeoIP *gi, char *hostname, int i) {
     const char *country_code;
     const char *country_name;
     const char *asnum_name;
@@ -137,44 +130,51 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
     geoipv6_t ipnum;
     ipnum = _GeoIP_lookupaddress_v6(hostname);
     if (__GEOIP_V6_IS_NULL(ipnum)) {
-        printf("%s: can't resolve hostname ( %s )\n", GeoIPDBDescription[i],
+        printf("%s: can't resolve hostname ( %s )\n",
+               GeoIPDBDescription[i],
                hostname);
-    }else {
+    } else {
         if (GEOIP_LOCATIONA_EDITION_V6 == i || GEOIP_ASNUM_EDITION_V6 == i ||
-            GEOIP_USERTYPE_EDITION_V6 == i || GEOIP_REGISTRAR_EDITION_V6 ==
-            i ||
+            GEOIP_USERTYPE_EDITION_V6 == i || GEOIP_REGISTRAR_EDITION_V6 == i ||
             GEOIP_DOMAIN_EDITION_V6 == i || GEOIP_ORG_EDITION_V6 == i ||
             GEOIP_ISP_EDITION_V6 == i || GEOIP_NETSPEED_EDITION_REV1_V6 == i) {
             asnum_name = GeoIP_name_by_ipnum_v6(gi, ipnum);
             if (asnum_name == NULL) {
                 printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-            }else {
+            } else {
                 printf("%s: %s\n", GeoIPDBDescription[i], asnum_name);
             }
-        }else if (GEOIP_CITY_EDITION_REV0_V6 == i) {
+        } else if (GEOIP_CITY_EDITION_REV0_V6 == i) {
             gir = GeoIP_record_by_ipnum_v6(gi, ipnum);
             if (NULL == gir) {
                 printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-            }else {
-                printf("%s: %s, %s, %s, %s, %f, %f\n", GeoIPDBDescription[i],
-                       gir->country_code, _mk_NA(
-                           gir->region),
-                       _mk_NA(gir->city), _mk_NA(
-                           gir->postal_code), gir->latitude, gir->longitude);
+            } else {
+                printf("%s: %s, %s, %s, %s, %f, %f\n",
+                       GeoIPDBDescription[i],
+                       gir->country_code,
+                       _mk_NA(gir->region),
+                       _mk_NA(gir->city),
+                       _mk_NA(gir->postal_code),
+                       gir->latitude,
+                       gir->longitude);
             }
-        }else if (GEOIP_CITY_EDITION_REV1_V6 == i) {
+        } else if (GEOIP_CITY_EDITION_REV1_V6 == i) {
             gir = GeoIP_record_by_ipnum_v6(gi, ipnum);
             if (NULL == gir) {
                 printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-            }else {
+            } else {
                 printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n",
-                       GeoIPDBDescription[i], gir->country_code, _mk_NA(
-                           gir->region), _mk_NA(gir->city), _mk_NA(
-                           gir->postal_code),
-                       gir->latitude, gir->longitude, gir->metro_code,
+                       GeoIPDBDescription[i],
+                       gir->country_code,
+                       _mk_NA(gir->region),
+                       _mk_NA(gir->city),
+                       _mk_NA(gir->postal_code),
+                       gir->latitude,
+                       gir->longitude,
+                       gir->metro_code,
                        gir->area_code);
             }
-        }else if (GEOIP_COUNTRY_EDITION_V6 == i) {
+        } else if (GEOIP_COUNTRY_EDITION_V6 == i) {
             country_id = GeoIP_id_by_ipnum_v6(gi, ipnum);
             if (country_id < 0 || country_id >= (int)GeoIP_num_countries()) {
                 printf("%s: Invalid database\n", GeoIPDBDescription[i]);
@@ -184,8 +184,10 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
             country_name = GeoIP_country_name[country_id];
             if (country_id == 0) {
                 printf("%s: IP Address not found\n", GeoIPDBDescription[i]);
-            }else {
-                printf("%s: %s, %s\n", GeoIPDBDescription[i], country_code,
+            } else {
+                printf("%s: %s, %s\n",
+                       GeoIPDBDescription[i],
+                       country_code,
                        country_name);
             }
         }

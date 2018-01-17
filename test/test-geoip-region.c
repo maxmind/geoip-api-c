@@ -15,25 +15,24 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
 #include "GeoIP.h"
-#include <sys/types.h>          /* For uint32_t */
+#include <sys/types.h> /* For uint32_t */
 #ifdef HAVE_STDINT_H
-#include <stdint.h>             /* For uint32_t */
+#include <stdint.h> /* For uint32_t */
 #endif
 #if !defined(_WIN32)
-#include <netdb.h>              /* For gethostbyname */
-#include <netinet/in.h>         /* For ntohl */
+#include <netdb.h>      /* For gethostbyname */
+#include <netinet/in.h> /* For ntohl */
 #else
 #include <windows.h>
 #include <winsock.h>
 #endif
 #include <assert.h>
 
-unsigned long inetaddr(const char *name)
-{
+unsigned long inetaddr(const char *name) {
     struct hostent *host;
     struct in_addr inaddr;
 
@@ -43,13 +42,9 @@ unsigned long inetaddr(const char *name)
     return inaddr.s_addr;
 }
 
-static const char *_mk_NA(const char *p)
-{
-    return p ? p : "N/A";
-}
+static const char *_mk_NA(const char *p) { return p ? p : "N/A"; }
 
-int main()
-{
+int main(void) {
     GeoIP *gi;
     GeoIPRegion *gir, giRegion;
 
@@ -76,7 +71,8 @@ int main()
     gir = GeoIP_region_by_addr(gi, "10.0.0.0");
     if (gir != NULL) {
         printf("lookup of private IP address: country = %s, region = %s\n",
-               gir->country_code, gir->region);
+               gir->country_code,
+               gir->region);
     }
 
     while (fscanf(f, "%s%s%s", ipAddress, expectedCountry, expectedCountry3) !=
@@ -85,15 +81,14 @@ int main()
 
         gir = GeoIP_region_by_name(gi, ipAddress);
         if (gir != NULL) {
-            time_zone =
-                GeoIP_time_zone_by_country_and_region(gir->country_code,
-                                                      gir->region);
+            time_zone = GeoIP_time_zone_by_country_and_region(gir->country_code,
+                                                              gir->region);
             printf("%s, %s, %s, %s\n",
                    gir->country_code,
                    (!gir->region[0]) ? "N/A" : gir->region,
-                   _mk_NA(GeoIP_region_name_by_code
-                              (gir->country_code,
-                              gir->region)), _mk_NA(time_zone));
+                   _mk_NA(GeoIP_region_name_by_code(gir->country_code,
+                                                    gir->region)),
+                   _mk_NA(time_zone));
         } else {
             printf("NULL!\n");
         }
