@@ -10,7 +10,9 @@
 
 Release script:
 
-1. run `dev-bin/ppa-release.sh`
+0. Install build dependencies: `apt-get install devscripts && mk-build-deps --install debian/control`
+1. Add yourself as a maintainer in `debian/control`.
+2. run `dev-bin/ppa-release.sh`
 
 Manual PPA process:
 
