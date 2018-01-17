@@ -1,3 +1,9 @@
+geoip (1.6.12-0+maxmind1) zesty; urgency=low
+
+  * New upstream release.
+
+ -- Florian Ragwitz <rafl@debian.org>  Wed, 17 Jan 2018 12:07:31 -0800
+
 geoip (1.6.11-0+maxmind1) zesty; urgency=low
 
   * New upstream release.
