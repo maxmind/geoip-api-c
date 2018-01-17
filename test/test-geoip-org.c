@@ -15,18 +15,14 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
 #include "GeoIP.h"
 
-static const char *_mk_NA(const char *p)
-{
-    return p ? p : "N/A";
-}
+static const char *_mk_NA(const char *p) { return p ? p : "N/A"; }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *f;
     GeoIP *gi;
     char *org;
@@ -54,8 +50,12 @@ int main(int argc, char *argv[])
         if (org != NULL) {
             ret = GeoIP_range_by_ip(gi, (const char *)host);
 
-            printf("%s\t%s\t%d\t%s\t%s\n", host, _mk_NA(org),
-                   GeoIP_last_netmask(gi), ret[0], ret[1]);
+            printf("%s\t%s\t%d\t%s\t%s\n",
+                   host,
+                   _mk_NA(org),
+                   GeoIP_last_netmask(gi),
+                   ret[0],
+                   ret[1]);
             GeoIP_range_by_ip_delete(ret);
             free(org);
         }

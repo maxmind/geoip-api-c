@@ -3,10 +3,10 @@
 
 #include "GeoIP.h"
 
-GEOIP_API unsigned int _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum,
-                                             GeoIPLookup * gl);
-GEOIP_API unsigned int _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum,
-                                                GeoIPLookup * gl);
+GEOIP_API unsigned int
+_GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl);
+GEOIP_API unsigned int
+_GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *gl);
 GEOIP_API geoipv6_t _GeoIP_addr_to_num_v6(const char *addr);
 
 GEOIP_API unsigned long _GeoIP_lookupaddress(const char *host);
