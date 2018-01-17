@@ -1,5 +1,6 @@
 ## Releasing
 
+* Make sure https://github.com/github/hub is installed and configured.
 * Make sure the `ChangeLog` is up to date.
 * Run `dev-bin/release.sh`
 
