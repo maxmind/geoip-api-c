@@ -2764,3 +2764,9 @@ int GeoIP_cleanup(void) {
 
     return result;
 }
+
+void GeoIP_free(void *ptr) {
+  if (ptr) {
+    free(ptr);
+  }
+}
