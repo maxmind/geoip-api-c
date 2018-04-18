@@ -1,5 +1,6 @@
 #NMAKE makefile for Windows developers.
-#Produces a static library (GeoIP.lib).
+#Produces a static library (libGeoIP.lib).
+#Produces a DLL (GeoIP.dll) and import library (GeoIP.lib).
 
 #################################################################
 # configuration section
@@ -40,15 +41,23 @@ APP_DIR=apps
 
 GEOIP_LIB = GeoIP.lib
 
+LIBGEOIP_LIB = libGeoIP.lib
+
 APP_PROGRAMS = geoiplookup.exe
 
 TEST_PROGRAMS = benchmark.exe test-geoip.exe
 
-all: GeoIP.lib test_progs app_progs
+all: GeoIP.lib libGeoIP.lib test_progs app_progs
 
 $(GEOIP_LIB):
    cd $(LIB_DIR)
-   $(MAKE) -nologo -f Makefile.vc GEOIPDATADIR=$(GEOIPDATADIR)
+   $(MAKE) -nologo -f Makefile.vc GeoIP.lib GEOIPDATADIR=$(GEOIPDATADIR) GEOIP_EXPORTS=1
+   cd ..
+
+$(LIBGEOIP_LIB):
+   $(MAKE) -nologo -f Makefile.vc clean
+   cd $(LIB_DIR)
+   $(MAKE) -nologo -f Makefile.vc libGeoIP.lib GEOIPDATADIR=$(GEOIPDATADIR)
    cd ..
 
 test_progs:
@@ -67,18 +76,35 @@ test:   $(GEOIP_LIB) test_progs
    test-geoip.exe
    cd ..
 
-install: $(GEOIP_LIB) app_progs
-   cd $(LIB_DIR)
-   copy $(GEOIP_LIB) $(INSTALL_LIB)
-   copy *.h $(INSTALL_INC)
+install: $(GEOIP_LIB) all
+   if not exist "$(INSTALL_LIB)" mkdir "$(INSTALL_LIB)"
+   if not exist "$(INSTALL_INC)" mkdir "$(INSTALL_INC)"
+   if not exist "$(INSTALL_BIN)" mkdir "$(INSTALL_BIN)"
+   cd "$(LIB_DIR)"
+   for %L in ($(GEOIP_LIB) $(LIBGEOIP_LIB)) do copy %L "$(INSTALL_LIB)"
+   for %I in (GeoIP.h GeoIPCity.h) do copy %I "$(INSTALL_INC)"
+   copy GeoIP.dll "$(INSTALL_BIN)"
    cd ..\$(APP_DIR)
-   copy $(APP_PROGRAMS) $(INSTALL_BIN)
+   copy $(APP_PROGRAMS) "$(INSTALL_BIN)"
    cd ..\$(DATA_DIR)
-   copy $(DATA_FILE) $(GEOIPDATADIR)
+   copy $(DATA_FILE) "$(GEOIPDATADIR)"
    cd ..
 
+uninstall:
+   if exist "$(INSTALL_LIB)\GeoIP.lib" del "$(INSTALL_LIB)\GeoIP.lib"
+   if exist "$(INSTALL_LIB)\libGeoIP.lib" del "$(INSTALL_LIB)\libGeoIP.lib"
+   if exist "$(INSTALL_INC)\GeoIP.h" del "$(INSTALL_INC)\GeoIP.h"
+   if exist "$(INSTALL_INC)\GeoIPCity.h" del "$(INSTALL_INC)\GeoIPCity.h"
+   if exist "$(INSTALL_BIN)\GeoIP.dll" del "$(INSTALL_BIN)\GeoIP.dll"
+   if exist "$(INSTALL_BIN)\$(APP_PROGRAMS)" del "$(INSTALL_BIN)\$(APP_PROGRAMS)"
+
 clean:
-   del $(LIB_DIR)\*.obj $(LIB_DIR)\*.lib $(LIB_DIR)\*.dll
+   del $(LIB_DIR)\*.obj
+   del $(APP_DIR)\*.obj
+   del $(TEST_DIR)\*.obj
+
+realclean:
+   del $(LIB_DIR)\*.obj $(LIB_DIR)\*.lib $(LIB_DIR)\*.exp $(LIB_DIR)\*.dll
    del $(APP_DIR)\*.obj $(APP_DIR)\*.exe
    del $(TEST_DIR)\*.obj $(TEST_DIR)\*.exe
 
