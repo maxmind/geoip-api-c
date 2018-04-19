@@ -1,14 +1,20 @@
 #NMAKE makefile for Windows developers. 
-##Produces a static library (GeoIP.lib). 
-#Produces a DLL (GeoIP.dll) and library (GeoIP.lib).
+##Produces a static library (libGeoIP.lib).
+#Produces a DLL (GeoIP.dll) and import library (GeoIP.lib).
  
 COMPILER=cl 
- 
-CFLAGS=-DWIN32 -DGEOIP_EXPORTS -MD -nologo 
+
+!ifdef GEOIP_EXPORTS
+EXPORTS_FLAGS=-DGEOIP_EXPORTS
+!else
+EXPORTS_FLAGS= -DGEOIP_STATIC
+!endif
+
+CFLAGS=-DWIN32 $(EXPORTS_FLAGS) -MD -nologo 
  
 GEOIPINC = -I..\libGeoIP 
  
-CC1 = $(COMPILER) $(CFLAGS) $(GEOIPINC) -DGEOIPDATADIR=\"$(GEOIPDATADIR)\" -DPACKAGE_VERSION=\"1.6.3\"
+CC1 = $(COMPILER) $(CFLAGS) $(GEOIPINC) -DGEOIPDATADIR=\"$(GEOIPDATADIR)\" -DPACKAGE_VERSION=\"1.6.12\"
 
 LINKER=link
 
@@ -21,9 +27,11 @@ OBJS=GeoIP.obj GeoIPCity.obj GeoIP_deprecated.obj regionName.obj timeZone.obj pr
 EXTRA_LIBS= ws2_32.lib
  
 AR=lib 
+
+# all: GeoIP.dll libGeoIP.lib
  
-#GeoIP.lib:  GeoIP.obj GeoIPCity.obj regionName.obj md5.obj timeZone.obj
-#   $(AR) -nologo $(OBJS) $(EXTRA_LIBS) /OUT:GeoIP.lib 
+libGeoIP.lib: GeoIP.obj GeoIPCity.obj GeoIP_deprecated.obj regionName.obj timeZone.obj pread.obj
+  $(AR) -nologo $(OBJS) $(EXTRA_LIBS) /OUT:libGeoIP.lib 
 
 GeoIP.dll GeoIP.lib: $(OBJS)
    $(LD1) $(OBJS) $(EXTRA_LIBS) /out:GeoIP.dll /implib:GeoIP.lib

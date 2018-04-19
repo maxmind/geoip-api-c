@@ -158,6 +158,9 @@ typedef enum {
 #ifdef GEOIP_EXPORTS
 #define GEOIP_API __declspec(dllexport)
 #define GEOIP_DATA __declspec(dllexport)
+#elif GEOIP_STATIC
+#define GEOIP_API
+#define GEOIP_DATA
 #else
 #define GEOIP_DATA __declspec(dllimport)
 #define GEOIP_API
