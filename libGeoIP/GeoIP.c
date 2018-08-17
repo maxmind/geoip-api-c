@@ -2765,8 +2765,6 @@ int GeoIP_cleanup(void) {
     return result;
 }
 
-void GeoIP_free(void *ptr) {
-  if (ptr) {
+void GeoIP_string_delete(void *ptr) {
     free(ptr);
-  }
 }
