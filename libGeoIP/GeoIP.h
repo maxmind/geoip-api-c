@@ -76,7 +76,9 @@ typedef struct GeoIPTag {
     unsigned int ext_flags; /* bit 0 teredo support enabled */
 } GeoIP;
 
-typedef struct GeoIPLookup { int netmask; } GeoIPLookup;
+typedef struct GeoIPLookup {
+    int netmask;
+} GeoIPLookup;
 
 typedef enum { GEOIP_TEREDO_BIT = 0 } GeoIPExtFlags;
 
