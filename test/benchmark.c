@@ -125,7 +125,7 @@ void testgeoipcity(int flags, const char *msg, int numlookups) {
     int i2 = 0;
     double t = 0;
 
-    GEOIP_OPEN("GeoLiteCity.dat", flags);
+    GEOIP_OPEN("GeoIPCity.dat", flags);
     timerstart();
     for (i2 = 0; i2 < numlookups; i2++) {
         i3 = GeoIP_record_by_addr(i, ipstring[i4]);

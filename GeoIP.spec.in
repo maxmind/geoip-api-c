@@ -12,10 +12,6 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-root
 %description
 GeoIP is a C library that enables the user to find geographical and
 network information of an IP address.
-Included is a free GeoLite Country database
-that is updated at the beginning of every month.
-To download the latest free GeoLite databases, go to:
-http://dev.maxmind.com/geoip/geolite
 
 %package devel
 Summary: GeoIP headers, libraries
