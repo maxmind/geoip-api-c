@@ -128,10 +128,7 @@ test/
      test-geoip-netspeed.c
 ```
 
-The test-geoip.c program works with the GeoIP Legacy Country database. The
-test-geoip-city.c program works with the GeoIP Legacy City databases. The
-other example programs require the paid databases available
-(https://www.maxmind.com/en/geoip2-services-and-databases).
+These example programs use our [GeoIP Legacy databases](https://www.maxmind.com/en/geoip2-services-and-databases).
 
 ## Troubleshooting ##
 
