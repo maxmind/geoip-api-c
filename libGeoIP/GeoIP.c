@@ -1359,22 +1359,22 @@ unsigned int
 _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *gl) {
     int depth;
     char paddr[ADDR_STR_LEN];
-    unsigned int x;
+    size_t x;
     unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
     const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
-    unsigned int offset = 0;
+    size_t offset = 0;
 
     const unsigned char *p;
-    int j;
+    size_t j;
 
-    unsigned int record_pair_length = gi->record_length * 2;
+    const size_t record_pair_length = gi->record_length * 2;
 
     _check_mtime(gi);
     if (GeoIP_teredo(gi)) {
         __GEOIP_PREPARE_TEREDO(&ipnum);
     }
     for (depth = 127; depth >= 0; depth--) {
-        unsigned int byte_offset = record_pair_length * offset;
+        size_t byte_offset = record_pair_length * offset;
         if (byte_offset > gi->size - record_pair_length) {
             /* The pointer is invalid */
             break;
@@ -1382,16 +1382,15 @@ _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *gl) {
         if (gi->cache == NULL && gi->index_cache == NULL) {
             /* read from disk */
             int fno = fileno(gi->GeoIPDatabase);
-            if (pread(
-                    fno, stack_buffer, record_pair_length, (long)byte_offset) !=
-                record_pair_length) {
+            if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
+                (ssize_t)record_pair_length) {
                 break;
             }
         } else if (gi->index_cache == NULL) {
             /* simply point to record in memory */
-            buf = gi->cache + (long)byte_offset;
+            buf = gi->cache + byte_offset;
         } else {
-            buf = gi->index_cache + (long)byte_offset;
+            buf = gi->index_cache + byte_offset;
         }
 
         if (GEOIP_CHKBIT_V6(depth, ipnum.s6_addr)) {
@@ -1459,19 +1458,19 @@ geoipv6_t _GeoIP_addr_to_num_v6(const char *addr) {
 unsigned int
 _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
     int depth;
-    unsigned int x;
+    size_t x;
     unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
     const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
-    unsigned int offset = 0;
+    size_t offset = 0;
 
     const unsigned char *p;
-    int j;
+    size_t j;
 
-    unsigned int record_pair_length = gi->record_length * 2;
+    const size_t record_pair_length = gi->record_length * 2;
 
     _check_mtime(gi);
     for (depth = 31; depth >= 0; depth--) {
-        unsigned int byte_offset = record_pair_length * offset;
+        size_t byte_offset = record_pair_length * offset;
         if (byte_offset > gi->size - record_pair_length) {
             /* The pointer is invalid */
             break;
@@ -1480,14 +1479,14 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
             /* read from disk */
             int fno = fileno(gi->GeoIPDatabase);
             if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
-                record_pair_length) {
+                (ssize_t)record_pair_length) {
                 break;
             }
         } else if (gi->index_cache == NULL) {
             /* simply point to record in memory */
-            buf = gi->cache + (long)byte_offset;
+            buf = gi->cache + byte_offset;
         } else {
-            buf = gi->index_cache + (long)byte_offset;
+            buf = gi->index_cache + byte_offset;
         }
 
         if (ipnum & (1 << depth)) {
