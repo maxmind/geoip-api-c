@@ -1467,6 +1467,7 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
     size_t j;
 
     const size_t record_pair_length = gi->record_length * 2;
+    size_t right_branch;
 
     _check_mtime(gi);
     for (depth = 31; depth >= 0; depth--) {
@@ -1489,42 +1490,22 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
             buf = gi->index_cache + byte_offset;
         }
 
-        if (ipnum & (1 << depth)) {
-            /* Take the right-hand branch */
-            if (gi->record_length == 3) {
-                /* Most common case is completely unrolled and uses constants.
-                 */
-                x = (buf[3 * 1 + 0] << (0 * 8)) + (buf[3 * 1 + 1] << (1 * 8)) +
-                    (buf[3 * 1 + 2] << (2 * 8));
+        right_branch = (ipnum & (1 << depth)) != 0;
 
-            } else {
-                /* General case */
-                j = gi->record_length;
-                p = &buf[2 * j];
-                x = 0;
-                do {
-                    x <<= 8;
-                    x += *(--p);
-                } while (--j);
-            }
-
+        if (gi->record_length == 3) {
+            /* Most common case is completely unrolled and uses constants.
+             */
+            p = &buf[right_branch * 3];
+            x = (p[0] << (0 * 8)) + (p[1] << (1 * 8)) + (p[2] << (2 * 8));
         } else {
-            /* Take the left-hand branch */
-            if (gi->record_length == 3) {
-                /* Most common case is completely unrolled and uses constants.
-                 */
-                x = (buf[3 * 0 + 0] << (0 * 8)) + (buf[3 * 0 + 1] << (1 * 8)) +
-                    (buf[3 * 0 + 2] << (2 * 8));
-            } else {
-                /* General case */
-                j = gi->record_length;
-                p = &buf[1 * j];
-                x = 0;
-                do {
-                    x <<= 8;
-                    x += *(--p);
-                } while (--j);
-            }
+            /* General case */
+            j = gi->record_length;
+            p = &buf[(right_branch + 1) * j];
+            x = 0;
+            do {
+                x <<= 8;
+                x += *(--p);
+            } while (--j);
         }
 
         if (x >= gi->databaseSegments[0]) {
