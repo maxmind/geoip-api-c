@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* GeoIP.c
  *
  * Copyright (C) 2016 MaxMind, Inc.
