@@ -1366,7 +1366,6 @@ _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *gl) {
 
     const unsigned char *p;
     int j;
-    int fno = fileno(gi->GeoIPDatabase);
 
     unsigned int record_pair_length = gi->record_length * 2;
 
@@ -1382,6 +1381,7 @@ _GeoIP_seek_record_v6_gl(GeoIP *gi, geoipv6_t ipnum, GeoIPLookup *gl) {
         }
         if (gi->cache == NULL && gi->index_cache == NULL) {
             /* read from disk */
+            int fno = fileno(gi->GeoIPDatabase);
             if (pread(
                     fno, stack_buffer, record_pair_length, (long)byte_offset) !=
                 record_pair_length) {
@@ -1466,7 +1466,6 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
 
     const unsigned char *p;
     int j;
-    int fno = fileno(gi->GeoIPDatabase);
 
     unsigned int record_pair_length = gi->record_length * 2;
 
@@ -1479,6 +1478,7 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
         }
         if (gi->cache == NULL && gi->index_cache == NULL) {
             /* read from disk */
+            int fno = fileno(gi->GeoIPDatabase);
             if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
                 record_pair_length) {
                 break;
