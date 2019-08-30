@@ -1476,18 +1476,18 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
             /* The pointer is invalid */
             break;
         }
-        if (gi->cache == NULL && gi->index_cache == NULL) {
+        if (gi->cache != NULL) {
+            /* simply point to record in memory */
+            buf = gi->cache + byte_offset;
+        } else if (gi->index_cache != NULL) {
+            buf = gi->index_cache + byte_offset;
+        } else {
             /* read from disk */
             int fno = fileno(gi->GeoIPDatabase);
             if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
                 (ssize_t)record_pair_length) {
                 break;
             }
-        } else if (gi->index_cache == NULL) {
-            /* simply point to record in memory */
-            buf = gi->cache + byte_offset;
-        } else {
-            buf = gi->index_cache + byte_offset;
         }
 
         right_branch = (ipnum & (1 << depth)) != 0;
