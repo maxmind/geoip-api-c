@@ -3,7 +3,7 @@
 set -e
 set -x
 
-DISTS=( zesty yakkety xenial trusty precise )
+DISTS=( focal eoan bionic xenial trusty )
 
 VERSION=$(perl -MFile::Slurp::Tiny=read_file -MDateTime <<EOF
 use v5.16;
