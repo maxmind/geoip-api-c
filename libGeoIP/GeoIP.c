@@ -1458,12 +1458,13 @@ geoipv6_t _GeoIP_addr_to_num_v6(const char *addr) {
 
 unsigned int
 _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
-    int depth;
     unsigned int x;
     unsigned char stack_buffer[2 * MAX_RECORD_LENGTH];
     const unsigned char *buf = (gi->cache == NULL) ? stack_buffer : NULL;
     unsigned int offset = 0;
-
+		unsigned int stack[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+		int sp = 0;
+		unsigned int ipPrefix = 0;
     const unsigned char *p;
     int j;
     int fno = fileno(gi->GeoIPDatabase);
@@ -1471,75 +1472,97 @@ _GeoIP_seek_record_gl(GeoIP *gi, unsigned long ipnum, GeoIPLookup *gl) {
     unsigned int record_pair_length = gi->record_length * 2;
 
     _check_mtime(gi);
-    for (depth = 31; depth >= 0; depth--) {
-        unsigned int byte_offset = record_pair_length * offset;
-        if (byte_offset > gi->size - record_pair_length) {
-            /* The pointer is invalid */
-            break;
-        }
-        if (gi->cache == NULL && gi->index_cache == NULL) {
-            /* read from disk */
-            if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
-                record_pair_length) {
-                break;
-            }
-        } else if (gi->index_cache == NULL) {
-            /* simply point to record in memory */
-            buf = gi->cache + (long)byte_offset;
-        } else {
-            buf = gi->index_cache + (long)byte_offset;
-        }
+    // for (depth = 31; depth >= 0; depth--) {
+  	for (;;) {
+			unsigned int byte_offset = record_pair_length * offset;
+			if (byte_offset > gi->size - record_pair_length) {
+				/* The pointer is invalid */
+				break;
+			}
+			if (gi->cache == NULL && gi->index_cache == NULL) {
+				/* read from disk */
+				if (pread(fno, stack_buffer, record_pair_length, byte_offset) !=
+						record_pair_length) {
+					break;
+				}
+			} else if (gi->index_cache == NULL) {
+				/* simply point to record in memory */
+				buf = gi->cache + (long)byte_offset;
+			} else {
+				buf = gi->index_cache + (long)byte_offset;
+			}
 
-        if (ipnum & (1 << depth)) {
-            /* Take the right-hand branch */
-            if (gi->record_length == 3) {
-                /* Most common case is completely unrolled and uses constants.
-                 */
-                x = (buf[3 * 1 + 0] << (0 * 8)) + (buf[3 * 1 + 1] << (1 * 8)) +
-                    (buf[3 * 1 + 2] << (2 * 8));
+			if ((ipPrefix & (1 << (31 - sp)))/*ipnum & (1 << depth)*/) {
+				/* Take the right-hand branch */
+				if (gi->record_length == 3) {
+					/* Most common case is completely unrolled and uses constants.
+					 */
+					x = (buf[3 * 1 + 0] << (0 * 8)) + (buf[3 * 1 + 1] << (1 * 8)) +
+						(buf[3 * 1 + 2] << (2 * 8));
 
-            } else {
-                /* General case */
-                j = gi->record_length;
-                p = &buf[2 * j];
-                x = 0;
-                do {
-                    x <<= 8;
-                    x += *(--p);
-                } while (--j);
-            }
+				} else {
+					/* General case */
+					j = gi->record_length;
+					p = &buf[2 * j];
+					x = 0;
+					do {
+						x <<= 8;
+						x += *(--p);
+					} while (--j);
+				}
+				//sp--;
 
-        } else {
-            /* Take the left-hand branch */
-            if (gi->record_length == 3) {
-                /* Most common case is completely unrolled and uses constants.
-                 */
-                x = (buf[3 * 0 + 0] << (0 * 8)) + (buf[3 * 0 + 1] << (1 * 8)) +
-                    (buf[3 * 0 + 2] << (2 * 8));
-            } else {
-                /* General case */
-                j = gi->record_length;
-                p = &buf[1 * j];
-                x = 0;
-                do {
-                    x <<= 8;
-                    x += *(--p);
-                } while (--j);
-            }
-        }
-
-        if (x >= gi->databaseSegments[0]) {
-            gi->netmask = gl->netmask = 32 - depth;
-            return x;
-        }
-        offset = x;
+			} else { // zero
+				/* Take the left-hand branch */
+				if (gi->record_length == 3) {
+					/* Most common case is completely unrolled and uses constants.
+					 */
+					x = (buf[3 * 0 + 0] << (0 * 8)) + (buf[3 * 0 + 1] << (1 * 8)) +
+						(buf[3 * 0 + 2] << (2 * 8));
+				} else {
+					/* General case */
+					j = gi->record_length;
+					p = &buf[1 * j];
+					x = 0;
+					do {
+						x <<= 8;
+						x += *(--p);
+					} while (--j);
+				}
+			}
+			//printf("sp = %02d; ip prefix = %08x; x = %08x\n", sp, ipPrefix, x);
+			if (x >= gi->databaseSegments[0]) {
+				if (x > gi->databaseSegments[0]) {
+					printf("ip addr %08x/%d\n", ipPrefix, sp);
+				}
+				if ((ipPrefix & (1 << (31 - sp))) == 0) {
+					ipPrefix |= (1 << (31 - sp));
+					continue;
+				} else {
+					ipPrefix &= ~(1 << (31 - sp));
+				}
+				// pop
+				while (sp > 0) {
+					x = stack[--sp];
+					//printf("pop %08x\n", x);
+					if (ipPrefix & (1 << (31 - sp))) {
+						if (!sp && ipPrefix & (1 << (31 - sp))) {
+							return gi->databaseSegments[0]; // popped root
+						}
+						ipPrefix &= ~(1 << (31 - sp));
+						continue;
+					} else {
+						ipPrefix |= (1 << (31 - sp));
+						break;
+					}
+				}
+			} else {
+				stack[sp++] = offset;
+				//printf("push %08x\n", offset);
+			}
+			offset = x;
     }
-    /* shouldn't reach here */
-    DEBUG_MSGF(gi->flags,
-               "Error Traversing Database for ipnum = %lu - Perhaps database "
-               "is corrupt?\n",
-               ipnum);
-    return 0;
+    return gi->databaseSegments[0];
 }
 
 unsigned long GeoIP_addr_to_num(const char *addr) {
