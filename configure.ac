@@ -48,8 +48,6 @@ AC_CHECK_FUNC(gethostbyname_r, [
 
 AC_CHECK_FUNCS([ memset memchr munmap strrchr socket strchr strdup strstr ])
 
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
 AC_FUNC_MMAP
 
 AC_ARG_ENABLE([data-files],
