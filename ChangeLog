@@ -4,6 +4,8 @@
   lookup functions. This is useful on Windows when the library may have been
   compiled with one runtime and you are using another. Pull request by Simone
   Basso. GitHub #100.
+* Fix build problems related to `rpl_malloc()`. Pull request by elig0n.
+  GitHub #116.
 
 1.6.12 2018-01-17
 
