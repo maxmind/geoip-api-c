@@ -34,7 +34,7 @@ fi
 perl -pi -e "s/(?<=AC_INIT\(\[GeoIP\], \[)(\d+\.\d+\.\d+)(?=])/$version/gsm" configure.ac
 
 if [ -n "$(git status --porcelain)" ]; then
-    git add configure.ac 
+    git add configure.ac
     git commit -m "Bumped version to $version"
 fi
 
@@ -54,8 +54,4 @@ fi
 
 git push
 
-message="$version
-
-$notes"
-
-hub release create -a "$dist" -m "$message" "v$version"
+gh release create --target "$(git branch --show-current)" -t "$version" -n "$notes" "v$version" "$dist"
